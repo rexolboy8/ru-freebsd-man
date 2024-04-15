@@ -1,214 +1,212 @@
-.\" Copyright (C) 2001 Matthew Dillon. All rights reserved.
+.\" Copyright (C) 2001 Matthew Dillon. Все права защищены.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\" Распространение и использование в исходных и двоичных формах, с модификацией или без
+.\" модификацией, разрешены при соблюдении следующих условий
+.\" соблюдены:
+.\" 1. Перераспределение исходного кода должно сохранять вышеуказанное уведомление об авторских правах
+.\" уведомление об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. Перераспределение в двоичной форме должно воспроизводить вышеуказанное уведомление об авторских правах
+.\" уведомление об авторских правах, этот список условий и следующий отказ от ответственности в
+.\" документации и/или других материалах, поставляемых вместе с дистрибутивом.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL AUTHOR OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ АВТОРОМ И РАЗРАБОТЧИКАМИ ``КАК ЕСТЬ`` И
+.\" ЛЮБЫЕ ЯВНЫЕ ИЛИ ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ
+.\" ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ ТОВАРНОГО СОСТОЯНИЯ И ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ
+.\" НЕ ПРИНИМАЮТСЯ.  НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ АВТОР ИЛИ СОАВТОРЫ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ
+.\" ЗА ЛЮБЫЕ ПРЯМЫЕ, КОСВЕННЫЕ, СЛУЧАЙНЫЕ, СПЕЦИАЛЬНЫЕ, ПРИМЕРНЫЕ ИЛИ КОСВЕННЫЕ УБЫТКИ.
+.\" УЩЕРБ (ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ, ПРИОБРЕТЕНИЕ ТОВАРОВ-ЗАМЕНИТЕЛЕЙ
+.\" ИЛИ УСЛУГИ; ПОТЕРЮ ИСПОЛЬЗОВАНИЯ, ДАННЫХ ИЛИ ПРИБЫЛИ; ИЛИ ПЕРЕРЫВ В РАБОТЕ)
+.\" НЕЗАВИСИМО ОТ ПРИЧИН И ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ, БУДЬ ТО КОНТРАКТ, СТРОГИЙ
+.\" ОТВЕТСТВЕННОСТИ, ИЛИ ДЕЛИКТА (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ), ВОЗНИКАЮЩИХ КАКИМ-ЛИБО ОБРАЗОМ
+.\" В РЕЗУЛЬТАТЕ ИСПОЛЬЗОВАНИЯ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ, ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ
+.\" ТАКОГО УЩЕРБА.
 .\"
 .Dd May 26, 2001
-.Dt FIREWALL 7
+.Dt БРАНДМАУЭР 7
 .Os
-.Sh NAME
-.Nm firewall
-.Nd simple firewalls under FreeBSD
-.Sh FIREWALL BASICS
-A Firewall is most commonly used to protect an internal network
-from an outside network by preventing the outside network from
-making arbitrary connections into the internal network.
-Firewalls
-are also used to prevent outside entities from spoofing internal
-IP addresses and to isolate services such as NFS or SMBFS (Windows
-file sharing) within LAN segments.
+.Sh ИМЯ
+.Nm брандмауэр
+.Nd простые брандмауэры под FreeBSD
+.Sh ОСНОВНЫЕ СВЕДЕНИЯ О БРАНДМАУЭРЕ
+Брандмауэр чаще всего используется для защиты внутренней сети
+от внешней сети, не позволяя внешней сети
+произвольных подключений к внутренней сети.
+Брандмауэры
+также используются для предотвращения подделки внутренних
+IP-адреса и для изоляции таких служб, как NFS или SMBFS (Windows
+общий доступ к файлам) в сегментах локальной сети.
 .Pp
-The
 .Fx
-firewalling system also has the capability to limit bandwidth using
+также имеет возможность ограничивать пропускную способность с помощью
 .Xr dummynet 4 .
-This feature can be useful when you need to guarantee a certain
-amount of bandwidth for a critical purpose.
-For example, if you
-are doing video conferencing over the Internet via your
-office T1 (1.5 MBits/s), you may wish to bandwidth-limit all other
-T1 traffic to 1 MBit/s in order to reserve at least 0.5 MBits
-for your video conferencing connections.
-Similarly if you are
-running a popular web or ftp site from a colocation facility
-you might want to limit bandwidth to prevent excessive bandwidth
-charges from your provider.
+Эта функция может быть полезна, когда необходимо гарантировать определенную
+пропускную способность для критически важной цели.
+например, если вы проводите видеоконференции через Интернет по
+T1 (1,5 МБит/с), вы можете захотеть ограничить пропускную способность всего остального
+трафика T1 до 1 МБит/с, чтобы зарезервировать хотя бы 0,5 МБит
+для соединений видеоконференций.
+Аналогично, если вы
+запускаете популярный веб-сайт или ftp-сайт из центра размещения
+вы можете ограничить пропускную способность, чтобы избежать чрезмерной платы за пропускную способность
+провайдера.
 .Pp
-Finally,
+Наконец,
 .Fx
-firewalls may be used to divert packets or change the next-hop
-address for packets to help route them to the correct destination.
-Packet diversion is most often used to support NAT (network
-address translation), which allows an internal network using
-a private IP space to make connections to the outside for browsing
-or other purposes.
+брандмауэры могут использоваться для перенаправления пакетов или изменения адреса следующего узла
+адреса пакетов, чтобы помочь направить их в нужное место назначения.
+Переадресация пакетов чаще всего используется для поддержки NAT (трансляции сетевых
+трансляции адресов), которая позволяет внутренней сети, использующей
+частное IP-пространство для подключения к внешней сети для просмотра веб-страниц
+или других целей.
 .Pp
-Constructing a firewall may appear to be trivial, but most people
-get them wrong.
-The most common mistake is to create an exclusive
-firewall rather than an inclusive firewall.
-An exclusive firewall
-allows all packets through except for those matching a set of rules.
-An inclusive firewall allows only packets matching the ruleset
-through.
-Inclusive firewalls are much, much safer than exclusive
-firewalls but a tad more difficult to build properly.
-The
-second most common mistake is to blackhole everything except the
-particular port you want to let through.
-TCP/IP needs to be able
-to get certain types of ICMP errors to function properly - for
-example, to implement MTU discovery.
-Also, a number of common
-system daemons make reverse connections to the
+Создание межсетевого экрана может показаться тривиальной задачей, но большинство людей
+ошибаются.
+Самая распространенная ошибка - создание эксклюзивного
+а не всеохватывающий брандмауэр.
+Исключительный брандмауэр
+пропускает все пакеты, кроме тех, которые соответствуют набору правил.
+Всеохватывающий брандмауэр пропускает только пакеты, соответствующие набору правил
+через него.
+Инклюзивные брандмауэры намного, намного безопаснее, чем эксклюзивные
+брандмауэров, но их сложнее правильно построить.
+На
+Вторая наиболее распространенная ошибка - закрывать все, кроме
+конкретного порта, который вы хотите пропустить.
+TCP/IP должен иметь возможность
+получать определенные типы ошибок ICMP, чтобы функционировать правильно - например.
+например, для реализации обнаружения MTU.
+Кроме того, ряд распространенных
+системных демонов устанавливают обратные соединения с
 .Sy auth
-service in an attempt to authenticate the user making a connection.
-Auth is rather dangerous but the proper implementation is to return
-a TCP reset for the connection attempt rather than simply blackholing
-the packet.
-We cover these and other quirks involved with constructing
-a firewall in the sample firewall section below.
-.Sh IPFW KERNEL CONFIGURATION
-You do not need to create a custom kernel to use the IP firewalling features.
-If you enable firewalling in your
+в попытке аутентифицировать пользователя, устанавливающего соединение.
+Auth довольно опасен, но правильная реализация заключается в том, чтобы возвращать
+TCP-сброс при попытке соединения, а не просто блокировать
+пакет.
+Мы рассмотрим эти и другие причуды, связанные с созданием
+брандмауэра в примере брандмауэра ниже.
+.Sh КОНФИГУРАЦИЯ ЯДРА IPFW
+Вам не нужно создавать собственное ядро, чтобы использовать функции IP-брандмауэра.
+Если вы включите брандмауэр в вашем
 .Pa /etc/rc.conf
-(see below), the ipfw kernel module will be loaded automatically
-when necessary.
-However,
-if you are paranoid you can compile IPFW directly into the
+(см. ниже), модуль ядра ipfw будет загружаться автоматически
+при необходимости.
+Однако,
+если вы параноик, вы можете скомпилировать IPFW непосредственно в
 .Fx
-kernel by using the
+ядра, используя файл
 .Sy IPFIREWALL
-option set.
-If compiled in the kernel, ipfw denies all
-packets by default, which means that, if you do not load in
-a permissive ruleset via
+набор опций.
+Если ipfw скомпилирован в ядро, он запрещает все
+пакеты по умолчанию, что означает, что если вы не загрузите
+набор разрешающих правил через
 .Pa /etc/rc.conf ,
-rebooting into your new kernel will take the network offline.
-This can prevent you from being able to access your system if you
-are not sitting at the console.
-It is also quite common to
-update a kernel to a new release and reboot before updating
-the binaries.
-This can result in an incompatibility between
-the
+перезагрузка с новым ядром приведет к отключению сети.
+Это может помешать вам получить доступ к системе, если вы
+если вы не сидите за консолью.
+Также довольно часто
+обновить ядро до новой версии и перезагрузиться перед обновлением
+двоичных файлов.
+Это может привести к несовместимости между
+сайтом
 .Xr ipfw 8
-program and the kernel which prevents it from running in the
-boot sequence, also resulting in an inaccessible machine.
-Because of these problems the
+и ядром, в результате чего программа не сможет запуститься в
+последовательности загрузки, что также приведет к недоступности машины.
+В связи с этими проблемами в программе
 .Sy IPFIREWALL_DEFAULT_TO_ACCEPT
-kernel option is also available which changes the default firewall
-to pass through all packets.
-Note, however, that using this option
-may open a small window of opportunity during booting where your
-firewall passes all packets.
-Still, it is a good option to use
-while getting up to speed with
+
+Также доступна опция ядра, которая изменяет стандартный брандмауэр
+на прохождение всех пакетов.
+Обратите внимание, однако, что использование этой опции
+может открыть небольшое окно возможностей во время загрузки, когда ваш
+брандмауэр пропускает все пакеты.
+Тем не менее, это хороший вариант для использования
+во время работы с
 .Fx
-firewalling.
-Get rid of it once you understand how it all works
-to close the loophole, though.
-There is a third option called
+брандмауэром.
+Избавьтесь от него, как только поймете, как все это работает
+чтобы закрыть лазейку.
+Существует третий вариант, называемый
 .Sy IPDIVERT
-which allows you to use the firewall to divert packets to a user program
-and is necessary if you wish to use
+которая позволяет использовать брандмауэр для перенаправления пакетов в пользовательскую программу
+и необходима, если вы хотите использовать
 .Xr natd 8
-to give private internal networks access to the outside world.
-If you want to be able to limit the bandwidth used by certain types of
-traffic, the
+для предоставления частным внутренним сетям доступа к внешнему миру.
+Если вы хотите иметь возможность ограничить пропускную способность, используемую определенными типами
+трафика, то следует использовать
 .Sy DUMMYNET
-option must be used to enable
+должен быть использован для включения
 .Em ipfw pipe
-rules.
-.Sh SAMPLE IPFW-BASED FIREWALL
-Here is an example ipfw-based firewall taken from a machine with three
-interface cards.
-fxp0 is connected to the 'exposed' LAN.
-Machines
-on this LAN are dual-homed with both internal 10.\& IP addresses and
-Internet-routed IP addresses.
-In our example, 192.100.5.x represents
-the Internet-routed IP block while 10.x.x.x represents the internal
-networks.
-While it is not relevant to the example, 10.0.1.x is
-assigned as the internal address block for the LAN on fxp0, 10.0.2.x
-for the LAN on fxp1, and 10.0.3.x for the LAN on fxp2.
+правила.
+.Sh ПРИМЕР БРАНДМАУЭРА НА ОСНОВЕ IPFW
+Здесь приведен пример брандмауэра на основе ipfw, взятый с машины с тремя
+интерфейсными платами.
+fxp0 подключен к "открытой" локальной сети.
+Машины
+в этой локальной сети имеют два IP-адреса: внутренний 10.\& и
+IP-адреса с маршрутизацией в Интернет.
+В нашем примере 192.100.5.x представляет собой
+блок маршрутизируемых в Интернет IP-адресов, а 10.x.x.x представляет внутреннюю
+сети.
+Хотя это не имеет значения для данного примера, 10.0.1.x
+назначен в качестве блока внутренних адресов для локальной сети на fxp0, 10.0.2.x
+для локальной сети на fxp1 и 10.0.3.x для локальной сети на fxp2.
 .Pp
-In this example we want to isolate all three LANs from the Internet
-as well as isolate them from each other, and we want to give all
-internal addresses access to the Internet through a NAT gateway running
-on this machine.
-To make the NAT gateway work, the firewall machine
-is given two Internet-exposed addresses on fxp0 in addition to an
-internal 10.\& address on fxp0: one exposed address (not shown)
-represents the machine's official address, and the second exposed
-address (192.100.5.5 in our example) represents the NAT gateway
-rendezvous IP.
-We make the example more complex by giving the machines
-on the exposed LAN internal 10.0.0.x addresses as well as exposed
-addresses.
-The idea here is that you can bind internal services
-to internal addresses even on exposed machines and still protect
-those services from the Internet.
-The only services you run on
-exposed IP addresses would be the ones you wish to expose to the
-Internet.
+В этом примере мы хотим изолировать все три локальные сети от Интернета
+а также изолировать их друг от друга, и мы хотим предоставить всем
+внутренним адресам доступ в Интернет через NAT-шлюз, запущенный
+на этой машине.
+Чтобы шлюз NAT работал, машине брандмауэра
+предоставляются два адреса для доступа в Интернет на fxp0 в дополнение к
+внутреннего адреса 10.\& на fxp0: один открытый адрес (не показан)
+представляет собой официальный адрес машины, а второй открытый адрес
+адрес (192.100.5.5 в нашем примере) представляет собой NAT-шлюз
+IP-адрес rendezvous.
+Мы усложним пример, предоставив машинам
+в открытой локальной сети внутренние адреса 10.0.0.x, а также открытые адреса
+адреса.
+Идея заключается в том, что вы можете привязать внутренние службы
+к внутренним адресам даже на открытых машинах и при этом защитить
+эти службы от Интернета.
+Единственные службы, которые вы запускаете на
+открытых IP-адресах, будут те, которые вы хотите вывести в Интернет.
+Интернет.
 .Pp
-It is important to note that the 10.0.0.x network in our example
-is not protected by our firewall.
-You must make sure that your
-Internet router protects this network from outside spoofing.
-Also, in our example, we pretty much give the exposed hosts free
-reign on our internal network when operating services through
-internal IP addresses (10.0.0.x).
-This is somewhat of security
-risk: what if an exposed host is compromised?
-To remove the
-risk and force everything coming in via LAN0 to go through
-the firewall, remove rules 01010 and 01011.
+Важно отметить, что сеть 10.0.0.x в нашем примере
+не защищена нашим брандмауэром.
+Вы должны убедиться, что ваш
+Интернет-маршрутизатор защищает эту сеть от подмены извне.
+Кроме того, в нашем примере мы практически предоставили открытому хосту свободу
+в нашей внутренней сети при работе служб через
+внутренние IP-адреса (10.0.0.x).
+Это представляет определенный риск для безопасности
+риск: что, если открытый хост будет скомпрометирован?
+Чтобы устранить
+риск и заставить все, что поступает через LAN0, проходить через
+брандмауэр, удалите правила 01010 и 01011.
 .Pp
-Finally, note that the use of internal addresses represents a
-big piece of our firewall protection mechanism.
-With proper
-spoofing safeguards in place, nothing outside can directly
-access an internal (LAN1 or LAN2) host.
+Наконец, обратите внимание, что использование внутренних адресов представляет собой
+большую часть нашего механизма защиты брандмауэра.
+При наличии надлежащих
+защите от подмены, ничто внешнее не может напрямую
+получить доступ к внутреннему (LAN1 или LAN2) узлу.
 .Bd -literal
 # /etc/rc.conf
 #
 firewall_enable="YES"
 firewall_type="/etc/ipfw.conf"
 
-# temporary port binding range let
-# through the firewall.
-#
-# NOTE: heavily loaded services running through the firewall may require
-# a larger port range for local-size binding.  4000-10000 or 4000-30000
-# might be a better choice.
+# временный диапазон привязки портов пусть
+# через брандмауэр.
+# ПРИМЕЧАНИЕ: сильно загруженные службы, работающие через брандмауэр, могут потребовать.
+# больший диапазон портов для привязки к локальному размеру.  4000-10000 или 4000-30000
+# могут быть лучшим выбором.
 ip_portrange_first=4000
 ip_portrange_last=5000
 \&...
 .Ed
 .Bd -literal
 # /etc/ipfw.conf
-#
+
 # FIREWALL: the firewall machine / nat gateway
 # LAN0	    10.0.0.X and 192.100.5.X (dual homed)
 # LAN1	    10.0.1.X
@@ -235,178 +233,178 @@ ip_portrange_last=5000
 #      |
 #    [Internet]
 #
-# NOT SHOWN:  The INTERNET ROUTER must contain rules to disallow
-# all packets with source IP addresses in the 10. block in order
-# to protect the dual-homed 10.0.0.x block.  Exposed hosts are
-# not otherwise protected in this example - they should only bind
-# exposed services to exposed IPs but can safely bind internal
-# services to internal IPs.
+# НЕ ПОКАЗАНО: Роутер INTERNET должен содержать правила, запрещающие
+# все пакеты с IP-адресами источников в блоке 10. для того, чтобы
+# защитить блок 10.0.0.x с двойным хомингом.  Открытые хосты.
+# не защищены в этом примере - они должны только связывать
+# открытые службы к открытым IP-адресам, но могут безопасно связывать внутренние
+# службы к внутренним IP.
 #
-# The NAT gateway works by taking packets sent from internal
-# IP addresses to external IP addresses and routing them to natd, which
-# is listening on port 8668.   This is handled by rule 00300.  Data coming
-# back to natd from the outside world must also be routed to natd using
-# rule 00301.  To make the example interesting, we note that we do
-# NOT have to run internal requests to exposed hosts through natd
-# (rule 00290) because those exposed hosts know about our
-# 10. network.  This can reduce the load on natd.  Also note that we
-# of course do not have to route internal<->internal traffic through
-# natd since those hosts know how to route our 10. internal network.
-# The natd command we run from /etc/rc.local is shown below.  See
-# also the in-kernel version of natd, ipnat.
+# Шлюз NAT работает, принимая пакеты, отправленные с внутренних
+# IP-адресов на внешние IP-адреса и маршрутизируя их в natd, который
+# прослушивает порт 8668.   Этим занимается правило 00300.  Данные поступают
+# обратно в natd из внешнего мира, также должны быть направлены в natd с помощью
+# правило 00301.  Чтобы сделать пример интересным, отметим, что нам
+# НЕ нужно направлять внутренние запросы к открытым хостам через natd
+# (правило 00290), потому что эти открытые хосты знают о нашей
+# 10. сети.  Это может снизить нагрузку на natd.  Также обратите внимание, что нам
+# конечно, не нужно направлять внутренний<->внутренний трафик через
+# natd, поскольку эти хосты знают, как маршрутизировать нашу внутреннюю сеть # 10.
+# Команда natd, которую мы запускаем из /etc/rc.local, показана ниже.  См.
+# также версию natd для ядра, ipnat.
 #
-#	natd -s -u -a 208.161.114.67
-#
-#
+# natd -s -u -a 208.161.114.67
+
 add 00290 skipto 1000 ip from 10.0.0.0/8 to 192.100.5.0/24
 add 00300 divert 8668 ip from 10.0.0.0/8 to not 10.0.0.0/8
 add 00301 divert 8668 ip from not 10.0.0.0/8 to 192.100.5.5
 
-# Short cut the rules to avoid running high bandwidths through
-# the entire rule set.  Allow established tcp connections through,
-# and shortcut all outgoing packets under the assumption that
-# we need only firewall incoming packets.
+# Сократите правила, чтобы избежать высокой пропускной способности
+# весь набор правил.  Разрешите установленные tcp-соединения,
+# и сократить все исходящие пакеты, исходя из предположения, что
+# нам нужен брандмауэр только для входящих пакетов.
 #
-# Allowing established tcp connections through creates a small
-# hole but may be necessary to avoid overloading your firewall.
-# If you are worried, you can move the rule to after the spoof
-# checks.
+# Разрешение установленных tcp-соединений создает небольшую
+# дыру, но может быть необходимо, чтобы избежать перегрузки брандмауэра.
+# Если вы беспокоитесь, вы можете переместить правило после проверки на подделку.
+# проверки.
 #
 add 01000 allow tcp from any to any established
 add 01001 allow all from any to any out via fxp0
 add 01001 allow all from any to any out via fxp1
 add 01001 allow all from any to any out via fxp2
 
-# Spoof protection.  This depends on how well you trust your
-# internal networks.  Packets received via fxp1 MUST come from
-# 10.0.1.x.  Packets received via fxp2 MUST come from 10.0.2.x.
-# Packets received via fxp0 cannot come from the LAN1 or LAN2
-# blocks.  We cannot protect 10.0.0.x here, the Internet router
-# must do that for us.
+# Защита от подделок.  Это зависит от того, насколько вы доверяете своим
+# внутренним сетям.  Пакеты, полученные через fxp1, ДОЛЖНЫ приходить от
+# 10.0.1.x. Пакеты, полученные через fxp2, ДОЛЖНЫ приходить от 10.0.2.x.
+# Пакеты, полученные через fxp0, не могут поступать из блоков LAN1 или LAN2.
+# блоков.  Мы не можем защитить 10.0.0.x здесь, это должен сделать интернет-маршрутизатор.
+# должен сделать это за нас.
 #
 add 01500 deny all from not 10.0.1.0/24 in via fxp1
 add 01500 deny all from not 10.0.2.0/24 in via fxp2
 add 01501 deny all from 10.0.1.0/24 in via fxp0
 add 01501 deny all from 10.0.2.0/24 in via fxp0
 
-# In this example rule set there are no restrictions between
-# internal hosts, even those on the exposed LAN (as long as
-# they use an internal IP address).  This represents a
-# potential security hole (what if an exposed host is
-# compromised?).  If you want full restrictions to apply
-# between the three LANs, firewalling them off from each
-# other for added security, remove these two rules.
+# В этом примере набора правил нет ограничений между
+# внутренними хостами, даже находящимися в открытой локальной сети (при условии, что
+# они используют внутренний IP-адрес).  Это представляет собой
+# потенциальную брешь в безопасности (что, если открытый хост будет
+# скомпрометирован?).  Если вы хотите, чтобы все ограничения применялись
+# между тремя локальными сетями, отгородив их друг от друга брандмауэром
+# друг от друга для дополнительной безопасности, удалите эти два правила.
 #
-# If you want to isolate LAN1 and LAN2, but still want
-# to give exposed hosts free reign with each other, get
-# rid of rule 01010 and keep rule 01011.
+# Если вы хотите изолировать локальные сети LAN1 и LAN2, но при этом хотите.
+# предоставить хостам свободное взаимодействие друг с другом, избавьтесь
+# избавьтесь от правила 01010 и оставьте правило 01011.
 #
-# (commented out, uncomment for less restrictive firewall)
+# (закомментировано, откомментируйте для менее ограничительного брандмауэра)
 #add 01010 allow all from 10.0.0.0/8 to 10.0.0.0/8
 #add 01011 allow all from 192.100.5.0/24 to 192.100.5.0/24
 #
 
-# SPECIFIC SERVICES ALLOWED FROM SPECIFIC LANS
+# КОНКРЕТНЫЕ СЕРВИСЫ, РАЗРЕШЕННЫЕ С КОНКРЕТНЫХ LANS
 #
-# If using a more restrictive firewall, allow specific LANs
-# access to specific services running on the firewall itself.
-# In this case we assume LAN1 needs access to filesharing running
-# on the firewall.  If using a less restrictive firewall
-# (allowing rule 01010), you do not need these rules.
+# При использовании более ограничительного брандмауэра разрешите определенным локальным сетям
+# доступ к определенным службам, работающим на самом брандмауэре.
+# В данном случае мы предполагаем, что локальной сети LAN1 нужен доступ к обмену файлами, запущенному
+# на брандмауэре.  Если используется менее ограничительный брандмауэр
+# (разрешающее правило 01010), вам не нужны эти правила.
 #
 add 01012 allow tcp from 10.0.1.0/8 to 10.0.1.1 139
 add 01012 allow udp from 10.0.1.0/8 to 10.0.1.1 137,138
 
-# GENERAL SERVICES ALLOWED TO CROSS INTERNAL AND EXPOSED LANS
+# ОБЩИЕ СЕРВИСЫ, КОТОРЫМ РАЗРЕШЕНО ПЕРЕСЕКАТЬ ВНУТРЕННИЙ и ОТКРЫТЫЕ LANS
 #
-# We allow specific UDP services through: DNS lookups, ntalk, and ntp.
-# Note that internal services are protected by virtue of having
-# spoof-proof internal IP addresses (10. net), so these rules
-# really only apply to services bound to exposed IPs.  We have
-# to allow UDP fragments or larger fragmented UDP packets will
-# not survive the firewall.
+# Мы разрешаем определенные UDP-службы: DNS, ntalk и ntp.
+# Обратите внимание, что внутренние службы защищены благодаря тому, что имеют
+# защищенных от подмены внутренних IP-адресов (10. net), поэтому эти правила
+# действительно применяются только к сервисам, привязанным к открытым IP-адресам.  Мы должны
+# разрешить фрагменты UDP, иначе большие фрагментированные пакеты UDP
+# не выдержат брандмауэра.
 #
-# If we want to expose high-numbered temporary service ports
-# for things like DNS lookup responses we can use a port range,
-# in this example 4000-65535, and we set to /etc/rc.conf variables
-# on all exposed machines to make sure they bind temporary ports
-# to the exposed port range (see rc.conf example above)
+# Если мы хотим открыть временные порты служб с большим количеством номеров.
+# для таких вещей, как ответы на поиск DNS, мы можем использовать диапазон портов,
+# в этом примере 4000-65535, и задаем в /etc/rc.conf переменные
+
+# на всех открытых машинах, чтобы убедиться, что они привязывают временные порты
+# к диапазону открытых портов (см. пример rc.conf выше)
 #
 add 02000 allow udp from any to any 4000-65535,domain,ntalk,ntp
 add 02500 allow udp from any to any frag
 
-# Allow similar services for TCP.  Again, these only apply to
-# services bound to exposed addresses.  NOTE: we allow 'auth'
-# through but do not actually run an identd server on any exposed
-# port.  This allows the machine being authed to respond with a
-# TCP RESET.  Throwing the packet away would result in delays
-# when connecting to remote services that do reverse ident lookups.
+# Разрешите аналогичные службы для TCP.  Опять же, они применяются только к
+# сервисам, привязанным к открытым адресам.  ПРИМЕЧАНИЕ: мы разрешаем 'auth'
+# но на самом деле не запускаем identd-сервер на любом открытом
+# порту.  Это позволяет машине, на которой выполняется аутентификация, отвечать
+# TCP RESET.  Отбрасывание пакета приведет к задержкам
+# при подключении к удаленным сервисам, выполняющим обратный поиск идентификатора.
 #
-# Note that we do not allow tcp fragments through, and that we do
-# not allow fragments in general (except for UDP fragments).  We
-# expect the TCP mtu discovery protocol to work properly so there
-# should be no TCP fragments.
+# Обратите внимание, что мы не пропускаем фрагменты tcp, и что мы вообще
+# не разрешаем фрагменты вообще (за исключением UDP-фрагментов).  Мы
+# ожидаем, что протокол обнаружения TCP mtu будет работать правильно, поэтому
+# не должно быть TCP-фрагментов.
 #
 add 03000 allow tcp from any to any http,https
 add 03000 allow tcp from any to any 4000-65535,ssh,smtp,domain,ntalk
 add 03000 allow tcp from any to any auth,pop3,ftp,ftp-data
 
-# It is important to allow certain ICMP types through, here is a list
-# of general ICMP types.  Note that it is important to let ICMP type 3
-# through.
+# Важно разрешить определенные типы ICMP, вот список
+# общих типов ICMP.  Обратите внимание, что важно разрешить ICMP типа 3
+# через.
 #
-#	0	Echo Reply
-#	3	Destination Unreachable (used by TCP MTU discovery, aka
-#					packet-too-big)
-#	4	Source Quench (typically not allowed)
-#	5	Redirect (typically not allowed - can be dangerous!)
-#	8	Echo
-#	11	Time Exceeded
-#	12	Parameter Problem
-#	13	Timestamp
-#	14	Timestamp Reply
+# 0 Echo Reply
+# 3 Destination Unreachable (используется для обнаружения TCP MTU, он же
+# packet-too-big)
+# 4 Source Quench (обычно не разрешается)
+# 5 Redirect  (обычно не разрешается - может быть опасно!)
+# 8 Echo
+# 11 Time Exceeded
+# 12 Parameter Problem
+# 13 Timestamp
+# 14 Timestamp Reply
 #
-# Sometimes people need to allow ICMP REDIRECT packets, which is
-# type 5, but if you allow it make sure that your Internet router
-# disallows it.
+# Иногда людям нужно разрешить пакеты ICMP REDIRECT, которые относятся к
+# тип 5, но если вы разрешаете их, убедитесь, что ваш интернет-маршрутизатор
+# запрещает его.
 
 add 04000 allow icmp from any to any icmptypes 0,3,8,11,12,13,14
 
-# log any remaining fragments that get through.  Might be useful,
-# otherwise do not bother.  Have a final deny rule as a safety to
-# guarantee that your firewall is inclusive no matter how the kernel
-# is configured.
+# регистрируйте все оставшиеся фрагменты, которые проходят.  Может быть полезно,
+# в противном случае не стоит беспокоиться.  В качестве защиты имейте заключительное запрещающее правило, чтобы
+# гарантировать, что ваш брандмауэр будет инклюзивным независимо от того, как настроено ядро
+# настроено.
 #
 add 05000 deny log ip from any to any frag
 add 06000 deny all from any to any
 .Ed
-.Sh PORT BINDING INTERNAL AND EXTERNAL SERVICES
-We have mentioned multi-homing hosts and binding services to internal or
-external addresses but we have not really explained it.
-When you have a
-host with multiple IP addresses assigned to it, you can bind services run
-on that host to specific IPs or interfaces rather than all IPs.
-Take
-the firewall machine for example: with three interfaces
-and two exposed IP addresses
-on one of those interfaces, the firewall machine is known by 5 different
-IP addresses (10.0.0.1, 10.0.1.1, 10.0.2.1, 192.100.5.5, and say
+.Sh ПРИВЯЗКА ПОРТОВ К ВНУТРЕННИМ И ВНЕШНИМ СЕРВИСАМ
+Мы уже упоминали о мультихоминге хостов и привязке сервисов к внутренним или
+внешним адресам, но толком не объяснили.
+Когда у вас есть
+хост с несколькими IP-адресами, вы можете привязать службы, запущенные на этом хосте, к определенным IP или внешним адресам.
+на этом хосте к определенным IP-адресам или интерфейсам, а не ко всем IP-адресам.
+Возьмем, к примеру,
+например, машину брандмауэра: с тремя интерфейсами
+и двумя открытыми IP-адресами
+на одном из этих интерфейсов, машина брандмауэра известна под 5 различными
+IP-адресами (10.0.0.1, 10.0.1.1, 10.0.2.1, 192.100.5.5 и, скажем.
 192.100.5.1).
-If the firewall is providing file sharing services to the
-windows LAN segment (say it is LAN1), you can use samba's 'bind interfaces'
-directive to specifically bind it to just the LAN1 IP address.
-That
-way the file sharing services will not be made available to other LAN
-segments.
-The same goes for NFS.
-If LAN2 has your UNIX engineering
-workstations, you can tell nfsd to bind specifically to 10.0.2.1.
-You
-can specify how to bind virtually every service on the machine and you
-can use a light
+Если брандмауэр предоставляет услуги общего доступа к файлам в
+сегмента локальной сети windows (скажем, это LAN1), вы можете использовать директиву samba 'bind interfaces'
+чтобы специально привязать его только к IP-адресу LAN1.
+Таким образом
+таким образом, службы общего доступа к файлам не будут доступны для других сегментов локальной сети
+сегментам.
+То же самое относится и к NFS.
+Если в LAN2 расположены инженерные рабочие станции UNIX
+рабочие станции UNIX, вы можете указать nfsd привязываться именно к 10.0.2.1.
+Вы
+можно указать, как связать практически все службы на машине, и вы можете
+можно использовать легкий
 .Xr jail 8
-to indirectly bind services that do not otherwise give you the option.
-.Sh SEE ALSO
+для косвенной привязки служб, которые в противном случае не предоставляют такой возможности.
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr dummynet 4 ,
 .Xr ipnat 5 ,
 .Xr rc.conf 5 ,
@@ -418,7 +416,7 @@ to indirectly bind services that do not otherwise give you the option.
 .Xr jail 8 ,
 .Xr natd 8 ,
 .Xr nfsd 8
-.Sh ADDITIONAL READING
+.Sh ДОПОЛНИТЕЛЬНЫЕ МАТЕРИАЛЫ
 .Bl -tag -width indent
 .It Nm Ipfilter
 .Xr ipf 5 ,
@@ -429,12 +427,11 @@ to indirectly bind services that do not otherwise give you the option.
 .Xr pfctl 8 ,
 .Xr pflogd 8
 .El
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
 .Nm
-manual page was originally written by
+была первоначально написана
 .An Matthew Dillon
-and first appeared
-in
+и впервые появилась
+в
 .Fx 4.3 ,
-May 2001.
+Май 2001.

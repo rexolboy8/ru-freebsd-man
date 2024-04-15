@@ -1,310 +1,308 @@
-.\"	$Id: roff.7,v 1.116 2021/09/18 12:23:06 schwarze Exp $
+.\" $Id: roff.7,v 1.116 2021/09/18 12:23:06 schwarze Exp $
 .\"
 .\" Copyright (c) 2010, 2011, 2012 Kristaps Dzonsons <kristaps@bsd.lv>
 .\" Copyright (c) 2010-2019 Ingo Schwarze <schwarze@openbsd.org>
 .\"
-.\" Permission to use, copy, modify, and distribute this software for any
-.\" purpose with or without fee is hereby granted, provided that the above
-.\" copyright notice and this permission notice appear in all copies.
+.\" Разрешение на использование, копирование, изменение и распространение данного программного обеспечения для любых
+
+.\" уведомление об авторских правах и данное разрешение будут присутствовать во всех копиях.
 .\"
-.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\" ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ "КАК ЕСТЬ", И АВТОР ОТКАЗЫВАЕТСЯ ОТ ВСЕХ ГАРАНТИЙ.
+.\" В ОТНОШЕНИИ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ, ВКЛЮЧАЯ ВСЕ ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ
+.\" ТОВАРНОГО СОСТОЯНИЯ И ПРИГОДНОСТИ. НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ АВТОР НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ ЗА
+.\" ЛЮБЫЕ СПЕЦИАЛЬНЫЕ, ПРЯМЫЕ, КОСВЕННЫЕ ИЛИ ПОСЛЕДУЮЩИЕ УБЫТКИ ИЛИ ЛЮБЫЕ УБЫТКИ
+.\" ВОЗНИКШИЕ В РЕЗУЛЬТАТЕ ПОТЕРИ ИСПОЛЬЗОВАНИЯ, ДАННЫХ ИЛИ ПРИБЫЛИ, БУДЬ ТО В
+.\" ПО ДОГОВОРУ, ХАЛАТНОСТИ ИЛИ ДРУГИМ ДЕЛИКТНЫМ ДЕЙСТВИЯМ, ВОЗНИКАЮЩИМ ИЗ
+.\" ИЛИ В СВЯЗИ С ИСПОЛЬЗОВАНИЕМ ИЛИ РАБОТОЙ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ.
 .\"
 .Dd $Mdocdate: September 18 2021 $
 .Dt ROFF 7
 .Os
-.Sh NAME
+.Sh ИМЯ
 .Nm roff
-.Nd roff language reference for mandoc
-.Sh DESCRIPTION
-The
+.Nd cправочник по языку roff для mandoc
+.Sh ОПИСАНИЕ
 .Nm roff
-language is a general purpose text formatting language.
-Since traditional implementations of the
+это язык форматирования текста общего назначения.
+Поскольку традиционные реализации языка
 .Xr mdoc 7
-and
+и
 .Xr man 7
-manual formatting languages are based on it,
-many real-world manuals use small numbers of
+основаны на нем,
+во многих реальных руководствах используется небольшое количество
 .Nm
-requests and escape sequences intermixed with their
+запросов и управляющих последовательностей, перемежающихся с их
 .Xr mdoc 7
-or
+или
 .Xr man 7
-code.
-To properly format such manuals, the
+кодом.
+Для правильного форматирования таких руководств необходимо использовать
 .Xr mandoc 1
-utility supports a subset of
+поддерживает подмножество
 .Nm
-requests and escapes.
-Even though this manual page lists all
+запросов и escapes.
+Несмотря на то, что на этой странице руководства перечислены все
 .Nm
-requests and escape sequences, it only contains partial information
-about requests not supported by
+запросы и управляющие последовательности, она содержит лишь частичную информацию
+о запросах, не поддерживаемых
 .Xr mandoc 1
-and about language features that do not matter for manual pages.
-For complete
+и об особенностях языка, которые не имеют значения для страниц руководства.
+Для получения полной информации
 .Nm
-manuals, consult the
-.Sx SEE ALSO
-section.
+обратитесь к разделу
+.Sx СМОТРИТЕ ТАКЖЕ
+раздел.
 .Pp
-Input lines beginning with the control character
+Строки ввода, начинающиеся с управляющего символа
 .Sq \&.
-are parsed for requests and macros.
-Such lines are called
-.Dq request lines
-or
-.Dq macro lines ,
-respectively.
-Requests change the processing state and manipulate the formatting;
-some macros also define the document structure and produce formatted
-output.
-The single quote
+разбираются на запросы и макросы.
+Такие строки называются
+.Dq списки запроса
+или
+.Dq macro списки
+соответственно.
+Запросы изменяют состояние обработки и управляют форматированием;
+некоторые макросы также определяют структуру документа и производят форматирование
+вывод.
+Одиночная кавычка
 .Pq Qq \(aq
-is accepted as an alternative control character,
-treated by
+принимается в качестве альтернативного управляющего символа,
+обрабатывается
 .Xr mandoc 1
-just like
+так же, как
 .Ql \&.
 .Pp
-Lines not beginning with control characters are called
-.Dq text lines .
-They provide free-form text to be printed; the formatting of the text
-depends on the respective processing context.
-.Sh LANGUAGE SYNTAX
+Строки, не начинающиеся с управляющих символов, называются
+.Dq text списки .
+Они представляют собой текст произвольной формы для печати; форматирование текста
+зависит от соответствующего контекста обработки.
+.Sh СИНТАКСИС ЯЗЫКА
 .Nm
-documents may contain only graphable 7-bit ASCII characters, the space
-character, and, in certain circumstances, the tab character.
-The backslash character
+Документы могут содержать только графические 7-битные символы ASCII, символ пробела и, при определенных обстоятельствах, символ табуляции.
+и, при определенных обстоятельствах, символ табуляции.
+Символ обратной косой черты
 .Sq \e
-indicates the start of an escape sequence, used for example for
-.Sx Comments
-and
-.Sx Special Characters .
-For a complete listing of escape sequences, consult the
-.Sx ESCAPE SEQUENCE REFERENCE
-below.
-.Ss Comments
-Text following an escaped double-quote
+обозначает начало управляющей последовательности, используемой, например, для
+.Sx Комментарии
+и
+.Sx Специальные символы.
+Для получения полного списка управляющих последовательностей обратитесь к разделу
+.Sx ССЫЛКА НА ESCAPE-ПОСЛЕДОВАТЕЛЬНОСТЬ
+ниже.
+.Ss Комментарии
+Текст, следующий за экранированной двойной кавычкой
 .Sq \e\(dq ,
-whether in a request, macro, or text line, is ignored to the end of the line.
-A request line beginning with a control character and comment escape
+в строке запроса, макроса или текста, игнорируется до конца строки.
+Строка запроса, начинающаяся с управляющего символа и экранированного комментария
 .Sq \&.\e\(dq
-is also ignored.
-Furthermore, request lines with only a control character and optional
-trailing whitespace are stripped from input.
+также игнорируется.
+Кроме того, строки запроса, содержащие только управляющий символ и необязательный
+необязательное пробельное пространство в конце строки, удаляются из ввода.
 .Pp
-Examples:
+Примеры:
 .Bd -literal -offset indent -compact
-\&.\e\(dq This is a comment line.
-\&.\e\(dq The next line is ignored:
+\&.\e\(dq Это строка комментария.
+\&.\e\(dq Следующая строка игнорируется:
 \&.
-\&.Sh EXAMPLES \e\(dq This is a comment, too.
-\&example text \e\(dq And so is this.
+\&.Sh EXAMPLES \e\(dq Это тоже комментарий.
+\&example text \e\(dq Так и это.
 .Ed
-.Ss Special Characters
-Special characters are used to encode special glyphs and are rendered
-differently across output media.
-They may occur in request, macro, and text lines.
-Sequences begin with the escape character
+.Ss Специальные символы
+Специальные символы используются для кодирования особых глифов и отображаются
+и по-разному отображаются на разных носителях.
+Они могут встречаться в запросах, макросах и текстовых строках.
+Последовательности начинаются с символа эвакуации
 .Sq \e
-followed by either an open-parenthesis
+за которым следует либо открытая парентеза
 .Sq \&(
-for two-character sequences; an open-bracket
+для двухсимвольных последовательностей; открытая скобка
 .Sq \&[
-for n-character sequences (terminated at a close-bracket
+для n-символьных последовательностей (завершается закрытой скобкой
 .Sq \&] ) ;
-or a single one character sequence.
+или одиночная односимвольная последовательность.
 .Pp
-Examples:
+Примеры:
 .Bl -tag -width Ds -offset indent -compact
 .It Li \e(em
-Two-letter em dash escape.
+Двухбуквенный символ тире em.
 .It Li \ee
-One-letter backslash escape.
+Однобуквенный обратный слеш.
 .El
 .Pp
-See
+См.
 .Xr mandoc_char 7
-for a complete list.
-.Ss Font Selection
-In
+для полного списка.
+.Ss Выбор шрифта
+В
 .Xr mdoc 7
-and
+и
 .Xr man 7
-documents, fonts are usually selected with macros.
-The
+шрифты обычно выбираются с помощью макросов.
 .Ic \ef
-escape sequence and the
+и
 .Ic \&ft
-request can be used to manually change the font,
-but this is not recommended in
+можно использовать для ручного изменения шрифта,
+но это не рекомендуется в
 .Xr mdoc 7
-documents.
-Such manual font changes are overridden by many subsequent macros.
+документах.
+Такое ручное изменение шрифта отменяется многими последующими макросами.
 .Pp
-The following fonts are supported:
+Поддерживаются следующие шрифты:
 .Pp
 .Bl -tag -width CW -offset indent -compact
 .It Cm B
-Bold font.
+Полужирный шрифт.
 .It Cm BI
-A font that is both bold and italic.
+Шрифт, который одновременно является жирным и курсивным.
 .It Cm CB
-Bold constant width font.
-Same as
+Полужирный шрифт постоянной ширины.
+Такой же, как
 .Cm B
-in terminal output.
+в терминальном выводе.
 .It Cm CI
-Italic constant width font.
-Same as
+Курсивный шрифт постоянной ширины.
+То же, что и
 .Cm I
-in terminal output.
+в терминальном выводе.
 .It Cm CR
-Regular constant width font.
-Same as
+Обычный шрифт постоянной ширины.
+То же, что и
 .Cm R
-in terminal output.
+в терминальном выводе.
 .It Cm CW
-An alias for
+Псевдоним для
 .Cm CR .
 .It Cm I
-Italic font.
+Курсивный шрифт.
 .It Cm P
-Return to the previous font.
-If a macro caused a font change since the last
+Возврат к предыдущему шрифту.
+Если макрос вызвал изменение шрифта с момента последнего
 .Ic \ef
-eascape sequence or
+последовательности eascape или
 .Ic \&ft
-request, this returns to the font before the last font change in
-the macro rather than to the font before the last manual font change.
+это возвращает к шрифту, предшествующему последнему изменению шрифта в макросе, а не к шрифту, предшествующему последнему изменению шрифта вручную.
+макроса, а не к шрифту перед последним изменением шрифта вручную.
 .It Cm R
-Roman font.
-This is the default font.
+Римский шрифт.
+Это шрифт по умолчанию.
 .It Cm 1
-An alias for
+Псевдоним для
 .Cm R .
 .It Cm 2
-An alias for
+Псевдоним для
 .Cm I .
 .It Cm 3
-An alias for
+Псевдоним для
 .Cm B .
 .It Cm 4
-An alias for
+Псевдоним для
 .Cm BI .
 .El
 .Pp
-Examples:
+Примеры:
 .Bl -tag -width Ds -offset indent -compact
 .It Li \efBbold\efR
-Write in \fBbold\fP, then switch to regular font mode.
+Напишите в \fBbold\fP, затем переключитесь в режим обычного шрифта.
 .It Li \efIitalic\efP
-Write in \fIitalic\fP, then return to previous font mode.
+Напишите в \fIitalic\fP, затем вернитесь в предыдущий режим шрифта.
 .It Li \ef(BIbold italic\efP
-Write in \f(BIbold italic\fP, then return to previous font mode.
+Напишите в \f(BIbold italic\fP, затем вернитесь к предыдущему режиму шрифта.
 .El
-.Ss Whitespace
-Whitespace consists of the space character.
-In text lines, whitespace is preserved within a line.
-In request and macro lines, whitespace delimits arguments and is discarded.
+.Ss Пробелы
+Пробельные символы состоят из символа пробела.
+В текстовых строках пробельные символы сохраняются в пределах строки.
+В строках запросов и макросов пробельные символы отделяют аргументы и удаляются.
 .Pp
-Unescaped trailing spaces are stripped from text line input unless in a
-literal context.
-In general, trailing whitespace on any input line is discouraged for
-reasons of portability.
-In the rare case that a space character is needed at the end of an
-input line, it may be forced by
+Незачеркнутые пробелы в конце строки удаляются из ввода текстовых строк, за исключением случаев, когда они используются в
+буквальном контексте.
+В целом, не рекомендуется использовать пробельные символы в любой строке ввода по причинам
+из соображений переносимости.
+В редких случаях, когда символ пробела необходим в конце
+в конце строки ввода, он может быть принудительно установлен с помощью
 .Sq \e\ \e& .
 .Pp
-Literal space characters can be produced in the output
-using escape sequences.
-In macro lines, they can also be included in arguments using quotation; see
-.Sx MACRO SYNTAX
-for details.
+Буквальные символы пробела могут быть получены на выходе
+с помощью управляющих последовательностей.
+В строках макросов они также могут быть включены в аргументы с помощью кавычек; см.
+.Sx СИНТАКСИС МАКРОСОВ
+для получения подробной информации.
 .Pp
-Blank text lines, which may include whitespace, are only permitted
-within literal contexts.
-If the first character of a text line is a space, that line is printed
-with a leading newline.
-.Ss Scaling Widths
-Many requests and macros support scaled widths for their arguments.
-The syntax for a scaled width is
+Пустые текстовые строки, которые могут включать пробельные символы, разрешены только
+только в литеральных контекстах.
+Если первым символом текстовой строки является пробел, эта строка печатается
+с новой строкой.
+.Ss Ширина масштабирования
+Многие запросы и макросы поддерживают масштабирование ширины своих аргументов.
+Синтаксис для масштабирования ширины следующий
 .Sq Li [+-]?[0-9]*.[0-9]*[:unit:] ,
-where a decimal must be preceded or followed by at least one digit.
+где десятичной дроби должна предшествовать или следовать хотя бы одна цифра.
 .Pp
-The following scaling units are accepted:
+Принимаются следующие единицы масштабирования:
 .Pp
 .Bl -tag -width Ds -offset indent -compact
 .It c
-centimetre
+сантиметр
 .It i
-inch
+дюйм
 .It P
-pica (1/6 inch)
+пика (1/6 дюйма)
 .It p
-point (1/72 inch)
+точка (1/72 дюйма)
 .It f
-scale
+масштаб
 .Sq u
-by 65536
+на 65536
 .It v
-default vertical span
+вертикальный размах по умолчанию
 .It m
-width of rendered
+ширина отображаемого
 .Sq m
 .Pq em
-character
+символ
 .It n
-width of rendered
+ширина отрисованного
 .Sq n
 .Pq en
-character
+символ
 .It u
-default horizontal span for the terminal
+горизонтальный размах по умолчанию для терминала
 .It M
 mini-em (1/100 em)
 .El
 .Pp
-Using anything other than
+При использовании любых других значений, кроме
 .Sq m ,
 .Sq n ,
-or
+или
 .Sq v
-is necessarily non-portable across output media.
-See
-.Sx COMPATIBILITY .
+обязательно не переносится на разные носители.
+См.
+.Sx СОВМЕСТИМОСТЬ .
 .Pp
-If a scaling unit is not provided, the numerical value is interpreted
-under the default rules of
+Если единица масштабирования не указана, числовое значение интерпретируется
+в соответствии с правилами по умолчанию
 .Sq v
-for vertical spaces and
+для вертикальных пробелов и
 .Sq u
-for horizontal ones.
+для горизонтальных.
 .Pp
-Examples:
+Примеры:
 .Bl -tag -width ".Bl -tag -width 2i" -offset indent -compact
-.It Li \&.Bl -tag -width 2i
-two-inch tagged list indentation in
+.It Li \&.Bl -tag -twidth 2i
+двухдюймовый отступ маркированного списка в
 .Xr mdoc 7
 .It Li \&.HP 2i
-two-inch tagged list indentation in
+двухдюймовый отступ маркированного списка в
 .Xr man 7
 .It Li \&.sp 2v
-two vertical spaces
+два вертикальных пробела
 .El
-.Ss Sentence Spacing
-Each sentence should terminate at the end of an input line.
-By doing this, a formatter will be able to apply the proper amount of
-spacing after the end of sentence (unescaped) period, exclamation mark,
-or question mark followed by zero or more non-sentence closing
-delimiters
+.Ss Интервал между предложениями
+Каждое предложение должно заканчиваться в конце строки ввода.
+Таким образом, форматтер сможет применить нужное количество
+интервал после точки, восклицательного знака или вопросительного знака, за которым следует ноль или более невосклицательных знаков,
+или вопросительного знака, за которыми следует ноль или более не закрывающих предложение
+разделителей
 .Po
 .Sq \&) ,
 .Sq \&] ,
@@ -312,310 +310,309 @@ delimiters
 .Sq \&"
 .Pc .
 .Pp
-The proper spacing is also intelligently preserved if a sentence ends at
-the boundary of a macro line.
+Правильный интервал также разумно сохраняется, если предложение заканчивается на
+на границе макростроки.
 .Pp
-If an input line happens to end with a period, exclamation or question
-mark that isn't the end of a sentence, append a zero-width space
+Если строка ввода заканчивается точкой, восклицательным или вопросительным
+не являющимся концом предложения, добавьте пробел нулевой ширины.
 .Pq Sq \e& .
 .Pp
-Examples:
+Примеры:
 .Bd -literal -offset indent -compact
-Do not end sentences mid-line like this.  Instead,
-end a sentence like this.
-A macro would end like this:
+Не завершайте предложения посередине строки таким образом.  Вместо этого,
+заканчивайте предложение вот так.
+Макрос будет заканчиваться следующим образом:
 \&.Xr mandoc 1 \&.
-An abbreviation at the end of an input line needs escaping, e.g.\e&
-like this.
+Аббревиатура в конце строки ввода нуждается в экранировании, например \e&
+например.
 .Ed
-.Sh REQUEST SYNTAX
-A request or macro line consists of:
+.Sh СИНТАКСИС ЗАПРОСА
+Строка запроса или макроса состоит из:
 .Pp
 .Bl -enum -compact
 .It
-the control character
+управляющий символ
 .Sq \&.
-or
+или
 .Sq \(aq
-at the beginning of the line,
+в начале строки,
 .It
-optionally an arbitrary amount of whitespace,
+произвольное количество пробельных символов,
 .It
-the name of the request or the macro, which is one word of arbitrary
-length, terminated by whitespace,
+имя запроса или макроса, которое представляет собой одно слово произвольной
+длины, завершенное пробелами,
 .It
-and zero or more arguments delimited by whitespace.
+и ноль или более аргументов, ограниченных пробелами.
 .El
 .Pp
-Thus, the following request lines are all equivalent:
+Таким образом, все следующие строки запроса эквивалентны:
 .Bd -literal -offset indent
 \&.ig end
-\&.ig    end
-\&.   ig end
+\&.ig end
+\&. ig end
 .Ed
-.Sh MACRO SYNTAX
-Macros are provided by the
+.Sh СИНТАКСИС МАКРОСОВ
+Макросы предоставляются в
 .Xr mdoc 7
-and
+и
 .Xr man 7
-languages and can be defined by the
+и могут быть определены с помощью
 .Ic \&de
-request.
-When called, they follow the same syntax as requests, except that
-macro arguments may optionally be quoted by enclosing them
-in double quote characters
+запросом.
+При вызове они следуют тому же синтаксису, что и запросы, за исключением того, что
+аргументы макросов можно заключать в кавычки, заключая их
+в двойные кавычки
 .Pq Sq \(dq .
-Quoted text, even if it contains whitespace or would cause
-a macro invocation when unquoted, is always considered literal text.
-Inside quoted text, pairs of double quote characters
+Текст, заключенный в кавычки, даже если он содержит пробельные символы или может привести к
+если он содержит пробелы или без кавычек вызвал бы вызов макроса, всегда считается буквальным текстом.
+Внутри текста, заключенного в кавычки, пары символов двойных кавычек
 .Pq Sq Qq
-resolve to single double quote characters.
+преобразуются в одиночные двойные кавычки.
 .Pp
-To be recognised as the beginning of a quoted argument, the opening
-quote character must be preceded by a space character.
-A quoted argument extends to the next double quote character that is not
-part of a pair, or to the end of the input line, whichever comes earlier.
-Leaving out the terminating double quote character at the end of the line
-is discouraged.
-For clarity, if more arguments follow on the same input line,
-it is recommended to follow the terminating double quote character
-by a space character; in case the next character after the terminating
-double quote character is anything else, it is regarded as the beginning
-of the next, unquoted argument.
+Чтобы распознать начало аргумента, заключенного в кавычки, открывающему символу
+символ кавычек должен предшествовать символу пробела.
+Аргумент, заключенный в кавычки, продолжается до следующего символа двойной кавычки, который не является
+или до конца строки ввода, в зависимости от того, что наступит раньше.
+Оставлять завершающий символ двойной кавычки в конце строки
+не рекомендуется.
+Для ясности, если в одной строке ввода следует несколько аргументов,
+рекомендуется после завершающего символа двойной кавычки
+символом пробела; в случае если следующий символ после завершающего
+двойной кавычки, то он считается началом
+следующего, не заключенного в кавычки аргумента.
 .Pp
-Both in quoted and unquoted arguments, pairs of backslashes
+Как в аргументах, заключенных в кавычки, так и в аргументах без кавычек, пары обратных косых черт
 .Pq Sq \e\e
-resolve to single backslashes.
-In unquoted arguments, space characters can alternatively be included
-by preceding them with a backslash
+преобразуются в одиночные обратные слеши.
+В аргументах без кавычек пробельные символы могут быть альтернативно включены
+поставив перед ними обратную косую черту
 .Pq Sq \e\~ ,
-but quoting is usually better for clarity.
+но для ясности обычно лучше использовать кавычки.
 .Pp
-Examples:
+Примеры:
 .Bl -tag -width Ds -offset indent -compact
 .It Li .Fn strlen \(dqconst char *s\(dq
-Group arguments
+Групповые аргументы
 .Qq const char *s
-into one function argument.
-If unspecified,
+в один аргумент функции.
+Если не указано,
 .Qq const ,
 .Qq char ,
-and
+и
 .Qq *s
-would be considered separate arguments.
+будут считаться отдельными аргументами.
 .It Li .Op \(dqFl a\(dq
-Consider
+Рассмотрим
 .Qq \&Fl a
-as literal text instead of a flag macro.
+как литеральный текст, а не макрос флага.
 .El
-.Sh REQUEST REFERENCE
-The
+.Sh ЗАПРОСИТЬ ССЫЛКУ
 .Xr mandoc 1
 .Nm
-parser recognises the following requests.
-For requests marked as "ignored" or "unsupported", any arguments are
-ignored, and the number of arguments is not checked.
+распознает следующие запросы.
+Для запросов, помеченных как "игнорируемые" или "неподдерживаемые", любые аргументы
+игнорируются, а количество аргументов не проверяется.
 .Bl -tag -width Ds
 .It Ic \&ab Op Ar message
-Abort processing.
-Currently unsupported.
+Прервать обработку.
+В настоящее время не поддерживается.
 .It Ic \&ad Op Cm b | c | l | n | r
-Set line adjustment mode for subsequent text.
-Currently ignored.
+Установка режима выравнивания строк для последующего текста.
+В настоящее время игнорируется.
 .It Ic \&af Ar registername format
-Assign an output format to a number register.
-Currently ignored.
+Назначить формат вывода для регистра чисел.
+В настоящее время игнорируется.
 .It Ic \&aln Ar newname oldname
-Create an alias for a number register.
-Currently unsupported.
+Создать псевдоним для регистра чисел.
+В настоящее время не поддерживается.
 .It Ic \&als Ar newname oldname
-Create an alias for a request, string, macro, or diversion.
+Создание псевдонима для запроса, строки, макроса или переадресации.
 .It Ic \&am Ar macroname Op Ar endmacro
-Append to a macro definition.
-The syntax of this request is the same as that of
+Добавление к определению макроса.
+Синтаксис этого запроса такой же, как у
 .Ic \&de .
 .It Ic \&am1 Ar macroname Op Ar endmacro
-Append to a macro definition, switching roff compatibility mode off
-during macro execution (groff extension).
-The syntax of this request is the same as that of
+Добавление к макроопределению, отключение режима совместимости с roff
+во время выполнения макроса (расширение groff).
+Синтаксис этого запроса такой же, как у запроса
 .Ic \&de1 .
-Since
+Поскольку
 .Xr mandoc 1
-does not implement
+не реализует
 .Nm
-compatibility mode at all, it handles this request as an alias for
+режим совместимости, он обрабатывает этот запрос как псевдоним для
 .Ic \&am .
 .It Ic \&ami Ar macrostring Op Ar endstring
-Append to a macro definition, specifying the macro name indirectly
-(groff extension).
-The syntax of this request is the same as that of
+Добавление к определению макроса с косвенным указанием имени макроса
+(расширение groff).
+Синтаксис этого запроса такой же, как и у запроса
 .Ic \&dei .
 .It Ic \&ami1 Ar macrostring Op Ar endstring
-Append to a macro definition, specifying the macro name indirectly
-and switching roff compatibility mode off during macro execution
-(groff extension).
-The syntax of this request is the same as that of
+Добавление к определению макроса с косвенным указанием имени макроса
+и отключение режима совместимости с roff во время выполнения макроса
+(расширение groff).
+Синтаксис этого запроса такой же, как у запроса
 .Ic \&dei1 .
-Since
+Поскольку
 .Xr mandoc 1
-does not implement
+не реализует
 .Nm
-compatibility mode at all, it handles this request as an alias for
+режим совместимости вообще, он обрабатывает этот запрос как псевдоним для
 .Ic \&ami .
 .It Ic \&as Ar stringname Op Ar string
-Append to a user-defined string.
-The syntax of this request is the same as that of
+Добавление к заданной пользователем строке.
+Синтаксис этого запроса такой же, как и у запроса
 .Ic \&ds .
-If a user-defined string with the specified name does not yet exist,
-it is set to the empty string before appending.
+Если пользовательская строка с указанным именем еще не существует,
+то перед добавлением она будет установлена в пустую строку.
 .It Ic \&as1 Ar stringname Op Ar string
-Append to a user-defined string, switching roff compatibility mode off
-during macro execution (groff extension).
-The syntax of this request is the same as that of
+Добавление в пользовательскую строку, отключение режима совместимости с roff
+во время выполнения макроса (расширение groff).
+Синтаксис этого запроса такой же, как и у запроса
 .Ic \&ds1 .
-Since
+Поскольку
 .Xr mandoc 1
-does not implement
+не реализует
 .Nm
-compatibility mode at all, it handles this request as an alias for
+режим совместимости, он обрабатывает этот запрос как псевдоним для
 .Ic \&as .
 .It Ic \&asciify Ar divname
-Fully unformat a diversion.
-Currently unsupported.
+Полностью отформатировать див.
+В настоящее время не поддерживается.
 .It Ic \&backtrace
-Print a backtrace of the input stack.
-This is a groff extension and currently ignored.
+Вывести обратную трассировку стека ввода.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&bd Ar font Oo Ar curfont Oc Op Ar offset
-Artificially embolden by repeated printing with small shifts.
-Currently ignored.
+Искусственное повышение жирности путем повторной печати с небольшими сдвигами.
+В настоящее время игнорируется.
 .It Ic \&bleedat Ar left top width height
-Set the BleedBox page parameter for PDF generation.
-This is a Heirloom extension and currently ignored.
+Устанавливает параметр страницы BleedBox для генерации PDF.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&blm Ar macroname
-Set a blank line trap.
-Currently unsupported.
+Устанавливает ловушку пустых строк.
+В настоящее время не поддерживается.
 .It Ic \&box Ar divname
-Begin a diversion without including a partially filled line.
-Currently unsupported.
+Начать отвод без включения частично заполненной строки.
+В настоящее время не поддерживается.
 .It Ic \&boxa Ar divname
-Add to a diversion without including a partially filled line.
-Currently unsupported.
+Добавить к отводу, не включая частично заполненную строку.
+В настоящее время не поддерживается.
 .It Ic \&bp Oo Cm + Ns | Ns Cm - Oc Ns Ar pagenumber
-Begin a new page.
-Currently ignored.
+Начать новую страницу.
+В настоящее время игнорируется.
 .It Ic \&BP Ar source height width position offset flags label
-Define a frame and place a picture in it.
-This is a Heirloom extension and currently unsupported.
+Определяет рамку и помещает в нее изображение.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&br
-Break the output line.
+Прервать строку вывода.
 .It Ic \&break
-Break out of the innermost
+Выйти из внутренней строки
 .Ic \&while
-loop.
+цикла.
 .It Ic \&breakchar Ar char ...
-Optional line break characters.
-This is a Heirloom extension and currently ignored.
+Необязательные символы перевода строки.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&brnl Ar N
-Break output line after the next
+Разрыв строки вывода после следующей
 .Ar N
-input lines.
-This is a Heirloom extension and currently ignored.
+строки ввода.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&brp
-Break and spread output line.
-Currently, this is implemented as an alias for
+Разрыв и распространение выходной строки.
+В настоящее время это расширение реализовано как псевдоним для
 .Ic \&br .
 .It Ic \&brpnl Ar N
-Break and spread output line after the next
+Прерывание и распространение строки вывода после следующей
 .Ar N
-input lines.
-This is a Heirloom extension and currently ignored.
+входных строк.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&c2 Op Ar char
-Change the no-break control character.
-Currently unsupported.
+Изменяет управляющий символ без разрыва.
+В настоящее время не поддерживается.
 .It Ic \&cc Op Ar char
-Change the control character.
-If
+Изменение управляющего символа.
+Если
 .Ar char
-is not specified, the control character is reset to
+не указан, управляющий символ сбрасывается на
 .Sq \&. .
-Trailing characters are ignored.
+При этом завершающие символы игнорируются.
 .It Ic \&ce Op Ar N
-Center the next
+Отцентрировать следующий
 .Ar N
-input lines without filling.
+строк ввода без заполнения.
 .Ar N
-defaults to 1.
-An argument of 0 or less ends centering.
-Currently, high level macros abort centering.
+по умолчанию равен 1.
+Аргумент, равный 0 или меньше, завершает центрирование.
+В настоящее время макросы высокого уровня прерывают центрирование.
 .It Ic \&cf Ar filename
-Output the contents of a file.
-Ignored because insecure.
+Вывод содержимого файла.
+Игнорируется из-за небезопасности.
 .It Ic \&cflags Ar flags char ...
-Set character flags.
-This is a groff extension and currently ignored.
+Установка флагов символов.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&ch Ar macroname Op Ar dist
-Change a trap location.
-Currently ignored.
+Изменить местоположение ловушки.
+В настоящее время игнорируется.
 .It Ic \&char Ar glyph Op Ar string
-Define or redefine the ASCII character or character escape sequence
+Определить или переопределить символ ASCII или последовательность экранирования символов.
 .Ar glyph
-to be rendered as
+для отображения в виде
 .Ar string ,
-which can be empty.
-Only partially supported in
+которая может быть пустой.
+Поддерживается только частично в
 .Xr mandoc 1 ;
-may interact incorrectly with
+может некорректно взаимодействовать с
 .Ic \&tr .
 .It Ic \&chop Ar stringname
-Remove the last character from a macro, string, or diversion.
-Currently unsupported.
+Удаляет последний символ из макроса, строки или отвлечения.
+В настоящее время не поддерживается.
 .It Ic \&class Ar classname char ...
-Define a character class.
-This is a groff extension and currently ignored.
+Определяет класс символов.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&close Ar streamname
-Close an open file.
-Ignored because insecure.
+Закрыть открытый файл.
+Игнорируется, так как небезопасно.
 .It Ic \&CL Ar color text
-Print text in color.
-This is a Heirloom extension and currently unsupported.
+Печать текста в цвете.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&color Op Cm 1 | 0
-Activate or deactivate colors.
-This is a groff extension and currently ignored.
+Активировать или деактивировать цвета.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&composite Ar from to
-Define a name component for composite glyph names.
-This is a groff extension and currently unsupported.
+Определяет компонент имени для составных имен глифов.
+Это расширение groff и в настоящее время не поддерживается.
 .It Ic \&continue
-Immediately start the next iteration of a
+Немедленно начать следующую итерацию функции
 .Ic \&while
-loop.
-Currently unsupported.
+цикла.
+В настоящее время не поддерживается.
 .It Ic \&cp Op Cm 1 | 0
-Switch
+Переключатель
 .Nm
-compatibility mode on or off.
-Currently ignored.
+включить или выключить режим совместимости.
+В настоящее время игнорируется.
 .It Ic \&cropat Ar left top width height
-Set the CropBox page parameter for PDF generation.
-This is a Heirloom extension and currently ignored.
+Устанавливает параметр страницы CropBox для генерации PDF.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&cs Ar font Op Ar width Op Ar emsize
-Constant character spacing mode.
-Currently ignored.
+Режим постоянного межсимвольного интервала.
+В настоящее время игнорируется.
 .It Ic \&cu Op Ar N
-Underline next
+Подчеркивание следующего
 .Ar N
-input lines including whitespace.
-Currently ignored.
+Строки ввода, включающие пробельные символы.
+В настоящее время игнорируется.
 .It Ic \&da Ar divname
-Append to a diversion.
-Currently unsupported.
+Добавление к отклонению.
+В настоящее время не поддерживается.
 .It Ic \&dch Ar macroname Op Ar dist
-Change a trap location in the current diversion.
-This is a Heirloom extension and currently unsupported.
+Изменить местоположение ловушки в текущем отводе.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&de Ar macroname Op Ar endmacro
-Define a
+Определить
 .Nm
-macro.
-Its syntax can be either
+макрос.
+Его синтаксис может быть следующим
 .Bd -literal -offset indent
 .Pf . Ic \&de Ar macroname
 .Ar definition
@@ -629,53 +626,53 @@ or
 .Pf . Ar endmacro
 .Ed
 .Pp
-Both forms define or redefine the macro
+Обе формы определяют или переопределяют макрос
 .Ar macroname
-to represent the
+для представления
 .Ar definition ,
-which may consist of one or more input lines, including the newline
-characters terminating each line, optionally containing calls to
+которое может состоять из одной или нескольких строк ввода, включая символы новой строки, завершающие каждую строку.
+символы, завершающие каждую строку, и, по желанию, содержащие вызовы
 .Nm
-requests,
+запросы,
 .Nm
-macros or high-level macros like
+макросы или макросы высокого уровня, такие как
 .Xr man 7
-or
+или
 .Xr mdoc 7
-macros, whichever applies to the document in question.
+макросы, в зависимости от того, что относится к данному документу.
 .Pp
-Specifying a custom
+Указание пользовательского
 .Ar endmacro
-works in the same way as for
+работает так же, как и для
 .Ic \&ig ;
-namely, the call to
+а именно, вызов
 .Sq Pf . Ar endmacro
-first ends the
+сначала завершает
 .Ar definition ,
-and after that, it is also evaluated as a
+после чего оно также оценивается как
 .Nm
-request or
+запрос или
 .Nm
-macro, but not as a high-level macro.
+макрос, но не как макрос высокого уровня.
 .Pp
-The macro can be invoked later using the syntax
+Макрос может быть вызван позже с помощью синтаксиса
 .Pp
 .D1 Pf . Ar macroname Op Ar argument Op Ar argument ...
 .Pp
-Regarding argument parsing, see
-.Sx MACRO SYNTAX
-above.
+Что касается разбора аргументов, см.
+.Sx СИНТАКСИС МАКРОСОВ
+выше.
 .Pp
-The line invoking the macro will be replaced
-in the input stream by the
+Строка, вызывающая макрос, будет заменена
+во входном потоке на
 .Ar definition ,
-replacing all occurrences of
+заменяя все вхождения
 .No \e\e$ Ns Ar N ,
-where
+где
 .Ar N
-is a digit, by the
+это цифра, по
 .Ar N Ns th Ar argument .
-For example,
+Например,
 .Bd -literal -offset indent
 \&.de ZN
 \efI\e^\e\e$1\e^\efP\e\e$2
@@ -683,351 +680,346 @@ For example,
 \&.ZN XtFree .
 .Ed
 .Pp
-produces
+производит
 .Pp
 .D1 \efI\e^XtFree\e^\efP.
 .Pp
-in the input stream, and thus in the output: \fI\^XtFree\^\fP.
-Each occurrence of \e\e$* is replaced with all the arguments,
-joined together with single space characters.
-The variant \e\e$@ is similar, except that each argument is
-individually quoted.
+во входном потоке, а значит, и в выходном: \fI\^XtFree\^\fP.
+Каждое вхождение \e\e$* заменяется всеми аргументами,
+объединенными одиночными пробелами.
+Вариант \e\e$@ аналогичен, за исключением того, что каждый аргумент
+отдельно.
 .Pp
-Since macros and user-defined strings share a common string table,
-defining a macro
+Поскольку макросы и пользовательские строки используют общую таблицу строк,
+определяя макрос
 .Ar macroname
-clobbers the user-defined string
+уничтожает определяемую пользователем строку
 .Ar macroname ,
-and the
+и
 .Ar definition
-can also be printed using the
+может быть также напечатано с помощью
 .Sq \e*
-string interpolation syntax described below
+синтаксис строчной интерполяции, описанный ниже
 .Ic ds ,
-but this is rarely useful because every macro definition contains at least
-one explicit newline character.
+но это редко бывает полезно, поскольку каждое макроопределение содержит по крайней мере
+один явный символ новой строки.
 .Pp
-In order to prevent endless recursion, both groff and
+Чтобы предотвратить бесконечную рекурсию, как groff, так и
 .Xr mandoc 1
-limit the stack depth for expanding macros and strings
-to a large, but finite number, and
+ограничивают глубину стека для расширения макросов и строк
+до большого, но конечного числа, а
 .Xr mandoc 1
-also limits the length of the expanded input line.
-Do not rely on the exact values of these limits.
+также ограничивает длину расширяемой строки ввода.
+Не полагайтесь на точные значения этих ограничений.
 .It Ic \&de1 Ar macroname Op Ar endmacro
-Define a
+Определить
 .Nm
-macro that will be executed with
+макрос, который будет выполняться при
 .Nm
-compatibility mode switched off during macro execution.
-This is a groff extension.
-Since
+режим совместимости будет отключен во время выполнения макроса.
+Это расширение groff.
+Поскольку
 .Xr mandoc 1
-does not implement
+не реализует
 .Nm
-compatibility mode at all, it handles this request as an alias for
+режим совместимости, он обрабатывает этот запрос как псевдоним для
 .Ic \&de .
 .It Ic \&defcolor Ar newname scheme component ...
-Define a color name.
-This is a groff extension and currently ignored.
+Определение имени цвета.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&dei Ar macrostring Op Ar endstring
-Define a
+Определить
 .Nm
-macro, specifying the macro name indirectly (groff extension).
-The syntax of this request is the same as that of
+макрос, указывая имя макроса косвенно (расширение groff).
+Синтаксис этого запроса такой же, как и у запроса
 .Ic \&de .
-The effect is the same as:
+Эффект тот же, что и в случае:
 .Pp
 .D1 Pf . Cm \&de No \e* Ns Bo Ar macrostring Bc Op \e* Ns Bq Ar endstring
 .It Ic \&dei1 Ar macrostring Op Ar endstring
-Define a
+Определить a
 .Nm
-macro that will be executed with
+макрос, который будет выполняться с помощью
 .Nm
-compatibility mode switched off during macro execution,
-specifying the macro name indirectly (groff extension).
-Since
+режим совместимости выключен на время выполнения макроса,
+указывая имя макроса косвенно (расширение groff).
+Поскольку
 .Xr mandoc 1
-does not implement
+не реализует
 .Nm
-compatibility mode at all, it handles this request as an alias for
+режим совместимости, он обрабатывает этот запрос как псевдоним для
 .Ic \&dei .
 .It Ic \&device Ar string ...
 .It Ic \&devicem Ar stringname
-These two requests only make sense with the groff-specific intermediate
-output format and are unsupported.
+Эти два запроса имеют смысл только при использовании специфического для groff промежуточного
+и не поддерживаются.
 .It Ic \&di Ar divname
-Begin a diversion.
-Currently unsupported.
+Начать отвлечение.
+В настоящее время не поддерживается.
 .It Ic \&do Ar command Op Ar argument ...
-Execute
+Выполнить
 .Nm
-request or macro line with compatibility mode disabled.
-Currently unsupported.
+запрос или макрос с отключенным режимом совместимости.
+В настоящее время не поддерживается.
 .It Ic \&ds Ar stringname Op Oo \(dq Oc Ns Ar string
-Define a user-defined string.
-The
+Определяет пользовательскую строку.
+Адрес
 .Ar stringname
-and
+и
 .Ar string
-arguments are space-separated.
-If the
+разделяются пробелами.
+Если
 .Ar string
-begins with a double-quote character, that character will not be part
-of the string.
-All remaining characters on the input line form the
-.Ar string ,
-including whitespace and double-quote characters, even trailing ones.
+начинается с символа двойной кавычки, этот символ не будет частью
+строки.
+Все оставшиеся символы в строке ввода образуют
+.Ar string
+включая пробельные символы и символы двойных кавычек, в том числе и концевые.
 .Pp
-The
 .Ar string
-can be interpolated into subsequent text by using
+может быть интерполирована в последующий текст с помощью
 .No \e* Ns Bq Ar stringname
-for a
+для
 .Ar stringname
-of arbitrary length, or \e*(NN or \e*N if the length of
+произвольной длины, или \e*(NN или \e*N, если длина
 .Ar stringname
-is two or one characters, respectively.
-Interpolation can be prevented by escaping the leading backslash;
-that is, an asterisk preceded by an even number of backslashes
-does not trigger string interpolation.
+составляет два или один символ соответственно.
+Интерполяцию можно предотвратить, экранировав ведущую обратную косую черту;
+то есть звездочка, которой предшествует четное количество обратных косых черточек
+не вызывает интерполяции строки.
 .Pp
-Since user-defined strings and macros share a common string table,
-defining a string
+Поскольку пользовательские строки и макросы используют общую таблицу строк,
+определение строки
 .Ar stringname
-clobbers the macro
+уничтожает макрос
 .Ar stringname ,
-and the
+и
 .Ar stringname
-used for defining a string can also be invoked as a macro,
-in which case the following input line will be appended to the
+используемый для определения строки, также может быть вызван как макрос,
+в этом случае следующая строка ввода будет добавлена к
 .Ar string ,
-forming a new input line passed to the
+образуя новую входную строку, передаваемую в
 .Nm
-parser.
-For example,
+синтаксический анализатор.
+Например,
 .Bd -literal -offset indent
 \&.ds badidea .S
 \&.badidea
 H SYNOPSIS
 .Ed
 .Pp
-invokes the
+вызывает
 .Ic SH
-macro when used in a
+макрос при использовании в
 .Xr man 7
-document.
-Such abuse is of course strongly discouraged.
+документе.
+Разумеется, такое злоупотребление категорически не рекомендуется.
 .It Ic \&ds1 Ar stringname Op Oo \(dq Oc Ns Ar string
-Define a user-defined string that will be expanded with
+Определяет пользовательскую строку, которая будет расширена с помощью функции
 .Nm
-compatibility mode switched off during string expansion.
-This is a groff extension.
-Since
+режим совместимости будет отключен во время расширения строки.
+Это расширение groff.
+Поскольку
 .Xr mandoc 1
-does not implement
+не реализует
 .Nm
-compatibility mode at all, it handles this request as an alias for
+режим совместимости, он обрабатывает этот запрос как псевдоним для
 .Ic \&ds .
 .It Ic \&dwh Ar dist macroname
-Set a location trap in the current diversion.
-This is a Heirloom extension and currently unsupported.
+Установить ловушку местоположения в текущем дивергенте.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&dt Op Ar dist macroname
-Set a trap within a diversion.
-Currently unsupported.
+Установить ловушку внутри диверсии.
+В настоящее время не поддерживается.
 .It Ic \&ec Op Ar char
-Enable the escape mechanism and change the escape character.
-The
+Включить механизм отвода и изменить символ отвода.
 .Ar char
-argument defaults to the backslash
+по умолчанию используется обратная косая черта
 .Pq Sq \e .
 .It Ic \&ecr
-Restore the escape character.
-Currently unsupported.
+Восстановление символа эвакуации.
+В настоящее время не поддерживается.
 .It Ic \&ecs
-Save the escape character.
-Currently unsupported.
+Сохранить управляющий символ.
+В настоящее время не поддерживается.
 .It Ic \&el Ar body
-The
 .Dq else
-half of an if/else conditional.
-Pops a result off the stack of conditional evaluations pushed by
+половина условного оператора if/else.
+Выводит результат из стека условных оценок, подталкиваемого
 .Ic \&ie
-and uses it as its conditional.
-If no stack entries are present (e.g., due to no prior
+и использует его в качестве условия.
+Если в стеке нет записей (например, из-за отсутствия предыдущих
 .Ic \&ie
-calls)
-then false is assumed.
-The syntax of this request is similar to
+вызовов)
+то предполагается false.
+Синтаксис этого запроса аналогичен
 .Ic \&if
-except that the conditional is missing.
+за исключением того, что условный знак отсутствует.
 .It Ic \&em Ar macroname
-Set a trap at the end of input.
-Currently unsupported.
+Устанавливает ловушку в конце ввода.
+В настоящее время не поддерживается.
 .It Ic \&EN
-End an equation block.
-See
+Завершить блок уравнений.
+См.
 .Ic \&EQ .
 .It Ic \&eo
-Disable the escape mechanism completely.
+Полностью отключить механизм выхода.
 .It Ic \&EP
-End a picture started by
+Завершение изображения, начатого
 .Ic \&BP .
-This is a Heirloom extension and currently unsupported.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&EQ
-Begin an equation block.
-See
+Начало блока уравнений.
+См.
 .Xr eqn 7
-for a description of the equation language.
+для описания языка уравнений.
 .It Ic \&errprint Ar message
-Print a string like an error message.
-This is a Heirloom extension and currently ignored.
+Выводит строку, похожую на сообщение об ошибке.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&ev Op Ar envname
-Switch to another environment.
-Currently unsupported.
+Переключение на другое окружение.
+В настоящее время не поддерживается.
 .It Ic \&evc Op Ar envname
-Copy an environment into the current environment.
-Currently unsupported.
+Копирование окружения в текущее окружение.
+В настоящее время не поддерживается.
 .It Ic \&ex
-Abort processing and exit.
-Currently unsupported.
+Прервать обработку и выйти.
+В настоящее время не поддерживается.
 .It Ic \&fallback Ar curfont font ...
-Select the fallback sequence for a font.
-This is a Heirloom extension and currently ignored.
+Выбор последовательности возврата для шрифта.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&fam Op Ar familyname
-Change the font family.
-This is a groff extension and currently ignored.
+Изменить семейство шрифта.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&fc Op Ar delimchar Op Ar padchar
-Define a delimiting and a padding character for fields.
-Currently unsupported.
+Определяет разделительный и прокладочный символ для полей.
+В настоящее время не поддерживается.
 .It Ic \&fchar Ar glyphname Op Ar string
-Define a fallback glyph.
-Currently unsupported.
+Определяет запасной глиф.
+В настоящее время не поддерживается.
 .It Ic \&fcolor Ar colorname
-Set the fill color for \eD objects.
-This is a groff extension and currently ignored.
+Устанавливает цвет заливки для объектов \eD.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&fdeferlig Ar font string ...
-Defer ligature building.
-This is a Heirloom extension and currently ignored.
+Отложить создание лигатуры.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&feature Cm + Ns | Ns Cm - Ns Ar name
-Enable or disable an OpenType feature.
-This is a Heirloom extension and currently ignored.
+Включить или отключить функцию OpenType.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&fi
-Break the output line and switch to fill mode,
-which is active by default but can be ended with the
+Прервать строку вывода и переключиться в режим заливки,
+который активен по умолчанию, но может быть завершен с помощью команды
 .Ic \&nf
-request.
-In fill mode, input from subsequent input lines is added to
-the same output line until the next word no longer fits,
-at which point the output line is broken.
-This request is implied by the
+запросом.
+В режиме заполнения ввод из последующих строк ввода добавляется в
+в одну и ту же выходную строку до тех пор, пока следующее слово не перестанет помещаться,
+после чего выходная строка разрывается.
+Этот запрос подразумевается командой
 .Xr mdoc 7
 .Ic \&Sh
-macro and by the
+макрос и
 .Xr man 7
 .Ic \&SH ,
 .Ic \&SS ,
-and
+и
 .Ic \&EE
-macros.
+макросы.
 .It Ic \&fkern Ar font minkern
-Control the use of kerning tables for a font.
-This is a Heirloom extension and currently ignored.
+Управление использованием таблиц кернинга для шрифта.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&fl
-Flush output.
-Currently ignored.
+Вывод промывки.
+В настоящее время игнорируется.
 .It Ic \&flig Ar font string char ...
-Define ligatures.
-This is a Heirloom extension and currently ignored.
-.It Ic \&fp Ar position font Op Ar filename
-Assign font position.
-Currently ignored.
+Определить лигатуры.
+Это расширение Heirloom и в настоящее время игнорируется.
+.It Ic \&fp Ar позиция шрифта Op Ar filename
+Назначить позицию шрифта.
+В настоящее время игнорируется.
 .It Ic \&fps Ar mapname ...
-Mount a font with a special character map.
-This is a Heirloom extension and currently ignored.
+Монтирует шрифт со специальной картой символов.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&fschar Ar font glyphname Op Ar string
-Define a font-specific fallback glyph.
-This is a groff extension and currently unsupported.
+Определяет специфический для шрифта резервный glyph.
+Это расширение groff и в настоящее время не поддерживается.
 .It Ic \&fspacewidth Ar font Op Ar afmunits
-Set a font-specific width for the space character.
-This is a Heirloom extension and currently ignored.
+Устанавливает специфическую для шрифта ширину символа пробела.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&fspecial Ar curfont Op Ar font ...
-Conditionally define a special font.
-This is a groff extension and currently ignored.
+Условное определение специального шрифта.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&ft Op Ar font
-Change the font; see
-.Sx Font Selection .
-The
+Изменить шрифт; см.
+.Sx Выбор шрифта.
 .Ar font
-argument defaults to
+по умолчанию принимает значение
 .Cm P .
 .It Ic \&ftr Ar newname Op Ar oldname
-Translate font name.
-This is a groff extension and currently ignored.
+Перевести имя шрифта.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&fzoom Ar font Op Ar permille
-Zoom font size.
-Currently ignored.
+Увеличить размер шрифта.
+В настоящее время игнорируется.
 .It Ic \&gcolor Op Ar colorname
-Set glyph color.
-This is a groff extension and currently ignored.
+Установка цвета глифа.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&hc Op Ar char
-Set the hyphenation character.
-Currently ignored.
+Установка символа дефиса.
+В настоящее время игнорируется.
 .It Ic \&hcode Ar char code ...
-Set hyphenation codes of characters.
-Currently ignored.
+Установка кодов символов дефиса.
+В настоящее время игнорируется.
 .It Ic \&hidechar Ar font char ...
-Hide characters in a font.
-This is a Heirloom extension and currently ignored.
+Скрыть символы в шрифте.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&hla Ar language
-Set hyphenation language.
-This is a groff extension and currently ignored.
+Установить язык дефисов.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&hlm Op Ar number
-Set maximum number of consecutive hyphenated lines.
-Currently ignored.
+Устанавливает максимальное количество последовательных дефисных строк.
+В настоящее время игнорируется.
 .It Ic \&hpf Ar filename
-Load hyphenation pattern file.
-This is a groff extension and currently ignored.
+Загрузить файл с шаблоном дефиса.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&hpfa Ar filename
-Load hyphenation pattern file, appending to the current patterns.
-This is a groff extension and currently ignored.
+Загрузка файла с шаблонами дефисов, добавление к текущим шаблонам.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&hpfcode Ar code code ...
-Define mapping values for character codes in hyphenation patterns.
-This is a groff extension and currently ignored.
+Определяет значения отображения для кодов символов в шаблонах дефиса.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&hw Ar word ...
-Specify hyphenation points in words.
-Currently ignored.
+Определяет точки дефиса в словах.
+В настоящее время игнорируется.
 .It Ic \&hy Op Ar mode
-Set automatic hyphenation mode.
-Currently ignored.
+Установите автоматический режим расстановки переносов.
+В настоящее время игнорируется.
 .It Ic \&hylang Ar language
-Set hyphenation language.
-This is a Heirloom extension and currently ignored.
+Установить язык дефиса.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&hylen Ar nchar
-Minimum word length for hyphenation.
-This is a Heirloom extension and currently ignored.
+Минимальная длина слова для дефиса.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&hym Op Ar length
-Set hyphenation margin.
-This is a groff extension and currently ignored.
+Задать отступ от дефиса.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&hypp Ar penalty ...
-Define hyphenation penalties.
-This is a Heirloom extension and currently ignored.
+Определить штрафы за дефисное написание.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&hys Op Ar length
-Set hyphenation space.
-This is a groff extension and currently ignored.
+Задать пространство для дефиса.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&ie Ar condition body
-The
 .Dq if
-half of an if/else conditional.
-The result of the conditional is pushed into a stack used by subsequent
-invocations of
+половина условного оператора if/else.
+Результат условия заталкивается в стек, используемый последующими
+вызовах
 .Ic \&el ,
-which may be separated by any intervening input (or not exist at all).
-Its syntax is equivalent to
+которые могут быть разделены любым промежуточным вводом (или вообще отсутствовать).
+Его синтаксис эквивалентен
 .Ic \&if .
 .It Ic \&if Ar condition body
-Begin a conditional.
-This request can also be written as follows:
+Начать выполнение условия.
+Этот запрос также можно записать следующим образом:
 .Bd -unfilled -offset indent
 .Pf . Ic \&if Ar condition No \e{ Ns Ar body
 .Ar body ... Ns \e}
@@ -1038,161 +1030,159 @@ This request can also be written as follows:
 .Pf . No \e}
 .Ed
 .Pp
-The
 .Ar condition
-is a boolean expression.
-Currently,
+представляет собой булево выражение.
+В настоящее время,
 .Xr mandoc 1
-supports the following subset of roff conditionals:
+поддерживает следующее подмножество условий roff:
 .Bl -bullet
 .It
-If
+Если
 .Sq \&!
-is prefixed to
-.Ar condition ,
-it is logically inverted.
+имеет префикс
+.Ar condition,
+оно логически инвертировано.
 .It
-If the first character of
+Если первый символ
 .Ar condition
-is
+является
 .Sq n
 .Pq nroff mode
-or
+или
 .Sq o
-.Pq odd page ,
-it evaluates to true, and the
+.Pq odd page,
+будет оценена как true, а body
 .Ar body
-starts with the next character.
+начинается со следующего символа.
 .It
-If the first character of
+Если первый символ
 .Ar condition
-is
+это
 .Sq e
 .Pq even page ,
 .Sq t
 .Pq troff mode ,
-or
+или
 .Sq v
 .Pq vroff mode ,
-it evaluates to false, and the
+будет равно false, а body
 .Ar body
-starts with the next character.
+начинается со следующего символа.
 .It
-If the first character of
+Если первый символ
 .Ar condition
-is
+является
 .Sq c
 .Pq character available ,
-it evaluates to true if the following character is an ASCII character
-or a valid character escape sequence, or to false otherwise.
-The
+то оно принимает значение true, если следующий символ является символом ASCII
+или допустимой управляющей последовательностью символов, или false в противном случае.
 .Ar body
-starts with the character following that next character.
+начинается с символа, следующего за этим следующим символом.
 .It
-If the first character of
+Если первый символ
 .Ar condition
-is
+является
 .Sq d ,
-it evaluates to true if the rest of
+то оно оценивается как true, если остальные символы
 .Ar condition
-is the name of an existing user defined macro or string;
-otherwise, it evaluates to false.
+является именем существующего макроса или строки, определенной пользователем;
+в противном случае - false.
 .It
-If the first character of
+Если первый символ
 .Ar condition
-is
+является
 .Sq r ,
-it evaluates to true if the rest of
+то оно оценивается как true, если остальные символы
 .Ar condition
-is the name of an existing number register;
-otherwise, it evaluates to false.
+является именем существующего регистра чисел;
+в противном случае - false.
 .It
-If the
+Если
 .Ar condition
-starts with a parenthesis or with an optionally signed
-integer number, it is evaluated according to the rules of
-.Sx Numerical expressions
-explained below.
-It evaluates to true if the result is positive,
-or to false if the result is zero or negative.
+начинается со скобки или с опционального знакового
+целое число, оно оценивается в соответствии с правилами
+.Sx Числовые выражения
+которые описаны ниже.
+Результат оценивается как true, если результат положительный,
+или в false, если результат нулевой или отрицательный.
 .It
-Otherwise, the first character of
+В противном случае первый символ
 .Ar condition
-is regarded as a delimiter and it evaluates to true if the string
-extending from its first to its second occurrence is equal to the
-string extending from its second to its third occurrence.
+рассматривается как разделитель и оценивается как true, если строка
+от первого до второго его вхождения равна строке
+строке, идущей от второго до третьего вхождения.
 .It
-If
+Если
 .Ar condition
-cannot be parsed, it evaluates to false.
+не может быть разобрано, то его значение равно false.
 .El
 .Pp
-If a conditional is false, its children are not processed, but are
-syntactically interpreted to preserve the integrity of the input
-document.
-Thus,
+Если условие ложно, его дочерние элементы не обрабатываются, но
+синтаксически интерпретируются, чтобы сохранить целостность входного
+документа.
+Таким образом,
 .Pp
 .D1 \&.if t .ig
 .Pp
-will discard the
+отбрасывает
 .Sq \&.ig ,
-which may lead to interesting results, but
+что может привести к интересным результатам, но
 .Pp
 .D1 \&.if t .if t \e{\e
 .Pp
-will continue to syntactically interpret to the block close of the final
-conditional.
-Sub-conditionals, in this case, obviously inherit the truth value of
-the parent.
+будет продолжать синтаксическую интерпретацию до закрытия блока заключительного
+условного блока.
+Подусловия, в этом случае, очевидно, наследуют истинностное значение
+родительского.
 .Pp
-If the
+Если
 .Ar body
-section is begun by an escaped brace
+начинается экранированной скобкой
 .Sq \e{ ,
-scope continues until the end of the input line containing the
-matching closing-brace escape sequence
+область видимости продолжается до конца строки ввода, содержащей
+соответствующую последовательность закрывающих скобок
 .Sq \e} .
-If the
+Если
 .Ar body
-is not enclosed in braces, scope continues until the end of the line.
-If the
+не заключено в скобки, область видимости продолжается до конца строки.
+Если
 .Ar condition
-is followed by a
+сопровождается
 .Ar body
-on the same line, whether after a brace or not, then requests and macros
+в той же строке, независимо от того, заключено оно в скобки или нет, то запросы и макросы
 .Em must
-begin with a control character.
-It is generally more intuitive, in this case, to write
+начинаться с управляющего символа.
+Как правило, в этом случае интуитивно понятнее написать
 .Bd -unfilled -offset indent
 .Pf . Ic \&if Ar condition No \e{\e
 .Pf . Ar request
 .Pf . No \e}
 .Ed
 .Pp
-than having the request or macro follow as
+чем если бы запрос или макрос следовал как
 .Pp
 .D1 Pf . Ic \&if Ar condition Pf \e{. Ar request
 .Pp
-The scope of a conditional is always parsed, but only executed if the
-conditional evaluates to true.
+Область действия условия всегда разбирается, но выполняется только в том случае, если
+условие оценивается как истина.
 .Pp
-Note that the
+Обратите внимание на то, что
 .Sq \e}
-is converted into a zero-width escape sequence if not passed as a
-standalone macro
+преобразуется в управляющую последовательность нулевой ширины, если не передается как
+отдельный макрос
 .Sq \&.\e} .
-For example,
+Например,
 .Pp
 .D1 \&.Fl a \e} b
 .Pp
-will result in
+приведет к
 .Sq \e}
-being considered an argument of the
+будет считаться аргументом
 .Sq \&Fl
-macro.
+макроса.
 .It Ic \&ig Op Ar endmacro
-Ignore input.
-Its syntax can be either
+Игнорирует ввод.
+Его синтаксис может быть следующим
 .Bd -literal -offset indent
 .Pf . Cm \&ig
 .Ar ignored text
@@ -1206,1090 +1196,1080 @@ or
 .Pf . Ar endmacro
 .Ed
 .Pp
-In the first case, input is ignored until a
-.Sq \&..
-request is encountered on its own line.
-In the second case, input is ignored until the specified
+В первом случае ввод игнорируется до тех пор, пока не будет получено сообщение
+.Sq \&...
+запрос встречается в своей строке.
+Во втором случае ввод игнорируется до тех пор, пока не встретится указанный
 .Sq Pf . Ar endmacro
-is encountered.
-Do not use the escape character
+не будет встречен.
+Не используйте символ завершения
 .Sq \e
-anywhere in the definition of
+нигде в определении
 .Ar endmacro ;
-it would cause very strange behaviour.
+Это приведет к очень странному поведению.
 .Pp
-When the
+Когда
 .Ar endmacro
-is a roff request or a roff macro, like in
+является запросом roff или макросом roff, как, например, в
 .Pp
-.D1 \&.ig if
+.D1 \&.ig если
 .Pp
-the subsequent invocation of
+последующий вызов
 .Ic \&if
-will first terminate the
+сначала завершит
 .Ar ignored text ,
-then be invoked as usual.
-Otherwise, it only terminates the
+а затем будет вызван как обычно.
+В противном случае будет завершен только
 .Ar ignored text ,
-and arguments following it or the
-.Sq \&..
-request are discarded.
+и аргументы, следующие за ним, или
+.Sq \&...
+отбрасываются.
 .It Ic \&in Op Oo Cm + Ns | Ns Cm - Oc Ns Ar width
-Change indentation.
-See
+Изменение отступа.
+См.
 .Xr man 7 .
-Ignored in
+Игнорируется в
 .Xr mdoc 7 .
 .It Ic \&index Ar register stringname substring
-Find a substring in a string.
-This is a Heirloom extension and currently unsupported.
+Найти подстроку в строке.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&it Ar expression macro
-Set an input line trap.
-The named
+Устанавливает ловушку для входной строки.
+Именованный
 .Ar macro
-will be invoked after processing the number of input text lines
-specified by the numerical
+будет вызван после обработки количества строк входного текста
+указанных числовым
 .Ar expression .
-While evaluating the
-.Ar expression ,
-the unit suffixes described below
-.Sx Scaling Widths
-are ignored.
+Во время оценки
+.Ar expression .
+используются суффиксы единиц измерения, описанные ниже
+.Sx Ширина масштабирования
+игнорируются.
 .It Ic \&itc Ar expression macro
-Set an input line trap, not counting lines ending with \ec.
-Currently unsupported.
+Устанавливает ловушку для входных строк, не считая строк, заканчивающихся на \ec.
+В настоящее время не поддерживается.
 .It Ic \&IX Ar class keystring
-To support the generation of a table of contents,
+Для поддержки генерации оглавления,
 .Xr pod2man 1
-emits this user-defined macro, usually without defining it.
-To avoid reporting large numbers of spurious errors,
+выдает этот пользовательский макрос, обычно не определяя его.
+Чтобы избежать сообщения о большом количестве ложных ошибок,
 .Xr mandoc 1
-ignores it.
+игнорирует его.
 .It Ic \&kern Op Cm 1 | 0
-Switch kerning on or off.
-Currently ignored.
+Включает или выключает кернинг.
+В настоящее время игнорируется.
 .It Ic \&kernafter Ar font char ... afmunits ...
-Increase kerning after some characters.
-This is a Heirloom extension and currently ignored.
+Усиление кернинга после некоторых символов.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&kernbefore Ar font char ... afmunits ...
-Increase kerning before some characters.
-This is a Heirloom extension and currently ignored.
+Увеличивает кернинг перед некоторыми символами.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&kernpair Ar font char ... font char ... afmunits
-Add a kerning pair to the kerning table.
-This is a Heirloom extension and currently ignored.
+Добавляет пару kerning в таблицу kerning.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&lc Op Ar glyph
-Define a leader repetition character.
-Currently unsupported.
+Определяет символ повторения лидера.
+В настоящее время не поддерживается.
 .It Ic \&lc_ctype Ar localename
-Set the
+Установить
 .Dv LC_CTYPE
 locale.
-This is a Heirloom extension and currently unsupported.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&lds Ar macroname string
-Define a local string.
-This is a Heirloom extension and currently unsupported.
+Определить локальную строку.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&length Ar register string
-Count the number of input characters in a string.
-Currently unsupported.
+Подсчитывает количество вводимых символов в строке.
+В настоящее время не поддерживается.
 .It Ic \&letadj Ar lspmin lshmin letss lspmax lshmax
-Dynamic letter spacing and reshaping.
-This is a Heirloom extension and currently ignored.
+Динамический интервал между буквами и изменение их формы.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&lf Ar lineno Op Ar filename
-Change the line number for error messages.
-Ignored because insecure.
+Изменение номера строки для сообщений об ошибках.
+Игнорируется из-за небезопасности.
 .It Ic \&lg Op Cm 1 | 0
-Switch the ligature mechanism on or off.
-Currently ignored.
+Включить или выключить механизм ligature.
+В настоящее время игнорируется.
 .It Ic \&lhang Ar font char ... afmunits
-Hang characters at left margin.
-This is a Heirloom extension and currently ignored.
+Hang characters на левом поле.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&linetabs Op Cm 1 | 0
-Enable or disable line-tabs mode.
-This is a groff extension and currently unsupported.
+Включить или отключить режим строчных табуляций.
+Это расширение groff и в настоящее время не поддерживается.
 .It Ic \&ll Op Oo Cm + Ns | Ns Cm - Oc Ns Ar width
-Change the output line length.
-If the
+Изменение длины выводимой строки.
+Если в меню "Параметры" задано значение
 .Ar width
-argument is omitted, the line length is reset to its previous value.
-The default setting for terminal output is 78n.
-If a sign is given, the line length is added to or subtracted from;
-otherwise, it is set to the provided value.
-Using this request in new manuals is discouraged for several reasons,
-among others because it overrides the
+опущен, длина строки возвращается к предыдущему значению.
+По умолчанию для терминального вывода установлено значение 78n.
+Если указан знак, длина строки прибавляется или вычитается;
+в противном случае она устанавливается на указанное значение.
+Использовать этот запрос в новых руководствах не рекомендуется по нескольким причинам,
+в том числе потому, что он отменяет
 .Xr mandoc 1
 .Fl O Cm width
-command line option.
+параметра командной строки.
 .It Ic \&lnr Ar register Oo Cm + Ns | Ns Cm - Oc Ns Ar value Op Ar increment
-Set local number register.
-This is a Heirloom extension and currently unsupported.
+Установка регистра локальных чисел.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&lnrf Ar register Oo Cm + Ns | Ns Cm - Oc Ns Ar value Op Ar increment
-Set local floating-point register.
-This is a Heirloom extension and currently unsupported.
+Установка локального регистра с плавающей точкой.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&lpfx Ar string
-Set a line prefix.
-This is a Heirloom extension and currently unsupported.
+Установка префикса строки.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&ls Op Ar factor
-Set line spacing.
-It takes one integer argument specifying the vertical distance of
-subsequent output text lines measured in v units.
-Currently ignored.
+Устанавливает межстрочный интервал.
+Принимает один целочисленный аргумент, определяющий расстояние по вертикали между
+последующих строк выводимого текста, измеряемое в единицах v.
+В настоящее время игнорируется.
 .It Ic \&lsm Ar macroname
-Set a leading spaces trap.
-This is a groff extension and currently unsupported.
+Устанавливает leading spaces trap.
+Это расширение groff и в настоящее время не поддерживается.
 .It Ic \&lt Op Oo Cm + Ns | Ns Cm - Oc Ns Ar width
-Set title line length.
-Currently ignored.
+Задает длину строки заголовка.
+В настоящее время игнорируется.
 .It Ic \&mc Ar glyph Op Ar dist
-Print margin character in the right margin.
-The
+Печать margin символа на правом margin.
 .Ar dist
-is currently ignored; instead, 1n is used.
+в настоящее время игнорируется; вместо него используется 1n.
 .It Ic \&mediasize Ar media
-Set the device media size.
-This is a Heirloom extension and currently ignored.
+Установка размера носителя устройства.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&minss Ar width
-Set minimum word space.
-This is a Heirloom extension and currently ignored.
+Устанавливает минимальное пространство для слов.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&mk Op Ar register
-Mark vertical position.
-Currently ignored.
+Отметить вертикальную позицию.
+В настоящее время игнорируется.
 .It Ic \&mso Ar filename
-Load a macro file using the search path.
-Ignored because insecure.
+Загрузка макрофайла по пути поиска.
+Игнорируется из-за небезопасности.
 .It Ic \&na
-Disable adjusting without changing the adjustment mode.
-Currently ignored.
+Отключить регулировку без изменения режима регулировки.
+В настоящее время игнорируется.
 .It Ic \&ne Op Ar height
-Declare the need for the specified minimum vertical space
-before the next trap or the bottom of the page.
-Currently ignored.
+Объявить о необходимости заданного минимального вертикального пространства
+перед следующей ловушкой или низом страницы.
+В настоящее время игнорируется.
 .It Ic \&nf
-Break the output line and switch to no-fill mode.
-Subsequent input lines are kept together on the same output line
-even when exceeding the right margin,
-and line breaks in subsequent input cause output line breaks.
-This request is implied by the
+Разрыв строки вывода и переход в режим отсутствия заполнения.
+Последующие строки ввода сохраняются вместе на одной строке вывода
+даже при превышении правого поля,
+а разрывы строк при последующем вводе вызывают разрывы строк вывода.
+Этот запрос подразумевается в строке
 .Xr mdoc 7
 .Ic \&Bd Fl unfilled
-and
-.Ic \&Bd Fl literal
-macros and by the
+и
+.Ic \&Bd Fl литерал
+макросами, а также
 .Xr man 7
 .Ic \&EX
-macro.
-The
+макросом.
 .Ic \&fi
-request switches back to the default fill mode.
+запрос переключается обратно в режим заполнения по умолчанию.
 .It Ic \&nh
-Turn off automatic hyphenation mode.
-Currently ignored.
+Выключает режим автоматического дефисного написания.
+В настоящее время игнорируется.
 .It Ic \&nhychar Ar char ...
-Define hyphenation-inhibiting characters.
-This is a Heirloom extension and currently ignored.
+Определяет символы, запрещающие дефисное написание.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&nm Op Ar start Op Ar inc Op Ar space Op Ar indent
-Print line numbers.
-Currently unsupported.
+Выводить номера строк.
+В настоящее время не поддерживается.
 .It Ic \&nn Op Ar number
-Temporarily turn off line numbering.
-Currently unsupported.
+Временно отключить нумерацию строк.
+В настоящее время не поддерживается.
 .It Ic \&nop Ar body
-Execute the rest of the input line as a request, macro, or text line,
-skipping the
+Выполнение оставшейся части строки ввода как запроса, макроса или текстовой строки,
+пропуская
 .Ic \&nop
-request and any space characters immediately following it.
-This is mostly used to indent text lines inside macro definitions.
+и все пробельные символы, следующие за ним.
+В основном используется для отступа текстовых строк внутри макроопределений.
 .It Ic \&nr Ar register Oo Cm + Ns | Ns Cm - Oc Ns Ar expression Op Ar stepsize
-Define or change a register.
-A register is an arbitrary string value that defines some sort of state,
-which influences parsing and/or formatting.
-For the syntax of
+Определение или изменение регистра.
+Регистр - это произвольное строковое значение, определяющее некоторое состояние,
+которое влияет на синтаксический разбор и/или форматирование.
+Для синтаксиса
 .Ar expression ,
-see
-.Sx Numerical expressions
-below.
-If it is prefixed by a sign, the register will be
-incremented or decremented instead of assigned to.
+см.
+.Sx Числовые выражения
+ниже.
+Если перед выражением стоит знак, то регистр будет
+инкрементируется или декрементируется, а не присваивается.
 .Pp
-The
 .Ar stepsize
-is used by the
+используется программой
 .Ic \en+
-auto-increment feature.
-It remains unchanged when omitted while changing an existing register,
-and it defaults to 0 when defining a new register.
+функция автоматического увеличения.
+Это остается неизменным, если опущен при изменении существующего регистра,
+а при определении нового регистра по умолчанию принимает значение 0.
 .Pp
-The following
+Следующий
 .Ar register
-is handled specially:
+обрабатывается особым образом:
 .Bl -tag -width Ds
 .It Cm nS
-If set to a positive integer value, certain
+Если он установлен в целое положительное значение, то некоторые
 .Xr mdoc 7
-macros will behave in the same way as in the
-.Em SYNOPSIS
-section.
-If set to 0, these macros will behave in the same way as outside the
-.Em SYNOPSIS
-section, even when called within the
-.Em SYNOPSIS
-section itself.
-Note that starting a new
+макросы будут вести себя так же, как и в
+.Em СИНОПСИС
+раздел.
+Если установить значение 0, то эти макросы будут вести себя так же, как и вне раздела
+.Em СИНОПСИС
+даже при вызове внутри секции
+.Em СИНОПСИС
+самой секции.
+Обратите внимание, что запуск нового
 .Xr mdoc 7
-section with the
+с
 .Ic \&Sh
-macro will reset this register.
+сбросит этот регистр.
 .El
 .It Xo
 .Ic \&nrf Ar register Oo Cm + Ns | Ns Cm - Oc Ns Ar expression
 .Op Ar increment
 .Xc
-Define or change a floating-point register.
-This is a Heirloom extension and currently unsupported.
+Определение или изменение регистра с плавающей точкой.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&nroff
-Force nroff mode.
-This is a groff extension and currently ignored.
+Принудительный режим nroff.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&ns
-Turn on no-space mode.
-Currently ignored.
+Включить режим no-space.
+В настоящее время игнорируется.
 .It Ic \&nx Op Ar filename
-Abort processing of the current input file and process another one.
-Ignored because insecure.
+Прервать обработку текущего входного файла и обработать другой.
+Игнорируется, так как небезопасно.
 .It Ic \&open Ar stream file
-Open a file for writing.
-Ignored because insecure.
+Открыть файл для записи.
+Игнорируется из-за небезопасности.
 .It Ic \&opena Ar stream file
-Open a file for appending.
-Ignored because insecure.
+Открыть файл для добавления.
+Игнорируется из-за небезопасности.
 .It Ic \&os
-Output saved vertical space.
-Currently ignored.
+Вывод сохраненного вертикального пространства.
+В настоящее время игнорируется.
 .It Ic \&output Ar string
-Output directly to intermediate output.
-Not supported.
+Вывод непосредственно на промежуточный вывод.
+Не поддерживается.
 .It Ic \&padj Op Cm 1 | 0
-Globally control paragraph-at-once adjustment.
-This is a Heirloom extension and currently ignored.
+Глобальное управление выравниванием абзаца по времени.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&papersize Ar media
-Set the paper size.
-This is a Heirloom extension and currently ignored.
+Установка размера бумаги.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&pc Op Ar char
-Change the page number character.
-Currently ignored.
+Изменить символ номера страницы.
+В настоящее время игнорируется.
 .It Ic \&pev
-Print environments.
-This is a groff extension and currently ignored.
+Печатные среды.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&pi Ar command
-Pipe output to a shell command.
-Ignored because insecure.
+Направить вывод в команду оболочки.
+Игнорируется из-за небезопасности.
 .It Ic \&PI
-Low-level request used by
+Низкоуровневый запрос, используемый
 .Ic \&BP .
-This is a Heirloom extension and currently unsupported.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&pl Op Oo Cm + Ns | Ns Cm - Oc Ns Ar height
-Change page length.
-Currently ignored.
+Изменение длины страницы.
+В настоящее время игнорируется.
 .It Ic \&pm
-Print names and sizes of macros, strings, and diversions
-to standard error output.
-Currently ignored.
+Выводить имена и размеры макросов, строк и отвлекающих элементов
+в стандартный вывод ошибок.
+В настоящее время игнорируется.
 .It Ic \&pn Oo Cm + Ns | Ns Cm - Oc Ns Ar number
-Change the page number of the next page.
-Currently ignored.
+Изменить номер следующей страницы.
+В настоящее время игнорируется.
 .It Ic \&pnr
-Print all number registers on standard error output.
-Currently ignored.
+Вывести все регистры чисел на стандартный вывод ошибок.
+В настоящее время игнорируется.
 .It Ic \&po Op Oo Cm + Ns | Ns Cm - Oc Ns Ar offset
-Set a horizontal page offset.
-If no argument is specified, the page offset is reverted to its
-previous value.
-If a sign is specified, the new page offset is calculated relative
-to the current one; otherwise, it is absolute.
-The argument follows the syntax of
-.Sx Scaling Widths
-and the default scaling unit is
+Устанавливает горизонтальное смещение страницы.
+Если аргумент не указан, то смещение страницы возвращается к своему
+предыдущему значению.
+Если указан знак, то новое смещение страницы вычисляется относительно
+относительно текущего; в противном случае оно будет абсолютным.
+Аргумент соответствует синтаксису
+.Sx Ширина масштабирования
+а единицей масштабирования по умолчанию является
 .Cm m .
 .It Ic \&ps Op Oo Cm + Ns | Ns Cm - Oc Ns size
-Change point size.
-Currently ignored.
+Изменение размера точки.
+В настоящее время игнорируется.
 .It Ic \&psbb Ar filename
-Retrieve the bounding box of a PostScript file.
-Currently unsupported.
+Получение ограничительной рамки PostScript-файла.
+В настоящее время не поддерживается.
 .It Ic \&pshape Ar indent length ...
-Set a special shape for the current paragraph.
-This is a Heirloom extension and currently unsupported.
+Установка специальной формы для текущего абзаца.
+Это расширение Heirloom и в настоящее время не поддерживается.
 .It Ic \&pso Ar command
-Include output of a shell command.
-Ignored because insecure.
+Включить вывод команды оболочки.
+Игнорируется из-за небезопасности.
 .It Ic \&ptr
-Print the names and positions of all traps on standard error output.
-This is a groff extension and currently ignored.
+Вывести имена и позиции всех ловушек на стандартный вывод ошибок.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&pvs Op Oo Cm + Ns | Ns Cm - Oc Ns Ar height
-Change post-vertical spacing.
-This is a groff extension and currently ignored.
+Изменение расстояния между post-vertical.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&rchar Ar glyph ...
-Remove glyph definitions.
-Currently unsupported.
+Удаление определений glyph.
+В настоящее время не поддерживается.
 .It Ic \&rd Op Ar prompt Op Ar argument ...
-Read from standard input.
-Currently ignored.
+Чтение из стандартного ввода.
+В настоящее время игнорируется.
 .It Ic \&recursionlimit Ar maxrec maxtail
-Set the maximum stack depth for recursive macros.
-This is a Heirloom extension and currently ignored.
+Устанавливает максимальную глубину стека для рекурсивных макросов.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&return Op Ar twice
-Exit the presently executed macro and return to the caller.
-The argument is currently ignored.
+Выход из текущего выполняемого макроса и возврат к вызывающему.
+Аргумент в настоящее время игнорируется.
 .It Ic \&rfschar Ar font glyph ...
-Remove font-specific fallback glyph definitions.
-Currently unsupported.
+Удаление определений glyph обратного хода, специфичных для шрифта.
+В настоящее время не поддерживается.
 .It Ic \&rhang Ar font char ... afmunits
-Hang characters at right margin.
-This is a Heirloom extension and currently ignored.
+Повесить символы на правое поле.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&rj Op Ar N
-Justify the next
+Обосновать следующий
 .Ar N
-input lines to the right margin without filling.
+строк ввода до правого поля без заполнения.
 .Ar N
-defaults to 1.
-An argument of 0 or less ends right adjustment.
+по умолчанию равен 1.
+Аргумент, равный 0 или меньше, прекращает выравнивание по правому краю.
 .It Ic \&rm Ar macroname
-Remove a request, macro or string.
+Удаление запроса, макроса или строки.
 .It Ic \&rn Ar oldname newname
-Rename a request, macro, diversion, or string.
-In
+Переименовать запрос, макрос, дивергенцию или строку.
+В
 .Xr mandoc 1 ,
-user-defined macros,
+макросы, определяемые пользователем,
 .Xr mdoc 7
-and
+и
 .Xr man 7
-macros, and user-defined strings can be renamed, but renaming of
-predefined strings and of
+макросы и пользовательские строки могут быть переименованы, но переименование
+предопределенных строк и
 .Nm
-requests is not supported, and diversions are not implemented at all.
+не поддерживается, а переадресация вообще не реализована.
 .It Ic \&rnn Ar oldname newname
-Rename a number register.
-Currently unsupported.
+Переименование регистра номеров.
+В настоящее время не поддерживается.
 .It Ic \&rr Ar register
-Remove a register.
+Удалить регистр.
 .It Ic \&rs
-End no-space mode.
-Currently ignored.
+Завершить режим отсутствия пробелов.
+В настоящее время игнорируется.
 .It Ic \&rt Op Ar dist
-Return to marked vertical position.
-Currently ignored.
+Возврат в отмеченную вертикальную позицию.
+В настоящее время игнорируется.
 .It Ic \&schar Ar glyph Op Ar string
-Define global fallback glyph.
-This is a groff extension and currently unsupported.
+Определяет глобальный запасной glyph.
+Это расширение groff и в настоящее время не поддерживается.
 .It Ic \&sentchar Ar char ...
-Define sentence-ending characters.
-This is a Heirloom extension and currently ignored.
+Определяет символы окончания предложения.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&shc Op Ar glyph
-Change the soft hyphen character.
-Currently ignored.
+Изменить символ мягкого дефиса.
+В настоящее время игнорируется.
 .It Ic \&shift Op Ar number
-Shift macro arguments
+Сдвиг аргументов макроса
 .Ar number
-times, by default once: \e\e$i becomes what \e\e$i+number was.
-Also decrement \en(.$ by
-.Ar number .
+раз, по умолчанию один раз: \e\e$i становится тем, чем было \e\e$i+число.
+Также уменьшите \en(.$ на
+.Ar number
 .It Ic \&sizes Ar size ...
-Define permissible point sizes.
-This is a groff extension and currently ignored.
+Определяет допустимые размеры точек.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&so Ar filename
-Include a source file.
-The file is read and its contents processed as input in place of the
+Включить исходный файл.
+Файл считывается и его содержимое обрабатывается как входной сигнал вместо
 .Ic \&so
-request line.
-To avoid inadvertent inclusion of unrelated files,
+строки запроса.
+Чтобы избежать случайного включения несвязанных файлов,
 .Xr mandoc 1
-only accepts relative paths not containing the strings
+принимает только относительные пути, не содержащие строк
 .Qq ../
-and
-.Qq /.. .
+и
+.Qq /... .
 .Pp
-This request requires
+Этот запрос требует
 .Xr man 1
-to change to the right directory before calling
+чтобы перейти в нужный каталог перед вызовом
 .Xr mandoc 1 ,
-per convention to the root of the manual tree.
-Typical usage looks like:
+по условию в корень дерева руководств.
+Типичное использование выглядит следующим образом:
 .Pp
 .Dl \&.so man3/Xcursor.3
 .Pp
-As the whole concept is rather fragile, the use of
+Поскольку вся эта концепция довольно хрупкая, использование
 .Ic \&so
-is discouraged.
-Use
+не рекомендуется.
+Используйте
 .Xr ln 1
-instead.
+вместо него.
 .It Ic \&sp Op Ar height
-Break the output line and emit vertical space.
-The argument follows the syntax of
-.Sx Scaling Widths
-and defaults to one blank line
+Разрывает строку вывода и выдает вертикальный пробел.
+Аргумент соответствует синтаксису
+.Sx Ширина масштабирования
+и по умолчанию равен одной пустой строке
 .Pq Li 1v .
 .It Ic \&spacewidth Op Cm 1 | 0
-Set the space width from the font metrics file.
-This is a Heirloom extension and currently ignored.
+Устанавливает ширину пробела из файла метрики шрифта.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&special Op Ar font ...
-Define a special font.
-This is a groff extension and currently ignored.
+Определяет специальный шрифт.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&spreadwarn Op Ar width
-Warn about wide spacing between words.
-Currently ignored.
+Предупреждение о большом интервале между словами.
+В настоящее время игнорируется.
 .It Ic \&ss Ar wordspace Op Ar sentencespace
-Set space character size.
-Currently ignored.
+Установка размера символов пробела.
+В настоящее время игнорируется.
 .It Ic \&sty Ar position style
-Associate style with a font position.
-This is a groff extension and currently ignored.
+Ассоциировать стиль с позицией шрифта.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&substring Ar stringname startpos Op Ar endpos
-Replace a user-defined string with a substring.
-Currently unsupported.
+Замена пользовательской строки на подстроку.
+В настоящее время не поддерживается.
 .It Ic \&sv Op Ar height
-Save vertical space.
-Currently ignored.
+Экономия вертикального пространства.
+В настоящее время игнорируется.
 .It Ic \&sy Ar command
-Execute shell command.
-Ignored because insecure.
+Выполнить команду оболочки.
+Игнорируется из-за небезопасности.
 .It Ic \&T&
-Re-start a table layout, retaining the options of the prior table
-invocation.
-See
+Повторный запуск макета таблицы с сохранением опций предыдущего вызова таблицы
+вызова.
+См.
 .Ic \&TS .
 .It Ic \&ta Op Ar width ... Op Cm T Ar width ...
-Set tab stops.
-Each
-.Ar width
-argument follows the syntax of
-.Sx Scaling Widths .
-If prefixed by a plus sign, it is relative to the previous tab stop.
-The arguments after the
+Установка ограничителей табуляции.
+.Ar width .
+аргумент соответствует синтаксису
+.Sx Ширина масштабирования
+Если перед аргументом стоит знак плюс, то он относится к предыдущей остановке табуляции.
+Аргументы после
 .Cm T
-marker are used repeatedly as often as needed; for each reuse,
-they are taken relative to the last previously established tab stop.
-When
+.It Ic \&tkf Ar font minps width1 maxps width2
+используются многократно и так часто, как это необходимо; при каждом повторном использовании
+они берутся относительно последней ранее установленной остановки табуляции.
+Когда
 .Ic \&ta
-is called without arguments, all tab stops are cleared.
+вызывается без аргументов, все ограничители табуляции очищаются.
 .It Ic \&tc Op Ar glyph
-Change tab repetition character.
-Currently unsupported.
+Изменение символа повторения табуляции.
+В настоящее время не поддерживается.
 .It Ic \&TE
-End a table context.
-See
+Завершить контекст таблицы.
+См.
 .Ic \&TS .
 .It Ic \&ti Oo Cm + Ns | Ns Cm - Oc Ns Ar width
-Break the output line and indent the next output line by
+Разрыв строки вывода и отступ следующей строки вывода на
 .Ar width .
-If a sign is specified, the temporary indentation is calculated
-relative to the current indentation; otherwise, it is absolute.
-The argument follows the syntax of
-.Sx Scaling Widths
-and the default scaling unit is
+Если указан знак, временной отступ вычисляется
+относительно текущего отступа; в противном случае он будет абсолютным.
+Синтаксис аргумента соответствует синтаксису
+.Sx Ширина масштабирования
+а единицей масштабирования по умолчанию является
 .Cm m .
 .It Ic \&tkf Ar font minps width1 maxps width2
-Enable track kerning for a font.
-Currently ignored.
+Включает track kerning для шрифта.
+В настоящее время игнорируется.
 .It Ic \&tl No \& Ap Ar left Ap Ar center Ap Ar right Ap
-Print a title line.
-Currently unsupported.
+Печать строки заголовка.
+В настоящее время не поддерживается.
 .It Ic \&tm Ar string
-Print to standard error output.
-Currently ignored.
+Печать в стандартный вывод ошибок.
+В настоящее время игнорируется.
 .It Ic \&tm1 Ar string
-Print to standard error output, allowing leading blanks.
-This is a groff extension and currently ignored.
+Печать в стандартный вывод ошибок с разрешением ведущих пробелов.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&tmc Ar string
-Print to standard error output without a trailing newline.
-This is a groff extension and currently ignored.
+Печать в стандартный вывод ошибок без завершающей новой строки.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&tr Ar glyph glyph ...
-Output character translation.
-The first glyph in each pair is replaced by the second one.
-Character escapes can be used; for example,
+Вывод перевода символов.
+Первый glyph в каждой паре заменяется вторым.
+Можно использовать экранирование символов; например,
 .Pp
 .Dl tr \e(xx\e(yy
 .Pp
-replaces all invocations of \e(xx with \e(yy.
+заменяет все вызовы \e(xx на \e(yy.
 .It Ic \&track Ar font minps width1 maxps width2
-Static letter space tracking.
-This is a Heirloom extension and currently ignored.
+Статическое отслеживание пробелов между буквами.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&transchar Ar char ...
-Define transparent characters for sentence-ending.
-This is a Heirloom extension and currently ignored.
+Определяет прозрачные символы для завершения предложений.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&trf Ar filename
-Output the contents of a file, disallowing invalid characters.
-This is a groff extension and ignored because insecure.
+Вывести содержимое файла, не допуская недопустимых символов.
+Это расширение groff и игнорируется из-за небезопасности.
 .It Ic \&trimat Ar left top width height
-Set the TrimBox page parameter for PDF generation.
-This is a Heirloom extension and currently ignored.
+Устанавливает параметр страницы TrimBox для генерации PDF.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&trin Ar glyph glyph ...
-Output character translation, ignored by
+Перевод выходных символов, игнорируется
 .Ic \&asciify .
-Currently unsupported.
+В настоящее время не поддерживается.
 .It Ic \&trnt Ar glyph glyph ...
-Output character translation, ignored by \e!.
-Currently unsupported.
+Перевод выходного символа, игнорируется \e!
+В настоящее время не поддерживается.
 .It Ic \&troff
-Force troff mode.
-This is a groff extension and currently ignored.
+Принудительное использование режима troff.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&TS
-Begin a table, which formats input in aligned rows and columns.
-See
+Начать таблицу, которая форматирует ввод в выровненные строки и столбцы.
+См.
 .Xr tbl 7
-for a description of the tbl language.
+для описания языка tbl.
 .It Ic \&uf Ar font
-Globally set the underline font.
-Currently ignored.
+Глобальная установка шрифта подчеркивания.
+В настоящее время игнорируется.
 .It Ic \&ul Op Ar N
-Underline next
+Подчеркивание следующее
 .Ar N
-input lines.
-Currently ignored.
+строк ввода.
+В настоящее время игнорируется.
 .It Ic \&unformat Ar divname
-Unformat spaces and tabs in a diversion.
-Currently unsupported.
+Снимает форматирование пробелов и табуляции в диве.
+В настоящее время не поддерживается.
 .It Ic \&unwatch Ar macroname
-Disable notification for string or macro.
-This is a Heirloom extension and currently ignored.
+Отключение уведомления о строке или макросе.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&unwatchn Ar register
-Disable notification for register.
-This is a Heirloom extension and currently ignored.
+Отключить уведомление для регистра.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&vpt Op Cm 1 | 0
-Enable or disable vertical position traps.
-This is a groff extension and currently ignored.
+Включить или отключить vertical position traps.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&vs Op Oo Cm + Ns | Ns Cm - Oc Ns Ar height
-Change vertical spacing.
-Currently ignored.
+Изменение вертикального интервала.
+В настоящее время игнорируется.
 .It Ic \&warn Ar flags
-Set warning level.
-Currently ignored.
+Установить уровень предупреждения.
+В настоящее время игнорируется.
 .It Ic \&warnscale Ar si
-Set the scaling indicator used in warnings.
-This is a groff extension and currently ignored.
+Устанавливает индикатор масштаба, используемый в предупреждениях.
+Это расширение groff и в настоящее время игнорируется.
 .It Ic \&watch Ar macroname
-Notify on change of string or macro.
-This is a Heirloom extension and currently ignored.
+Уведомлять об изменении строки или макроса.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&watchlength Ar maxlength
-On change, report the contents of macros and strings
-up to the specified length.
-This is a Heirloom extension and currently ignored.
-.It Ic \&watchn Ar register
-Notify on change of register.
-This is a Heirloom extension and currently ignored.
+При изменении сообщать о содержимом макросов и строк
+до указанной длины.
+Это расширение Heirloom и в настоящее время игнорируется.
+.It Ic \&watchlength Ar register
+Уведомляет об изменении регистра.
+Это расширение Heirloom и в настоящее время игнорируется.
 .It Ic \&wh Ar dist Op Ar macroname
-Set a page location trap.
-Currently unsupported.
+Устанавливает ловушку расположения страницы.
+В настоящее время не поддерживается.
 .It Ic \&while Ar condition body
-Repeated execution while a
+Повторное выполнение при выполнении
 .Ar condition
-is true, with syntax similar to
+является истинным, с синтаксисом, аналогичным
 .Ic \&if .
-Currently implemented with two restrictions: cannot nest,
-and each loop must start and end in the same scope.
+В настоящее время реализовано с двумя ограничениями: не может быть вложенным,
+и каждый цикл должен начинаться и заканчиваться в одной и той же области видимости.
 .It Ic \&write Oo \(dq Oc Ns Ar string
-Write to an open file.
-Ignored because insecure.
+Запись в открытый файл.
+Игнорируется, так как небезопасно.
 .It Ic \&writec Oo \(dq Oc Ns Ar string
-Write to an open file without appending a newline.
-Ignored because insecure.
+Запись в открытый файл без добавления новой строки.
+Игнорируется из-за небезопасности.
 .It Ic \&writem Ar macroname
-Write macro or string to an open file.
-Ignored because insecure.
+Запись макроса или строки в открытый файл.
+Игнорируется из-за небезопасности.
 .It Ic \&xflag Ar level
-Set the extension level.
-This is a Heirloom extension and currently ignored.
+Установить уровень расширения.
+Это расширение Heirloom и в настоящее время игнорируется.
 .El
-.Ss Numerical expressions
-The
+.Ss Числовые выражения
 .Ic \&nr ,
 .Ic \&if ,
-and
+и
 .Ic \&ie
-requests accept integer numerical expressions as arguments.
-These are always evaluated using the C
+принимают в качестве аргументов целочисленные числовые выражения.
+Они всегда оцениваются с помощью C
 .Vt int
-type; integer overflow works the same way as in the C language.
-Numbers consist of an arbitrary number of digits
+тип; целочисленное переполнение работает так же, как и в языке C.
+Числа состоят из произвольного количества цифр
 .Sq 0
-to
+до
 .Sq 9
-prefixed by an optional sign
+перед которыми ставится необязательный знак
 .Sq +
-or
+или
 .Sq - .
-Each number may be followed by one optional scaling unit described below
-.Sx Scaling Widths .
-The following equations hold:
+За каждым числом может следовать одна необязательная единица масштабирования, описанная ниже
+.Sx Ширина масштабирования .
+При этом действуют следующие уравнения:
 .Bd -literal -offset indent
 1i = 6v = 6P = 10m = 10n = 72p = 1000M = 240u = 240
 254c = 100i = 24000u = 24000
 1f = 65536u = 65536
 .Ed
 .Pp
-The following binary operators are implemented.
-Unless otherwise stated, they behave as in the C language:
+Реализованы следующие двоичные операторы.
+Если не указано иное, они ведут себя так же, как в языке C:
 .Pp
 .Bl -tag -width 2n -compact
 .It Ic +
-addition
+сложение
 .It Ic -
-subtraction
+вычитание
 .It Ic *
-multiplication
+умножение
 .It Ic /
-division
+деление
 .It Ic %
-remainder of division
+остаток от деления
 .It Ic <
-less than
+меньше чем
 .It Ic >
-greater than
+больше
 .It Ic ==
-equal to
+равный
 .It Ic =
-equal to, same effect as
+равно, тот же эффект, что и
 .Ic ==
-(this differs from C)
+(отличается от C)
 .It Ic <=
-less than or equal to
+меньше или равно
 .It Ic >=
-greater than or equal to
+больше или равно
 .It Ic <>
-not equal to (corresponds to C
+не равно (соответствует C
 .Ic != ;
-this one is of limited portability, it is supported by Heirloom roff,
-but not by groff)
+Этот вариант имеет ограниченную переносимость, он поддерживается Heirloom roff,
+но не groff)
 .It Ic &
-logical and (corresponds to C
+логическое и (соответствует C
 .Ic && )
 .It Ic \&:
-logical or (corresponds to C
+логическое или (соответствует C
 .Ic || )
 .It Ic <?
-minimum (not available in C)
+минимальное (отсутствует в C)
 .It Ic >?
-maximum (not available in C)
+максимум (недоступно в C)
 .El
 .Pp
-There is no concept of precedence; evaluation proceeds from left to right,
-except when subexpressions are enclosed in parentheses.
-Inside parentheses, whitespace is ignored.
-.Sh ESCAPE SEQUENCE REFERENCE
-The
+Понятие старшинства отсутствует; оценка выполняется слева направо,
+за исключением случаев, когда подвыражения заключены в круглые скобки.
+Внутри круглых скобок пробельные символы игнорируются.
+.Sh ССЫЛКА НА ESCAPE-ПОСЛЕДОВАТЕЛЬНОСТЬ
 .Xr mandoc 1
 .Nm
-parser recognises the following escape sequences.
-In
+распознает следующие экранирующие последовательности.
+В
 .Xr mdoc 7
-and
+и
 .Xr man 7
-documents, using escape sequences is discouraged except for those
-described in the
-.Sx LANGUAGE SYNTAX
-section above.
+не рекомендуется использовать управляющие последовательности, за исключением тех, которые
+описанных в
+.Sh ССЫЛКА НА ESCAPE-ПОСЛЕДОВАТЕЛЬНОСТЬ
 .Pp
-A backslash followed by any character not listed here
-simply prints that character itself.
+Обратная косая черта, за которой следует любой символ, не перечисленный здесь
+просто печатает сам этот символ.
 .Bl -tag -width Ds
 .It Ic \e<newline>
-A backslash at the end of an input line can be used to continue the
-logical input line on the next physical input line, joining the text
-on both lines together as if it were on a single input line.
+Обратная косая черта в конце строки ввода может быть использована для продолжения
+логической строки ввода на следующую физическую строку ввода, соединяя текст
+на обеих строках, как если бы он был на одной строке ввода.
 .It Ic \e<space>
-The escape sequence backslash-space
-.Pq Sq \e\ \&
-is an unpaddable space-sized non-breaking space character; see
-.Sx Whitespace
-and
+Экранирующая последовательность backslash-space
+.Pq Sq \e\ \e\ \&
+это символ неразрывного пробела размером с пробел; см.
+.Sx Пробелы
+и
 .Xr mandoc_char 7 .
 .It Ic \e!
-Embed text up to and including the end of the input line into the
-current diversion or into intermediate output without interpreting
-requests, macros, and escapes.
-Currently unsupported.
+Встраивает текст до конца строки ввода включительно в
+текущий отвод или в промежуточный вывод без интерпретации
+запросов, макросов и escapes.
+В настоящее время не поддерживается.
 .It Ic \e\(dq
-The rest of the input line is treated as
-.Sx Comments .
+Оставшаяся часть входной строки обрабатывается как
+.Sx Комментарии .
 .It Ic \e#
-Line continuation with comment.
-Discard the rest of the physical input line and continue the logical
-input line on the next physical input line, joining the text on
-both lines together as if it were on a single input line.
-This is a groff extension.
+Продолжение строки с комментарием.
+Отбросьте остаток физической строки ввода и продолжите логическую
+логическую строку ввода на следующей физической строке ввода, соединяя текст на
+соединяя текст на обеих строках, как если бы он был на одной строке ввода.
+Это расширение groff.
 .It Ic \e$ Ns Ar arg
-Macro argument expansion, see
+Расширение аргумента макроса, см.
 .Ic \&de .
 .It Ic \e%
-Hyphenation allowed at this point of the word; ignored by
+Дефис разрешен в этой точке слова; игнорируется
 .Xr mandoc 1 .
 .It Ic \e&
-Non-printing zero-width character,
-often used for various kinds of escaping; see
-.Sx Whitespace ,
+Непечатаемый символ нулевой ширины,
+часто используется для различных видов экранирования; см.
+.Sx Пробелы ,
 .Xr mandoc_char 7 ,
-and the
-.Dq MACRO SYNTAX
-and
-.Dq Delimiters
-sections in
+и
+.Dq СИНТАКСИС МАКРОСОВ
+и
+.Dq Разделители
+разделы в
 .Xr mdoc 7 .
 .It Ic \e\(aq
-Acute accent special character; use
+Специальный символ острого ударения; используйте
 .Ic \e(aa
-instead.
+вместо него.
 .It Ic \e( Ns Ar cc
-.Sx Special Characters
-with two-letter names, see
+.Sx Специальные символы
+с двухбуквенными именами, см.
 .Xr mandoc_char 7 .
 .It Ic \e)
-Zero-width space transparent to end-of-sentence detection;
-ignored by
+Пробел нулевой ширины, прозрачный для определения конца предложения;
+игнорируется
 .Xr mandoc 1 .
 .It Ic \e*[ Ns Ar name Ns Ic \&]
-Interpolate the string with the
+Интерполировать строку с
 .Ar name .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \e* Ns Ar c
-and
+и
 .Ic \e*( Ns Ar cc .
 .Pp
-One string is predefined on the
+Одна строка предопределена в
 .Nm
-language level:
+языкового уровня:
 .Ic \e*(.T
-expands to the name of the output device,
-for example ascii, utf8, ps, pdf, html, or markdown.
+Расширяется до имени устройства вывода,
+например, ascii, utf8, ps, pdf, html или markdown.
 .Pp
-Macro sets traditionally predefine additional strings which are not
-portable and differ across implementations.
-Those supported by
+Наборы макросов традиционно предопределяют дополнительные строки, которые не являются
+не переносимы и различаются в разных реализациях.
+Те, которые поддерживаются
 .Xr mandoc 1
-are listed in
+перечислены в
 .Xr mandoc_char 7 .
 .Pp
-Strings can be defined, changed, and deleted with the
+Строки могут быть определены, изменены и удалены с помощью команды
 .Ic \&ds ,
 .Ic \&as ,
-and
+и
 .Ic \&rm
-requests.
+запросами.
 .It Ic \e,
-Left italic correction (groff extension); ignored by
+Коррекция левого курсива (расширение groff); игнорируется запросами
 .Xr mandoc 1 .
 .It Ic \e-
-Special character
-.Dq mathematical minus sign ;
-see
+Специальный символ
+.Dq математический знак минус;
+см.
 .Xr mandoc_char 7
-for details.
+для подробностей.
 .It Ic \e/
-Right italic correction (groff extension); ignored by
+коррекция правого курсива (расширение groff); игнорируется
 .Xr mandoc 1 .
 .It Ic \e:
-Breaking the line is allowed at this point of the word
-without inserting a hyphen.
+Разрыв строки разрешен в этой точке слова
+без вставки дефиса.
 .It Ic \e?
-Embed the text up to the next
+Встраивать текст до следующего
 .Ic \e?
-into the current diversion without interpreting requests, macros,
-and escapes.
-This is a groff extension and currently unsupported.
+в текущий отвод без интерпретации запросов, макросов,
+и эскейпов.
+Это расширение groff и в настоящее время не поддерживается.
 .It Ic \e[ Ns Ar name Ns Ic \&]
-.Sx Special Characters
-with names of arbitrary length, see
+.Sx Специальные символы
+с именами произвольной длины, см.
 .Xr mandoc_char 7 .
 .It Ic \e^
-One-twelfth em half-narrow space character, effectively zero-width in
+Двенадцатый эм полуузкий пробельный символ, фактически нулевой ширины в
 .Xr mandoc 1 .
 .It Ic \e_
-Underline special character; use
+Специальный символ подчеркивания; используется
 .Ic \e(ul
-instead.
+вместо него.
 .It Ic \e`
-Grave accent special character; use
+Специальный символ могильного ударения; используйте
 .Ic \e(ga
-instead.
+вместо него.
 .It Ic \e{
-Begin conditional input; see
+Начало условного ввода; см.
 .Ic \&if .
 .It Ic \e\(ba
-One-sixth em narrow space character, effectively zero-width in
+Символ с узким пробелом в одну шестую em, фактически нулевой ширины в
 .Xr mandoc 1 .
 .It Ic \e}
-End conditional input; see
+Конец условного ввода; см.
 .Ic \&if .
 .It Ic \e~
-Paddable non-breaking space character.
+Символ неразрывного пробела.
 .It Ic \e0
-Digit width space character.
+Символ пробела шириной в цифру.
 .It Ic \eA\(aq Ns Ar string Ns Ic \(aq
-Anchor definition; ignored by
+Определение якоря; игнорируется
 .Xr mandoc 1 .
 .It Ic \ea
-Leader character; ignored by
+Ведущий символ; игнорируется
 .Xr mandoc 1 .
 .It Ic \eB\(aq Ns Ar string Ns Ic \(aq
-Interpolate
+Интерполировать
 .Sq 1
-if
+если
 .Ar string
-conforms to the syntax of
-.Sx Numerical expressions
-explained above or
+соответствует синтаксису
+.Sx Числовые выражения
+описанному выше, или
 .Sq 0
-otherwise.
+иначе.
 .It Ic \eb\(aq Ns Ar string Ns Ic \(aq
-Bracket building function; ignored by
+Функция построения скобок; игнорируется
 .Xr mandoc 1 .
-.It Ic \eC\(aq Ns Ar name Ns Ic \(aq
-.Sx Special Characters
-with names of arbitrary length.
+.It Ic \eC\(aq Ns Ar имя Ns Ic \(aq
+.Sx Специальные символы
+с именами произвольной длины.
 .It Ic \ec
-When encountered at the end of an input text line,
-the next input text line is considered to continue that line,
-even if there are request or macro lines in between.
-No whitespace is inserted.
+Встречается в конце строки вводимого текста,
+следующая строка текста считается продолжением этой строки,
+даже если между ними есть строки запроса или макроса.
+Пробельные символы не вставляются.
 .It Ic \eD\(aq Ns Ar string Ns Ic \(aq
-Draw graphics function; ignored by
+Функция рисования графики; игнорируется
 .Xr mandoc 1 .
 .It Ic \ed
-Move down by half a line; ignored by
+Перемещение вниз на половину строки; игнорируется
 .Xr mandoc 1 .
 .It Ic \eE
-Escape character intended to not be interpreted in copy mode.
-In
+Символ Escape, который не должен интерпретироваться в режиме копирования.
+В
 .Xr mandoc 1 ,
-it currently does the same as
+в настоящее время он выполняет те же функции, что и
 .Ic \e
-itself.
+сам по себе.
 .It Ic \ee
-Backslash special character.
+Специальный символ обратной косой черты.
 .It Ic \eF[ Ns Ar name Ns Ic \&]
-Switch font family (groff extension); ignored by
+Переключение семейства шрифтов (расширение groff); игнорируется
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \eF Ns Ar c
-and
+и
 .Ic \eF( Ns Ar cc .
 .It Ic \ef[ Ns Ar name Ns Ic \&]
-Switch to the font
+Переключитесь на шрифт
 .Ar name ,
-see
-.Sx Font Selection .
-For short names, there are variants
+см.
+.Sx Выбор шрифта.
+Для коротких имен существуют варианты
 .Ic \ef Ns Ar c
-and
+и
 .Ic \ef( Ns Ar cc .
-An empty name
+Пустое имя
 .Ic \ef[]
-defaults to
+по умолчанию принимает значение
 .Ic \efP .
 .It Ic \eg[ Ns Ar name Ns Ic \&]
-Interpolate the format of a number register; ignored by
+Интерполирует формат регистра чисел; игнорируется
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \eg Ns Ar c
-and
+и
 .Ic \eg( Ns Ar cc .
 .It Ic \eH\(aq Ns Oo +|- Oc Ns Ar number Ns Ic \(aq
-Set the height of the current font; ignored by
+Установить высоту текущего шрифта; игнорируется
 .Xr mandoc 1 .
-.It Ic \eh\(aq Ns Oo Cm \&| Oc Ns Ar width Ns Ic \(aq
-Horizontal motion.
-If the vertical bar is given, the motion is relative to the current
-indentation.
-Otherwise, it is relative to the current position.
-The default scaling unit is
+.It Ic \eh\(aq Ns Oo Cm \&| Oc Ns Ar ширина Ns Ic \(aq
+Горизонтальное движение.
+Если задана вертикальная полоса, движение осуществляется относительно текущего
+отступа.
+В противном случае - относительно текущей позиции.
+Единицей масштабирования по умолчанию является
 .Cm m .
 .It Ic \ek[ Ns Ar name Ns Ic \&]
-Mark horizontal input place in register; ignored by
+Отметка места горизонтального ввода в регистре; игнорируется
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \ek Ns Ar c
-and
+и
 .Ic \ek( Ns Ar cc .
 .It Ic \eL\(aq Ns Ar number Ns Oo Ar c Oc Ns Ic \(aq
-Vertical line drawing function; ignored by
+Функция рисования вертикальных линий; игнорируется
 .Xr mandoc 1 .
-.It Ic \el\(aq Ns Ar width Ns Oo Ar c Oc Ns Ic \(aq
-Draw a horizontal line of
+.It Ic \el\(aq Ns Ar ширина Ns Oo Ar c Oc Ns Ic \(aq
+Нарисовать горизонтальную линию шириной
 .Ar width
-using the glyph
+используя глиф
 .Ar c .
 .It Ic \eM[ Ns Ar name Ns Ic \&]
-Set fill (background) color (groff extension); ignored by
+Установка цвета заливки (фона) (расширение groff); игнорируется
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \eM Ns Ar c
-and
+и
 .Ic \eM( Ns Ar cc .
 .It Ic \em[ Ns Ar name Ns Ic \&]
-Set glyph drawing color (groff extension); ignored by
+Установка цвета рисунка глифа (расширение groff); игнорируется
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \em Ns Ar c
-and
+и
 .Ic \em( Ns Ar cc .
-.It Ic \eN\(aq Ns Ar number Ns Ic \(aq
-Character
+.It Ic \eN\(aq Ns Ar число Ns Ic \(aq
+Характер
 .Ar number
-on the current font.
-.It Ic \en Ns Oo +|- Oc Ns Ic \&[ Ns Ar name Ns Ic \&]
-Interpolate the number register
+на текущем шрифте.
+.It Ic \en Ns Oo +|- Oc Ns Ic \&[ Ns Ar имя Ns Ic \&]
+Интерполировать регистр номера
 .Ar name .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \en Ns Ar c
-and
+и
 .Ic \en( Ns Ar cc .
-If the optional sign is specified,
-the register is first incremented or decremented by the
+Если указан необязательный знак,
+регистр сначала увеличивается или уменьшается на величину
 .Ar stepsize
-that was specified in the relevant
+который был указан в соответствующем
 .Ic \&nr
-request, and the changed value is interpolated.
-.It Ic \eO Ns Ar digit , Ic \eO[5 Ns arguments Ns Ic \&]
-Suppress output.
-This is a groff extension and currently unsupported.
-With an argument of
+и измененное значение интерполируется.
+.It Ic \eO Ns Ar digit , Ic \eO[5 Ns аргументов Ns Ic \&]
+Подавление вывода.
+Это расширение groff и в настоящее время не поддерживается.
+С аргументом
 .Ic 1 , 2 , 3 ,
-or
+или
 .Ic 4 ,
-it is ignored.
+он игнорируется.
 .It Ic \eo\(aq Ns Ar string Ns Ic \(aq
-Overstrike, writing all the characters contained in the
+Перечеркивание, запись всех символов, содержащихся в строке
 .Ar string
-to the same output position.
-In terminal and HTML output modes,
-only the last one of the characters is visible.
+в одну и ту же позицию вывода.
+В режимах вывода терминала и HTML,
+будет виден только последний из символов.
 .It Ic \ep
-Break the output line at the end of the current word.
+Прерывает строку вывода в конце текущего слова.
 .It Ic \eR\(aq Ns Ar name Oo +|- Oc Ns Ar number Ns Ic \(aq
-Set number register; ignored by
+Установить регистр номера; игнорируется
 .Xr mandoc 1 .
 .It Ic \er
-Move up by one line; ignored by
+Перемещение на одну строку вверх; игнорируется
 .Xr mandoc 1 .
 .It Ic \eS\(aq Ns Ar number Ns Ic \(aq
-Slant output; ignored by
+Наклонный вывод; игнорируется
 .Xr mandoc 1 .
 .It Ic \es\(aq Ns Oo +|- Oc Ns Ar number Ns Ic \(aq
-Change point size; ignored by
+Изменить размер точки; игнорируется
 .Xr mandoc 1 .
-Alternative forms
+Альтернативные формы
 .Ic \es Ns Oo +|- Oc Ns Ar n ,
 .Ic \es Ns Oo +|- Oc Ns Ic \(aq Ns Ar number Ns Ic \(aq ,
 .Ic \es[ Ns Oo +|- Oc Ns Ar number Ns Ic \&] ,
-and
+и
 .Ic \es Ns Oo +|- Oc Ns Ic \&[ Ns Ar number Ns Ic \&]
-are also parsed and ignored.
+также разбираются и игнорируются.
 .It Ic \et
-Horizontal tab; ignored by
+Горизонтальная табуляция; игнорируется
 .Xr mandoc 1 .
 .It Ic \eu
-Move up by half a line; ignored by
+Переместиться на полстроки вверх; игнорируется
 .Xr mandoc 1 .
 .It Ic \eV[ Ns Ar name Ns Ic \&]
-Interpolate an environment variable; ignored by
+Интерполировать переменную окружения; игнорируется
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \eV Ns Ar c
-and
+и
 .Ic \eV( Ns Ar cc .
 .It Ic \ev\(aq Ns Ar number Ns Ic \(aq
-Vertical motion; ignored by
+Вертикальное движение; игнорируется
 .Xr mandoc 1 .
 .It Ic \ew\(aq Ns Ar string Ns Ic \(aq
-Interpolate the width of the
+Интерполировать ширину
 .Ar string .
-The
 .Xr mandoc 1
-implementation assumes that after expansion of user-defined strings, the
-.Ar string
-only contains normal characters, no escape sequences, and that each
-character has a width of 24 basic units.
+предполагает, что после расширения пользовательских строк, строка
+.Ar string .
+содержит только обычные символы, без управляющих последовательностей, и что каждый символ
+символ имеет ширину 24 базовые единицы.
 .It Ic \eX\(aq Ns Ar string Ns Ic \(aq
-Output
-.Ar string
-as device control function; ignored in nroff mode and by
+Выход
+.Ar string .
+как функция управления устройством; игнорируется в режиме nroff и при
 .Xr mandoc 1 .
-.It Ic \ex\(aq Ns Ar number Ns Ic \(aq
-Extra line space function; ignored by
+.It Ic \ev\(aq Ns Ar number Ns Ic \(aq
+Функция дополнительного пробела в строке; игнорируется
 .Xr mandoc 1 .
 .It Ic \eY[ Ns Ar name Ns Ic \&]
-Output a string as a device control function; ignored in nroff mode and by
+Вывод строки в качестве функции управления устройством; игнорируется в режиме nroff и программой
 .Xr mandoc 1 .
-For short names, there are variants
+Для коротких имен существуют варианты
 .Ic \eY Ns Ar c
-and
+и
 .Ic \eY( Ns Ar cc .
 .It Ic \eZ\(aq Ns Ar string Ns Ic \(aq
-Print
+Печать
 .Ar string
-with zero width and height; ignored by
+с нулевой шириной и высотой; игнорируется
 .Xr mandoc 1 .
 .It Ic \ez
-Output the next character without advancing the cursor position.
+Вывод следующего символа без перемещения позиции курсора.
 .El
-.Sh COMPATIBILITY
-The
+.Sh СОВМЕСТИМОСТЬ
 .Xr mandoc 1
-implementation of the
+реализация
 .Nm
-language is incomplete.
-Major unimplemented features include:
+является неполной.
+К основным нереализованным функциям относятся:
 .Pp
 .Bl -dash -compact
 .It
-For security reasons,
+По соображениям безопасности,
 .Xr mandoc 1
-never reads or writes external files except via
+никогда не читает и не записывает внешние файлы, кроме как через
 .Ic \&so
-requests with safe relative paths.
+запросы с безопасными относительными путями.
 .It
-There is no automatic hyphenation, no adjustment to the right margin,
-and very limited support for centering; the output is always set flush-left.
+Отсутствует автоматическое выделение дефисов, нет настройки правого поля,
+и очень ограниченная поддержка центрирования; вывод всегда устанавливается заподлицо с левым краем.
 .It
-Support for setting tabulator and leader characters is missing,
-and support for manually changing indentation is limited.
+Отсутствует поддержка установки табулятора и ведущих символов,
+и поддержка ручного изменения отступа ограничена.
 .It
-The
 .Sq u
-scaling unit is the default terminal unit.
-In traditional troff systems, this unit changes depending on the
-output media.
+является единицей масштабирования по умолчанию.
+В традиционных системах troff эта единица изменяется в зависимости от
+носителя вывода.
 .It
-Width measurements are implemented in a crude way
-and often yield wrong results.
-Support for explicit movement requests and escapes is limited.
+Измерения ширины реализованы грубым способом
+и часто дают неверные результаты.
+Поддержка явных запросов на перемещение и экранирование ограничена.
 .It
-There is no concept of output pages, no support for floats,
-graphics drawing, and picture inclusion;
-terminal output is always continuous.
+Отсутствует концепция страниц вывода, нет поддержки поплавков,
+рисования графики и включения картинок;
+терминальный вывод всегда непрерывный.
 .It
-Requests regarding color, font families, font sizes,
-and glyph manipulation are ignored.
-Font support is very limited.
-Kerning is not implemented, and no ligatures are produced.
+Запросы, касающиеся цвета, семейства шрифтов, размера шрифтов,
+и манипуляций с глифами игнорируются.
+Поддержка шрифтов очень ограничена.
+Кернинг не реализован, лигатуры не создаются.
 .It
-The
 .Qq \(aq
-macro control character does not suppress output line breaks.
+не подавляет разрывы строк.
 .It
-Diversions and environments are not implemented,
-and support for traps is very incomplete.
+Не реализованы диверсии и окружения,
+а поддержка ловушек очень неполна.
 .It
-Use of macros is not supported inside
+Использование макросов не поддерживается внутри
 .Xr tbl 7
-code.
+код.
 .El
 .Pp
-The special semantics of the
+Специальная семантика
 .Cm nS
-number register is an idiosyncrasy of
+регистра чисел является идиосинкразией
 .Ox
-manuals and not supported by other
+и не поддерживается другими руководствами.
 .Xr mdoc 7
-implementations.
-.Sh SEE ALSO
+реализациями.
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr mandoc 1 ,
 .Xr eqn 7 ,
 .Xr man 7 ,
@@ -2301,7 +2281,7 @@ implementations.
 .%A Brian W. Kernighan
 .%I AT&T Bell Laboratories
 .%T Troff User's Manual
-.%R Computing Science Technical Report
+.%R Технический отчет по вычислительной технике
 .%N 54
 .%C Murray Hill, New Jersey
 .%D 1976 and 1992
@@ -2315,28 +2295,28 @@ implementations.
 .%D September 17, 2007
 .%U http://heirloom.sourceforge.net/doctools/troff.pdf
 .Re
-.Sh HISTORY
-The RUNOFF typesetting system, whose input forms the basis for
+.Sh ИСТОРИЯ
+Система набора RUNOFF, чьи исходные данные легли в основу
 .Nm ,
-was written in MAD and FAP for the CTSS operating system by Jerome E.
-Saltzer in 1964.
-Doug McIlroy rewrote it in BCPL in 1969, renaming it
+была написана на языках MAD и FAP для операционной системы CTSS Джеромом Е.
+Зальтцером в 1964 году.
+Doug McIlroy переписал ее на BCPL в 1969 году, переименовав ее в
 .Nm .
-Dennis M. Ritchie rewrote McIlroy's
+Dennis M. Ritchie переписал версию McIlroy's
 .Nm
-in PDP-11 assembly for
+на ассемблере PDP-11 для
 .At v1 ,
-Joseph F. Ossanna improved roff and renamed it nroff
-for
+Joseph F. Ossanna  улучшил roff и переименовал его в nroff
+для
 .At v2 ,
-then ported nroff to C as troff, which Brian W. Kernighan released with
+затем портировал nroff на C как troff, который БBrian W. Kernighan выпустил в версии
 .At v7 .
-In 1989, James Clark re-implemented troff in C++, naming it groff.
-.Sh AUTHORS
+В 1989 году James Clark повторно реализовал troff на C++, назвав его groff.
+.Sh АВТОРЫ
 .An -nosplit
-This
+Это
 .Nm
-reference was written by
+была написана
 .An Kristaps Dzonsons Aq Mt kristaps@bsd.lv
-and
+и
 .An Ingo Schwarze Aq Mt schwarze@openbsd.org .

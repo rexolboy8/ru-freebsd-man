@@ -1,196 +1,196 @@
 .\" Copyright (c) 2001 Networks Associates Technology, Inc.
-.\" All rights reserved.
+.\" Все права защищены.
 .\"
-.\" This software was developed for the FreeBSD Project by Chris
-.\" Costello at Safeport Network Services and NAI Labs, the Security
-.\" Research Division of Network Associates, Inc. under DARPA/SPAWAR
-.\" contract N66001-01-C-8035 ("CBOSS"), as part of the DARPA CHATS
-.\" research program.
+.\" Это программное обеспечение было разработано для проекта FreeBSD Chris
+.\" Костелло из Safeport Network Services и NAI Labs, компания Security
+.\" исследовательского подразделения Network Associates, Inc. по контракту DARPA/SPAWAR
+.\" контракт N66001-01-C-8035 ("CBOSS"), как часть исследовательской программы DARPA CHATS
+.\" исследовательской программы.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\" Распространение и использование в исходных и двоичных формах, с модификацией или без
+.\" разрешены при соблюдении следующих условий
+.\" соблюдаются:
+.\" 1. Перераспределение исходного кода должно сохранять вышеуказанное уведомление об авторских правах
+.\" уведомление об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. Перераспределение в двоичной форме должно воспроизводить вышеуказанное уведомление об авторских правах
+.\" уведомление об авторских правах, этот список условий и следующий отказ от ответственности в
+.\" документации и/или других материалах, поставляемых вместе с дистрибутивом.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE AUTHORS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ АВТОРАМИ И РАЗРАБОТЧИКАМИ "КАК ЕСТЬ" И
+.\" ЛЮБЫЕ ЯВНЫЕ ИЛИ ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ
+.\" ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ ТОВАРНОГО СОСТОЯНИЯ И ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ
+.\" НЕ ПРИНИМАЮТСЯ.  НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ АВТОРЫ ИЛИ СОАВТОРЫ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ
+.\" ЗА ЛЮБЫЕ ПРЯМЫЕ, КОСВЕННЫЕ, СЛУЧАЙНЫЕ, СПЕЦИАЛЬНЫЕ, ПРИМЕРНЫЕ ИЛИ КОСВЕННЫЕ УБЫТКИ.
+.\" УЩЕРБ (ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ, ПРИОБРЕТЕНИЕ ТОВАРОВ-ЗАМЕНИТЕЛЕЙ
+.\" ИЛИ УСЛУГИ; ПОТЕРЮ ИСПОЛЬЗОВАНИЯ, ДАННЫХ ИЛИ ПРИБЫЛИ; ИЛИ ПЕРЕРЫВ В РАБОТЕ)
+.\" НЕЗАВИСИМО ОТ ПРИЧИН И ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ, БУДЬ ТО КОНТРАКТ, СТРОГИЙ
+.\" ОТВЕТСТВЕННОСТИ, ИЛИ ДЕЛИКТА (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ), ВОЗНИКАЮЩИХ КАКИМ-ЛИБО ОБРАЗОМ
+.\" В СВЯЗИ С ИСПОЛЬЗОВАНИЕМ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ, ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ
+.\" ТАКОГО УЩЕРБА.
 .\"
-.Dd May 3, 2020
+.Dd 3 мая 2020 г.
 .Dt FFS 7
 .Os
-.Sh NAME
+.Sh ИМЯ
 .Nm ffs
-.Nd Berkeley fast file system
-.Sh SYNOPSIS
-In the kernel configuration file:
-.Cd "options FFS"
-.Cd "options QUOTA"
-.Cd "options SOFTUPDATES"
-.Cd "options SUIDDIR"
-.Cd "options UFS_ACL"
-.Cd "options UFS_DIRHASH"
-.Cd "options UFS_EXTATTR"
-.Cd "options UFS_EXTATTR_AUTOSTART"
-.Cd "options UFS_GJOURNAL"
+.Nd Быстрая файловая система Berkeley
+.Sh СИНОПСИС
+В конфигурационном файле ядра:
+.Cd "параметры FFS"
+.Cd "параметры QUOTA"
+.Cd "параметры SOFTUPDATES"
+.Cd "параметры SUIDDIR"
+.Cd "параметры UFS_ACL"
+.Cd "параметры UFS_DIRHASH"
+.Cd "параметры UFS_EXTATTR"
+.Cd "параметры UFS_EXTATTR_AUTOSTART"
+.Cd "параметры UFS_GJOURNAL"
 .Pp
-In
+В
 .Xr fstab 5 :
 .Bd -literal -compact
-/dev/disk0a	/mnt ufs rw 1 1
+/dev/disk0a /mnt ufs rw 1 1
 .Ed
-.Sh DESCRIPTION
-The Berkeley fast file system
-provides facilities to store file system data onto a disk device.
+.Sh ОПИСАНИЕ
+Быстрая файловая система Berkeley
+предоставляет средства для хранения данных файловой системы на дисковом устройстве.
 .Nm
-has been optimized over the years
-for speed and reliability
-and is the default
+была оптимизирована в течение многих лет
+для повышения скорости и надежности
+и используется по умолчанию
 .Fx
-file system.
-.Ss Quotas
+файловая система.
+.Ss Квоты
 .Bl -tag -width 2n
-.It Cd "options QUOTA"
-This option allows system administrators
-to set limits on disk usage
-on a per-user basis.
-Quotas can be used only on file systems
-mounted with the
+.It Cd "параметры QUOTA"
+Эта опция позволяет системным администраторам
+устанавливать ограничения на использование диска
+для каждого пользователя.
+Квоты можно использовать только для файловых систем
+смонтированных с помощью
 .Cm quota
-option;
-see
+опцией;
+см.
 .Xr quota 1
-and
+и
 .Xr edquota 8 .
 .El
-.Ss Soft Updates
+.Ss программное обновления
 .Bl -tag -width 2n
-.It Cd "options SOFTUPDATES"
-The soft updates feature tracks writes to the disk
-and enforces metadata update dependencies
-(e.g., updating free block maps)
-to ensure that the file system remains consistent.
+.It Cd "параметры SOFTUPDATES"
+Функция программного обновления отслеживает записи на диск
+и обеспечивает выполнение зависимостей обновления метаданных
+(например, обновление карт свободных блоков)
+для обеспечения согласованности файловой системы.
 .Pp
-To create a new file system with the soft updates
-enabled,
-use
+Чтобы создать новую файловую систему с включенной функцией программных обновлений
+включено,
+используйте
 .Xr newfs 8
-command:
+команда:
 .Pp
 .D1 Nm newfs Fl U Ar fs
 .Pp
 .Ar fs
-can be either a mount point listed in
+может быть либо точкой монтирования, указанной в
 .Xr fstab 5
 .Pq e.g. , Pa /usr ,
-or a disk device
+либо дисковым устройством
 .Pq e.g., Pa /dev/da0a .
 .Pp
-It is possible to enable soft updates on an
+Можно включить программное обновление на
 .Em unmounted
-file system by using
+файловой системы с помощью
 .Xr tunefs 8
-command:
+команда:
 .Pp
 .D1 Nm tunefs Fl n Cm enable Ar fs
 .Pp
-Soft updates can also add journaling that reduces the time spent by
+Программное обновления могут также добавить журналирование, которое уменьшает время, затрачиваемое на
 .Xr fsck_ffs 8
-cleaning up a filesystem after a crash from several minutes to a few seconds.
-The journal is placed in an inode named
+на очистку файловой системы после сбоя с нескольких минут до нескольких секунд.
+Журнал помещается в узел с именем
 .Pa .sujournal ,
-and is kept as a circular log of segments containing
-records that describe metadata operations.
+и хранится в виде кругового журнала, состоящего из сегментов, содержащих
+записи, описывающие операции с метаданными.
 .Pp
-To create a new file system with both the soft updates
-and soft updates journaling enabled,
-use the following command:
+Чтобы создать новую файловую систему с включенной функцией мягких обновлений
+и включенной журнализацией мягких обновлений,
+используйте следующую команду:
 .Pp
 .D1 Nm newfs Fl j Ar fs
 .Pp
-This runs
+Это запускает
 .Xr tunefs 8
-command after
+команда после
 .Xr newfs 8
-command with
+команда с
 .Fl U
-flag enabled.
-It is possible to enable soft updates journaling on an
+флаг включен.
+Можно включить журналирование мягких обновлений на
 .Em unmounted
-file system by using
+файловой системы с помощью
 .Xr tunefs 8
-command:
+команда:
 .Pp
 .D1 Nm tunefs Fl j Cm enable Ar fs
 .Pp
-This flag automatically enables the soft updates feature
-when it is not enabled.
-Note that this
+Этот флаг автоматически включает функцию плавного обновления
+если она не включена.
+Обратите внимание, что этот
 .Xr tunefs 8
-command will fail if a file
+не выполнится, если файл
 .Pa .sujournal
-already exists before enabling the soft updates journaling.
+уже существует до включения журналирования мягких обновлений.
 .El
-.Ss File Ownership Inheritance
+.Ss Наследование прав собственности на файлы
 .Bl -tag -width 2n
-.It Cd "options SUIDDIR"
-For use in file sharing environments
-on networks including
+.It Cd "параметры SUIDDIR"
+Для использования в средах совместного доступа к файлам
+в сетях, включающих
 .Tn "Microsoft Windows"
-and
+и
 .Tn "Apple Macintosh"
-computers,
-this option allows files on file systems
-mounted with the
+компьютеры,
+этот параметр позволяет файлам на файловых системах
+смонтированных с помощью
 .Cm suiddir
-option
-to inherit the ownership of its directory,
-i.e.,
-.Dq "if it's my directory, it must be my file."
+опция
+унаследовать право собственности на свой каталог,
+т.е.,
+.Dq "Если это мой каталог, то это должен быть мой файл."
 .El
-.Ss Access Control Lists
+.Ss Списки контроля доступа
 .Bl -tag -width 2n
-.It Cd "options UFS_ACL"
-Access control lists allow the association of
-fine-grained discretionary access control information
-with files and directories.
-This option requires the presence of the
+.It Cd "параметры UFS_ACL"
+Списки контроля доступа позволяют объединять
+тонкую информацию о дискреционном контроле доступа
+с файлами и каталогами.
+Эта опция требует наличия параметра
 .Dv UFS_EXTATTR
-option, and it is recommended that
+и рекомендуется, чтобы
 .Dv UFS_EXTATTR_AUTOSTART
-is included as well,
-so that ACLs are enabled atomically upon mounting the file system.
+также включена,
+чтобы ACL включались атомарно при монтировании файловой системы.
 .El
 .Pp
-In order to enable support for ACLs,
-two extended attributes must be available in the
+Чтобы включить поддержку ACL,
+в файловой системе должны быть доступны два расширенных атрибута
 .Dv EXTATTR_NAMESPACE_SYSTEM
-namespace:
+пространства имен:
 .Pa posix1e.acl_access ,
-which holds the access ACL,
-and
+который содержит ACL доступа,
+и
 .Pa posix1e.acl_default ,
-which holds the default ACL for directories.
-If you are using file system extended attributes,
-the following commands may be used to
-allocate space for and create the necessary EA backing files
-for ACLs in the root of each file system.
-In these examples, the root file system is used;
-see
-.Sx "Extended Attributes"
-for more details.
+в котором хранится ACL по умолчанию для каталогов.
+Если вы используете расширенные атрибуты файловой системы,
+следующие команды могут быть использованы для
+выделения места и создания необходимых файлов подложки EA
+для ACL в корне каждой файловой системы.
+В этих примерах используется корневая файловая система;
+см.
+.Sx "Расширенные атрибуты"
+для получения более подробной информации.
 .Bd -literal -offset indent
 mkdir -p /.attribute/system
 cd /.attribute/system
@@ -198,100 +198,100 @@ extattrctl initattr -p / 388 posix1e.acl_access
 extattrctl initattr -p / 388 posix1e.acl_default
 .Ed
 .Pp
-On the next mount of the root file system,
-the attributes will be automatically started if
+При следующем монтировании корневой файловой системы,
+атрибуты будут автоматически запущены, если
 .Dv UFS_EXTATTR_AUTOSTART
-is included in the kernel configuration,
-and ACLs will be enabled.
-.Ss Directory Hashing
+включен в конфигурацию ядра,
+и будут включены ACL.
+.Ss Хеширование каталогов
 .Bl -tag -width 2n
-.It Cd "options UFS_DIRHASH"
-Implements a hash-based lookup scheme for directories
-in order to speed up accesses to very large directories.
+.It Cd "параметры UFS_DIRHASH"
+Реализует схему поиска каталогов на основе хэша
+для ускорения доступа к очень большим каталогам.
 .El
-.Ss Extended Attributes
+.Ss Расширенные атрибуты
 .Bl -tag -width 2n
-.It Cd "options UFS_EXTATTR"
-Extended attributes allow the association of
-additional arbitrary metadata with files and directories,
-which can be assigned and retrieved from userland
-as well as from within the kernel; see
+.It Cd "параметры UFS_EXTATTR"
+Расширенные атрибуты позволяют связывать
+дополнительные произвольные метаданные с файлами и каталогами,
+которые могут назначаться и извлекаться как из пользовательского интерфейса
+а также из ядра; см.
 .Xr extattrctl 8 .
-.It Cd "options UFS_EXTATTR_AUTOSTART"
-If this option is defined,
+.It Cd "параметры UFS_EXTATTR_AUTOSTART"
+Если эта опция определена,
 .Nm
-will search for a
+будет искать
 .Pa .attribute
-subdirectory of the file system root during the mount operation.
-If found, extended attribute support will be
-automatically started for that file system.
+в подкаталоге корня файловой системы во время операции монтирования.
+Если он будет найден, поддержка расширенных атрибутов будет
+будет автоматически запущена поддержка расширенных атрибутов для этой файловой системы.
 .El
-.Ss GEOM-based Journaling
+.Ss Журналирование на основе GEOM
 .Bl -tag -width 2n
-.It Cd "options UFS_GJOURNAL"
-Implements a block level journaling of a UFS file system,
-which is for both data and metadata.
-To enable this,
-create a
+.It Cd "параметры UFS_GJOURNAL"
+Реализует журналирование файловой системы UFS на уровне блоков,
+как для данных, так и для метаданных.
+Чтобы включить эту функцию,
+создайте
 .Xr gjournal 8
-GEOM provider for a block device by using the
-following command:
+провайдера GEOM для блочного устройства с помощью следующей команды
+следующую команду:
 .Pp
 .D1 Nm gjournal label Ar da0
 .Pp
-In this example,
+В этом примере,
 .Pa /dev/da0
-is used as the target block device,
-and
+используется в качестве целевого блочного устройства,
+и
 .Pa /dev/da0.journal
-is created.
-Then create a new file system by using
+будет создан.
+Затем создайте новую файловую систему с помощью
 .Xr newfs 8
-with the block level journaling flag and mount it:
+с флагом журналирования на уровне блоков и смонтируйте ее:
 .Pp
 .D1 Nm newfs Fl J Ar /dev/da0.journal
 .D1 Nm mount Fl o Cm async Ar /dev/da0.journal Ar /mnt
 .Pp
 .Cm async
-option is not mandatory but recommended for better performance
-because the journaling guarantees the consistency of an
+опция не является обязательной, но рекомендуется для повышения производительности
+поскольку журналирование гарантирует согласованность
 .Cm async
-mount.
+монтирование.
 .Pp
-It is also possible to enable the block level journaling
-on an existing file system.
-To do so,
-use
+Также можно включить журналирование на уровне блоков
+в существующей файловой системе.
+Для этого,
+используйте
 .Xr gjournal 8
-utility to label the underlying block device and
+для маркировки базового блочного устройства и
 .Xr tunefs 8
-utility to enable the block level journaling flag:
+чтобы включить флаг журналирования на уровне блока:
 .Pp
 .D1 Nm gjournal label Ar da0
 .D1 Nm tunefs Fl J Cm enable Ar /dev/da0.journal
 .D1 Nm mount Fl o Cm async Ar /dev/da0.journal Ar /mnt
 .El
 .Ss Xr sysctl 8 MIBs
-The following
+Следующие
 .Xr sysctl 8
-MIBs are defined for use with
+MIB определены для использования с
 .Nm :
 .Bl -hang -width ".Va vfs.ffs.doreallocblk"
 .It Va vfs.ffs.doasyncfree
-Asynchronously write out modified i-node and indirect blocks
-upon reallocating file system blocks to be contiguous.
+Асинхронная запись измененных блоков i-узла и косвенных блоков
+при перераспределении блоков файловой системы, чтобы они были смежными.
 .Pq Default: 1 .
 .It Va vfs.ffs.doreallocblks
-Enable support for the rearrangement of blocks
-to be contiguous.
+Включить поддержку перераспределения блоков
+чтобы они были смежными.
 .Pq Default: 1 .
 .El
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
+Адрес
 .Nm
-manual page first appeared in
+впервые появилась в
 .Fx 4.5 .
-.Sh SEE ALSO
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr quota 1 ,
 .Xr acl 3 ,
 .Xr extattr 3 ,
@@ -306,8 +306,8 @@ manual page first appeared in
 .%A S. Leffler
 .%A R. Fabry
 .%D August 1984
-.%T "A Fast File System for UNIX"
-.%J "ACM Transactions on Computer Systems"
+.%T "Быстрая файловая система для UNIX"
+.%J "Транзакции ACM в компьютерных системах"
 .%N 2
 .%V 3
 .%P 181-197
@@ -315,14 +315,14 @@ manual page first appeared in
 .Rs
 .%A M. McKusick
 .%D June 2000
-.%T "Soft Updates: A Technique for Eliminating Most Synchronous Writes in the Fast Filesystem"
-.%J "Proceedings of the Freenix Track at the 1999 Usenix Annual Technical Conference"
+.%T "Программное обновления: метод устранения большинства синхронных операций записи в быстрой файловой системе"
+.%J "Материалы трека Freenix на ежегодной технической конференции Usenix 1999"
 .%P 71-84
 .Re
 .Rs
 .%A M. McKusick
 .%A J. Roberson
 .%D May 2010
-.%T "Journaled Soft-updates"
-.%J "BSD Canada Conference 2010 (BSDCan)"
+.%T "Журнал программное обновления"
+.%J "Канадская конференция BSD 2010 (BSDCan)"
 .Re

@@ -1,98 +1,95 @@
-.\"	$Id: man.7,v 1.148 2021/08/05 14:31:14 schwarze Exp $
+.\" $Id: man.7,v 1.148 2021/08/05 14:31:14 schwarze Exp $
 .\"
 .\" Copyright (c) 2009, 2010, 2011, 2012 Kristaps Dzonsons <kristaps@bsd.lv>
 .\" Copyright (c) 2011-2015, 2017-2020 Ingo Schwarze <schwarze@openbsd.org>
 .\" Copyright (c) 2017 Anthony Bentley <bentley@openbsd.org>
 .\" Copyright (c) 2010 Joerg Sonnenberger <joerg@netbsd.org>
 .\"
-.\" Permission to use, copy, modify, and distribute this software for any
-.\" purpose with or without fee is hereby granted, provided that the above
-.\" copyright notice and this permission notice appear in all copies.
+.\" Разрешение на использование, копирование, изменение и распространение данного программного обеспечения для любых
+
+.\" уведомление об авторских правах и данное разрешение будут присутствовать во всех копиях.
 .\"
-.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\" ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ "КАК ЕСТЬ", И АВТОР ОТКАЗЫВАЕТСЯ ОТ ВСЕХ ГАРАНТИЙ.
+.\" В ОТНОШЕНИИ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ, ВКЛЮЧАЯ ВСЕ ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ
+.\" ТОВАРНОГО СОСТОЯНИЯ И ПРИГОДНОСТИ. НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ АВТОР НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ ЗА
+.\" ЛЮБЫЕ СПЕЦИАЛЬНЫЕ, ПРЯМЫЕ, КОСВЕННЫЕ ИЛИ ПОСЛЕДУЮЩИЕ УБЫТКИ ИЛИ ЛЮБЫЕ УБЫТКИ
+.\" ВОЗНИКШИЕ В РЕЗУЛЬТАТЕ ПОТЕРИ ИСПОЛЬЗОВАНИЯ, ДАННЫХ ИЛИ ПРИБЫЛИ, БУДЬ ТО В
+.\" ПО ДОГОВОРУ, ХАЛАТНОСТИ ИЛИ ДРУГИМ ДЕЛИКТНЫМ ДЕЙСТВИЯМ, ВОЗНИКАЮЩИМ ИЗ
+.\" ИЛИ В СВЯЗИ С ИСПОЛЬЗОВАНИЕМ ИЛИ РАБОТОЙ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ.
 .\"
 .Dd $Mdocdate: August 5 2021 $
 .Dt MAN 7
 .Os
-.Sh NAME
+.Sh ИМЯ
 .Nm man
-.Nd legacy formatting language for manual pages
-.Sh DESCRIPTION
-The
+.Nd Устаревший язык форматирования для справочных страниц
+.Sh ОПИСАНИЕ
 .Nm man
-language was the standard formatting language for
+был стандартным языком форматирования для
 .At
-manual pages from 1979 to 1989.
-Do not use it to write new manual pages: it is a purely presentational
-language and lacks support for semantic markup.
-Use the
+с 1979 по 1989 год.
+Не используйте его для написания новых страниц руководства: это чисто презентационный
+и не поддерживает семантическую разметку.
+Используйте
 .Xr mdoc 7
-language, instead.
+вместо него.
 .Pp
-In a
+В
 .Nm
-document, lines beginning with the control character
+строки, начинающиеся с управляющего символа
 .Sq \&.
-are called
-.Dq macro lines .
-The first word is the macro name.
-It usually consists of two capital letters.
-For a list of portable macros, see
-.Sx MACRO OVERVIEW .
-The words following the macro name are arguments to the macro.
+называются
+.Dq macro cписки .
+Первое слово - это имя макроса.
+Обычно оно состоит из двух заглавных букв.
+Список переносимых макросов см.
+.Sx ОБЗОР МАКРОСОВ.
+Слова, следующие за именем макроса, являются аргументами макроса.
 .Pp
-Lines not beginning with the control character are called
-.Dq text lines .
-They provide free-form text to be printed; the formatting of the text
-depends on the respective processing context:
+Строки, не начинающиеся с управляющего символа, называются
+.Dq text списки .
+Они представляют собой текст произвольной формы для печати; форматирование текста
+зависит от соответствующего контекста обработки:
 .Bd -literal -offset indent
-\&.SH Macro lines change control state.
-Text lines are interpreted within the current state.
+\&.SH Макростроки изменяют состояние управления.
+Текстовые строки интерпретируются в рамках текущего состояния.
 .Ed
 .Pp
-Many aspects of the basic syntax of the
+Многие аспекты базового синтаксиса языка
 .Nm
-language are based on the
+Язык; Смотрите
 .Xr roff 7
-language; see the
-.Em LANGUAGE SYNTAX
-and
-.Em MACRO SYNTAX
-sections in the
+см.
+.Em СИНТАКСИС ЯЗЫКА
+и
+.Em СИНТАКСИС МАКРОСОВ
+разделы в
 .Xr roff 7
-manual for details, in particular regarding
-comments, escape sequences, whitespace, and quoting.
+руководство для получения подробной информации, в частности о
+комментариев, экранирующих последовательностей, пробельных символов и кавычек.
 .Pp
-Each
+Каждый
 .Nm
-document starts with the
+начинается с
 .Ic TH
-macro specifying the document's name and section, followed by the
-.Sx NAME
-section formatted as follows:
+макроса, указывающего имя и раздел документа, за которым следует макрос
+.Sx ИМЯ
+отформатированный следующим образом:
 .Bd -literal -offset indent
 \&.TH PROGNAME 1 1979-01-10
-\&.SH NAME
-\efBprogname\efR \e(en one line about what it does
+\&.SH ИМЯ
+\efBprogname\efR \e(en одна строка о том, что он делает
 .Ed
-.Sh MACRO OVERVIEW
-This overview is sorted such that macros of similar purpose are listed
-together.
-Deprecated and non-portable macros are not included in the overview,
-but can be found in the alphabetical reference below.
-.Ss Page header and footer meta-data
+.Sh ОБЩИЕ СВЕДЕНИЯ
+Этот обзор отсортирован таким образом, что макросы одинакового назначения перечислены вместе.
+Устаревшие и непортируемые макросы не включены в обзор,
+но их можно найти в алфавитном справочнике ниже.
 .Bl -column "RS, RE" description
 .It Ic TH Ta set the title: Ar name section date Op Ar source Op Ar volume
 .It Ic AT Ta display AT&T UNIX version in the page footer (<= 1 argument)
 .It Ic UC Ta display BSD version in the page footer (<= 1 argument)
 .El
-.Ss Sections and paragraphs
+.Ss Разделы и параграфы
 .Bl -column "RS, RE" description
 .It Ic SH Ta section header (one line)
 .It Ic SS Ta subsection header (one line)
@@ -103,7 +100,7 @@ but can be found in the alphabetical reference below.
 .It Ic PD Ta set vertical paragraph distance: Op Ar height
 .It Ic in Ta additional indent: Op Ar width
 .El
-.Ss Physical markup
+.Ss Физическая разметка
 .Bl -column "RS, RE" description
 .It Ic B Ta boldface font
 .It Ic I Ta italic font
@@ -116,172 +113,167 @@ but can be found in the alphabetical reference below.
 .It Ic RB Ta alternate between roman and boldface fonts
 .It Ic RI Ta alternate between roman and italic fonts
 .El
-.Sh MACRO REFERENCE
-This section is a canonical reference to all macros, arranged
-alphabetically.
-For the scoping of individual macros, see
-.Sx MACRO SYNTAX .
+.Sh СПРАВОЧНИК ПО МАКРОСАМ
+Этот раздел представляет собой каноническую ссылку на все макросы, расположенные
+в алфавитном порядке.
+О масштабировании отдельных макросов см.
+.Sx СИНТАКСИС МАКРОСОВ .
 .Bl -tag -width 3n
 .It Ic AT
-Sets the volume for the footer for compatibility with man pages from
+Устанавливает объем нижнего колонтитула для совместимости с man страницами из
 .At
-releases.
-The optional arguments specify which release it is from.
-This macro is an extension that first appeared in
+запросы.
+Необязательные аргументы указывают, из какого выпуска он взят.
+Этот макрос является расширением, впервые появившимся в
 .Bx 4.3 .
 .It Ic B
-Text is rendered in bold face.
+Текст выделяется жирным шрифтом.
 .It Ic BI
-Text is rendered alternately in bold face and italic.
-Thus,
+Текст попеременно отображается жирным шрифтом и курсивом.
+Таким образом,
 .Sq .BI this word and that
-causes
+вызывает
 .Sq this
-and
+и
 .Sq and
-to render in bold face, while
+выделяются жирным шрифтом, в то время как
 .Sq word
-and
+и
 .Sq that
-render in italics.
-Whitespace between arguments is omitted in output.
+выделены курсивом.
+Пробелы между аргументами в выводе опущены.
 .Pp
-Example:
+Пример:
 .Pp
 .Dl \&.BI bold italic bold italic
 .It Ic BR
-Text is rendered alternately in bold face and roman (the default font).
-Whitespace between arguments is omitted in output.
-See also
+Текст попеременно отображается жирным шрифтом и романским (шрифт по умолчанию).
+Пробелы между аргументами при выводе опускаются.
+См. также
 .Ic BI .
 .It Ic DT
-Restore the default tabulator positions.
-They are at intervals of 0.5 inches.
-This has no effect unless the tabulator positions were changed with the
+Восстанавливает позиции табулятора по умолчанию.
+Они заданы с интервалом в 0,5 дюйма.
+Это не имеет никакого эффекта, если позиции табулятора не были изменены с помощью команды
 .Xr roff 7
 .Ic ta
-request.
+запрос.
 .It Ic EE
-This is a non-standard Version 9
+Это нестандартная версия 9
 .At
-extension later adopted by GNU.
-In
+расширение, позднее принятое GNU.
+В
 .Xr mandoc 1 ,
-it does the same as the
+оно делает то же самое, что и
 .Xr roff 7
 .Ic fi
-request (switch to fill mode).
+запрос (переключение в режим заполнения).
 .It Ic EX
-This is a non-standard Version 9
+Это нестандартная версия 9
 .At
-extension later adopted by GNU.
-In
+расширение, позднее принятое GNU.
+В
 .Xr mandoc 1 ,
-it does the same as the
+оно делает то же самое, что и
 .Xr roff 7
 .Ic nf
-request (switch to no-fill mode).
+запрос (переключение в режим отсутствия заполнения).
 .It Ic HP
-Begin a paragraph whose initial output line is left-justified, but
-subsequent output lines are indented, with the following syntax:
+Начать абзац, начальная строка которого выравнивается по левому краю, но
+последующие строки выводятся с отступом, со следующим синтаксисом:
 .Pp
 .D1 Pf . Ic HP Op Ar width
 .Pp
-The
 .Ar width
-argument is a
+является аргументом
 .Xr roff 7
-scaling width.
-If specified, it's saved for later paragraph left margins;
-if unspecified, the saved or default width is used.
+ширина масштабирования.
+Если он указан, он сохраняется для последующих левых полей абзаца;
+если не указан, используется сохраненная ширина или ширина по умолчанию.
 .Pp
-This macro is portable, but deprecated
-because it has no good representation in HTML output,
-usually ending up indistinguishable from
+Этот макрос переносимый, но устаревший
+потому что он не имеет хорошего представления в HTML-выводах,
+обычно он оказывается неотличим от
 .Ic PP .
 .It Ic I
-Text is rendered in italics.
+Текст выделяется курсивом.
 .It Ic IB
-Text is rendered alternately in italics and bold face.
-Whitespace between arguments is omitted in output.
-See also
+Текст попеременно выделяется курсивом и жирным шрифтом.
+Пробелы между аргументами при выводе опускаются.
+См. также
 .Ic BI .
 .It Ic IP
-Begin an indented paragraph with the following syntax:
+Начните абзац с отступом, используя следующий синтаксис:
 .Pp
 .D1 Pf . Ic IP Op Ar head Op Ar width
 .Pp
-The
 .Ar width
-argument is a
+является аргументом
 .Xr roff 7
-scaling width defining the left margin.
-It's saved for later paragraph left-margins; if unspecified, the saved or
-default width is used.
+масштабируемая ширина, определяющая левое поле.
+Он сохраняется для последующих левых полей абзацев; если он не указан, используется сохраненная или
+используется ширина по умолчанию.
 .Pp
-The
 .Ar head
-argument is used as a leading term, flushed to the left margin.
-This is useful for bulleted paragraphs and so on.
+используется как ведущий термин, вытесняемый на левое поле.
+Это полезно для абзацев с пулями и т. д.
 .It Ic IR
-Text is rendered alternately in italics and roman (the default font).
-Whitespace between arguments is omitted in output.
-See also
+Текст выводится поочередно курсивом и римским шрифтом (шрифт по умолчанию).
+Пробелы между аргументами при выводе опускаются.
+См. также
 .Ic BI .
 .It Ic LP
-A synonym for
+Синоним для
 .Ic PP .
 .It Ic ME
-End a mailto block started with
+Завершение блока mailto, начатого с
 .Ic MT .
-This is a non-standard GNU extension.
+Это нестандартное расширение GNU.
 .It Ic MT
-Begin a mailto block.
-This is a non-standard GNU extension.
-It has the following syntax:
+Начало блока mailto.
+Это нестандартное расширение GNU.
+Оно имеет следующий синтаксис:
 .Bd -unfilled -offset indent
 .Pf . Ic MT Ar address
-link description to be shown
+описание ссылки, которая должна быть показана
 .Pf . Ic ME
 .Ed
 .It Ic OP
-Optional command-line argument.
-This is a non-standard DWB extension.
-It has the following syntax:
+Необязательный аргумент командной строки.
+Это нестандартное расширение DWB.
+Оно имеет следующий синтаксис:
 .Pp
 .D1 Pf . Ic OP Ar key Op Ar value
 .Pp
-The
 .Ar key
-is usually a command-line flag and
+обычно является флагом командной строки, а
 .Ar value
-its argument.
+его аргумент.
 .It Ic P
-This synonym for
+Синоним для
 .Ic PP
-is an
+является
 .At III
-extension later adopted by
+расширение, позднее принятое в
 .Bx 4.3 .
 .It Ic PD
-Specify the vertical space to be inserted before each new paragraph.
+Укажите вертикальный пробел, который должен быть вставлен перед каждым новым абзацем.
 .br
-The syntax is as follows:
+Синтаксис выглядит следующим образом:
 .Pp
 .D1 Pf . Ic PD Op Ar height
 .Pp
-The
 .Ar height
-argument is a
+является аргументом
 .Xr roff 7
-scaling width.
-It defaults to
+ширина масштабирования.
+По умолчанию он равен
 .Cm 1v .
-If the unit is omitted,
+Если единица измерения опущена,
 .Cm v
-is assumed.
+принимается за единицу.
 .Pp
-This macro affects the spacing before any subsequent instances of
+Этот макрос влияет на интервал перед любыми последующими экземплярами
 .Ic HP ,
 .Ic IP ,
 .Ic LP ,
@@ -290,216 +282,215 @@ This macro affects the spacing before any subsequent instances of
 .Ic SH ,
 .Ic SS ,
 .Ic SY ,
-and
+и
 .Ic TP .
 .It Ic PP
-Begin an undecorated paragraph.
-The scope of a paragraph is closed by a subsequent paragraph,
-sub-section, section, or end of file.
-The saved paragraph left-margin width is reset to the default.
+
+Начните неоформленный абзац.
+Объем абзаца закрывается последующим абзацем,
+подразделом, разделом или концом файла.
+Сохраненная ширина абзаца по левому краю сбрасывается на значение по умолчанию.
 .It Ic RB
-Text is rendered alternately in roman (the default font) and bold face.
-Whitespace between arguments is omitted in output.
-See also
+Текст попеременно отображается романским (шрифт по умолчанию) и полужирным начертанием.
+Пробелы между аргументами при выводе опускаются.
+См. также
 .Ic BI .
 .It Ic RE
-Explicitly close out the scope of a prior
+Явное закрытие области действия предшественника
 .Ic RS .
-The default left margin is restored to the state before that
+Левое поле по умолчанию восстанавливается до состояния, предшествующего этому
 .Ic RS
-invocation.
+вызов.
 .Pp
-The syntax is as follows:
+Синтаксис следующий:
 .Pp
 .D1 Pf . Ic RE Op Ar level
 .Pp
-Without an argument, the most recent
+Без аргумента используется самый последний
 .Ic RS
-block is closed out.
-If
+блок закрывается.
+Если
 .Ar level
-is 1, all open
+равен 1, все открытые
 .Ic RS
-blocks are closed out.
-Otherwise,
+блоки закрываются.
+В противном случае,
 .Ar level No \(mi 1
-nested
+вложенный
 .Ic RS
-blocks remain open.
+блоки остаются открытыми.
 .It Ic RI
-Text is rendered alternately in roman (the default font) and italics.
-Whitespace between arguments is omitted in output.
-See also
+Текст попеременно отображается романским (шрифт по умолчанию) и курсивным шрифтом.
+Пробелы между аргументами при выводе опускаются.
+См. также
 .Ic BI .
 .It Ic RS
-Temporarily reset the default left margin.
-This has the following syntax:
+Временно сбрасывает левое поле по умолчанию.
+Имеет следующий синтаксис:
 .Pp
 .D1 Pf . Ic RS Op Ar width
 .Pp
-The
 .Ar width
-argument is a
+является аргументом
 .Xr roff 7
-scaling width.
-If not specified, the saved or default width is used.
+ширина масштабирования.
+Если он не указан, используется сохраненная ширина или ширина по умолчанию.
 .Pp
-See also
+См. также
 .Ic RE .
 .It Ic SB
-Text is rendered in small size (one point smaller than the default font)
-bold face.
-This macro is an extension that probably first appeared in SunOS 4.0
-and was later adopted by GNU and by
+Текст отображается маленьким размером (на один пункт меньше, чем шрифт по умолчанию)
+жирный шрифт.
+Этот макрос является расширением, которое, вероятно, впервые появилось в SunOS 4.0
+и позднее было принято GNU и
 .Bx 4.4 .
 .It Ic SH
-Begin a section.
-The scope of a section is only closed by another section or the end of
-file.
-The paragraph left-margin width is reset to the default.
+Начало раздела.
+Область действия секции закрывается только другой секцией или концом
+файла.
+Ширина абзаца по левому краю сбрасывается на значение по умолчанию.
 .It Ic SM
-Text is rendered in small size (one point smaller than the default
-font).
+Текст отображается мелким шрифтом (на один пункт меньше, чем шрифт по умолчанию).
+шрифта по умолчанию).
 .It Ic SS
-Begin a sub-section.
-The scope of a sub-section is closed by a subsequent sub-section,
-section, or end of file.
-The paragraph left-margin width is reset to the default.
+Начало подраздела.
+Область действия подраздела закрывается последующим подразделом,
+разделом или концом файла.
+Ширина абзаца по левому краю сбрасывается на значение по умолчанию.
 .It Ic SY
-Begin a synopsis block with the following syntax:
+Начать блок синопсиса со следующим синтаксисом:
 .Bd -unfilled -offset indent
 .Pf . Ic SY Ar command
 .Ar arguments
 .Pf . Ic YS
 .Ed
 .Pp
-This is a non-standard GNU extension
-and very rarely used even in GNU manual pages.
-Formatting is similar to
+Это нестандартное расширение GNU
+и очень редко используется даже на страницах руководств GNU.
+Форматирование аналогично
 .Ic IP .
 .It Ic TH
-Set the name of the manual page for use in the page header
-and footer with the following syntax:
+Задайте имя страницы руководства для использования в верхнем и нижнем колонтитулах страницы
+и нижнем колонтитуле со следующим синтаксисом:
 .Pp
 .D1 Pf . Ic TH Ar name section date Op Ar source Op Ar volume
 .Pp
-Conventionally, the document
+
+Обычно документ
 .Ar name
-is given in all caps.
-The
+указывается заглавными буквами.
 .Ar section
-is usually a single digit, in a few cases followed by a letter.
-The recommended
+обычно представляет собой одну цифру, в некоторых случаях за ней следует буква.
+Рекомендуемая
 .Ar date
-format is
+формат
 .Sy YYYY-MM-DD
-as specified in the ISO-8601 standard;
-if the argument does not conform, it is printed verbatim.
-If the
+как указано в стандарте ISO-8601;
+если аргумент не соответствует, он печатается дословно.
+Если аргумент
 .Ar date
-is empty or not specified, the current date is used.
-The optional
+пуст или не указан, используется текущая дата.
+Необязательный
 .Ar source
-string specifies the organisation providing the utility.
-When unspecified,
+указывает на организацию, предоставляющую утилиту.
+Если не указано,
 .Xr mandoc 1
-uses its
+использует свой
 .Fl Ios
-argument.
-The
+аргумент.
+Адрес
 .Ar volume
-string replaces the default volume title of the
+заменяет стандартное название тома
 .Ar section .
 .Pp
-Examples:
+Примеры:
 .Pp
 .Dl \&.TH CVS 5 "1992-02-12" GNU
 .It Ic TP
-Begin a paragraph where the head, if exceeding the indentation width, is
-followed by a newline; if not, the body follows on the same line after
-advancing to the indentation width.
-Subsequent output lines are indented.
-The syntax is as follows:
+Начать абзац, в котором заголовок, если он превышает ширину отступа, следует
+следует новая строка; если нет, то тело следует на той же строке после
+после перехода на ширину отступа.
+Последующие строки выводятся с отступом.
+Синтаксис выглядит следующим образом:
 .Bd -unfilled -offset indent
 .Pf . Ic TP Op Ar width
 .Ar head No \e" one line
 .Ar body
 .Ed
 .Pp
-The
 .Ar width
-argument is a
+аргумент
 .Xr roff 7
-scaling width.
-If specified, it's saved for later paragraph left-margins; if
-unspecified, the saved or default width is used.
+ширина масштабирования.
+Если он указан, он сохраняется для последующих левых отступов абзаца; если
+если не указан, используется сохраненная ширина или ширина по умолчанию.
 .It Ic TQ
-Like
+Как
 .Ic TP ,
-except that no vertical spacing is inserted before the paragraph.
-This is a non-standard GNU extension
-and very rarely used even in GNU manual pages.
+за исключением того, что перед абзацем не вставляется вертикальный интервал.
+Это нестандартное расширение GNU
+и очень редко используется даже на страницах руководств GNU.
 .It Ic UC
-Sets the volume for the footer for compatibility with man pages from
+Устанавливает объем нижнего колонтитула для совместимости с man страницами с расширением
 .Bx
-releases.
-The optional first argument specifies which release it is from.
-This macro is an extension that first appeared in
+выпусков.
+Необязательный первый аргумент указывает, из какого выпуска он взят.
+Этот макрос является расширением, которое впервые появилось в
 .Bx 3 .
 .It Ic UE
-End a uniform resource identifier block started with
+Завершает блок унифицированного идентификатора ресурса, начатый с
 .Ic UR .
-This is a non-standard GNU extension.
+Это нестандартное расширение GNU.
 .It Ic UR
-Begin a uniform resource identifier block.
-This is a non-standard GNU extension.
-It has the following syntax:
+Начало блока унифицированных идентификаторов ресурсов.
+Это нестандартное расширение GNU.
+Оно имеет следующий синтаксис:
 .Bd -unfilled -offset indent
 .Pf . Ic UR Ar uri
-link description to be shown
+описание ссылки, которая должна быть показана
 .Pf . Ic UE
 .Ed
 .It Ic YS
-End a synopsis block started with
+Завершить блок синопсиса, начатый с
 .Ic SY .
-This is a non-standard GNU extension.
+Это нестандартное расширение GNU.
 .It Ic in
-Indent relative to the current indentation:
+Отступ относительно текущего отступа:
 .Pp
-.D1 Pf . Ic in Op Ar width
+.D1 Pf . Ic в ширине Op Ar
 .Pp
-If
+Если
 .Ar width
-is signed, the new offset is relative.
-Otherwise, it is absolute.
-This value is reset upon the next paragraph, section, or sub-section.
+подписана, то новое смещение является относительным.
+В противном случае оно является абсолютным.
+Это значение сбрасывается при переходе к следующему абзацу, разделу или подразделу.
 .El
-.Sh MACRO SYNTAX
-The
+.Sh СИНТАКСИС МАКРОСОВ
+Адрес
 .Nm
-macros are classified by scope: line scope or block scope.
-Line macros are only scoped to the current line (and, in some
-situations, the subsequent line).
-Block macros are scoped to the current line and subsequent lines until
-closed by another block macro.
-.Ss Line Macros
-Line macros are generally scoped to the current line, with the body
-consisting of zero or more arguments.
-If a macro is scoped to the next line and the line arguments are empty,
-the next line, which must be text, is used instead.
-Thus:
+Макросы классифицируются по области видимости: область видимости строки или область видимости блока.
+Строчные макросы имеют область видимости только для текущей строки (и, в некоторых
+в некоторых ситуациях - на последующую строку).
+Блочные макросы относятся к текущей строке и последующим строкам до тех пор, пока
+пока не будут закрыты другим блочным макросом.
+.Ss Линейные макросы
+Строковые макросы обычно относятся к текущей строке, а их тело
+состоящее из нуля или более аргументов.
+Если макрос привязан к следующей строке, а аргументы строки пусты,
+вместо него используется следующая строка, которая должна быть текстом.
+Таким образом:
 .Bd -literal -offset indent
 \&.I
 foo
 .Ed
 .Pp
-is equivalent to
+эквивалентно
 .Sq .I foo .
-If next-line macros are invoked consecutively, only the last is used.
-If a next-line macro is followed by a non-next-line macro, an error is
-raised.
+Если макросы следующей строки вызываются последовательно, используется только последний.
+Если за макросом следующей строки следует макрос, не являющийся макросом следующей строки, будет выдана ошибка
+будет выдана ошибка.
 .Pp
-The syntax is as follows:
+Синтаксис следующий:
 .Bd -literal -offset indent
 \&.YO \(lBbody...\(rB
 \(lBbody...\(rB
@@ -526,26 +517,26 @@ The syntax is as follows:
 .It Ic UC  Ta    <=1       Ta    current   Ta    \&
 .It Ic in  Ta    1         Ta    current   Ta    Xr roff 7
 .El
-.Ss Block Macros
-Block macros comprise a head and body.
-As with in-line macros, the head is scoped to the current line and, in
-one circumstance, the next line (the next-line stipulations as in
-.Sx Line Macros
-apply here as well).
+.Ss Блочные макросы
+Блочные макросы состоят из головы и тела.
+Как и в случае со строчными макросами, головка относится к текущей строке и, в некоторых случаях, к следующей строке.
+в некоторых случаях - на следующую строку (условия следующей строки, как в
+.Sx Линейные макросы
+применяются и здесь).
 .Pp
-The syntax is as follows:
+Синтаксис следующий:
 .Bd -literal -offset indent
 \&.YO \(lBhead...\(rB
 \(lBhead...\(rB
 \(lBbody...\(rB
 .Ed
 .Pp
-The closure of body scope may be to the section, where a macro is closed
-by
+Закрытие области видимости тела может быть в раздел, где макрос закрывается
+по адресу
 .Ic SH ;
-sub-section, closed by a section or
+подсекция, закрытая разделом или
 .Ic SS ;
-or paragraph, closed by a section, sub-section,
+или параграф, закрытый разделом, подразделом,
 .Ic HP ,
 .Ic IP ,
 .Ic LP ,
@@ -553,13 +544,13 @@ or paragraph, closed by a section, sub-section,
 .Ic PP ,
 .Ic RE ,
 .Ic SY ,
-or
+или
 .Ic TP .
-No closure refers to an explicit block closing macro.
+Нет закрытия относится к явному макросу закрытия блока.
 .Pp
-As a rule, block macros may not be nested; thus, calling a block macro
-while another block macro scope is open, and the open scope is not
-implicitly closed, is syntactically incorrect.
+Как правило, блочные макросы не могут быть вложенными; таким образом, вызов блочного макроса
+в то время как область видимости другого блочного макроса открыта, и открытая область видимости не
+неявно закрыта, является синтаксически некорректным.
 .Bl -column "MacroX" "ArgumentsX" "Head ScopeX" "sub-sectionX" "compatX" -offset indent
 .It Em Macro Ta Em Arguments Ta Em Head Scope Ta Em Body Scope  Ta Em Notes
 .It Ic HP  Ta    <2        Ta    current    Ta    paragraph   Ta    \&
@@ -581,24 +572,24 @@ implicitly closed, is syntactically incorrect.
 .It Ic YS  Ta    0         Ta    none       Ta    none        Ta    GNU
 .El
 .Pp
-If a block macro is next-line scoped, it may only be followed by in-line
-macros for decorating text.
-.Ss Font handling
-In
+Если блочный макрос расположен в следующей строке, за ним могут следовать только строчные
+макросы для оформления текста.
+.Ss Работа со шрифтами
+в
 .Nm
-documents, both
-.Sx Physical markup
-macros and
+документах, как
+.Sx Физическая разметка
+макросы и
 .Xr roff 7
 .Ql \ef
-font escape sequences can be used to choose fonts.
-In text lines, the effect of manual font selection by escape sequences
-only lasts until the next macro invocation; in macro lines, it only lasts
-until the end of the macro scope.
-Note that macros like
+Для выбора шрифтов можно использовать escape-последовательности шрифтов.
+В текстовых строках эффект ручного выбора шрифта по escape-последовательностям
+длится только до следующего вызова макроса; В макролиниях он длится только
+до конца области видимости макроса.
+Обратите внимание, что макросы, такие как
 .Ic BR
-open and close a font scope for each argument.
-.Sh SEE ALSO
+открывают и закрывают область видимости шрифта для каждого аргумента.
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr man 1 ,
 .Xr mandoc 1 ,
 .Xr eqn 7 ,
@@ -606,38 +597,36 @@ open and close a font scope for each argument.
 .Xr mdoc 7 ,
 .Xr roff 7 ,
 .Xr tbl 7
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
 .Nm
-language first appeared as a macro package for the roff typesetting
-system in
+язык впервые появился в виде пакета макросов для набора текста roff
+система в
 .At v7 .
 .Pp
-The stand-alone implementation that is part of the
+Автономная реализация, входящая в состав
 .Xr mandoc 1
-utility first appeared in
+впервые появилась в
 .Ox 4.6 .
-.Sh AUTHORS
+.Sh АВТОРЫ
 .An -nosplit
 .An Douglas McIlroy Aq Mt m.douglas.mcilroy@dartmouth.edu
-designed and implemented the original version of these macros,
-wrote the original version of this manual page,
-and was the first to use them when he edited volume 1 of the
+разработал и реализовал оригинальную версию этих макросов,
+написал оригинальную версию этой страницы руководства,
+и первым использовал их при редактировании первого тома
 .At v7
-manual pages.
+страницы руководства.
 .Pp
 .An James Clark
-later rewrote the macros for groff.
+позже переписали макросы для groff.
 .An Eric S. Raymond Aq Mt esr@thyrsus.com
-and
+и
 .An Werner Lemberg Aq Mt wl@gnu.org
-added the extended
+добавили расширенный
 .Nm
-macros to groff in 2007.
+макросы в groff в 2007 году.
 .Pp
-The
 .Xr mandoc 1
-program and this
+программа и этот
 .Nm
-reference were written by
+Референс был написан
 .An Kristaps Dzonsons Aq Mt kristaps@bsd.lv .
