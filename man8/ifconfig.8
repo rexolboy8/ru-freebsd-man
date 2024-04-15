@@ -1,39 +1,38 @@
 .\" Copyright (c) 1983, 1991, 1993
 .\"	The Regents of the University of California.  All rights reserved.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
-.\" 3. Neither the name of the University nor the names of its contributors
-.\"    may be used to endorse or promote products derived from this software
-.\"    without specific prior written permission.
+.\" Распространение и использование в виде исходного кода и бинарных форм, с или без
+.\" изменений, разрешается при соблюдении следующих условий:
+.\" 1. При повторном распространении исходного кода необходимо сохранять вышеуказанные авторские права,
+.\"    список условий и следующий отказ от ответственности.
+.\" 2. При распространении в двоичной форме необходимо воспроизводить вышеуказанные авторские права,
+.\"    список условий и следующий отказ от ответственности в
+.\"    документации и/или других материалах, прилагаемых к дистрибутиву.
+.\" 3. Ни название университета, ни имена его сотрудников,
+.\"    не могут использоваться для одобрения или продвижения продуктов, созданных на основе этого программного обеспечения,
+.\"    без специального предварительного письменного разрешения.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ЭТО ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ РЕГЕНТАМИ И УЧАСТНИКАМИ  ``AS IS'' И
+.\" ЛЮБЫЕ ЯВНЫЕ ИЛИ ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ,
+.\" ПОДРАЗУМЕВАЕМЫМИ ГАРАНТИЯМИ ТОВАРНОСТИ И ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ
+.\" НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ РЕГЕНТЫ ИЛИ УЧАСТНИКИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ
+.\" ЗА ЛЮБЫЕ ПРЯМЫЕ, КОСВЕННЫЕ, СЛУЧАЙНЫЕ, ОСОБЫЕ ИЛИ ТИПОВЫЕ
+.\" УБЫТКИ (ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯ, ЗАКУПКУ ЗАМЕНЯЮЩИХ ТОВАРОВ
+.\" ИЛИ УСЛУГ; ПОТЕРЮ ИСПОЛЬЗОВАНИЯ, ДАННЫХ ИЛИ ПРИБЫЛИ; ИЛИ ПЕРЕРЫВ БИЗНЕСА),
+.\" В ЛЮБОМ СЛУЧАЕ И ПО ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ, БУДЬ ТО ДОГОВОР, СТРОГАЯ 
+.\" ОТВЕТСТВЕННОСТЬ ИЛИ ПРАВОНАРУШЕНИЕ (ВКЛЮЧАЯ НЕБРЕЖНОСТЬ ИЛИ ДРУГИЕ ОБРАЗЫ), ВОЗНИКАЮЩИЕ ЛЮБЫМ СПОСОБОМ
+.\" ЛЮБЫМ СПОСОБОМ ИСПОЛЬЗОВАНИЯ ЭТОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ, ДАЖЕ ЕСЛИ УВЕДОМЛЕНЫ О ВОЗМОЖНОСТИ
+.\" ТАКОГО УЩЕРБА.
 .\"
 .\"     From: @(#)ifconfig.8	8.3 (Berkeley) 1/5/94
 .\"
 .Dd June 20, 2023
 .Dt IFCONFIG 8
 .Os
-.Sh NAME
+.Sh ИМЯ
 .Nm ifconfig
 .Nd configure network interface parameters
-.Sh SYNOPSIS
+.Sh СИНОПСИС
 .Nm
 .Op Fl j Ar jail
 .Op Fl kLmn
@@ -75,1236 +74,1213 @@
 .Op Fl j Ar jail
 .Op Fl dkLmuv
 .Op Fl f Ar type Ns Cm \&: Ns Ar format
-.Sh DESCRIPTION
-The
+.Sh ОПИСАНИЕ
 .Nm
-utility is used to assign an address
-to a network interface and/or configure
-network interface parameters.
-The
+Утилита используется для назначения адреса
+к сетевому интерфейсу и/или настройки
+параметров сетевого интерфейса.
 .Nm
-utility must be used at boot time to define the network address
-of each interface present on a machine; it may also be used at
-a later time to redefine an interface's address
-or other operating parameters.
+Утилита должна использоваться во время загрузки для определения сетевого адреса
+каждого интерфейса, присутствующего на машине; его также можно использовать
+позднее, чтобы переопределить адрес интерфейса
+или другие рабочие параметры.
 .Pp
-The following options are available:
+Доступны следующие варианты:
 .Bl -tag -width indent
 .It Fl a
-Display information about all interfaces in the system.
+Отображение информации обо всех интерфейсах в системе.
 .Pp
-The
 .Fl a
-flag may be used instead of the
+вместо флага можно использовать
 .Ar interface
-argument.
+аргумент.
 .It Fl C
-List all the interface cloners available on the system,
-with no additional information.
-Use of this flag is mutually exclusive with all other flags and commands.
+Перечисление всех клонеров интерфейса, доступных в системе,
+без дополнительной информации.
+Использование этого флага является взаимоисключающим со всеми другими флагами и командами.
 .It Fl d
-Display only the interfaces that are down.
+Отображение только тех интерфейсов, которые не работают.
 .It Fl f Xo
 .Ar type Ns Cm \&: Ns Ar format Ns
 .Op Cm \&, Ns Ar type Ns Cm \&: Ns Ar format Ar ...
 .Xc
-Control the output format of
+Управление выходным форматом
 .Nm .
-The format is specified as a comma-separated list of
+Формат указывается как список разделенных запятыми
 .Ar type Ns Cm \&: Ns Ar format
 pairs
 .Po see the
-.Sx EXAMPLES
-section for more information
+.Sx ПРИМЕРЫ
+раздел для получения дополнительной информации
 .Pc .
 .Pp
-The output format can also be specified via the
+Выходной формат также можно указать с помощью
 .Ev IFCONFIG_FORMAT
-environment variable.
-The
+переменной среды.
 .Fl f
-flag can be supplied multiple times.
+флаг можно указывать несколько раз.
 .Pp
-The
 .Ar type Ns s
-and their associated
+и связанные с ними
 .Ar format
-strings are:
+строки:
 .Pp
 .Bl -tag -width ether
 .It Cm addr
-Adjust the display of inet and inet6 addresses:
+Настройка отображения адресов inet и inet6:
 .Pp
 .Bl -tag -width default -compact
 .It Cm default
-Default format,
+Формат по умолчанию,
 .Cm numeric
 .It Cm fqdn
-Fully qualified domain names
+Полные доменные имена
 .Pq FQDN
 .It Cm host
-Unqualified hostnames
+Неполные имена хостов
 .It Cm numeric
-Numeric format
+Числовой формат
 .El
 .It Cm ether
-Adjust the display of link-level ethernet (MAC) addresses:
+Настройка отображения адресов Ethernet (MAC) на уровне канала:
 .Pp
 .Bl -tag -width default -compact
 .It Cm colon
-Separate address segments with a colon
+Разделение сегментов адреса с двоеточием
 .It Cm dash
-Separate address segments with a dash
+Разделение сегментов адреса с тире
 .It Cm dotted
-Dotted notation, for example:
+Обозначение через точку, например:
 .Ql 5254.0015.4a3b
 .It Cm default
-Default format,
+Формат по умолчанию,
 .Cm colon
 .El
 .It Cm inet
-Adjust the display of inet address subnet masks:
+Настройка отображения масок подсети inet-адресов:
 .Pp
 .Bl -tag -width default -compact
 .It Cm cidr
-CIDR notation, for example:
+Обозначение CIDR, например:
 .Ql 203.0.113.224/26
 .It Cm default
-Default format,
+Формат по умолчанию,
 .Cm hex
 .It Cm dotted
-Dotted quad notation, for example:
+Квадратное обозначение с точками, например:
 .Ql 255.255.255.192
 .It Cm hex
-Hexadecimal format, for example:
+Шестнадцатеричный формат, пример:
 .Ql 0xffffffc0
 .El
 .It Cm inet6
-Adjust the display of inet6 address prefixes (subnet masks):
+Настройка отображения префиксов адресов inet6 (масок подсети):
 .Pp
 .Bl -tag -width default -compact
 .It Cm cidr
-CIDR notation, for example:
+Обозначение CIDR, пример:
 .Ql ::1/128
-or
+или
 .Ql fe80::1%lo0/64
 .It Cm default
-Default format,
+Формат по умолчанию,
 .Cm numeric
 .It Cm numeric
-Integer format, for example:
+Целочисленный формат, пример:
 .Ql prefixlen 64
 .El
 .El
 .It Fl G Ar groupname
-Exclude members of the specified
+Исключение членов указанных
 .Ar groupname
-from the output.
+из вывода.
 .Ar groupname .
 .Pp
-Only one option
+Только один вариант
 .Fl G
-should be specified as later override previous ones
+следует указать как более поздние, предыдущие
 .Ar groupname
-may contain shell patterns in which case it should be quoted.
+могут содержать шаблоны оболочки, и в этом случае его следует заключить в кавычки.
 .Pp
-Setting
+Параметр
 .Ar groupname
-to
+к
 .Cm all
-selects all interfaces.
+выбору всех интерфейсов
 .It Fl g Ar groupname
-Limit the output to the members of the specified
+Ограничить вывод членами указанного
 .Ar groupname .
 .Pp
-If
+Если
 .Fl g
-is specified before other significant flags like, e.g.,
+указывается перед другими важными флагами, например,
 .Fl a ,
 .Fl l ,
-or
+или
 .Fl C ,
-then
+затем
 .Nm
-lists names of interfaces belonging to
+перечисляет имена интерфейсов.
 .Ar groupname .
-Any other flags and arguments are ignored in this case.
+Любые другие флаги и аргументы в этом случае игнорируются.
 .Pp
-Only one option
+Только один вариант
 .Fl g
-should be specified as later override previous ones
+следует указать как более поздние, предыдущие
 .Ar groupname
-may contain shell patterns in which case it should be quoted.
+могут содержать шаблоны оболочки, и в этом случае его следует заключить в кавычки.
 .Pp
-Setting
+Параметр
 .Ar groupname
-to
+К
 .Cm all
-selects all interfaces.
+выбирает все интерфейсы.
 .It Fl j Ar jail
-Perform the actions inside the
+Выполните действия внутри
 .Ar jail .
 .Pp
-The
 .Cm ifconfig
-will first attach to the
+сначала прикрепится к
 .Ar jail
-(by jail id or jail name) before performing the effects.
+(по идентификатору или названию тюрьмы) перед выполнением эффектов.
 .Pp
-This allow network interfaces of
+Это позволяет сетевым интерфейсам
 .Ar jail
-to be configured even if the
+необходимую настройку, даже если
 .Cm ifconfig
-binary is not available in
+двоичный файл недоступен в
 .Ar jail .
 .It Fl k
-Print keying information for the
+Распечайте ключевую информацию для
 .Ar interface ,
-if available.
+если это доступно.
 .Pp
-For example, the values of 802.11 WEP keys and
+Например, значения ключей 802.11 WEP и
 .Xr carp 4
-passphrases will be printed, if accessible to the current user.
+парольные фразы будут напечатаны, если они доступны текущему пользователю.
 .Pp
-This information is not printed by default, as it may be considered
-sensitive.
+Эта информация не выводится по умолчанию, так как ее можно считать
+чувствительный.
 .It Fl L
-Display address lifetime for IPv6 addresses as time offset string.
+Отображение времени жизни адреса для адресов IPv6 в виде строки смещения времени.
 .It Fl l
-List all available interfaces on the system,
-with no other additional information.
+Перечислите все доступные интерфейсы в системе,
+без какой-либо другой дополнительной информации.
 .Pp
-If an
+Если
 .Ar address_family
-is specified, only interfaces of that type will be listed.
+указан, будут перечислены только интерфейсы этого типа.
 .Pp
-If the
+Если
 .Ar address_family
-is set to
+установлен на
 .Cm ether ,
-then
+то он
 .Fl l
-will exclude loopback interfaces from the list of Ethernet interfaces.
-This is a special case, because all the other synonyms of the
+исключит интерфейсы обратной связи из списка интерфейсов Ethernet.
+Это особый случай, поскольку все остальные синонимы
 .Cm link
-address family will include loopback interfaces in the list.
+Семейство адресов будет входить в список интерфейсов обратной связи.
 .Pp
-Use of this flag is mutually exclusive
-with all other flags and commands, except for
+Использование этого флага является взаимоисключающим.
+со всеми остальными флагами и командами, кроме
 .Fl d ,
 .Fl g ,
-and
+и
 .Fl u .
 .It Fl m
-Display the capability list and all
-of the supported media for the specified interface.
+Отобразите список возможностей и всех
+поддерживаемых носителей для указанного интерфейса.
 .It Fl n
-Disable automatic loading of network interface drivers.
+Отключите автоматическую загрузку драйверов сетевого интерфейса.
 .Pp
-By default if the network interface driver is not present in the kernel
-then
+По умолчанию, если драйвер сетевого интерфейса отсутствует в ядре
+Затем
 .Nm
-will attempt to load it.
+попытйтесь загрузить его.
 .It Fl u
-Display only the interfaces that are up.
+Отображайте только те интерфейсы, которые работают.
 .It Fl v
-Get more verbose status for an interface.
+Получите более подробный статус для интерфейса.
 .It Ar address
-For the inet family,
-the address is either a host name present in the host name data
-base,
+Для семьи Интернет,
+адрес является либо именем хоста, присутствующим в данных имени хоста
+базы,
 .Xr hosts 5 ,
-or an IPv4 address expressed in the Internet standard
+или адрес IPv4, выраженный в стандарте Интернета.
 .Dq dot notation .
 .Pp
-It is also possible to use the CIDR notation (also known as the
-slash notation) to include the netmask.
-That is, one can specify an address like
+Также возможно использовать нотацию CIDR (также известную как
+обозначение косой черты), чтобы включить сетевую маску.
+То есть можно указать адрес как
 .Li 192.168.0.1/16 .
 .Pp
-For the
+для
 .Cm inet6
-family, it is also possible to specify the prefix length using the slash
-notation, like
+семейства, длину префикса также можно указать с помощью косой черты
+обозначение, как
 .Li ::1/128 .
-See the
+смотрите
 .Cm prefixlen
-parameter below for more information.
+параметр ниже для получения дополнительной информации.
 .Pp
-The link-level
+Канальный уровень
 .Pq Cm link
-address
-is specified as a series of colon-separated hex digits.
-This can be used to, for example,
-set a new MAC address on an Ethernet interface, though the
-mechanism used is not Ethernet specific.
+адрес
+указывается как серия шестнадцатеричных цифр, разделенных двоеточиями.
+Это можно использовать, например, для
+установки нового MAC-адреса на интерфейсе Ethernet, хотя
+используемый механизм не является специфичным для Ethernet.
 .Pp
-Use the
+Используйте
 .Cm random
-keyword to set a randomly generated MAC address.
-A randomly-generated MAC address might be the same as one already in use
-in the network.
-Such duplications are extremely unlikely.
+ключевое слово для установки случайно сгенерированного MAC-адреса.
+Случайно сгенерированный MAC-адрес может совпадать с уже используемым.
+в сети.
+Такое совпадение крайне маловероятно.
 .Pp
-If the interface is already
-up when the link-level address is modified,
-it will be briefly brought down and
-then brought back up again in order to ensure that the receive
-filter in the underlying Ethernet hardware is properly reprogrammed.
+Если интерфейс уже
+включается при изменении адреса канального уровня,
+он будет ненадолго сбит и
+затем снова вернется, чтобы гарантировать получение
+Фильтра в базовом оборудовании Ethernet при правильном перепрограммировании.
 .It Ar address_family
-Specify the
-address family
-which affects interpretation of the remaining parameters.
-Since an interface can receive transmissions in differing protocols
-with different naming schemes, specifying the address family is recommended.
-The address or protocol families currently
-supported are:
+Указание
+адреса семьи
+влияет на интерпретацию остальных параметров.
+Поскольку интерфейс может принимать передачи по разным протоколам
+при различных схемах именования рекомендуется указывать семейство адресов.
+Семейства адресов или протоколов в настоящее время
+поддерживаются:
 .Bl -tag
 .It Cm ether
-Synonymous with
+Синоним с
 .Cm link
 .Po with some exceptions, see
 .Fl l
 .Pc .
 .It Cm inet
-Default, if available.
+По умолчанию, если доступно.
 .It Cm inet6
 .It Cm link
-Default, if
+По умолчанию, если
 .Cm inet
-is not available.
+не доступен.
 .It Cm lladdr
-Synonymous with
+Синоним с
 .Cm link .
 .El
 .It Ar dest_address
-Specify the address of the correspondent on the other end
-of a point to point link.
+Указание адреса корреспондента на другом конце
+связи «точка-точка».
 .It Ar interface
-This
-parameter is a string of the form
+Этот
+параметр представляет собой строку вида
 .Dq name unit ,
-for example,
+например,
 .Dq Li em0 .
 .El
 .Pp
-The
 .Nm
-utility displays the current configuration for a network interface
-when no optional parameters are supplied.
-If a protocol family is specified,
+утилита отображает текущую конфигурацию сетевого интерфейса
+когда не указаны дополнительные параметры.
+Если указано семейство протоколов,
 .Nm
-will report only the details specific to that protocol family.
+сообщит только подробности, относящиеся к этому семейству протоколов.
 .Pp
-When no arguments are given,
+Когда аргументы не приведены,
 .Fl a
-is implied.
+подразумевается.
 .Pp
-Only the super-user may modify the configuration of a network interface.
-.Sh PARAMETERS
-The following
+Только суперпользователь может изменять конфигурацию сетевого интерфейса.
+.Sh Параметры
+Следующий
 .Ar parameter Ns s
-may be set with
+может быть установлен с помощью
 .Nm :
 .Bl -tag -width indent
 .It Cm add
-Another name for the
+Другое название для
 .Cm alias
-parameter.
-Introduced for compatibility
-with
+Параметра.
+Введено для совместимости
+С
 .Bsx .
 .It Cm alias
-Establish an additional network address for this interface.
-This is sometimes useful when changing network numbers, and
-one wishes to accept packets addressed to the old interface.
-If the address is on the same subnet as the first network address
-for this interface, a non-conflicting netmask must be given.
-Usually
+Установка дополнительного сетевого адреса для этого интерфейса.
+Иногда полезна при изменении номеров сети, и когда
+пользователь хочет принимать пакеты, адресованные старому интерфейсу.
+Если адрес находится в той же подсети, что и первый сетевой адрес
+для этого интерфейса должна быть задана неконфликтующая сетевая маска.
+Обычно
 .Li 0xffffffff
-is most appropriate.
+является наиболее подходящим.
 .It Fl alias
-Remove the network address specified.
-This would be used if you incorrectly specified an alias, or it
-was no longer needed.
-If you have incorrectly set an NS address having the side effect
-of specifying the host portion, removing all NS addresses will
-allow you to respecify the host portion.
+Удаление указанного сетевого адреса.
+Будет использоваться, если вы неправильно указали псевдоним или в не
+больше не было необходимости.
+Если вы неправильно установили адрес NS, имеющий побочный эффект
+указания части хоста, удаление всех адресов NS будет
+позволять вам переопределить часть хоста.
 .It Cm anycast
 (Inet6 only.)
-Specify that the address configured is an anycast address.
-Based on the current specification,
-only routers may configure anycast addresses.
-Anycast address will not be used as source address of any of outgoing
-IPv6 packets.
+Укажите, что настроенный адрес является адресом произвольной рассылки.
+Согласно действующей спецификации,
+только маршрутизаторы могут настраивать произвольные адреса.
+Адрес Anycast не будет использоваться в качестве адреса источника любого из исходящих сообщений.
+IPv6-пакеты.
 .It Cm arp
-Enable the use of the Address Resolution Protocol
+Включение использования протокола разрешения адресов
 .Pq Xr arp 4
-in mapping
-between network level addresses and link level addresses (default).
-This is currently implemented for mapping between Internet Protocol addresses
-and IEEE 802 48-bit MAC addresses (Ethernet addresses).
+в картографии
+между адресами сетевого уровня и адресами канального уровня (по умолчанию).
+В настоящее время это реализовано для сопоставления адресов интернет-протокола.
+и 48-битные MAC-адреса IEEE 802 (адреса Ethernet).
 .It Fl arp
-Disable the use of the Address Resolution Protocol
+Отключение использования протокола разрешения адресов
 .Pq Xr arp 4 .
 .It Cm staticarp
-If the Address Resolution Protocol is enabled,
-the host will only reply to requests for its addresses,
-and will never send any requests.
+Если протокол разрешения адресов включен,
+хост будет отвечать только на запросы своих адресов,
+и никогда не будет отправлять никаких запросов.
 .It Fl staticarp
-If the Address Resolution Protocol is enabled,
-the host will perform normally,
-sending out requests and listening for replies.
+Если протокол разрешения адресов включен,
+хост будет работать нормально,
+отправка запросов и прослушивание ответов.
 .It Cm stickyarp
-Enable the so-called sticky ARP mode for the interface.
-If this option is enabled on the given interface, any resolved address is
-marked as a static one and never expires. This may be used to increase
-security of the network by preventing ARP spoofing or to reduce latency for
-high-performance Ethernet networks where the time needed for ARP resolution is
-too high. Please note that a similar feature is also provided for bridges. See
-the sticky option in the
+Включените для интерфейса так называемого режима липкого ARP.
+Если эта опция включена на данном интерфейсе, любой разрешенный адрес
+помечен как статический и не имеет срока действия. Это можно использовать для увеличения
+безопасности сети за счет предотвращения подмены ARP или уменьшения задержки для
+высокопроизводительных сетей Ethernet, в которых время, необходимое для разрешения ARP,
+слишком высоко. Обратите внимание, что аналогичная функция предусмотрена и для мостов.
 .Sx Bridge Interface Parameters
-section. Enabling this
-option may impact techniques which rely on ARP expiration/overwriting feature
-such as load-balancers or high-availabity solutions such as
+section. Включение этой
+опции может повлиять на методы, основанные на функции истечения срока действия/перезаписи ARP.
+таких как балансировщики нагрузки или решение высокой доступности, такие как
 .Xr carp 4 .
 .It Fl stickyarp
-Disable the so-called sticky ARP mode for the interface (default).
-Resolved addresses will expire normally respecting the kernel ARP
-configuration.
+Отключение для интерфейса так называемого режима липкого ARP (по умолчанию).
+Срок действия разрешенных адресов истекает в обычном режиме с соблюдением ARP ядра.
+конфигурации.
 .It Cm broadcast
 (Inet only.)
-Specify the address to use to represent broadcasts to the
-network.
-The default broadcast address is the address with a host part of all 1's.
+Указание адреса, который будет использоваться для представления широковещательных сообщений на
+сеть.
+Широковещательный адрес по умолчанию — это адрес, в котором часть хоста состоит из единиц.
 .It Cm debug
-Enable driver dependent debugging code; usually, this turns on
-extra console error logging.
+Включение кода отладки, зависящего от драйвера; обычно это включает
+дополнительная регистрация ошибок консоли.
 .It Fl debug
-Disable driver dependent debugging code.
+Отключение кода отладки, зависящего от драйвера.
 .It Cm promisc
-Put interface into permanently promiscuous mode.
+Перевод интерфейса в постоянно неразборчивый режим.
 .It Fl promisc
-Disable permanently promiscuous mode.
+Отключите навсегда беспорядочный режим.
 .It Cm delete
-Another name for the
+Другое название для
 .Fl alias
-parameter.
+параметра
 .It Cm description Ar value , Cm descr Ar value
-Specify a description of the interface.
-This can be used to label interfaces in situations where they may
-otherwise be difficult to distinguish.
+Указание описания интерфейса.
+Это можно использовать для маркировки интерфейсов в ситуациях, когда их может быть будет трудно отличить.
 .It Cm -description , Cm -descr
-Clear the interface description.
+Очистите описание интерфейса.
 .It Cm down
-Mark an interface
+Отметьте интерфейс
 .Dq down .
-When an interface is marked
+Когда интерфейс помечен
 .Dq down ,
-the system will not attempt to
-transmit messages through that interface.
-If possible, the interface will be reset to disable reception as well.
-This action does not automatically disable routes using the interface.
+система не будет пытаться
+передавать сообщения через этот интерфейс.
+Если возможно, интерфейс будет сброшен, чтобы отключить прием. 
+Это действие не отключает автоматически маршруты, использующие интерфейс.
 .It Cm group Ar groupname
-Assign the interface to a
+Назначение интерфейса
 .Dq group .
-The
 .Ar groupname
-may not be longer than 15 characters and must not end in a digit.
-Any interface can be in multiple groups.
+не может быть длиннее 15 символов и не должно заканчиваться цифрой.
+Любой интерфейс может находиться в нескольких группах.
 .Pp
-Cloned interfaces are members of their interface family group by default.
-For example, a VLAN interface such as
+Клонированные интерфейсы по умолчанию являются членами своей группы семейства интерфейсов.
+Например, интерфейс VLAN, такой как
 .Em vlan10
-is a member of the VLAN interface family group,
+является членом группы семейства интерфейсов VLAN,
 .Em vlan .
 .It Cm -group Ar groupname
-Remove the interface from the given
+Удаление интерфейса из данного
 .Dq group .
 .It Cm eui64
 (Inet6 only.)
-Fill interface index
-(lowermost 64bit of an IPv6 address)
-automatically.
+Заполнение индекса интерфейса
+(самые младшие 64 бита адреса IPv6)
+автоматически
 .It Cm fib Ar fib_number
-Specify interface FIB.
-A FIB
+Указание интерфейса FIB.
+FIB
 .Ar fib_number
-is assigned to all frames or packets received on that interface.
-The FIB is not inherited, e.g., vlans or other sub-interfaces will use
-the default FIB (0) irrespective of the parent interface's FIB.
-The kernel needs to be tuned to support more than the default FIB
-using the
+назначается всем кадрам или пакетам, полученным на этом интерфейсе.
+FIB не наследуется, например, виртуальные локальные сети или другие субинтерфейсы будут использовать
+FIB по умолчанию (0) независимо от FIB родительского интерфейса.
+Ядро необходимо настроить для поддержки большего, чем FIB.
+используя
 .Va ROUTETABLES
-kernel configuration option, or the
+параметр конфигурации ядра или
 .Va net.fibs
-tunable.
+настраиваемый.
 .It Cm tunnelfib Ar fib_number
-Specify tunnel FIB.
-A FIB
+Указание туннеля FIB.
+FIB
 .Ar fib_number
-is assigned to all packets encapsulated by tunnel interface, e.g.,
+назначается всем пакетам, инкапсулированным туннельным интерфейсом, например,
 .Xr gif 4 ,
 .Xr gre 4
-and
+и
 .Xr vxlan 4 .
 .It Cm maclabel Ar label
-If Mandatory Access Control support is enabled in the kernel,
-set the MAC label to
+Если в ядре включена поддержка обязательного контроля доступа,
+установите метку MAC на
 .Ar label .
 .\" (see
 .\" .Xr maclabel 7 ) .
 .It Cm media Ar type
-If the driver supports the media selection system, set the media type
-of the interface to
+Если драйвер поддерживает систему выбора носителя, установите тип носителя
+интерфейса для
 .Ar type .
-Some interfaces support the mutually exclusive use of one of several
-different physical media connectors.
-For example, a 10Mbit/s Ethernet
-interface might support the use of either AUI
-or twisted pair connectors.
-Setting the media type to
+Некоторые интерфейсы поддерживают взаимоисключающее использование одного из нескольких
+различных разъемов физических носителей.
+Например, Ethernet 10 Мбит/с.
+интерфейс может поддерживать использование любого AUI
+или разъемы витой пары.
+Установка типа носителя на
 .Cm 10base5/AUI
-would change the currently active connector to the AUI port.
-Setting it to
+изменит текущий активный разъем на порт AUI.
+Установка его на
 .Cm 10baseT/UTP
-would activate twisted pair.
-Refer to the interfaces' driver
-specific documentation or man page for a complete list of the
-available types.
+активирует витую пару.
+Обратитесь к драйверу интерфейсов
+конкретной документации или справочной страницы с полным списком
+доступных типов.
 .It Cm mediaopt Ar opts
-If the driver supports the media selection system, set the specified
-media options on the interface.
-The
+Если драйвер поддерживает систему выбора носителя, установите указанные
+параметры мультимедиа в интерфейсе.
 .Ar opts
-argument
-is a comma delimited list of options to apply to the interface.
-Refer to the interfaces' driver specific man page for a complete
-list of available options.
+Аргумент
+— список параметров, разделенных запятыми, которые можно применить к интерфейсу.
+Полную информацию см. на странице руководства по драйверам интерфейсов.
+список доступных опций.
 .It Fl mediaopt Ar opts
-If the driver supports the media selection system, disable the
-specified media options on the interface.
+Если драйвер поддерживает систему выбора носителя, отключите
+указанные параметры мультимедиа в интерфейсе.
 .It Cm mode Ar mode
-If the driver supports the media selection system, set the specified
-operating mode on the interface to
+Если драйвер поддерживает систему выбора носителя, установите указанный
+режим работы на интерфейсе
 .Ar mode .
-For IEEE 802.11 wireless interfaces that support multiple operating modes
-this directive is used to select between 802.11a
+Для беспроводных интерфейсов IEEE 802.11, поддерживающих несколько режимов работы.
+эта директива используется для выбора между 802.11a
 .Pq Cm 11a ,
 802.11b
 .Pq Cm 11b ,
-and 802.11g
+и 802.11g
 .Pq Cm 11g
-operating modes.
+режимы работы.
 .It Cm txrtlmt
-Set if the driver supports TX rate limiting.
+Установка, если драйвер поддерживает ограничение скорости передачи.
 .It Cm inst Ar minst , Cm instance Ar minst
-Set the media instance to
+Установите экземпляр носителя на
 .Ar minst .
-This is useful for devices which have multiple physical layer interfaces
+Это полезно для устройств, которые имеют несколько интерфейсов физического уровня.
 .Pq PHYs .
 .It Cm name Ar name
-Set the interface name to
+Установка имени интерфейса на
 .Ar name .
 .It Cm rxcsum , txcsum , rxcsum6 , txcsum6
-If the driver supports user-configurable checksum offloading,
-enable receive (or transmit) checksum offloading on the interface.
-The feature can be turned on selectively per protocol family.
-Use
+Если драйвер поддерживает настраиваемую пользователем разгрузку контрольной суммы,
+включите разгрузку контрольной суммы приема (или передачи) на интерфейсе.
+Эту функцию можно включить выборочно для каждого семейства протоколов.
+Используйте
 .Cm rxcsum6 , txcsum6
-for
+для
 .Xr ip6 4
-or
+или
 .Cm rxcsum , txcsum
-otherwise.
-Some drivers may not be able to enable these flags independently
-of each other, so setting one may also set the other.
-The driver will offload as much checksum work as it can reliably
-support, the exact level of offloading varies between drivers.
-.It Fl rxcsum , txcsum , rxcsum6 , txcsum6
-If the driver supports user-configurable checksum offloading,
-disable receive (or transmit) checksum offloading on the interface.
-The feature can be turned off selectively per protocol family.
-Use
+в противном случае.
+Некоторые драйверы не смогут включить эти флаги независимо.
+друг от друга, поэтому установка одного может также установить и другой.
+Драйвер надежно разгрузит столько работы по контрольной сумме, сколько сможет.
+поддержка, точный уровень разгрузки варьируется в зависимости от драйвера.
+.It Fl rxcsum, txcsum, rxcsum6, txcsum6
+Если драйвер поддерживает настраиваемую пользователем разгрузку контрольной суммы,
+отключите разгрузку контрольной суммы приема (или передачи) на интерфейсе.
+Эту функцию можно отключить выборочно для каждого семейства протоколов.
+Используйте
 .Fl rxcsum6 , txcsum6
-for
+для
 .Xr ip6 4
-or
+или
 .Fl rxcsum , txcsum
-otherwise.
-These settings may not always be independent of each other.
+в противном случае.
+Эти настройки не всегда могут быть независимыми друг от друга.
 .It Cm tso
-If the driver supports
+Если драйвер поддерживает
 .Xr tcp 4
-segmentation offloading, enable TSO on the interface.
-Some drivers may not be able to support TSO for
+разгрузку сегментации, включите TSO на интерфейсе.
+Некоторые драйверы могут не поддерживать TSO для
 .Xr ip 4
-and
+и
 .Xr ip6 4
-packets, so they may enable only one of them.
+пакеты, поэтому они могут включить только один из них.
 .It Fl tso
-If the driver supports
+Если драйвер поддерживает
 .Xr tcp 4
-segmentation offloading, disable TSO on the interface.
-It will always disable TSO for
+разгрузку сегментации, отключите TSO на интерфейсе.
+Он всегда будет отключать TSO для
 .Xr ip 4
-and
+и
 .Xr ip6 4 .
 .It Cm tso6 , tso4
-If the driver supports
+Если драйвер поддерживает
 .Xr tcp 4
-segmentation offloading for
+разгрузку сегментации для
 .Xr ip6 4
-or
+или
 .Xr ip 4
-use one of these to selectively enabled it only for one protocol family.
+используйте один из них, чтобы выборочно включить его только для одного семейства протоколов.
 .It Fl tso6 , tso4
-If the driver supports
+Если драйвер поддерживает
 .Xr tcp 4
-segmentation offloading for
+разгрузку сегментации для
 .Xr ip6 4
-or
+или
 .Xr ip 4
-use one of these to selectively disable it only for one protocol family.
+используйте один из них, чтобы выборочно отключить его только для одного семейства протоколов.
 .It Cm lro
-If the driver supports
+Если драйвер поддерживает
 .Xr tcp 4
-large receive offloading, enable LRO on the interface.
+большой прием разгрузки, включите LRO на интерфейсе.
 .It Fl lro
-If the driver supports
+Если драйвер поддерживает
 .Xr tcp 4
-large receive offloading, disable LRO on the interface.
+большой прием разгрузки, отключите LRO на интерфейсе.
 .It Cm txtls
-Transmit TLS offload encrypts Transport Layer Security (TLS) records and
-segments the encrypted record into one or more
+Разгрузка TLS при передаче шифрует записи TLS и
+сегментирует зашифрованную запись на одну или несколько
 .Xr tcp 4
-segments over either
+сегментов по 
 .Xr ip 4
-or
+или
 .Xr ip6 4 .
-If the driver supports transmit TLS offload,
-enable transmit TLS offload on the interface.
-Some drivers may not be able to support transmit TLS offload for
+Если драйвер поддерживает разгрузку TLS при передаче,
+включите разгрузку TLS при передаче на интерфейсе.
+Некоторые драйверы могут не поддерживать разгрузку TLS при передаче для
 .Xr ip 4
-and
+и
 .Xr ip6 4
-packets, so they may enable only one of them.
+пакетов, поэтому они могут включить только один из них.
 .It Fl txtls
-If the driver supports transmit TLS offload,
-disable transmit TLS offload on the interface.
-It will always disable TLS for
+Если драйвер поддерживает разгрузку TLS при передаче,
+отключите разгрузку TLS при передаче на интерфейсе.
+Он всегда будет отключать TLS для
 .Xr ip 4
-and
+и
 .Xr ip6 4 .
 .It Cm txtlsrtlmt
-Enable use of rate limiting (packet pacing) for TLS offload.
+Включение использования ограничения скорости (скорости передачи пакетов) для разгрузки TLS.
 .It Fl txtlsrtlmt
-Disable use of rate limiting for TLS offload.
+Отключение использования ограничения скорости для разгрузки TLS.
 .It Cm mextpg
-If the driver supports extended multi-page
+Если драйвер поддерживает расширенные многостраничные
 .Xr mbuf 9
-buffers, enable them on the interface.
+буферы, включите их на интерфейсе.
 .It Fl mextpg
-If the driver supports extended multi-page
+Если драйвер поддерживает расширенные многостраничные
 .Xr mbuf 9
-biffers, disable them on the interface.
+буферы, отключите их на интерфейсе.
 .It Cm wol , wol_ucast , wol_mcast , wol_magic
-Enable Wake On Lan (WOL) support, if available.
-WOL is a facility whereby a machine in a low power state may be woken
-in response to a received packet.
-There are three types of packets that may wake a system:
-ucast (directed solely to the machine's mac address),
-mcast (directed to a broadcast or multicast address),
-or
+Включите поддержку Wake On Lan (WOL), если она доступна.
+WOL — это средство, с помощью которого можно разбудить машину, находящуюся в состоянии низкого энергопотребления.
+в ответ на полученный пакет.
+Существует три типа пакетов, которые могут разбудить систему:
+ucast (направленный исключительно на MAC-адрес машины),
+mcast (направленный на широковещательный или многоадресный адрес),
+или
 magic
 .Po unicast or multicast frames with a
 .Dq magic contents
 .Pc .
-Not all devices support WOL, those that do indicate the mechanisms
-they support in their capabilities.
+Не все устройства поддерживают WOL, те, которые поддерживают, указывают механизмы
+поддержки в своих возможностях.
 .Cm wol
-is a synonym for enabling all available WOL mechanisms.
-To disable WOL use
+является синонимом включения всех доступных механизмов WOL.
+Чтобы отключить WOL, используйте
 .Fl wol .
 .It Cm vlanmtu , vlanhwtag , vlanhwfilter , vlanhwcsum , vlanhwtso
-If the driver offers user-configurable VLAN support, enable
-reception of extended frames, tag processing in hardware,
-frame filtering in hardware, checksum offloading, or TSO on VLAN,
-respectively.
-Note that this must be configured on a physical interface associated with
+Если драйвер предлагает поддержку настраиваемой пользователем VLAN, включите
+прием расширенных кадров, аппаратную обработку тегов,
+аппаратную фильтрацию кадров, разгрузку контрольной суммы или TSO в VLAN,
+соответственно.
+Обратите внимание, что это необходимо настроить на физическом интерфейсе, связанном с
 .Xr vlan 4 ,
-not on a
+не на
 .Xr vlan 4
-interface itself.
+самом интерфейсе
 .It Fl vlanmtu , vlanhwtag , vlanhwfilter , vlanhwcsum , vlanhwtso
-If the driver offers user-configurable VLAN support, disable
-reception of extended frames, tag processing in hardware,
-frame filtering in hardware, checksum offloading, or TSO on VLAN,
-respectively.
+Если драйвер предлагает поддержку настраиваемой пользователем VLAN, отключите
+прием расширенных кадров, аппаратную обработку тегов,
+аппаратную фильтрацию кадров, разгрузку контрольной суммы или TSO в VLAN,
+соответственно.
 .It Cm vxlanhwcsum , vxlanhwtso
-If the driver offers user-configurable VXLAN support, enable inner checksum
-offloading (receive and transmit) or TSO on VXLAN, respectively.
-Note that this must be configured on a physical interface associated with
+Если драйвер предлагает настраиваемую пользователем поддержку VXLAN, включите внутреннюю контрольную сумму.
+разгрузку (прием и передача) или TSO на VXLAN соответственно.
+Обратите внимание, что это необходимо настроить на физическом интерфейсе, связанном с
 .Xr vxlan 4 ,
-not on a
+не на
 .Xr vxlan 4
-interface itself.
-The physical interface is either the interface specified as the vxlandev
-or the interface hosting the vxlanlocal address.
-The driver will offload as much checksum work and TSO as it can reliably
-support, the exact level of offloading may vary between drivers.
+самом интерфейсе.
+Физический интерфейс — это либо интерфейс, указанный как vxlandev
+или интерфейс, на котором размещен адрес vxlanlocal.
+Драйвер надежно разгрузит столько работы по контрольной сумме и TSO, сколько сможет.
+поддержка, точный уровень разгрузки может варьироваться в зависимости от драйвера.
 .It Fl vxlanhwcsum , vxlanhwtso
-If the driver offers user-configurable VXLAN support, disable checksum
-offloading (receive and transmit) or TSO on VXLAN, respectively.
+Если драйвер предлагает настраиваемую пользователем поддержку VXLAN, отключите контрольную сумму.
+разгрузку (прием и передача) или TSO на VXLAN соответственно.
 .It Cm vnet Ar jail
-Move the interface to the
+Переместите интерфейс в
 .Xr jail 8 ,
-specified by name or JID.
-If the jail has a virtual network stack, the interface will disappear
-from the current environment and become visible to the jail.
+указывается по имени или JID.
+Если в jail есть стек виртуальной сети, интерфейс исчезнет.
+из текущей среды и станет видимыми для jail.
 .It Fl vnet Ar jail
-Reclaim the interface from the
+Переместите интерфейс в
 .Xr jail 8 ,
-specified by name or JID.
-If the jail has a virtual network stack, the interface will disappear
-from the jail, and become visible to the current network environment.
+указывается по имени или JID.
+Если в jail есть стек виртуальной сети, интерфейс исчезнет.
+из jail и станет видимыми для текущего сетевого окружения.
 .It Cm polling
-Turn on
+Включите
 .Xr polling 4
-feature and disable interrupts on the interface, if driver supports
-this mode.
+функцию и отключите прерывания на интерфейсе, если драйвер поддерживает
+этот режим.
 .It Fl polling
-Turn off
+Выключите
 .Xr polling 4
-feature and enable interrupt mode on the interface.
+функцию и включите режим прерывания на интерфейсе.
 .It Cm create
-Create the specified network pseudo-device.
-If the interface is given without a unit number, try to create a new
-device with an arbitrary unit number.
-If creation of an arbitrary device is successful, the new device name is
-printed to standard output unless the interface is renamed or destroyed
-in the same
+Создайте указанное сетевое псевдоустройство.
+Если интерфейс указан без номера устройства, попробуйте создать новое
+устройство с произвольным номером устройства.
+Если создание произвольного устройства прошло успешно, новое имя устройства будет
+выводится на стандартный вывод, если интерфейс не переименован или не уничтожен
+В тот же самый
 .Nm
-invocation.
+призыв.
 .It Cm destroy
-Destroy the specified network pseudo-device.
+Уничтожение указанного сетевого псевдоустройства
 .It Cm plumb
-Another name for the
+Другое название для
 .Cm create
-parameter.
-Included for Solaris compatibility.
+параметра.
+Включено для совместимости с Solaris.
 .It Cm unplumb
-Another name for the
+Другое название для
 .Cm destroy
-parameter.
-Included for Solaris compatibility.
+параметра.
+Включено для совместимости с Solaris.
 .It Cm metric Ar n
-Set the routing metric of the interface to
+Установите метрику маршрутизации интерфейса 
 .Ar n ,
-default 0.
-The routing metric is used by the routing protocol
+по умолчанию на 0.
+Метрика маршрутизации используется протоколом маршрутизации.
 .Pq Xr routed 8 .
-Higher metrics have the effect of making a route
-less favorable; metrics are counted as additional hops
-to the destination network or host.
+Более высокие показатели имеют эффект прокладывания маршрута через
+менее благоприятный; метрики учитываются как дополнительные прыжки
+к целевой сети или хосту.
 .It Cm mtu Ar n
-Set the maximum transmission unit of the interface to
+Установите максимальную единицу передачи интерфейса
 .Ar n ,
-default is interface specific.
-The MTU is used to limit the size of packets that are transmitted on an
-interface.
-Not all interfaces support setting the MTU, and some interfaces have
-range restrictions.
+по умолчанию зависящую от интерфейса.
+MTU используется для ограничения размера пакетов, передаваемых по сети.
+интерфейс.
+Не все интерфейсы поддерживают настройку MTU, а некоторые интерфейсы имеют
+ограничения по диапазону.
 .It Cm netmask Ar mask
 .\" (Inet and ISO.)
 (Inet only.)
-Specify how much of the address to reserve for subdividing
-networks into sub-networks.
-The mask includes the network part of the local address
-and the subnet part, which is taken from the host field of the address.
-The mask can be specified as a single hexadecimal number
-with a leading
+Укажите, какую часть адреса следует зарезервировать для разделения
+сети на подсети.
+Маска включает сетевую часть локального адреса.
+и часть подсети, которая берется из поля хоста адреса.
+Маска может быть указана как одно шестнадцатеричное число.
+с ведущим
 .Ql 0x ,
-with a dot-notation Internet address,
-or with a pseudo-network name listed in the network table
+интернет-адресом в точечной записи,
+или с именем псевдосети, указанным в сетевой таблице
 .Xr networks 5 .
-The mask contains 1's for the bit positions in the 32-bit address
-which are to be used for the network and subnet parts,
-and 0's for the host part.
-The mask should contain at least the standard network portion,
-and the subnet field should be contiguous with the network
-portion.
+Маска содержит единицы для битовых позиций в 32-битном адресе.
+которые будут использоваться для частей сети и подсети,
+и нули для хостовой части.
+Маска должна содержать как минимум стандартную сетевую часть,
+и поле подсети должно совпадать с сетью.
 .Pp
-The netmask can also be specified in CIDR notation after the address.
-See the
+Сетевую маску также можно указать в нотации CIDR после адреса.
+Смотрите
 .Ar address
-option above for more information.
+вариант выше для получения дополнительной информации.
 .It Cm prefixlen Ar len
 (Inet6 only.)
-Specify that
+Укажите, что
 .Ar len
-bits are reserved for subdividing networks into sub-networks.
-The
+биты зарезервированы для разделения сетей на подсети.
 .Ar len
-must be integer, and for syntactical reason it must be between 0 to 128.
-It is almost always 64 under the current IPv6 assignment rule.
-If the parameter is omitted, 64 is used.
+должно быть целым числом и по синтаксическим причинам должно находиться в диапазоне от 0 до 128.
+Согласно текущему правилу назначения IPv6, оно почти всегда равно 64.
+Если параметр опущен, используется 64.
 .Pp
-The prefix can also be specified using the slash notation after the address.
-See the
+Префикс также можно указать, используя косую черту после адреса.
+Смотрите
 .Ar address
-option above for more information.
+вариант выше для получения дополнительной информации.
 .It Cm remove
-Another name for the
+Другое название для
 .Fl alias
-parameter.
-Introduced for compatibility
-with
+параметра.
+Введено для совместимости
+С
 .Bsx .
 .Sm off
 .It Cm link Op Cm 0 No - Cm 2
 .Sm on
-Enable special processing of the link level of the interface.
-These three options are interface specific in actual effect, however,
-they are in general used to select special modes of operation.
-An example
-of this is to enable SLIP compression, or to select the connector type
-for some Ethernet cards.
-Refer to the man page for the specific driver
-for more information.
+Включение специальной обработки канального уровня интерфейса.
+Эти три параметра на самом деле зависят от интерфейса, однако
+они обычно используются для выбора специальных режимов работы.
+Например
+это значит включить сжатие SLIP или выбрать тип разъема
+для некоторых карт Ethernet.
+Обратитесь к странице руководства для конкретного драйвера.
+Чтобы получить больше информации.
 .Sm off
 .It Fl link Op Cm 0 No - Cm 2
 .Sm on
-Disable special processing at the link level with the specified interface.
+Отключените специальную обработку на уровне канала с указанным интерфейсом.
 .It Cm monitor
-Put the interface in monitor mode.
-No packets are transmitted, and received packets are discarded after
+Переведите интерфейс в режим монитора. 
+Пакеты не передаются, а полученные пакеты отбрасываются после
 .Xr bpf 4
-processing.
+обработки.
 .It Fl monitor
-Take the interface out of monitor mode.
+Выведите интерфейс из режима монитора.
 .It Cm pcp Ar priority_code_point
-Priority code point
+Код приоритета
 .Pq Dv PCP
-is an 3-bit field which refers to the IEEE 802.1p
-class of service and maps to the frame priority level.
+это 3-битное поле, которое относится к IEEE 802.1p.
+классу обслуживания и соответствует уровню приоритета кадра.
 .It Fl pcp
-Stop tagging packets on the interface w/ the priority code point.
+Прекратите пометки пакетов на интерфейсе кодовой точкой приоритета.
 .It Cm up
-Mark an interface
+Отметьте интерфейс
 .Dq up .
-This may be used to enable an interface after an
+Это можно использовать для включения интерфейса после
 .Dq Nm Cm down .
-It happens automatically when setting the first address on an interface.
-If the interface was reset when previously marked down,
-the hardware will be re-initialized.
+Это происходит автоматически при установке первого адреса на интерфейсе.
+Если интерфейс был сброшен, когда ранее был отмечен,
+оборудование будет повторно инициализировано.
 .El
 .Ss ICMPv6 Neighbor Discovery Protocol Parameters
-The following parameters are for ICMPv6 Neighbor Discovery Protocol.
-Note that the address family keyword
+Следующие параметры предназначены для протокола обнаружения соседей ICMPv6.
+Обратите внимание, что ключевое слово семейства адресов
 .Dq Li inet6
-is needed for them:
+для них необходимо:
 .Bl -tag -width indent
 .It Cm accept_rtadv
-Set a flag to enable accepting ICMPv6 Router Advertisement messages.
-The
+Установить флаг, позволяющий принимать сообщения объявления маршрутизатора ICMPv6.
 .Xr sysctl 8
-variable
+переменная
 .Va net.inet6.ip6.accept_rtadv
-controls whether this flag is set by default or not.
+контролирует, установлен ли этот флаг по умолчанию или нет.
 .It Cm -accept_rtadv
-Clear a flag
+Очистить флаг
 .Cm accept_rtadv .
 .It Cm no_radr
-Set a flag to control whether routers from which the system accepts
-Router Advertisement messages will be added to the Default Router List
-or not.
-When the
+Установить флаг, чтобы контролировать, принимают ли маршрутизаторы, от которых система
+Сообщения с рекламой маршрутизатора будут добавлены в список маршрутизаторов по умолчанию.
+или нет.
+Когда
 .Cm accept_rtadv
-flag is disabled, this flag has no effect.
-The
+флаг отключен, этот флаг не имеет никакого эффекта.
 .Xr sysctl 8
-variable
+переменная
 .Va net.inet6.ip6.no_radr
-controls whether this flag is set by default or not.
+контролирует, установлен ли этот флаг по умолчанию или нет.
 .It Cm -no_radr
-Clear a flag
+Очистить флаг
 .Cm no_radr .
 .It Cm auto_linklocal
-Set a flag to perform automatic link-local address configuration when
-the interface becomes available.
-The
+Установить указанный интерфейс в качестве маршрута по умолчанию, когда нет
+маршрутизатора по умолчанию.
 .Xr sysctl 8
-variable
+переменная
 .Va net.inet6.ip6.auto_linklocal
-controls whether this flag is set by default or not.
+контролирует, установлен ли этот флаг по умолчанию или нет.
 .It Cm -auto_linklocal
-Clear a flag
+Очистить флаг
 .Cm auto_linklocal .
 .It Cm defaultif
-Set the specified interface as the default route when there is no
-default router.
+Установить указанный интерфейс в качестве маршрута по умолчанию, когда нет
+маршрутизатора по умолчанию.
 .It Cm -defaultif
-Clear a flag
+Очистить флаг
 .Cm defaultif .
 .It Cm ifdisabled
-Set a flag to disable all of IPv6 network communications on the
-specified interface.
-Note that if there are already configured IPv6
-addresses on that interface, all of them are marked as
+Установить флаг, чтобы отключить все сетевые соединения IPv6 на
+указанный интерфейс. 
+Обратите внимание: если уже настроен IPv6
+адреса на этом интерфейсе, все они помечены как
 .Dq tentative
-and DAD will be performed when this flag is cleared.
+и DAD будет выполнен, когда этот флаг будет очищен.
 .It Cm -ifdisabled
-Clear a flag
+Очистить флаг
 .Cm ifdisabled .
-When this flag is cleared and
+Когда этот флаг снят и
 .Cm auto_linklocal
-flag is enabled, automatic configuration of a link-local address is
-performed.
+флаг включен, автоматическая настройка локального адреса канала включена.
+выполненно.
 .It Cm nud
-Set a flag to enable Neighbor Unreachability Detection.
+Set a flag to enable Neighbor Unreachability Detection. Установить флаг, чтобы включить обнаружение недоступности соседа.
 .It Cm -nud
-Clear a flag
+Очистить флаг
 .Cm nud .
 .It Cm no_prefer_iface
-Set a flag to not honor rule 5 of source address selection in RFC 3484.
-In practice this means the address on the outgoing interface will not be
-preferred, effectively yielding the decision to the address selection
-policy table, configurable with
+Установить флаг, чтобы не соблюдать 5 правило выбора адреса источника в RFC 3484.
+На практике это означает, что адрес на исходящем интерфейсе не будет
+предпочтительный, что фактически приводит к выбору адреса
+таблицы политики, настраиваемая с помощью
 .Xr ip6addrctl 8 .
 .It Cm -no_prefer_iface
-Clear a flag
+Очистить флаг
 .Cm no_prefer_iface .
 .It Cm no_dad
-Set a flag to disable Duplicate Address Detection.
+Установить флаг, чтобы отключить обнаружение повторяющихся адресов.
 .It Cm -no_dad
 Clear a flag
 .Cm no_dad .
 .El
 .Ss IPv6 Parameters
-The following parameters are specific for IPv6 addresses.
-Note that the address family keyword
+Следующие параметры относятся к адресам IPv6.
+Обратите внимание, что ключевое слово семейства адресов
 .Dq Li inet6
-is needed for them:
+для них необходимо:
 .Bl -tag -width indent
 .It Cm autoconf
-Set the IPv6 autoconfigured address bit.
+Установить бит автоконфигурируемого адреса IPv6.
 .It Fl autoconf
-Clear the IPv6 autoconfigured address bit.
+Очистить бит автоконфигурируемого адреса IPv6.
 .It Cm deprecated
-Set the IPv6 deprecated address bit.
+Установить бит устаревшего адреса IPv6.
 .It Fl deprecated
-Clear the IPv6 deprecated address bit.
+Очистить бит устаревшего адреса IPv6.
 .It Cm pltime Ar n
-Set preferred lifetime for the address.
+Установить предпочтительный срок действия адреса.
 .It Cm prefer_source
-Set a flag to prefer address as a candidate of the source address for
-outgoing packets.
+Установить флаг, чтобы предпочесть адрес в качестве кандидата исходного адреса для
+исходящие пакеты.
 .It Cm -prefer_source
-Clear a flag
+Очистить флаг
 .Cm prefer_source .
 .It Cm vltime Ar n
-Set valid lifetime for the address.
+Установить действительный срок действия адреса.
 .El
-.Ss IEEE 802.11 Wireless Interfaces Cloning Parameters
-The following parameters are specific to cloning
-IEEE 802.11 wireless interfaces with the
+.Ss IEEE 802.11 Параметры клонирования беспроводных интерфейсов
+Следующие параметры относятся к клонированию.
+Беспроводные интерфейсы IEEE 802.11 с
 .Cm create
-request:
+запрос:
 .Bl -tag -width indent
 .It Cm wlandev Ar device
-Use
+Используйте
 .Ar device
-as the parent for the cloned device.
+в качестве родителя для клонированного устройства.
 .It Cm wlanmode Ar mode
-Specify the operating mode for this cloned device.
+Укажите режим работы этого клонированного устройства.
 .Ar mode
-is one of
+один из
 .Cm sta ,
 .Cm ahdemo
-(or
+(или
 .Cm adhoc-demo ) ,
 .Cm ibss
-(or
+(или
 .Cm adhoc ) ,
 .Cm ap
-(or
+(или
 .Cm hostap ) ,
 .Cm wds ,
 .Cm tdma ,
 .Cm mesh ,
-and
+и
 .Cm monitor .
-The operating mode of a cloned interface cannot be changed.
-The
+Режим работы клонированного интерфейса изменить нельзя.
 .Cm tdma
-mode is actually implemented as an
+режим фактически реализован как
 .Cm adhoc-demo
-interface with special properties.
+интерфейс со специальными свойствами.
 .It Cm wlanbssid Ar bssid
-The 802.11 mac address to use for the bssid.
-This must be specified at create time for a legacy
+Mac-адрес 802.11, который будет использоваться для bssid.
+Это необходимо указать во время создания наследства.
 .Cm wds
-device.
+устройства.
 .It Cm wlanaddr Ar address
-The local mac address.
-If this is not specified then a mac address will automatically be assigned
-to the cloned device.
-Typically this address is the same as the address of the parent device
-but if the
+Локальный MAC-адрес.
+Если это не указано, то MAC-адрес будет присвоен автоматически.
+на клонированное устройство.
+Обычно этот адрес совпадает с адресом родительского устройства.
+но если
 .Cm bssid
-parameter is specified then the driver will craft a unique address for
-the device (if supported).
+параметр указан, то драйвер создаст уникальный адрес для
+устройства (если поддерживается).
 .It Cm wdslegacy
-Mark a
+Отметьте
 .Cm wds
-device as operating in
+устройство, работающее в
 .Dq legacy mode .
-Legacy
+Наследия
 .Cm wds
-devices have a fixed peer relationship and do not, for example, roam
-if their peer stops communicating.
-For completeness a Dynamic WDS (DWDS) interface may marked as
+устройства имеют фиксированные одноранговые отношения и, например, не перемещаются
+если их сверстник перестанет общаться.
+Для полноты интерфейс Dynamic WDS (DWDS) может быть помечен как
 .Fl wdslegacy .
 .It Cm bssid
-Request a unique local mac address for the cloned device.
-This is only possible if the device supports multiple mac addresses.
-To force use of the parent's mac address use
+Запросите уникальный локальный MAC-адрес для клонированного устройства.
+Это возможно только в том случае, если устройство поддерживает несколько MAC-адресов.
+Чтобы принудительно использовать Mac-адрес родителя, используйте
 .Fl bssid .
 .It Cm beacons
-Mark the cloned interface as depending on hardware support to
-track received beacons.
-To have beacons tracked in software use
+Отметьте клонированный интерфейс как зависящий от аппаратной поддержки, чтобы
+отслеживать полученные маяки.
+Чтобы маяки отслеживались при использовании программного обеспечения
 .Fl beacons .
-For
+Для
 .Cm hostap
-mode
+Режима
 .Fl beacons
-can also be used to indicate no beacons should
-be transmitted; this can be useful when creating a WDS configuration but
+также может использоваться для указания того, что маяки не должны
+передаваться; это может быть полезно при создании конфигурации WDS, но
 .Cm wds
-interfaces can only be created as companions to an access point.
+интерфейсы могут создаваться только как дополнение к точке доступа.
 .El
 .Ss Cloned IEEE 802.11 Wireless Interface Parameters
-The following parameters are specific to IEEE 802.11 wireless interfaces
-cloned with a
+Следующие параметры относятся к беспроводным интерфейсам IEEE 802.11.
+клонированым с помощью
 .Cm create
-operation:
+операции:
 .Bl -tag -width indent
 .It Cm ampdu
-Enable sending and receiving AMPDU frames when using 802.11n (default).
-The 802.11n specification states a compliant station must be capable
-of receiving AMPDU frames but transmission is optional.
-Use
+Включите отправку и получение кадров AMPDU при использовании 802.11n (по умолчанию).
+Спецификация 802.11n гласит, что совместимая станция должна быть способна
+получать кадры AMPDU, но передача не является обязательной.
+Используйте
 .Fl ampdu
-to disable all use of AMPDU with 802.11n.
-For testing and/or to work around interoperability problems one can use
+чтобы отключить любое использование AMPDU со стандартом 802.11n.
+Для тестирования и/или решения проблем совместимости можно использовать
 .Cm ampdutx
-and
+и
 .Cm ampdurx
-to control use of AMPDU in one direction.
+контроля использования AMPDU в одном направлении.
 .It Cm ampdudensity Ar density
-Set the AMPDU density parameter used when operating with 802.11n.
-This parameter controls the inter-packet gap for AMPDU frames.
-The sending device normally controls this setting but a receiving station
-may request wider gaps.
-Legal values for
+Установите параметр плотности AMPDU, используемый при работе с 802.11n.
+Этот параметр управляет интервалом между пакетами для кадров AMPDU.
+Обычно этим параметром управляет передающее устройство, но принимающей станции
+могут потребоваться более широкие пробелы.
+Юридические значения для
 .Ar density
-are 0, .25, .5, 1, 2, 4, 8, and 16 (microseconds).
-A value of
+равны 0, 0,25, 0,5, 1, 2, 4, 8 и 16 (микросекунды).
+Значение
 .Cm -
-is treated the same as 0.
+рассматривается так же, как 0.
 .It Cm ampdulimit Ar limit
-Set the limit on packet size for receiving AMPDU frames when operating
-with 802.11n.
-Legal values for
+Установите ограничение на размер пакета для приема кадров AMPDU при работе
+с 802.11n.
+Юридические значения для
 .Ar limit
-are 8192, 16384, 32768, and 65536 but one can also specify
-just the unique prefix: 8, 16, 32, 64.
-Note the sender may limit the size of AMPDU frames to be less
-than the maximum specified by the receiving station.
+это 8192, 16384, 32768 и 65536, но можно также указать
+просто уникальный префикс: 8, 16, 32, 64.
+Обратите внимание, что отправитель может ограничить размер кадров AMPDU, чтобы он был меньше.
+чем максимум, указанный принимающей станцией.
 .It Cm amsdu
-Enable sending and receiving AMSDU frames when using 802.11n.
-By default AMSDU is received but not transmitted.
-Use
+Включите отправку и получение кадров AMSDU при использовании 802.11n.
+По умолчанию AMSDU принимается, но не передается.
+Используйте
 .Fl amsdu
-to disable all use of AMSDU with 802.11n.
-For testing and/or to work around interoperability problems one can use
+чтобы отключить любое использование AMSDU со стандартом 802.11n.
+Для тестирования и/или решения проблем совместимости можно использовать
 .Cm amsdutx
-and
+и
 .Cm amsdurx
-to control use of AMSDU in one direction.
+контроля использованиея AMSDU в одном направлении.
 .It Cm amsdulimit Ar limit
-Set the limit on packet size for sending and receiving AMSDU frames
-when operating with 802.11n.
-Legal values for
+Установите ограничение на размер пакета для отправки и получения кадров AMSDU.
+при работе с 802.11n.
+Юридические значения для
 .Ar limit
-are 7935 and 3839 (bytes).
-Note the sender may limit the size of AMSDU frames to be less
-than the maximum specified by the receiving station.
-Note also that devices are not required to support the 7935 limit,
-only 3839 is required by the specification and the larger value
-may require more memory to be dedicated to support functionality
-that is rarely used.
+составляют 7935 и 3839 (байт).
+Обратите внимание, что отправитель может ограничить размер кадров AMSDU меньшими значениями.
+чем максимум, указанный принимающей станцией.
+Также обратите внимание, что устройства не обязаны поддерживать ограничение 7935.
+по спецификации требуется только 3839 и большее значение
+может потребовать больше памяти для поддержки функций, 
+что используется редко.
 .It Cm apbridge
-When operating as an access point, pass packets between
-wireless clients directly (default).
-To instead let them pass up through the
-system and be forwarded using some other mechanism, use
+При работе в качестве точки доступа передавайте пакеты между
+беспроводными клиентами напрямую (по умолчанию).
+Вместо этого нужно позволить им пройти через
+систему и пересылаться с использованием какого-либо другого механизма, используйте
 .Fl apbridge .
-Disabling the internal bridging
-is useful when traffic is to be processed with
-packet filtering.
+Отключение внутреннего моста
+полезно, когда трафик должен обрабатываться с помощью
+фильтрации пакетов.
 .It Cm authmode Ar mode
-Set the desired authentication mode in infrastructure mode.
-Not all adapters support all modes.
-The set of
-valid modes is
+Установите желаемый режим аутентификации в режиме инфраструктуры.
+Не все адаптеры поддерживают все режимы.
+Наборы
+допустимых режимов
 .Cm none , open , shared
 (shared key),
 .Cm 8021x
 (IEEE 802.1x),
-and
+и
 .Cm wpa
 (IEEE WPA/WPA2/802.11i).
-The
 .Cm 8021x
-and
+и
 .Cm wpa
-modes are only useful when using an authentication service
-(a supplicant for client operation or an authenticator when
-operating as an access point).
-Modes are case insensitive.
+режимы полезны только при использовании службы аутентификации
+(запрашивающий клиентской операции или аутентификатор, когда
+работает как точка доступа).
+Режимы нечувствительны к регистру.
 .It Cm bgscan
-Enable background scanning when operating as a station.
-Background scanning is a technique whereby a station associated to
-an access point will temporarily leave the channel to scan for
-neighboring stations.
-This allows a station to maintain a cache of nearby access points
-so that roaming between access points can be done without
-a lengthy scan operation.
-Background scanning is done only when a station is not busy and
-any outbound traffic will cancel a scan operation.
-Background scanning should never cause packets to be lost though
-there may be some small latency if outbound traffic interrupts a
-scan operation.
-By default background scanning is enabled if the device is capable.
-To disable background scanning, use
+Включите фоновое сканирование при работе в качестве станции.
+Фоновое сканирование — это метод, при котором станция, связанная с
+точкой доступа временно покинет канал для сканирования
+соседних станций.
+Это позволяет станции хранить кэш близлежащих точек доступа.
+чтобы роуминг между точками доступа мог осуществляться без
+длительной операции сканирования.
+Фоновое сканирование выполняется только тогда, когда станция не занята и
+любой исходящий трафик отменит операцию сканирования.
+Однако фоновое сканирование никогда не должно приводить к потере пакетов 
+может возникнуть небольшая задержка, если исходящий трафик прерывает
+операцию сканирования.
+По умолчанию фоновое сканирование включено, если устройство поддерживает эту функцию.
+Чтобы отключить фоновое сканирование, используйте
 .Fl bgscan .
-Background scanning is controlled by the
+Фоновое сканирование контролируется
 .Cm bgscanidle
-and
+и
 .Cm bgscanintvl
-parameters.
-Background scanning must be enabled for roaming; this is an artifact
-of the current implementation and may not be required in the future.
+параметром.
+Для роуминга необходимо включить фоновое сканирование; это артефакт
+текущей реализации и может не потребоваться в будущем.
 .It Cm bgscanidle Ar idletime
-Set the minimum time a station must be idle (not transmitting or
-receiving frames) before a background scan is initiated.
-The
+Установите минимальное время, в течение которого станция должна находиться в режиме ожидания (не вести передачу или
+получение кадров) до начала фонового сканирования.
 .Ar idletime
-parameter is specified in milliseconds.
-By default a station must be idle at least 250 milliseconds before
-a background scan is initiated.
-The idle time may not be set to less than 100 milliseconds.
+параметр указывается в миллисекундах.
+По умолчанию станция должна простаивать не менее 250 миллисекунд перед
+запуском фонового сканирования.
+Время простоя не может быть установлено менее 100 миллисекунд.
 .It Cm bgscanintvl Ar interval
-Set the interval at which background scanning is attempted.
-The
+Установите интервал, с которым будет выполняться фоновое сканирование.
 .Ar interval
-parameter is specified in seconds.
-By default a background scan is considered every 300 seconds (5 minutes).
-The
+параметр указывается в секундах.
+По умолчанию фоновое сканирование выполняется каждые 300 секунд (5 минут).
 .Ar interval
-may not be set to less than 15 seconds.
+не может быть установлено менее чем 15 секунд.
 .It Cm bintval Ar interval
-Set the interval at which beacon frames are sent when operating in
-ad-hoc or ap mode.
-The
+Установите интервал, с которым отправляются кадры маяка при работе в
+режиме ad-hoc или ap.
 .Ar interval
-parameter is specified in TU's (1024 usecs).
-By default beacon frames are transmitted every 100 TU's.
+Параметр указывается в TU (1024 usecs).
+По умолчанию кадры маяка передаются каждые 100 TU.
 .It Cm bmissthreshold Ar count
-Set the number of consecutive missed beacons at which the station
-will attempt to roam (i.e., search for a new access point).
-The
+Установите количество последовательных пропущенных маяков, при которых станция
+попытается перейти в роуминг (т. е. выполнить поиск новой точки доступа).
 .Ar count
-parameter must be in the range 1 to 255; though the
-upper bound may be reduced according to device capabilities.
-The default threshold is 7 consecutive missed beacons; but
-this may be overridden by the device driver.
-Another name for the
+параметр должен находиться в диапазоне от 1 до 255; хотя
+верхняя граница может быть уменьшена в зависимости от возможностей устройства.
+Порог по умолчанию — 7 последовательных пропущенных маяков; но
+это может быть отменено драйвером устройства.
+Другое название для
 .Cm bmissthreshold
-parameter is
+параметра это
 .Cm bmiss .
 .It Cm bssid Ar address
-Specify the MAC address of the access point to use when operating
-as a station in a BSS network.
-This overrides any automatic selection done by the system.
-To disable a previously selected access point, supply
+Укажите MAC-адрес точки доступа, которая будет использоваться при работе.
+как станция в сети BSS.
+Это отменяет любой автоматический выбор, сделанный системой.
+Чтобы отключить ранее выбранную точку доступа, введите
 .Cm any , none ,
-or
+или
 .Cm -
 for the address.
-This option is useful when more than one access point uses the same SSID.
-Another name for the
+для адреса.
+Эта опция полезна, когда несколько точек доступа используют один и тот же SSID.
+Другое название для
 .Cm bssid
-parameter is
+параметра это
 .Cm ap .
 .It Cm burst
-Enable packet bursting.
-Packet bursting is a transmission technique whereby the wireless
-medium is acquired once to send multiple frames and the interframe
-spacing is reduced.
-This technique can significantly increase throughput by reducing
-transmission overhead.
-Packet bursting is supported by the 802.11e QoS specification
-and some devices that do not support QoS may still be capable.
-By default packet bursting is enabled if a device is capable
-of doing it.
-To disable packet bursting, use
+Включение пакетной передачи.
+Пакетная передача — это метод передачи, при котором беспроводная связь
+среды приобретается один раз для отправки нескольких кадров и межкадрове
+расстояние уменьшается.
+Этот метод может значительно увеличить пропускную способность за счет сокращения
+накладных расходов на передачу.
+Пакетная передача пакетов поддерживается спецификацией QoS 802.11e.
+и некоторые устройства, которые не поддерживают QoS, могут по-прежнему поддерживать эту функцию.
+По умолчанию пакетная передача пакетов включена, если устройство способно
+делать это.
+Чтобы отключить пакетную передачу, используйте
 .Fl burst .
 .It Cm chanlist Ar channels
-Set the desired channels to use when scanning for access
-points, neighbors in an IBSS network, or looking for unoccupied
-channels when operating as an access point.
-The set of channels is specified as a comma-separated list with
-each element in the list representing either a single channel number or a range
-of the form
+Установите нужные каналы для использования при сканировании доступа
+точек, соседей в сети IBSS или найдите незанятые
+каналы при работе в качестве точки доступа.
+Набор каналов указывается в виде списка, разделенного запятыми,
+каждый элемент в списке представляет либо один номер канала, либо диапазон
+формы
 .Dq Li a-b .
-Channel numbers must be in the range 1 to 255 and be permissible
-according to the operating characteristics of the device.
+Номера каналов должны находиться в диапазоне от 1 до 255 и быть допустимыми.
+в зависимости от рабочих характеристик устройства.
 .It Cm channel Ar number
-Set a single desired channel.
-Channels range from 1 to 255, but the exact selection available
-depends on the region your adaptor was manufactured for.
-Setting
-the channel to
+Установите один желаемый канал.
+Каналы варьируются от 1 до 255, но возможен точный выбор.
+Это зависит от региона, для которого был изготовлен адаптер.
+Параметр
+канал для
 .Cm any ,
-or
+или
 .Dq Cm -
-will clear any desired channel and, if the device is marked up,
-force a scan for a channel to operate on.
-Alternatively the frequency, in megahertz, may be specified
-instead of the channel number.
+очистит любой желаемый канал и, если устройство размечено,
+принудительно выполнит сканирование канала для работы.
+Альтернативно можно указать частоту в мегагерцах.
+вместо номера канала.
 .Pp
-When there are several ways to use a channel the channel
-number/frequency may be appended with attributes to clarify.
-For example, if a device is capable of operating on channel 6
-with 802.11n and 802.11g then one can specify that g-only use
-should be used by specifying
+Если существует несколько способов использования канала, канал
+число/частота могут быть дополнены атрибутами для пояснения.
+Например, если устройство способно работать на канале 6
+с 802.11n и 802.11g, то можно указать, что следует использовать только g, указав
 .Cm 6:g .
-Similarly the channel width can be specified by appending it
-with
+Аналогично ширину канала можно указать, добавив ее
+С
 .Dq Cm \&/ ;
-e.g.,
+например,
 .Cm 6/40
-specifies a 40MHz wide channel.
-These attributes can be combined as in:
+определяет канал шириной 40 МГц.
+Эти атрибуты можно комбинировать следующим образом:
 .Cm 6:ht/40 .
 .Pp
-The full set of flags specified following a
+Полный набор флагов, указанный после
 .Dq Cm \&:
-are:
+является:
 .Pp
 .Bl -tag -compact
 .It Cm a
@@ -1312,1615 +1288,1596 @@ are:
 .It Cm b
 802.11b
 .It Cm d
-Atheros Dynamic Turbo mode
+с
 .It Cm g
 802.11g
 .It Cm h
-Same as
+Такой же как
 .Cm n
 .It Cm n
 802.11n aka HT
 .It Cm s
-Atheros Static Turbo mode
+с
 .It Cm t
-Atheros Dynamic Turbo mode, or appended to
+Режим Atheros Dynamic Turbo или добавлен к
 .Cm st
-and
+и
 .Cm dt
 .El
 .Pp
-The full set of channel widths following a
+Полный набор ширины канала после
 .Cm \&/
-are:
+является:
 .Pp
 .Bl -tag -compact
 .It Cm 5
-5MHz aka quarter-rate channel
+5 МГц или четвертьскоростной канал
 .It Cm 10
-10MHz aka half-rate channel
+10 МГц, он же полускоростной канал
 .It Cm 20
-20MHz mostly for use in specifying
+20 МГц в основном для использования при указании
 .Cm ht20
 .It Cm 40
-40MHz mostly for use in specifying
+40 МГц в основном для использования при указании
 .Cm ht40
 .El
 .Pp
-In addition,
-a 40MHz HT channel specification may include the location
-of the extension channel by appending
+Кроме того,
+спецификация HT-канала 40 МГц может включать местоположение
+канала расширения, добавив
 .Dq Cm \&+
-or
+или
 .Dq Cm \&-
-for above and below,
-respectively; e.g.,
+для верха и низа,
+соответственно; например,
 .Cm 2437:ht/40+
-specifies 40MHz wide HT operation
-with the center channel at frequency 2437 and the extension channel above.
-.It Cm country Ar name
-Set the country code to use in calculating the regulatory constraints
-for operation.
-In particular the set of available channels, how the wireless device
-will operation on the channels, and the maximum transmit power that
-can be used on a channel are defined by this setting.
-Country/Region codes are specified as a 2-character abbreviation
-defined by ISO 3166 or using a longer, but possibly ambiguous, spelling;
-e.g., "ES" and "Spain".
-The set of country codes are taken from
-.Pa /etc/regdomain.xml
-and can also
-be viewed with the
+определяет работу HT в полосе 40 МГц
+с центральным каналом на частоте 2437 и каналом расширения выше.
+.It Cm страна Ar название
+Установите код страны, который будет использоваться при расчете нормативных ограничений.
+для эксплуатации.
+В частности набор доступных каналов, как работает беспроводное устройство, как
+будет работать на каналах, и максимальная мощность передачи, которые
+могут использоваться на канале, определяются этой настройкой.
+Коды стран/регионов указываются в виде двухсимвольной аббревиатуры.
+определяется стандартом ISO 3166 или использует более длинное, но, возможно, неоднозначное написание;
+например, «ES» и «Испания».
+Набор кодов стран взят из
 .Cm list countries
-request.
-Note that not all devices support changing the country code from a default
-setting; typically stored in EEPROM.
-See also
+запроса.
+Обратите внимание, что не все устройства поддерживают изменение кода страны по умолчанию.
+параметр; обычно хранится в EEPROM.
+Смотрите также
 .Cm regdomain ,
 .Cm indoor ,
 .Cm outdoor ,
-and
+и
 .Cm anywhere .
 .It Cm dfs
-Enable Dynamic Frequency Selection (DFS) as specified in 802.11h.
-DFS embodies several facilities including detection of overlapping
-radar signals, dynamic transmit power control, and channel selection
-according to a least-congested criteria.
-DFS support is mandatory for some 5GHz frequencies in certain
-locales (e.g., ETSI).
-By default DFS is enabled according to the regulatory definitions
-specified in
+Включите динамический выбор частоты (DFS), как указано в 802.11h.
+DFS включает в себя несколько возможностей, включая обнаружение перекрытия.
+радиолокационные сигналы, динамическое управление мощностью передачи и выбор канала
+по критерию наименее перегруженности.
+Поддержка DFS обязательна для некоторых частот 5 ГГц.
+локально (например, ETSI).
+По умолчанию DFS включен в соответствии с нормативными определениями.
+указано в
 .Pa /etc/regdomain.xml
-and the current country code, regdomain,
-and channel.
-Note the underlying device (and driver) must support radar detection
-for full DFS support to work.
-To be fully compliant with the local regulatory agency frequencies that
-require DFS should not be used unless it is fully supported.
-Use
+и текущий код страны, рег.домен,
+и канал.
+Обратите внимание, что базовое устройство (и драйвер) должны поддерживать обнаружение радаров.
+для полной поддержки DFS.
+Чтобы полностью соответствовать частотам местных регулирующих органов, которые
+требует DFS не следует использовать, если он не поддерживается полностью.
+Используйте
 .Fl dfs
-to disable this functionality for testing.
+чтобы отключить эту функцию для тестирования.
 .It Cm dotd
-Enable support for the 802.11d specification (default).
-When this support is enabled in station mode, beacon frames that advertise
-a country code different than the currently configured country code will
-cause an event to be dispatched to user applications.
-This event can be used by the station to adopt that country code and
-operate according to the associated regulatory constraints.
-When operating as an access point with 802.11d enabled the beacon and
-probe response frames transmitted will advertise the current regulatory
-domain settings.
-To disable 802.11d use
+Включите поддержку спецификации 802.11d (по умолчанию).
+Когда эта поддержка включена в режиме станции, кадры маяка, рекламирующие
+код страны, отличные от текущего настроенного кода страны, будут
+вызвать отправку события пользовательским приложениям.
+Это событие может быть использовано станцией для принятия кода страны и
+действовать в соответствии с соответствующими нормативными ограничениями.
+При работе в качестве точки доступа с 802.11d включается маяк и
+Передаваемые кадры ответа на зонд будут сообщать о текущих нормативных
+настройках домена.
+Чтобы отключить 802.11d, используйте
 .Fl dotd .
 .It Cm doth
-Enable 802.11h support including spectrum management.
-When 802.11h is enabled beacon and probe response frames will have
-the SpectrumMgt bit set in the capabilities field and
-country and power constraint information elements will be present.
-802.11h support also includes handling Channel Switch Announcements (CSA)
-which are a mechanism to coordinate channel changes by an access point.
-By default 802.11h is enabled if the device is capable.
-To disable 802.11h use
+Включите поддержку 802.11h, включая управление спектром.
+Когда 802.11h включен, кадры ответа маяка и зонда будут иметь
+бит SpectrumMgt установленный в поле возможностей и
+Будут присутствовать элементы информации об ограничениях по стране и мощности.
+Поддержка 802.11h также включает обработку объявлений о переключении каналов (CSA).
+которые представляют собой механизм координации изменений канала точкой доступа.
+По умолчанию 802.11h включен, если устройство поддерживает его.
+Чтобы отключить 802.11h, используйте
 .Fl doth .
 .It Cm deftxkey Ar index
-Set the default key to use for transmission.
-Typically this is only set when using WEP encryption.
-Note that you must set a default transmit key
-for the system to know which key to use in encrypting outbound traffic.
-The
+Установите ключ по умолчанию, который будет использоваться для передачи.
+Обычно этот параметр устанавливается только при использовании шифрования WEP.
+Обратите внимание, что вы должны установить ключ передачи по умолчанию.
+чтобы система знала, какой ключ использовать для шифрования исходящего трафика.
 .Cm weptxkey
-is an alias for this request; it is provided for backwards compatibility.
+является псевдонимом для этого запроса; это предусмотрено для обратной совместимости.
 .It Cm dtimperiod Ar period
-Set the
+Установите
 DTIM
-period for transmitting buffered multicast data frames when
-operating in ap mode.
-The
+период для передачи буферизованных кадров многоадресной рассылки, когда
+работаета идет в режиме ap.
 .Ar period
-specifies the number of beacon intervals between DTIM
-and must be in the range 1 to 15.
-By default DTIM is 1 (i.e., DTIM occurs at each beacon).
+указывает количество интервалов маяка между DTIM
+и должно находиться в диапазоне от 1 до 15.
+По умолчанию DTIM равен 1 (т. е. DTIM возникает в каждом маяке).
 .It Cm quiet
-Enable the use of quiet IE.
-Hostap will use this to silence other
-stations to reduce interference for radar detection when
-operating on 5GHz frequency and doth support is enabled.
-Use
+Включите использование "тихого" (QUIET) IE.
+Хост будет использовать это, чтобы заставить замолчать другие
+станции для уменьшения помех при обнаружении радаров, когда
+работает на частоте 5 ГГц, поддержка включена.
+Используйте
 .Fl quiet
-to disable this functionality.
+чтобы отключить эту функцию.
 .It Cm quiet_period Ar period
-Set the QUIET
+с
 .Ar period
-to the number of beacon intervals between the start of regularly
-scheduled quiet intervals defined by Quiet element.
+к количеству интервалов радиомаяка между стартами регулярных
+запланированных интервалов тишины, определяемых элементом Quiet.
 .It Cm quiet_count Ar count
-Set the QUIET
+Установите тихий (QUIET)
 .Ar count
-to the number of TBTTs until the beacon interval during which the
-next quiet interval shall start.
-A value of 1 indicates the quiet
-interval will start during the beacon interval starting at the next
-TBTT.
-A value 0 is reserved.
+количеству TBTT до интервала передачи сигнала, в течение которого
+должен начаться следующий интервал тишины.
+Значение 1 указывает что тихий
+интервал начнется в течение интервала передачи маяка, начиная со следующего
+ТБТТ.
+Значение 0 зарезервировано.
 .It Cm quiet_offset Ar offset
-Set the QUIET
+Установите тихий QUIET
 .Ar offset
-to the offset of the start of the quiet interval from the TBTT
-specified by the Quiet count, expressed in TUs.
-The value of the
+для смещения начала интервала молчания от ТБТТ
+определямым количеством тишины, выраженным в TU.
+Ценность
 .Ar offset
-shall be less than one beacon interval.
+должна быть меньше одного интервала передачи маяка.
 .It Cm quiet_duration Ar dur
-Set the QUIET
+Установите тихий QUIET
 .Ar dur
-to the duration of the Quiet interval, expressed in TUs.
-The value should be less than beacon interval.
+к продолжительности интервала тишины, выраженной в ТЕ.
+Значение должно быть меньше интервала маяка.
 .It Cm dturbo
-Enable the use of Atheros Dynamic Turbo mode when communicating with
-another Dynamic Turbo-capable station.
-Dynamic Turbo mode is an Atheros-specific mechanism by which
-stations switch between normal 802.11 operation and a
+Включите использование режима Atheros Dynamic Turbo при общении с
+еще одной станцией с поддержкой Dynamic Turbo.
+Режим Dynamic Turbo — это специальный механизм Atheros, с помощью которого
+станции переключаются между нормальной работой 802.11 и
 .Dq boosted
-mode in which a 40MHz wide channel is used for communication.
-Stations using Dynamic Turbo mode operate boosted only when the
-channel is free of non-dturbo stations; when a non-dturbo station
-is identified on the channel all stations will automatically drop
-back to normal operation.
-By default, Dynamic Turbo mode is not enabled, even if the device is capable.
-Note that turbo mode (dynamic or static) is only allowed on some
-channels depending on the regulatory constraints; use the
+режимом, в котором для связи используется канал шириной 40 МГц.
+Станции, использующие режим Dynamic Turbo, работают с ускорением только тогда, когда
+на канале нет станций, не относящихся к dturbo; когда станция без турбонаддува
+идентифицированного на канале, все станции автоматически отключатся и
+возвращаются к нормальной работе.
+По умолчанию режим Dynamic Turbo не включен, даже если устройство поддерживает его.
+Обратите внимание, что турбо-режим (динамический или статический) разрешен только на некоторых устройствах.
+каналах в зависимости от нормативных ограничений; используйте
 .Cm list chan
-command to identify the channels where turbo mode may be used.
-To disable Dynamic Turbo mode use
+Команду для определения каналов, на которых можно использовать турборежим.
+Чтобы отключить режим Dynamic Turbo, используйте
 .Fl dturbo .
 .It Cm dwds
-Enable Dynamic WDS (DWDS) support.
-DWDS is a facility by which 4-address traffic can be carried between
-stations operating in infrastructure mode.
-A station first associates to an access point and authenticates using
-normal procedures (e.g., WPA).
-Then 4-address frames are passed to carry traffic for stations
-operating on either side of the wireless link.
-DWDS extends the normal WDS mechanism by leveraging existing security
-protocols and eliminating static binding.
+Включите поддержку динамического WDS (DWDS).
+DWDS — это средство, с помощью которого 4-адресный трафик может передаваться между
+станциями, работающим в инфраструктурном режиме.
+Станция сначала подключается к точке доступа и проходит аутентификацию, используя
+обычные процедуры (например, WPA).
+Затем передаются 4-адресные кадры для передачи трафика станциям.
+работающим по обе стороны беспроводного канала.
+DWDS расширяет обычный механизм WDS, используя существующую систему безопасности.
+протоколов и устранение статической привязки.
 .Pp
-When DWDS is enabled on an access point 4-address frames received from
-an authorized station will generate a
+Когда DWDS включен на точке доступа, с полученными 4-адресными кадрами,
+авторизованная станция сгенерирует
 .Dq DWDS discovery
-event to user
-applications.
-This event should be used to create a WDS interface that is bound
-to the remote station (and usually plumbed into a bridge).
-Once the WDS interface is up and running 4-address traffic then logically
-flows through that interface.
+событие для пользователя
+Приложения.
+Это событие следует использовать для создания интерфейса WDS, привязанного
+к удаленной станции (обычно подсоединенной к мосту).
+Как только интерфейс WDS запущен и работает с 4-адресным трафиком, то логически
+течет через этот интерфейс.
 .Pp
-When DWDS is enabled on a station, traffic with a destination address
-different from the peer station are encapsulated in a 4-address frame
-and transmitted to the peer.
-All 4-address traffic uses the security information of the stations
-(e.g., cryptographic keys).
-A station is associated using 802.11n facilities may transport
-4-address traffic using these same mechanisms; this depends on available
-resources and capabilities of the device.
-The DWDS implementation guards against layer 2 routing loops of
-multicast traffic.
+Когда на станции включен DWDS, трафик с адресом назначения
+отличного от одноранговой станции, инкапсулирется в 4-адресный кадр
+и передается партнеру.
+Весь 4-адресный трафик использует информацию безопасности станций.
+(например, криптографические ключи).
+Станция, связанная с использованием средств 802.11n, может передавать
+4-адресный трафик с использованием тех же механизмов; это зависит от наличия
+Ресурсов и возможностей устройства.
+Реализация DWDS защищает от петель маршрутизации уровня 2
+многоадресного трафика.
 .It Cm ff
-Enable the use of Atheros Fast Frames when communicating with
-another Fast Frames-capable station.
-Fast Frames are an encapsulation technique by which two 802.3
-frames are transmitted in a single 802.11 frame.
-This can noticeably improve throughput but requires that the
-receiving station understand how to decapsulate the frame.
-Fast frame use is negotiated using the Atheros 802.11 vendor-specific
-protocol extension so enabling use is safe when communicating with
-non-Atheros devices.
-By default, use of fast frames is enabled if the device is capable.
-To explicitly disable fast frames, use
+Включите использование Atheros Fast Frames при общении с
+еще одной станцией с поддержкой Fast Frames.
+Fast Frames — это метод инкапсуляции, при котором два 802.3
+кадра передаются в одном кадре 802.11.
+Это может заметно повысить пропускную способность, но требует, чтобы
+принимающая станция понимала, как декапсулировать кадр.
+Использование быстрых кадров согласовывается с использованием Atheros 802.11, зависящего от поставщика.
+расширения протокола, поэтому использование безопасно при общении с
+устройством, отличным от Atheros.
+По умолчанию использование быстрых кадров включено, если устройство поддерживает эту функцию.
+Чтобы отключить быстрые кадры, используйте
 .Fl ff .
 .It Cm fragthreshold Ar length
-Set the threshold for which transmitted frames are broken into fragments.
-The
+Установите порог, при котором передаваемые кадры разбиваются на фрагменты.
 .Ar length
-argument is the frame size in bytes and must be in the range 256 to 2346.
-Setting
+Аргумент — это размер кадра в байтах, который должен находиться в диапазоне от 256 до 2346.
+Параметр
 .Ar length
-to
+к
 .Li 2346 ,
 .Cm any ,
-or
+или
 .Cm -
-disables transmit fragmentation.
-Not all adapters honor the fragmentation threshold.
+отключает фрагментацию передачи.
+Не все адаптеры соблюдают порог фрагментации.
 .It Cm hidessid
-When operating as an access point, do not broadcast the SSID
-in beacon frames or respond to probe request frames unless
-they are directed to the ap (i.e., they include the ap's SSID).
-By default, the SSID is included in beacon frames and
-undirected probe request frames are answered.
-To re-enable the broadcast of the SSID etc., use
+При работе в качестве точки доступа не передавайте SSID.
+в кадрах маяка или отвечайте на кадры запроса зонда, если только
+они направляются на точку доступа (т. е. включают в себя SSID точки доступа).
+По умолчанию SSID включен в кадры маяка и
+ненаправленные кадры запроса зонда получают ответ.
+Чтобы снова включить трансляцию SSID и т. д., используйте
 .Fl hidessid .
 .It Cm ht
-Enable use of High Throughput (HT) when using 802.11n (default).
-The 802.11n specification includes mechanisms for operation
-on 20MHz and 40MHz wide channels using different signalling mechanisms
-than specified in 802.11b, 802.11g, and 802.11a.
-Stations negotiate use of these facilities, termed HT20 and HT40,
-when they associate.
-To disable all use of 802.11n use
+Включите использование высокой пропускной способности (HT) при использовании 802.11n (по умолчанию).
+Спецификация 802.11n включает механизмы для работы
+на каналах шириной 20 МГц и 40 МГц с использованием разных механизмов сигнализации
+что указано в 802.11b, 802.11g и 802.11a.
+Станции договариваются об использовании этих средств, называемых HT20 и HT40.
+когда они общаются.
+Чтобы отключить любое использование 802.11n, используйте
 .Fl ht .
-To disable use of HT20 (e.g., to force only HT40 use) use
+Чтобы отключить использование HT20 (например, принудительно использовать только HT40), используйте
 .Fl ht20 .
-To disable use of HT40 use
+Чтобы отключить использование HT40, используйте
 .Fl ht40 .
 .Pp
-HT configuration is used to
+Конфигурация HT используется для
 .Dq auto promote
-operation
-when several choices are available.
-For example, if a station associates to an 11n-capable access point
-it controls whether the station uses legacy operation, HT20, or HT40.
-When an 11n-capable device is setup as an access point and
-Auto Channel Selection is used to locate a channel to operate on,
-HT configuration controls whether legacy, HT20, or HT40 operation is setup
-on the selected channel.
-If a fixed channel is specified for a station then HT configuration can
-be given as part of the channel specification; e.g., 6:ht/20 to setup
-HT20 operation on channel 6.
+операции
+когда доступно несколько вариантов.
+Например, если станция подключается к точке доступа с поддержкой 11n
+она контролирует, использует ли станция устаревший режим, HT20 или HT40.
+Если устройство с поддержкой 11n настроено в качестве точки доступа и
+Автоматический выбор канала используется для определения канала для работы.
+Конфигурация HT определяет, будет ли настроена работа устаревшего режима, HT20 или HT40.
+на выбранном канале.
+Если для станции указан фиксированный канал, то конфигурация HT может
+быть задана как часть спецификации канала; например, 6:ht/20 для настройки
+Работы HT20 на канале 6.
 .It Cm htcompat
-Enable use of compatibility support for pre-802.11n devices (default).
-The 802.11n protocol specification went through several incompatible iterations.
-Some vendors implemented 11n support to older specifications that
-will not interoperate with a purely 11n-compliant station.
-In particular the information elements included in management frames
-for old devices are different.
-When compatibility support is enabled both standard and compatible data
-will be provided.
-Stations that associate using the compatibility mechanisms are flagged
-in
+Включите использование поддержки совместимости для устройств до 802.11n (по умолчанию).
+Спецификация протокола 802.11n претерпела несколько несовместимых итераций.
+Некоторые поставщики реализовали поддержку 11n для старых спецификаций, которые
+не будут взаимодействовать со станцией, полностью совместимой с 11n.
+В частности, информационные элементы, включенные в кадры управления
+для старых устройств и другие.
+Если включена поддержка совместимости, как стандартные, так и совместимые данные.
+будут обеспечены.
+Станции, подключающиеся с использованием механизмов совместимости, помечаются как в
 .Cm list sta .
-To disable compatibility support use
+Чтобы отключить поддержку совместимости, используйте
 .Fl htcompat .
 .It Cm htprotmode Ar technique
-For interfaces operating in 802.11n, use the specified
+Для интерфейсов, работающих в стандарте 802.11n, используйте указанный
 .Ar technique
-for protecting HT frames in a mixed legacy/HT network.
-The set of valid techniques is
+для защиты кадров HT в смешанной сети Legacy/HT.
+Набор действенных методик
 .Cm off ,
-and
+и
 .Cm rts
-(RTS/CTS, default).
-Technique names are case insensitive.
+(RTS/CTS, по умолчанию).
+Имена методов нечувствительны к регистру.
 .It Cm inact
-Enable inactivity processing for stations associated to an
-access point (default).
-When operating as an access point the 802.11 layer monitors
-the activity of each associated station.
-When a station is inactive for 5 minutes it will send several
+Включите обработку неактивности для станций, связанных с
+точкой доступа (по умолчанию).
+При работе в качестве точки доступа уровень 802.11 отслеживает
+деятельность каждой связанной станции.
+Если станция неактивна в течение 5 минут, она отправит несколько
 .Dq probe frames
-to see if the station is still present.
-If no response is received then the station is deauthenticated.
-Applications that prefer to handle this work can disable this
-facility by using
+чтобы проверить, существует ли еще станция.
+Если ответ не получен, станция деаутентифицируется.
+Приложения, которые предпочитают выполнять эту работу, могут отключить эту функцию.
+объекта с помощью
 .Fl inact .
 .It Cm indoor
-Set the location to use in calculating regulatory constraints.
-The location is also advertised in beacon and probe response frames
-when 802.11d is enabled with
+Установите местоположение, которое будет использоваться при расчете нормативных ограничений.
+Местоположение также объявляется в кадрах ответа маяка и зонда.
+когда 802.11d включен с помощью
 .Cm dotd .
-See also
+Смотрите также
 .Cm outdoor ,
 .Cm anywhere ,
 .Cm country ,
-and
+и
 .Cm regdomain .
 .It Cm list active
-Display the list of channels available for use taking into account
-any restrictions set with the
+Отображение списка доступных для использования каналов с учетом
+любых ограничений, установленных
 .Cm chanlist
-directive.
-See the description of
+директивой.
+Посмотрите описание
 .Cm list chan
-for more information.
+Чтобы получить больше информации.
 .It Cm list caps
-Display the adaptor's capabilities, including the operating
-modes supported.
+Отображение возможностей адаптера, включая эксплуатационные
+поддерживаемые режимы.
 .It Cm list chan
-Display the list of channels available for use.
-Channels are shown with their IEEE channel number, equivalent
-frequency, and usage modes.
-Channels identified as
+Отображение списка каналов, доступных для использования.
+Каналы показаны с указанием их номеров каналов IEEE, эквивалентных
+частоте и режиму использования.
+Каналы идентифицированые как
 .Ql 11g
-are also usable in
+также можно использовать в
 .Ql 11b
-mode.
-Channels identified as
+режмие.
+Каналы идентифицированые как
 .Ql 11a Turbo
-may be used only for Atheros' Static Turbo mode
-(specified with
-. Cm mediaopt turbo ) .
-Channels marked with a
+можно использовать только для режима Static Turbo Atheros.
+(указывается с помощью mediaopt turbo ) .
+Каналы, отмеченные значком
 .Ql *
-have a regulatory constraint that they be passively scanned.
-This means a station is not permitted to transmit on the channel until
-it identifies the channel is being used for 802.11 communication;
-typically by hearing a beacon frame from an access point operating
-on the channel.
+имеют нормативное ограничение, согласно которому они подлежат пассивному сканированию.
+Это означает, что станции не разрешается вести передачу по каналу до тех пор, пока
+он идентифицирует канал, используемый для связи 802.11;
+обычно путем прослушивания кадра маяка от работающей точки доступа
+на канале.
 .Cm list freq
-is another way of requesting this information.
-By default a compacted list of channels is displayed; if the
+это еще один способ запроса этой информации.
+По умолчанию отображается сжатый список каналов; если
 .Fl v
-option is specified then all channels are shown.
+указана опция, то отображаются все каналы.
 .It Cm list countries
-Display the set of country codes and regulatory domains that can be
-used in regulatory configuration.
+Отображение набора кодов стран и нормативных доменов, которые могут быть
+использованы в нормативной конфигурации
 .It Cm list mac
-Display the current MAC Access Control List state.
-Each address is prefixed with a character that indicates the
-current policy applied to it:
+Отображение текущего состояния списка контроля доступа MAC.
+Перед каждым адресом стоит символ, обозначающий, что
+к нему применена текущая политика:
 .Ql +
-indicates the address is allowed access,
+указывает, что к адресу разрешен доступ,
 .Ql -
-indicates the address is denied access,
+указывает на то, что к адресу запрещен доступ,
 .Ql *
-indicates the address is present but the current policy open
-(so the ACL is not consulted).
+указывает, что адрес присутствует, но текущая политика открыта
+(поэтому ACL не проверяется).
 .It Cm list mesh
-Displays the mesh routing table, used for forwarding packets on a mesh
-network.
+Отображает таблицу маршрутизации сети, используемую для пересылки пакетов в сети.
+сеть.
 .It Cm list regdomain
-Display the current regulatory settings including the available channels
-and transmit power caps.
+Отображение текущих нормативных настроек, включая доступные каналы
+и ограничения мощности передачи.
 .It Cm list roam
-Display the parameters that govern roaming operation.
+Отображение параметров, управляющих работой роуминга.
 .It Cm list txparam
-Display the parameters that govern transmit operation.
+Отображение параметров, которые управляют операцией передачи.
 .It Cm list txpower
-Display the transmit power caps for each channel.
+Отображение ограничения мощности передачи для каждого канала.
 .It Cm list scan
 Display the access points and/or ad-hoc neighbors
 located in the vicinity.
-This information may be updated automatically by the adapter
-with a
+Отображение точек доступа и/или одноранговых соседей
+расположенных в окрестностях.
+Эта информация может автоматически обновляться адаптером.
+с
 .Cm scan
-request or through background scanning.
-Depending on the capabilities of the stations the following
-flags (capability codes) can be included in the output:
+запросом или посредством фонового сканирования.
+В зависимости от возможностей станций:
+флаги (коды возможностей) могут быть включены в выходные данные:
 .Bl -tag -width 3n
 .It Li A
-Channel agility.
+Гибкость канала.
 .It Li B
-PBCC modulation.
+PBCC-модуляция.
 .It Li C
-Poll request capability.
+Возможность запроса опроса.
 .It Li D
-DSSS/OFDM capability.
+Возможность DSSS/OFDM.
 .It Li E
-Extended Service Set (ESS).
-Indicates that the station is part of an infrastructure network
-rather than an IBSS/ad-hoc network.
+Расширенный набор услуг (ESS).
+Указывает, что станция является частью инфраструктурной сети.
+а не сети IBSS/ad-hoc.
 .It Li I
-Independent Basic Service Set (IBSS).
-Indicates that the station is part of an ad-hoc network
-rather than an ESS network.
+Независимый базовый набор услуг (IBSS).
+Указывает, что станция является частью одноранговой сети.
+а не сети ESS.
 .It Li P
-Privacy capability.
-The station requires authentication and encryption
-for all data frames exchanged within the BSS using cryptographic means
-such as WEP, TKIP, or AES-CCMP.
+Возможность конфиденциальности.
+Станция требует аутентификации и шифрования.
+для всех кадров данных, которыми обмениваются внутри BSS с использованием криптографических средств
+например WEP, TKIP или AES-CCMP.
 .It Li R
-Robust Secure Network (RSN).
+Надежная безопасная сеть (RSN).
 .It Li S
-Short Preamble.
-Indicates that the network is using short preambles,
-defined in 802.11b High Rate/DSSS PHY,
-and utilizes a 56 bit sync field
-rather than the 128 bit field used in long preamble mode.
-Short preambles are used to optionally
-improve throughput performance with 802.11g and 802.11b.
+Краткая преамбула.
+Указывает, что сеть использует короткие преамбулы.
+определено в 802.11b High Speed/DSSS PHY,
+и использует 56-битное поле синхронизации
+а не 128-битное поле, используемое в режиме длинной преамбулы.
+Короткие преамбулы используются для
+улучшения производительность пропускной способности с помощью 802.11g и 802.11b.
 .It Li c
-Pollable capability.
+Возможность опроса.
 .It Li s
-Short slot time capability.
-Indicates that the 802.11g network is using a short slot time
-because there are no legacy (802.11b) stations present.
+Возможность короткого интервала времени.
+Указывает, что сеть 802.11g использует короткий интервал времени.
+потому что нет устаревших станций (802.11b).
 .El
 .Pp
-By default interesting information elements captured from the neighboring
-stations are displayed at the end of each row.
-Possible elements include:
+По умолчанию интересные элементы информации, захваченные из соседних
+станций отображаются в конце каждой строки.
+Возможные элементы включают в себя:
 .Cm WME
-(station supports WME),
+(станция поддерживает WME),
 .Cm WPA
-(station supports WPA),
+(станция поддерживает WPА),
 .Cm WPS
-(station supports WPS),
+(станция поддерживает WPS),
 .Cm RSN
-(station supports 802.11i/RSN),
+(станция поддерживает 802.11i/RSN),
 .Cm HTCAP
-(station supports 802.11n/HT communication),
+(станция поддерживает связь 802.11n/HT),
 .Cm ATH
-(station supports Atheros protocol extensions),
+(станция поддерживает расширения протокола Atheros),
 .Cm VEN
-(station supports unknown vendor-specific extensions).
-If the
+(станция поддерживает расширения неизвестных производителей).
+Если
 .Fl v
-flag is used all the information elements and their
-contents will be shown.
-Specifying the
+флаг использует все информационные элементы и их
+содержимое.
+Указание
 .Fl v
-flag also enables display of long SSIDs.
-The
+Флаг также включает отображение длинных SSID.
 .Cm list ap
-command is another way of requesting this information.
+команда — это еще один способ запроса этой информации.
 .It Cm list sta
-When operating as an access point display the stations that are
-currently associated.
-When operating in ad-hoc mode display stations identified as
-neighbors in the IBSS.
-When operating in mesh mode display stations identified as
-neighbors in the MBSS.
-When operating in station mode display the access point.
-Capabilities advertised by the stations are described under
-the
-.Cm scan
-request.
-The following flags can be included in the output:
+При работе в качестве точки доступа отображаются станции, которые
+в настоящее время связаны.
+При работе в режиме Ad-hoc станции отображения идентифицируются как
+соседи по IBSS.
+При работе в ячеистом режиме станции отображения обозначаются как
+соседи по MBSS.
+При работе в режиме станции отображается точка доступа.
+Возможности, рекламируемые станциями, описаны в разделе
+.Cm сканирование
+запрос.
+В вывод могут быть включены следующие флаги:
 .Bl -tag -width 3n
 .It Li A
-Authorized.
-Indicates that the station is permitted to send/receive data frames.
+Авторизованный.
+Указывает, что станции разрешено отправлять/получать кадры данных.
 .It Li E
-Extended Rate Phy (ERP).
-Indicates that the station is operating in an 802.11g network
-using extended transmit rates.
+Расширенная ставка Phy (ERP).
+Указывает, что станция работает в сети 802.11g.
+используя расширенные скорости передачи.
 .It Li H
-High Throughput (HT).
-Indicates that the station is using HT transmit rates.
-If a
+Высокая пропускная способность (HT).
+Указывает, что станция использует скорость передачи HT.
+Если
 .Sq Li +
-follows immediately after then the station associated
-using deprecated mechanisms supported only when
+следует сразу за соответствующей станцией,
+использование устаревших механизмов поддерживается только тогда, когда
 .Cm htcompat
-is enabled.
+включен.
 .It Li P
-Power Save.
-Indicates that the station is operating in power save mode.
+Энергосбережение.
+Указывает, что станция работает в режиме энергосбережения.
 .It Li Q
-Quality of Service (QoS).
-Indicates that the station is using QoS encapsulation for
-data frame.
-QoS encapsulation is enabled only when WME mode is enabled.
+Качество обслуживания (QoS).
+Указывает, что станция использует инкапсуляцию QoS для
+кадр данных.
+Инкапсуляция QoS включается только при включенном режиме WME.
 .It Li S
-Short GI in HT 40MHz mode enabled.
-If a
+Короткий GI в режиме HT 40 МГц включен.
+Если
 .Sq Li +
-follows immediately after then short GI in HT 20MHz mode is enabled as well.
+следует сразу после включения короткого GI в режиме HT 20 МГц.
 .It Li T
-Transitional Security Network (TSN).
-Indicates that the station associated using TSN; see also
+Переходная сеть безопасности (TSN).
+Указывает, что станция связана с использованием TSN; смотрите также
 .Cm tsn
-below.
+ниже.
 .It Li W
-Wi-Fi Protected Setup (WPS).
-Indicates that the station associated using WPS.
+Защищенная настройка Wi-Fi (WPS).
+Указывает, что станция связана с использованием WPS.
 .It Li s
-Short GI in HT 20MHz mode enabled.
+Короткий GI в режиме HT 20 МГц включен.
 .El
 .Pp
-By default information elements received from associated stations
-are displayed in a short form; the
+По умолчанию элементы информации, полученные от связанных станций
+отображаются в краткой форме; этот
 .Fl v
-flag causes this information to be displayed symbolically.
+Флаг заставляет эту информацию отображаться в символическом виде.
 .It Cm list wme
-Display the current channel parameters to use when operating in WME mode.
-If the
+Отображение текущих параметров канала, которые будут использоваться при работе в режиме WME.
+Если
 .Fl v
-option is specified then both channel and BSS parameters are displayed
-for each AC (first channel, then BSS).
-When WME mode is enabled for an adaptor this information will be
-displayed with the regular status; this command is mostly useful
-for examining parameters when WME mode is disabled.
-See the description of the
+указана опция, и затем отображаются параметры канала и BSS
+для каждого АС (первый канал, затем BSS).
+Если для адаптера включен режим WME, эта информация будет
+отображаться с обычным статусом; эта команда наиболее полезна
+для проверки параметров при отключенном режиме WME.
+Смотрите описание
 .Cm wme
-directive for information on the various parameters.
+директива для получения информации о различных параметрах.
 .It Cm maxretry Ar count
-Set the maximum number of tries to use in sending unicast frames.
-The default setting is 6 but drivers may override this with a value
-they choose.
+Установите максимальное количество попыток отправки одноадресных кадров.
+По умолчанию установлено значение 6, но драйверы могут переопределить его выбранным значением..
 .It Cm mcastrate Ar rate
-Set the rate for transmitting multicast/broadcast frames.
-Rates are specified as megabits/second in decimal; e.g.,\& 5.5 for 5.5 Mb/s.
-This rate should be valid for the current operating conditions;
-if an invalid rate is specified drivers are free to chose an
-appropriate rate.
+Установите скорость передачи кадров многоадресной/широковещательной рассылки.
+Скорость указывается в десятичных мегабитах в секунду; например,\& 5,5 для 5,5 Мбит/с.
+Эта ставка должна быть действительна для текущих условий эксплуатации;
+если указан неверный тариф, драйверы могут свободно выбрать
+соответствующий тариф.
 .It Cm mgtrate Ar rate
-Set the rate for transmitting management and/or control frames.
-Rates are specified as megabits/second in decimal; e.g.,\& 5.5 for 5.5 Mb/s.
+Установите скорость передачи кадров управления и/или контроля.
+Скорость указывается в десятичных мегабитах в секунду; например,\& 5,5 для 5,5 Мбит/с.
 .It Cm outdoor
-Set the location to use in calculating regulatory constraints.
-The location is also advertised in beacon and probe response frames
-when 802.11d is enabled with
-.Cm dotd .
-See also
-.Cm anywhere ,
-.Cm country ,
+Установите местоположение, которое будет использоваться при расчете нормативных ограничений.
+Местоположение также объявляется в кадрах ответа маяка и зонда.
+когда 802.11d включен с помощью
+.Cm точка .
+Смотрите также
+.Cm в любом месте ,
+.Cm страна ,
 .Cm indoor ,
-and
+и
 .Cm regdomain .
-.It Cm powersave
-Enable powersave operation.
-When operating as a client, the station will conserve power by
-periodically turning off the radio and listening for
-messages from the access point telling it there are packets waiting.
-The station must then retrieve the packets.
-Not all devices support power save operation as a client.
-The 802.11 specification requires that all access points support
-power save but some drivers do not.
-Use
+.It Cm энергосбережение
+Включите режим энергосбережения.
+Работая в качестве клиента, станция будет экономить электроэнергию за счет
+периодического выключения радио и прослушивания
+сообщения от точки доступа о том, что ожидаются пакеты.
+Затем станция должна получить пакеты.
+Не все устройства поддерживают режим энергосбережения в качестве клиента.
+Спецификация 802.11 требует, чтобы все точки доступа поддерживали
+энергосбережение, но некоторые драйверы этого не делают.
+Используйте
 .Fl powersave
-to disable powersave operation when operating as a client.
+для отключения режима энергосбережения при работе в качестве клиента.
 .It Cm powersavesleep Ar sleep
-Set the desired max powersave sleep time in TU's (1024 usecs).
-By default the max powersave sleep time is 100 TU's.
+Установите желаемое максимальное время энергосбережения в TU (1024 мкс).
+По умолчанию максимальное время энергосбережения составляет 100 ТЕ.
 .It Cm protmode Ar technique
-For interfaces operating in 802.11g, use the specified
+Для интерфейсов, работающих в стандарте 802.11g, используйте указанный
 .Ar technique
-for protecting OFDM frames in a mixed 11b/11g network.
-The set of valid techniques is
+для защиты кадров OFDM в смешанной сети 11b/11g.
+Набор действенных методик
 .Cm off , cts
 (CTS to self),
-and
+и
 .Cm rtscts
 (RTS/CTS).
-Technique names are case insensitive.
-Not all devices support
+Имена методов нечувствительны к регистру.
+Не все устройства поддерживают
 .Cm cts
-as a protection technique.
+как технику защиты.
 .It Cm pureg
-When operating as an access point in 802.11g mode allow only
-11g-capable stations to associate (11b-only stations are not
-permitted to associate).
-To allow both 11g and 11b-only stations to associate, use
+При работе в качестве точки доступа в режиме 802.11g разрешайте только
+Станции с поддержкой 11g для подключения (станции, поддерживающие только 11b, не поддерживаются).
+разрешено объединение).
+Чтобы разрешить подключение станций только 11g и 11b, используйте
 .Fl pureg .
 .It Cm puren
-When operating as an access point in 802.11n mode allow only
-HT-capable stations to associate (legacy stations are not
-permitted to associate).
-To allow both HT and legacy stations to associate, use
+При работе в качестве точки доступа в режиме 802.11n разрешайте только
+Станции с поддержкой HT для подключения (устаревшим станциям не
+разрешено объединение).
+Чтобы разрешить связь как HT устаревшим станциям, используйте
 .Fl puren .
 .It Cm regdomain Ar sku
-Set the regulatory domain to use in calculating the regulatory constraints
-for operation.
-In particular the set of available channels, how the wireless device
-will operation on the channels, and the maximum transmit power that
-can be used on a channel are defined by this setting.
-Regdomain codes (SKU's) are taken from
+Установите нормативный домен, который будет использоваться при расчете нормативных ограничений.
+для эксплуатации.
+В частности набор доступных каналов, как работает беспроводное устройство,
+будет работать на каналах, и максимальная мощность передачи, которая
+может использоваться на канале, определяются этой настройкой.
+Коды регдоменов (SKU) взяты из
 .Pa /etc/regdomain.xml
-and can also
-be viewed with the
-.Cm list countries
-request.
-Note that not all devices support changing the regdomain from a default
-setting; typically stored in EEPROM.
-See also
+а также могут
+просматриваться с помощью
+.Cm list country 
+запрос.
+Обратите внимание, что не все устройства поддерживают изменение регдомена по умолчанию.
+параметр; обычно хранится в EEPROM.
+Смотрите также
 .Cm country ,
 .Cm indoor ,
 .Cm outdoor ,
-and
+и
 .Cm anywhere .
 .It Cm rifs
-Enable use of Reduced InterFrame Spacing (RIFS) when operating in 802.11n
-on an HT channel.
-Note that RIFS must be supported by both the station and access point
-for it to be used.
-To disable RIFS use
+Включите использование уменьшенного межкадрового интервала (RIFS) при работе в 802.11n.
+на канале HT.
+Обратите внимание, что RIFS должен поддерживаться как станцией, так и точкой доступа.
+чтобы его можно было использовать.
+Чтобы отключить использование RIFS
 .Fl rifs .
 .It Cm roam:rate Ar rate
-Set the threshold for controlling roaming when operating in a BSS.
-The
+Установите порог контроля роуминга при работе в BSS.
 .Ar rate
-parameter specifies the transmit rate in megabits
-at which roaming should be considered.
-If the current transmit rate drops below this setting and background scanning
-is enabled, then the system will check if a more desirable access point is
-available and switch over to it.
-The current scan cache contents are used if they are considered
-valid according to the
+параметр определяет скорость передачи в мегабитах
+при этом следует учитывать роуминг.
+Если текущая скорость передачи упадет ниже этой настройки и включено фоновое сканирование, 
+то система проверит, есть ли более желательная точка доступа.
+и переключтся на него.
+Текущее содержимое кэша сканирования используется, если оно считается
+действительным в соответствии с
 .Cm scanvalid
-parameter; otherwise a background scan operation is triggered before
-any selection occurs.
-Each channel type has a separate rate threshold; the default values are:
-12 Mb/s (11a), 2 Mb/s (11b), 2 Mb/s (11g), MCS 1 (11na, 11ng).
+параметр; в противном случае операция фонового сканирования запускается раньше
+происходит любой выбор.
+Каждый тип канала имеет отдельный порог скорости; значения по умолчанию:
+12 Мбит/с (11a), 2 Мбит/с (11b), 2 Мбит/с (11g), MCS 1 (11na, 11ng).
 .It Cm roam:rssi Ar rssi
-Set the threshold for controlling roaming when operating in a BSS.
-The
+Установите порог контроля роуминга при работе в BSS.
 .Ar rssi
-parameter specifies the receive signal strength in dBm units
-at which roaming should be considered.
-If the current rssi drops below this setting and background scanning
-is enabled, then the system will check if a more desirable access point is
-available and switch over to it.
-The current scan cache contents are used if they are considered
-valid according to the
+параметр определяет мощность принимаемого сигнала в единицах dBm.
+при этом следует учитывать роуминг.
+Если текущий rssi упадет ниже этой настройки и фоновое сканирование
+включено, то система проверит, есть ли более желательная точка доступа.
+и переключится на нее.
+Текущее содержимое кэша сканирования используется, если оно считается
+действительным в соответствии с
 .Cm scanvalid
-parameter; otherwise a background scan operation is triggered before
-any selection occurs.
-Each channel type has a separate rssi threshold; the default values are
-all 7 dBm.
+параметр; в противном случае операция фонового сканирования запускается раньше и
+происходит любой выбор.
+Каждый тип канала имеет отдельный порог rssi; значения по умолчанию:
+все 7 dBm.
 .It Cm roaming Ar mode
-When operating as a station, control how the system will
-behave when communication with the current access point
-is broken.
-The
+При работе в качестве станции контролируйте, как система будет
+вести себя при связи с текущей точкой доступа.
 .Ar mode
-argument may be one of
+аргумент может быть одним из
 .Cm device
-(leave it to the hardware device to decide),
+(оставьте это на усмотрение аппаратного устройства),
 .Cm auto
-(handle either in the device or the operating system\[em]as appropriate),
+(обрабатывать либо на устройстве, либо в операционной системе\[em]в зависимости от ситуации),
 .Cm manual
-(do nothing until explicitly instructed).
-By default, the device is left to handle this if it is
-capable; otherwise, the operating system will automatically
-attempt to reestablish communication.
-Manual mode is used by applications such as
-.Xr wpa_supplicant 8
-that want to control the selection of an access point.
+(ничего не делать, пока не будет получено явное указание).
+По умолчанию устройство может справиться с этим, если оно
+способно; в противном случае операционная система автоматически
+попытаться восстановить связь.
+Ручной режим используется такими приложениями, как
 .It Cm rtsthreshold Ar length
-Set the threshold for which
-transmitted frames are preceded by transmission of an
-RTS
-control frame.
-The
+Установите порог, при котором
+передаваемым кадрам предшествует передача
+РТС
+контрольный кадр.
 .Ar length
-argument
-is the frame size in bytes and must be in the range 1 to 2346.
-Setting
+аргумент
+— размер кадра в байтах который должен находиться в диапазоне от 1 до 2346.
+Параметр
 .Ar length
-to
+к
 .Li 2346 ,
 .Cm any ,
-or
+или
 .Cm -
-disables transmission of RTS frames.
-Not all adapters support setting the RTS threshold.
+Запустите сканирование соседних станций, дождитесь его завершения и
+отобразите все найденные станции.
+Только суперпользователь может инициировать сканирование.
+Чтобы видеть
 .It Cm scan
-Initiate a scan of neighboring stations, wait for it to complete, and
-display all stations found.
-Only the super-user can initiate a scan.
-See
+Запустите сканирование соседних станций, дождитесь его завершения и
+отобразите все найденные станции.
+Только суперпользователь может инициировать сканирование.
 .Cm list scan
-for information on the display.
-By default a background scan is done; otherwise a foreground
-scan is done and the station may roam to a different access point.
-The
+для получения информации на дисплее.
+По умолчанию выполняется фоновое сканирование; иначе передний план
+сканирования завершен, и станция может перейти к другой точке доступа.
 .Cm list scan
-request can be used to show recent scan results without
-initiating a new scan.
+запрос можно использовать для отображения последних результатов сканирования без
+запуска нового сканирования.
 .It Cm scanvalid Ar threshold
-Set the maximum time the scan cache contents are considered valid;
-i.e., will be used without first triggering a scan operation to
-refresh the data.
-The
+Установите максимальное время, в течение которого содержимое кэша сканирования считается действительным;
+т. е. будет использоваться без предварительного запуска операции сканирования для
+обновить данные.
 .Ar threshold
-parameter is specified in seconds and defaults to 60 seconds.
-The minimum setting for
+Параметр указывается в секундах и по умолчанию равен 60 секундам.
+Минимальная настройка для
 .Ar threshold
-is 10 seconds.
-One should take care setting this threshold; if it is set too low
-then attempts to roam to another access point may trigger unnecessary
-background scan operations.
+составляет 10 секунд.
+Следует позаботиться об установлении этого порога; если он установлен слишком низко
+тогда попытки роуминга к другой точке доступа могут вызвать ненужные
+операции фонового сканирования.
 .It Cm shortgi
-Enable use of Short Guard Interval when operating in 802.11n
-on an HT channel.
-NB: this currently enables Short GI on both HT40 and HT20 channels.
-To disable Short GI use
+Включите использование короткого защитного интервала при работе в 802.11n.
+на канале HT.
+Примечание: в настоящее время Short GI включен как на каналах HT40, так и на HT20.
+Чтобы отключить использование Short GI
 .Fl shortgi .
 .It Cm smps
-Enable use of Static Spatial Multiplexing Power Save (SMPS)
-when operating in 802.11n.
-A station operating with Static SMPS maintains only a single
-receive chain active (this can significantly reduce power consumption).
-To disable SMPS use
+Включите использование энергосбережения статического пространственного мультиплексирования (SMPS).
+при работе в 802.11n.
+Станция, работающая со статическим ИИП, поддерживает только один
+получать цепочку активной (это позволяет существенно снизить энергопотребление).
+Чтобы отключить SMPS, используйте
 .Fl smps .
 .It Cm smpsdyn
-Enable use of Dynamic Spatial Multiplexing Power Save (SMPS)
-when operating in 802.11n.
-A station operating with Dynamic SMPS maintains only a single
-receive chain active but switches to multiple receive chains when it
-receives an RTS frame (this can significantly reduce power consumption).
-Note that stations cannot distinguish between RTS/CTS intended to
-enable multiple receive chains and those used for other purposes.
-To disable SMPS use
+Включите использование энергосбережения динамического пространственного мультиплексирования (SMPS).
+при работе в 802.11n.
+Станция, работающая с динамическим ИИП, поддерживает только одина
+цепочка приема активна, но переключается на несколько цепочек приема, когда она
+получает кадр RTS (это позволяет существенно снизить энергопотребление).
+Обратите внимание, что станции не могут различать RTS/CTS, предназначенные для
+включить несколько цепочек приема и те, которые используются для других целей.
+Чтобы отключить SMPS, используйте
 .Fl smps .
 .It Cm ssid Ar ssid
-Set the desired Service Set Identifier (aka network name).
-The SSID is a string up to 32 characters
-in length and may be specified as either a normal string or in
-hexadecimal when preceded by
+Установите желаемый идентификатор набора услуг (также известный как имя сети).
+SSID представляет собой строку длиной до 32 символов.
+по длине и может быть указан либо как обычная строка, либо в виде
+шестнадцатеричный, если ему предшествует
 .Ql 0x .
-Additionally, the SSID may be cleared by setting it to
+Кроме того, SSID можно очистить, установив для него значение
 .Ql - .
 .It Cm tdmaslot Ar slot
-When operating with TDMA, use the specified
+При работе с TDMA используйте указанный
 .Ar slot
-configuration.
-The
+конфигурация.
 .Ar slot
-is a number between 0 and the maximum number of slots in the BSS.
-Note that a station configured as slot 0 is a master and
-will broadcast beacon frames advertising the BSS;
-stations configured to use other slots will always
-scan to locate a master before they ever transmit.
-By default
+представляет собой число от 0 до максимального количества слотов в BSS.
+Обратите внимание, что станция, настроенная как слот 0, является ведущей и
+будет транслировать кадры маяка, рекламирующие BSS;
+станции, настроенные на использование других слотов, всегда будут
+сканируйте, чтобы найти мастера, прежде чем он начнет передачу.
+По умолчанию
 .Cm tdmaslot
-is set to 1.
+установлено на 1.
 .It Cm tdmaslotcnt Ar cnt
-When operating with TDMA, setup a BSS with
+При работе с TDMA настройте BSS со
 .Ar cnt
-slots.
-The slot count may be at most 8.
-The current implementation is only tested with two stations
-(i.e., point to point applications).
-This setting is only meaningful when a station is configured as slot 0;
-other stations adopt this setting from the BSS they join.
-By default
+слотами
+Количество слотов может быть не более 8.
+Текущая реализация тестируется только на двух станциях.
+(т.е. приложения «точка-точка»).
+Эта настройка имеет смысл только в том случае, если станция настроена как слот 0;
+другие станции перенимают эту настройку из BSS, к которому они присоединяются.
+По умолчанию
 .Cm tdmaslotcnt
-is set to 2.
+установлено на 2.
 .It Cm tdmaslotlen Ar len
-When operating with TDMA, setup a BSS such that each station has a slot
+При работе с TDMA настройте BSS так, чтобы каждая станция имела слот
 .Ar len
-microseconds long.
-The slot length must be at least 150 microseconds (1/8 TU)
-and no more than 65 milliseconds.
-Note that setting too small a slot length may result in poor channel
-bandwidth utilization due to factors such as timer granularity and
-guard time.
-This setting is only meaningful when a station is configured as slot 0;
-other stations adopt this setting from the BSS they join.
-By default
+длиной в микросекунды.
+Длина слота должна быть не менее 150 микросекунд (1/8 TU).
+и не более 65 миллисекунд.
+Обратите внимание, что установка слишком маленькой длины слота может привести к ухудшению качества канала.
+использование полосы пропускания из-за таких факторов, как степень детализации таймера и
+время охраны.
+Эта настройка имеет смысл только в том случае, если станция настроена как слот 0;
+другие станции перенимают эту настройку из BSS, к которому они присоединяются.
+По умолчанию
 .Cm tdmaslotlen
-is set to 10 milliseconds.
+установлено значение 10 миллисекунд.
 .It Cm tdmabintval Ar intval
-When operating with TDMA, setup a BSS such that beacons are transmitted every
+При работе с TDMA настройте BSS так, чтобы маяки передавались каждый раз.
 .Ar intval
-superframes to synchronize the TDMA slot timing.
-A superframe is defined as the number of slots times the slot length; e.g.,
-a BSS with two slots of 10 milliseconds has a 20 millisecond superframe.
-The beacon interval may not be zero.
-A lower setting of
+суперкадры для синхронизации времени слота TDMA.
+Суперкадр определяется как количество слотов, умноженное на длину слота; например,
+BSS с двумя слотами по 10 миллисекунд имеет суперкадр длительностью 20 миллисекунд.
+Интервал маяка не может быть нулевым.
+Более низкая настройка
+приводит к более частой ресинхронизации таймеров; это может помочь, если
+наблюдается значительный дрейф таймера.
+По умолчанию
 .Cm tdmabintval
-causes the timers to be resynchronized more often; this can be help if
-significant timer drift is observed.
-By default
-.Cm tdmabintval
-is set to 5.
+установлено на 5.
 .It Cm tsn
-When operating as an access point with WPA/802.11i allow legacy
-stations to associate using static key WEP and open authentication.
-To disallow legacy station use of WEP, use
+При работе в качестве точки доступа с WPA/802.11i разрешайте устаревшие
+станции для связывания с использованием статического ключа WEP и открытой аутентификации.
+Чтобы запретить устаревшей станции использовать WEP, используйте
 .Fl tsn .
 .It Cm txpower Ar power
-Set the power used to transmit frames.
-The
+Установите мощность, используемую для передачи кадров.
 .Ar power
-argument is specified in .5 dBm units.
-Out of range values are truncated.
-Typically only a few discrete power settings are available and
-the driver will use the setting closest to the specified value.
-Not all adapters support changing the transmit power.
-.It Cm ucastrate Ar rate
-Set a fixed rate for transmitting unicast frames.
-Rates are specified as megabits/second in decimal; e.g.,\& 5.5 for 5.5 Mb/s.
-This rate should be valid for the current operating conditions;
-if an invalid rate is specified drivers are free to chose an
-appropriate rate.
+Аргумент указывается в единицах 0,5 дБм.
+Значения, выходящие за пределы диапазона, обрезаются.
+Обычно доступно только несколько дискретных настроек мощности.
+драйвер будет использовать настройку, наиболее близкую к указанному значению.
+Не все адаптеры поддерживают изменение мощности передачи.
+.It Cm ucastrate Ar скорость
+Установите фиксированную скорость для передачи одноадресных кадров.
+Скорость указывается в десятичных мегабитах в секунду; например,\& 5,5 для 5,5 Мбит/с.
+Эта ставка должна быть действительна для текущих условий эксплуатации;
+если указан неверный тариф, водители могут свободно выбрать
+соответствующий тариф.
 .It Cm wepmode Ar mode
-Set the desired WEP mode.
-Not all adapters support all modes.
-The set of valid modes is
+Установите желаемый режим WEP.
+Не все адаптеры поддерживают все режимы.
+Набор допустимых режимов
 .Cm off , on ,
-and
+и
 .Cm mixed .
-The
 .Cm mixed
-mode explicitly tells the adaptor to allow association with access
-points which allow both encrypted and unencrypted traffic.
-On these adapters,
+режим явно сообщает адаптеру разрешить ассоциацию с доступом
+точки, которые разрешают как зашифрованный, так и незашифрованный трафик.
+На этих адаптерах
 .Cm on
-means that the access point must only allow encrypted connections.
-On other adapters,
+означает, что точка доступа должна разрешать только зашифрованные соединения.
+На других адаптерах
 .Cm on
-is generally another name for
+вообще-то это другое название
 .Cm mixed .
-Modes are case insensitive.
+Режимы нечувствительны к регистру.
 .It Cm weptxkey Ar index
-Set the WEP key to be used for transmission.
-This is the same as setting the default transmission key with
+Установите ключ WEP, который будет использоваться для передачи.
+Это то же самое, что установить ключ передачи по умолчанию с помощью
 .Cm deftxkey .
 .It Cm wepkey Ar key Ns | Ns Ar index : Ns Ar key
-Set the selected WEP key.
-If an
+Установите выбранный ключ WEP.
+Если
 .Ar index
-is not given, key 1 is set.
-A WEP key will be either 5 or 13
-characters (40 or 104 bits) depending on the local network and the
-capabilities of the adaptor.
-It may be specified either as a plain
-string or as a string of hexadecimal digits preceded by
+не задан, установлен ключ 1.
+Ключ WEP будет иметь номер 5 или 13.
+символов (40 или 104 бита) в зависимости от локальной сети и
+возможности адаптера.
+Он может быть указан либо как простой
+строка или строка шестнадцатеричных цифр, которым предшествует
 .Ql 0x .
-For maximum portability, hex keys are recommended;
-the mapping of text keys to WEP encryption is usually driver-specific.
-In particular, the Windows drivers do this mapping differently to
+Для максимальной мобильности рекомендуется использовать шестигранные ключи;
+Сопоставление текстовых ключей с WEP-шифрованием обычно зависит от драйвера.
+В частности, драйверы Windows выполняют это сопоставление иначе, чем
 .Fx .
-A key may be cleared by setting it to
+Ключ можно очистить, установив для него значение
 .Ql - .
-If WEP is supported then there are at least four keys.
-Some adapters support more than four keys.
-If that is the case, then the first four keys
-(1-4) will be the standard temporary keys and any others will be adaptor
-specific keys such as permanent keys stored in NVRAM.
+Если поддерживается WEP, то имеется как минимум четыре ключа.
+Некоторые адаптеры поддерживают более четырех клавиш.
+Если это так, то первые четыре клавиши
+(1-4) будут стандартными временными ключами, а все остальные будут адаптером.
+определенные ключи, такие как постоянные ключи, хранящиеся в NVRAM.
 .Pp
-Note that you must set a default transmit key with
+Обратите внимание, что вы должны установить ключ передачи по умолчанию с помощью
 .Cm deftxkey
-for the system to know which key to use in encrypting outbound traffic.
+чтобы система знала, какой ключ использовать для шифрования исходящего трафика.
 .It Cm wme
-Enable Wireless Multimedia Extensions (WME) support, if available,
-for the specified interface.
-WME is a subset of the IEEE 802.11e standard to support the
-efficient communication of realtime and multimedia data.
-To disable WME support, use
+Включите поддержку беспроводных мультимедийных расширений (WME), если она доступна.
+для указанного интерфейса.
+WME — это подмножество стандарта IEEE 802.11e, поддерживающее
+эффективная передача данных в реальном времени и мультимедийных данных.
+Чтобы отключить поддержку WME, используйте
 .Fl wme .
-Another name for this parameter is
+Другое название этого параметра:
 .Cm wmm .
 .Pp
-The following parameters are meaningful only when WME support is in use.
-Parameters are specified per-AC (Access Category) and
-split into those that are used by a station when acting
-as an access point and those for client stations in the BSS.
-The latter are received from the access point and may not be changed
-(at the station).
-The following Access Categories are recognized:
+Следующие параметры имеют смысл только при использовании поддержки WME.
+Параметры указаны для каждого AC (Категория доступа) и
+разделить на те, которые используются станцией при действии
+в качестве точки доступа и для клиентских станций в BSS.
+Последние принимаются от точки доступа и не могут быть изменены.
+(на станции).
+Распознаются следующие категории доступа:
 .Pp
 .Bl -tag -width ".Cm AC_BK" -compact
 .It Cm AC_BE
-(or
+(или
 .Cm BE )
-best effort delivery,
+доставка изо всех сил,
 .It Cm AC_BK
-(or
+(или
 .Cm BK )
-background traffic,
+фоновый трафик,
 .It Cm AC_VI
-(or
+(или
 .Cm VI )
-video traffic,
+видео трафик,
 .It Cm AC_VO
-(or
+(или
 .Cm VO )
-voice traffic.
+голосовой трафик.
 .El
 .Pp
-AC parameters are case-insensitive.
-Traffic classification is done in the operating system using the
-vlan priority associated with data frames or the
-ToS (Type of Service) indication in IP-encapsulated frames.
-If neither information is present, traffic is assigned to the
-Best Effort (BE) category.
+Параметры AC не чувствительны к регистру.
+Классификация трафика осуществляется в операционной системе с помощью
+приоритет vlan, связанный с кадрами данных или
+Индикация ToS (типа услуги) в кадрах, инкапсулированных по IP.
+Если ни одна информация отсутствует, трафику назначается
+Категория Best Effort (BE).
 .Bl -tag -width indent
 .It Cm ack Ar ac
-Set the ACK policy for QoS transmissions by the local station;
-this controls whether or not data frames transmitted by a station
-require an ACK response from the receiving station.
-To disable waiting for an ACK use
+Установите политику ACK для передач QoS локальной станцией;
+это контролирует, будут ли кадры данных передаваться станцией
+требуют ответа ACK от принимающей станции.
+Чтобы отключить ожидание ACK, используйте
 .Fl ack .
-This parameter is applied only to the local station.
+Этот параметр применяется только к местной станции.
 .It Cm acm Ar ac
-Enable the Admission Control Mandatory (ACM) mechanism
-for transmissions by the local station.
-To disable the ACM use
+Включите механизм обязательного контроля допуска (ACM).
+для передач местной станции.
+Чтобы отключить ACM, используйте
 .Fl acm .
-On stations in a BSS this parameter is read-only and indicates
-the setting received from the access point.
-NB: ACM is not supported right now.
+На станциях BSS этот параметр доступен только для чтения и указывает
+настройку, полученную от точки доступа.
+Примечание. ACM в настоящее время не поддерживается.
 .It Cm aifs Ar ac Ar count
-Set the Arbitration Inter Frame Spacing (AIFS)
-channel access parameter to use for transmissions
-by the local station.
-On stations in a BSS this parameter is read-only and indicates
-the setting received from the access point.
+Установите арбитражный межкадровый интервал (AIFS)
+параметр доступа к каналу, используемый для передач
+у местной станции.
+На станциях BSS этот параметр доступен только для чтения и указывает
+настройку, полученную от точки доступа.
 .It Cm cwmin Ar ac Ar count
-Set the CWmin channel access parameter to use for transmissions
-by the local station.
-On stations in a BSS this parameter is read-only and indicates
-the setting received from the access point.
+Установите параметр доступа к каналу CWmin, который будет использоваться для передач.
+у местной станции.
+На станциях BSS этот параметр доступен только для чтения и указывает
+настройку, полученную от точки доступа.
 .It Cm cwmax Ar ac Ar count
-Set the CWmax channel access parameter to use for transmissions
-by the local station.
-On stations in a BSS this parameter is read-only and indicates
-the setting received from the access point.
+Установите параметр доступа к каналу CWmax, который будет использоваться для передач.
+у местной станции.
+На станциях BSS этот параметр доступен только для чтения и указывает
+настройку, полученную от точки доступа.
 .It Cm txoplimit Ar ac Ar limit
-Set the Transmission Opportunity Limit channel access parameter
-to use for transmissions by the local station.
-This parameter defines an interval of time when a WME station
-has the right to initiate transmissions onto the wireless medium.
-On stations in a BSS this parameter is read-only and indicates
-the setting received from the access point.
+Установите параметр доступа к каналу «Ограничение возможностей передачи»
+использовать для передач местной станции.
+Этот параметр определяет интервал времени, в течение которого станция WME
+имеет право инициировать передачу по беспроводной среде.
+На станциях BSS этот параметр доступен только для чтения и указывает
+настройку, полученную от точки доступа.
 .It Cm bss:aifs Ar ac Ar count
-Set the AIFS channel access parameter to send to stations in a BSS.
-This parameter is meaningful only when operating in ap mode.
+Установите параметр доступа к каналу AIFS для отправки на станции в BSS.
+Этот параметр имеет смысл только при работе в режиме ap.
 .It Cm bss:cwmin Ar ac Ar count
-Set the CWmin channel access parameter to send to stations in a BSS.
-This parameter is meaningful only when operating in ap mode.
+Установите параметр доступа к каналу CWmin для отправки на станции в BSS.
+Этот параметр имеет смысл только при работе в режиме ap.
 .It Cm bss:cwmax Ar ac Ar count
-Set the CWmax channel access parameter to send to stations in a BSS.
-This parameter is meaningful only when operating in ap mode.
+Установите параметр доступа к каналу CWmax для отправки на станции в BSS.
+Этот параметр имеет смысл только при работе в режиме ap.
 .It Cm bss:txoplimit Ar ac Ar limit
-Set the TxOpLimit channel access parameter to send to stations in a BSS.
-This parameter is meaningful only when operating in ap mode.
+Установите параметр доступа к каналу TxOpLimit для отправки на станции в BSS.
+Этот параметр имеет смысл только при работе в режиме ap.
 .El
 .It Cm wps
-Enable Wireless Privacy Subscriber support.
-Note that WPS support requires a WPS-capable supplicant.
-To disable this function use
+Включите поддержку  Wireless Privacy Subscriber.
+Обратите внимание, что для поддержки WPS требуется соискатель с поддержкой WPS.
+Чтобы отключить эту функцию, используйте
 .Fl wps .
 .El
 .Ss MAC-Based Access Control List Parameters
-The following parameters support an optional access control list
-feature available with some adapters when operating in ap mode; see
+Следующие параметры поддерживают дополнительный список контроля доступа.
+функция доступна для некоторых адаптеров при работе в режиме ap; видеть
 .Xr wlan_acl 4 .
-This facility allows an access point to accept/deny association
-requests based on the MAC address of the station.
-Note that this feature does not significantly enhance security
-as MAC address spoofing is easy to do.
+Эта функция позволяет точке доступа принимать/отклонять ассоциацию.
+запросы на основе MAC-адреса станции.
+Обратите внимание, что эта функция существенно не повышает безопасность.
+поскольку подделать MAC-адрес легко.
 .Bl -tag -width indent
 .It Cm mac:add Ar address
-Add the specified MAC address to the database.
-Depending on the policy setting association requests from the
-specified station will be allowed or denied.
+Добавьте указанный MAC-адрес в базу данных.
+В зависимости от настроек политики запросы на ассоциацию от
+указанная станция будет разрешена или запрещена.
 .It Cm mac:allow
-Set the ACL policy to permit association only by
-stations registered in the database.
+Установите политику ACL, чтобы разрешить ассоциацию только
+станции, зарегистрированные в базе данных.
 .It Cm mac:del Ar address
-Delete the specified MAC address from the database.
+Удалите указанный MAC-адрес из базы данных.
 .It Cm mac:deny
-Set the ACL policy to deny association only by
-stations registered in the database.
+Установите политику ACL, чтобы запретить ассоциацию только
+станции, зарегистрированные в базе данных.
 .It Cm mac:kick Ar address
-Force the specified station to be deauthenticated.
-This typically is done to block a station after updating the
-address database.
+Принудительно проведите деаутентификацию указанной станции.
+Обычно это делается для блокировки станции после обновления
+база данных адресов.
 .It Cm mac:open
-Set the ACL policy to allow all stations to associate.
+Установите политику ACL, чтобы разрешить объединение всех станций.
 .It Cm mac:flush
-Delete all entries in the database.
+Удалите все записи в базе данных.
 .It Cm mac:radius
-Set the ACL policy to permit association only by
-stations approved by a RADIUS server.
-Note that this feature requires the
+Установите политику ACL, чтобы разрешить ассоциацию только
+станции, одобренные сервером RADIUS.
+Обратите внимание, что для этой функции требуется
 .Xr hostapd 8
-program be configured to do the right thing
-as it handles the RADIUS processing
-(and marks stations as authorized).
+программа должна быть настроена на правильные действия
+поскольку он обрабатывает RADIUS
+(и помечает станции как авторизованные).
 .El
 .Ss Mesh Mode Wireless Interface Parameters
-The following parameters are related to a wireless interface operating in mesh
-mode:
+Следующие параметры относятся к беспроводному интерфейсу, работающему в ячеистой сети.
+режим:
 .Bl -tag -width indent
 .It Cm meshid Ar meshid
-Set the desired Mesh Identifier.
-The Mesh ID is a string up to 32 characters in length.
-A mesh interface must have a Mesh Identifier specified
-to reach an operational state.
+Установите желаемый идентификатор сетки.
+Mesh ID представляет собой строку длиной до 32 символов.
+Для интерфейса сетки должен быть указан идентификатор сетки.
+для достижения рабочего состояния.
 .It Cm meshttl Ar ttl
-Set the desired
+Установите желаемый
 .Dq time to live
-for mesh forwarded packets;
-this is the number of hops a packet may be forwarded before
-it is discarded.
-The default setting for
+для пересылаемых пакетов;
+это количество прыжков, через которое пакет может быть перенаправлен
+оно отбрасывается.
+Настройка по умолчанию для
 .Cm meshttl
-is 31.
+это 31.
 .It Cm meshpeering
-Enable or disable peering with neighbor mesh stations.
-Stations must peer before any data packets can be exchanged.
-By default
+Включите или отключите пиринг с соседними ячеистыми станциями.
+Станции должны быть равноправными, прежде чем можно будет обмениваться пакетами данных.
+По умолчанию
 .Cm meshpeering
-is enabled.
+включен.
 .It Cm meshforward
-Enable or disable forwarding packets by a mesh interface.
-By default
+Включите или отключите пересылку пакетов через ячеистый интерфейс.
+По умолчанию
 .Cm meshforward
-is enabled.
+включен.
 .It Cm meshgate
-This attribute specifies whether or not the mesh STA activates mesh gate
-announcements.
-By default
+Этот атрибут определяет, активирует ли ячеистая STA ворота ячеистой сети.
+объявления.
+По умолчанию
 .Cm meshgate
-is disabled.
+выключен.
 .It Cm meshmetric Ar protocol
-Set the specified
+Установите указанный
 .Ar protocol
-as the link metric protocol used on a mesh network.
-The default protocol is called
+в качестве протокола метрики канала, используемого в ячеистой сети.
+Протокол по умолчанию называется
 .Ar AIRTIME .
-The mesh interface will restart after changing this setting.
+Интерфейс сетки перезапустится после изменения этого параметра.
 .It Cm meshpath Ar protocol
-Set the specified
+Установите указанный
 .Ar protocol
-as the path selection protocol used on a mesh network.
-The only available protocol at the moment is called
+в качестве протокола выбора пути, используемого в ячеистой сети.
+Единственный доступный протокол на данный момент называется
 .Ar HWMP
-(Hybrid Wireless Mesh Protocol).
-The mesh interface will restart after changing this setting.
+(Гибридный протокол беспроводной сети).
+Интерфейс сетки перезапустится после изменения этого параметра.
 .It Cm hwmprootmode Ar mode
-Stations on a mesh network can operate as
+Станции в ячеистой сети могут работать как
 .Dq root nodes .
-Root nodes try to find paths to all mesh nodes and advertise themselves
-regularly.
-When there is a root mesh node on a network, other mesh nodes can setup
-paths between themselves faster because they can use the root node
-to find the destination.
-This path may not be the best, but on-demand
-routing will eventually find the best path.
-The following modes are recognized:
+Корневые узлы пытаются найти пути ко всем узлам сетки и рекламируют себя.
+регулярно.
+Если в сети есть корневой узел сетки, другие узлы сетки могут настроить
+пути между собой быстрее, потому что они могут использовать корневой узел
+чтобы найти пункт назначения.
+Этот путь, возможно, не лучший, но по требованию
+маршрутизация в конечном итоге найдет лучший путь.
+Распознаются следующие режимы:
 .Pp
 .Bl -tag -width ".Cm PROACTIVE" -compact
 .It Cm DISABLED
-Disable root mode.
+Отключите корневой режим.
 .It Cm NORMAL
-Send broadcast path requests every two seconds.
-Nodes on the mesh without a path to this root mesh station with try to
-discover a path to us.
+Отправляйте запросы широковещательного пути каждые две секунды.
+Узлы сетки без пути к этой корневой станции сетки с попыткой
+открой путь к нам.
 .It Cm PROACTIVE
-Send broadcast path requests every two seconds and every node must reply
-with a path reply even if it already has a path to this root mesh station.
+Отправляйте запросы широковещательного пути каждые две секунды, и каждый узел должен ответить.
+с ответом о пути, даже если у него уже есть путь к этой корневой станции сети.
 .It Cm RANN
-Send broadcast root announcement (RANN) frames.
-Nodes on the mesh without a path to this root mesh station with try to
-discover a path to us.
+Отправка кадров широковещательного корневого объявления (RANN).
+Узлы сетки без пути к этой корневой станции сетки с попыткой
+открой путь к нам.
 .El
-By default
+По умолчанию
 .Cm hwmprootmode
-is set to
+установлено на
 .Ar DISABLED .
 .It Cm hwmpmaxhops Ar cnt
-Set the maximum number of hops allowed in an HMWP path to
+Установите максимальное количество прыжков, разрешенное в пути HMWP, на
 .Ar cnt .
-The default setting for
+Настройка по умолчанию для
 .Cm hwmpmaxhops
-is 31.
+31.
 .El
 .Ss Compatibility Parameters
-The following parameters are for compatibility with other systems:
+Следующие параметры предназначены для совместимости с другими системами:
 .Bl -tag -width indent
 .It Cm nwid Ar ssid
-Another name for the
+Другое название для
 .Cm ssid
-parameter.
-Included for
+параметр.
+Включено для
 .Nx
-compatibility.
+совместимость.
 .It Cm stationname Ar name
-Set the name of this station.
-The station name is not part of the IEEE 802.11
-protocol though some interfaces support it.
-As such it only
-seems to be meaningful to identical or virtually identical equipment.
-Setting the station name is identical in syntax to setting the SSID.
-One can also use
+Установите имя этой станции.
+Название станции не является частью IEEE 802.11.
+протокол, хотя некоторые интерфейсы его поддерживают.
+Как таковое это только
+кажется значимым для идентичного или практически идентичного оборудования.
+Установка имени станции по синтаксису идентична настройке SSID.
+Можно также использовать
 .Cm station
-for
+для
 .Bsx
-compatibility.
+совместимость.
 .It Cm wep
-Another way of saying
+Другой способ сказать
 .Cm wepmode on .
-Included for
+Включено для
 .Bsx
-compatibility.
+совместимость.
 .It Fl wep
-Another way of saying
+Другой способ сказать
 .Cm wepmode off .
-Included for
+Включено для
 .Bsx
-compatibility.
+совместимость.
 .It Cm nwkey key
-Another way of saying:
+Другой способ сказать:
 .Dq Li "wepmode on weptxkey 1 wepkey 1:key wepkey 2:- wepkey 3:- wepkey 4:-" .
-Included for
+Включено для
 .Nx
-compatibility.
+совместимость.
 .It Cm nwkey Xo
 .Sm off
 .Ar n : k1 , k2 , k3 , k4
 .Sm on
 .Xc
-Another way of saying
+Другой способ сказать:
 .Dq Li "wepmode on weptxkey n wepkey 1:k1 wepkey 2:k2 wepkey 3:k3 wepkey 4:k4" .
-Included for
+Включено для
 .Nx
-compatibility.
+совместимость.
 .It Fl nwkey
-Another way of saying
+Другой способ сказать:
 .Cm wepmode off .
-Included for
+Включено для
 .Nx
-compatibility.
+совместимость.
 .El
 .Ss Bridge Interface Parameters
-The following parameters are specific to bridge interfaces:
+Следующие параметры являются специфичными для мостовых интерфейсов:
 .Bl -tag -width indent
 .It Cm addm Ar interface
-Add the interface named by
+Добавьте интерфейс с именем
 .Ar interface
-as a member of the bridge.
-The interface is put into promiscuous mode
-so that it can receive every packet sent on the network.
+как участник моста.
+Интерфейс переведен в беспорядочный режим
+чтобы он мог получать каждый пакет, отправленный в сеть.
 .It Cm deletem Ar interface
-Remove the interface named by
+Удалите интерфейс, названный
 .Ar interface
-from the bridge.
-Promiscuous mode is disabled on the interface when
-it is removed from the bridge.
+с моста.
+Неразборчивый режим отключается на интерфейсе, когда
+его снимают с моста.
 .It Cm maxaddr Ar size
-Set the size of the bridge address cache to
+Установите размер кэша адресов моста на
 .Ar size .
-The default is 2000 entries.
+По умолчанию — 2000 записей.
 .It Cm timeout Ar seconds
-Set the timeout of address cache entries to
+Установите тайм-аут записей кэша адресов на
 .Ar seconds
-seconds.
-If
+секунды.
+Если
+
 .Ar seconds
-is zero, then address cache entries will not be expired.
-The default is 1200 seconds.
+равно нулю, то записи кэша адресов не будут просрочены.
+Значение по умолчанию — 1200 секунд.
 .It Cm addr
-Display the addresses that have been learned by the bridge.
+Отображение адресов, полученных мостом.
 .It Cm static Ar interface-name Ar address
-Add a static entry into the address cache pointing to
+Добавьте статическую запись в кэш адресов, указывающую на
 .Ar interface-name .
-Static entries are never aged out of the cache or re-placed, even if the
-address is seen on a different interface.
+Статические записи никогда не удаляются из кэша и не перемещаются, даже если
+адрес виден на другом интерфейсе.
+
 .It Cm deladdr Ar address
-Delete
+Удалить
 .Ar address
-from the address cache.
+из кэша адресов.
 .It Cm flush
-Delete all dynamically-learned addresses from the address cache.
+Удалите все динамически полученные адреса из кэша адресов.
 .It Cm flushall
-Delete all addresses, including static addresses, from the address cache.
+Удалите все адреса, включая статические, из кэша адресов.
 .It Cm discover Ar interface
-Mark an interface as a
+Отметить интерфейс как
 .Dq discovering
-interface.
-When the bridge has no address cache entry
-(either dynamic or static)
-for the destination address of a packet,
-the bridge will forward the packet to all
-member interfaces marked as
+интерфейс.
+Когда у моста нет записи в кэше адресов
+(либо динамический, либо статический)
+для адреса назначения пакета,
+мост перешлет пакет всем
+интерфейсы-члены, помеченные как
 .Dq discovering .
-This is the default for all interfaces added to a bridge.
+Это значение по умолчанию для всех интерфейсов, добавленных к мосту.
 .It Cm -discover Ar interface
-Clear the
+Очистить
 .Dq discovering
-attribute on a member interface.
-For packets without the
+атрибут в интерфейсе участника.
+Для пакетов без
 .Dq discovering
-attribute, the only packets forwarded on the interface are broadcast
-or multicast packets and packets for which the destination address
-is known to be on the interface's segment.
+атрибут, только пакеты, пересылаемые на интерфейс, являются широковещательными
+или многоадресные пакеты и пакеты, для которых адрес назначения
+известно, что он находится в сегменте интерфейса.
 .It Cm learn Ar interface
-Mark an interface as a
+Отметить интерфейс как
 .Dq learning
-interface.
-When a packet arrives on such an interface, the source
-address of the packet is entered into the address cache as being a
-destination address on the interface's segment.
-This is the default for all interfaces added to a bridge.
+интерфейс.
+Когда пакет поступает на такой интерфейс, источник
+адрес пакета вводится в кэш адресов как
+адрес назначения в сегменте интерфейса.
+Это значение по умолчанию для всех интерфейсов, добавленных к мосту.
 .It Cm -learn Ar interface
-Clear the
+Очистить
 .Dq learning
-attribute on a member interface.
+атрибут в интерфейсе участника.
 .It Cm sticky Ar interface
-Mark an interface as a
+Отметить интерфейс как
 .Dq sticky
 interface.
-Dynamically learned address entries are treated at static once entered into
-the cache.
-Sticky entries are never aged out of the cache or replaced, even if the
-address is seen on a different interface.
+интерфейс.
+Записи динамически полученных адресов обрабатываются как статические после их ввода.
+кэш.
+Прикрепленные записи никогда не удаляются из кэша и не заменяются, даже если
+адрес виден на другом интерфейсе.
 .It Cm -sticky Ar interface
-Clear the
+Очистить
 .Dq sticky
-attribute on a member interface.
+атрибут в интерфейсе участника.
 .It Cm private Ar interface
-Mark an interface as a
+Отметить интерфейс как
 .Dq private
 interface.
-A private interface does not forward any traffic to any other port that is also
-a private interface.
+интерфейс.
+Частный интерфейс не перенаправляет трафик на другой порт, который также
+частный интерфейс.
 .It Cm -private Ar interface
-Clear the
+Очистить
 .Dq private
-attribute on a member interface.
+атрибут в интерфейсе участника.
 .It Cm span Ar interface
-Add the interface named by
+Добавьте интерфейс с именем
 .Ar interface
-as a span port on the bridge.
-Span ports transmit a copy of every frame received by the bridge.
-This is most useful for snooping a bridged network passively on
-another host connected to one of the span ports of the bridge.
+как пролетный порт на мосту.
+Порты Span передают копию каждого кадра, полученного мостом.
+Это наиболее полезно для пассивного слежения за мостовой сетью.
+другой хост, подключенный к одному из портов моста.
 .It Cm -span Ar interface
-Delete the interface named by
+Удалить интерфейс, названный
 .Ar interface
-from the list of span ports of the bridge.
+из списка пролетных портов моста.
 .It Cm stp Ar interface
-Enable Spanning Tree protocol on
+Включить протокол связующего дерева
 .Ar interface .
-The
 .Xr if_bridge 4
-driver has support for the IEEE 802.1D Spanning Tree protocol (STP).
-Spanning Tree is used to detect and remove loops in a network topology.
+Драйвер поддерживает протокол связующего дерева IEEE 802.1D (STP).
+Spanning Tree используется для обнаружения и устранения петель в топологии сети.
 .It Cm -stp Ar interface
-Disable Spanning Tree protocol on
+Отключить протокол связующего дерева на
 .Ar interface .
-This is the default for all interfaces added to a bridge.
+Это значение по умолчанию для всех интерфейсов, добавленных к мосту.
 .It Cm edge Ar interface
-Set
+Набор
 .Ar interface
-as an edge port.
-An edge port connects directly to end stations cannot create bridging
-loops in the network, this allows it to transition straight to forwarding.
-.It Cm -edge Ar interface
-Disable edge status on
+в качестве пограничного порта.
+Граничный порт подключается напрямую к конечным станциям и не может создать мост.
+петель в сети, это позволяет сразу перейти к пересылке.
+.It Cm-edge Ar интерфейс
+Отключить статус Edge вкл.
 .Ar interface .
 .It Cm autoedge Ar interface
-Allow
+Позволять
 .Ar interface
-to automatically detect edge status.
-This is the default for all interfaces added to a bridge.
+для автоматического определения состояния края.
+Это значение по умолчанию для всех интерфейсов, добавленных к мосту.
 .It Cm -autoedge Ar interface
-Disable automatic edge status on
+Отключить автоматический статус края
 .Ar interface .
 .It Cm ptp Ar interface
-Set the
+Установить
 .Ar interface
-as a point to point link.
-This is required for straight transitions to forwarding and
-should be enabled on a direct link to another RSTP capable switch.
+как ссылка «точка-точка».
+Это необходимо для прямых переходов к пересылке и
+должен быть включен при прямом соединении с другим коммутатором с поддержкой RSTP.
 .It Cm -ptp Ar interface
-Disable point to point link status on
+Отключить статус соединения «точка-точка»
 .Ar interface .
-This should be disabled for a half duplex link and for an interface
-connected to a shared network segment,
-like a hub or a wireless network.
+Это должно быть отключено для полудуплексного канала и для интерфейса.
+подключен к общему сегменту сети,
+например, концентратор или беспроводная сеть.
 .It Cm autoptp Ar interface
-Automatically detect the point to point status on
+Автоматическое определение состояния точки-точки
 .Ar interface
-by checking the full duplex link status.
-This is the default for interfaces added to the bridge.
+проверив состояние полнодуплексного соединения.
+Это значение по умолчанию для интерфейсов, добавленных к мосту.
 .It Cm -autoptp Ar interface
-Disable automatic point to point link detection on
+Отключить автоматическое обнаружение соединения «точка-точка» на
 .Ar interface .
 .It Cm maxage Ar seconds
-Set the time that a Spanning Tree protocol configuration is valid.
-The default is 20 seconds.
-The minimum is 6 seconds and the maximum is 40 seconds.
+Установите время, в течение которого конфигурация протокола связующего дерева действительна.
+Значение по умолчанию — 20 секунд.
+Минимальное значение — 6 секунд, максимальное — 40 секунд.
 .It Cm fwddelay Ar seconds
-Set the time that must pass before an interface begins forwarding
-packets when Spanning Tree is enabled.
-The default is 15 seconds.
-The minimum is 4 seconds and the maximum is 30 seconds.
+Установите время, которое должно пройти, прежде чем интерфейс начнет пересылку
+пакеты, когда включено связующее дерево.
+По умолчанию — 15 секунд.
+Минимум — 4 секунды, максимум — 30 секунд.
 .It Cm hellotime Ar seconds
-Set the time between broadcasting of Spanning Tree protocol
-configuration messages.
-The hello time may only be changed when operating in legacy stp mode.
-The default is 2 seconds.
-The minimum is 1 second and the maximum is 2 seconds.
+Установите время между трансляциями протокола Spanning Tree.
+сообщения конфигурации.
+Время приветствия можно изменить только при работе в устаревшем режиме stp.
+По умолчанию — 2 секунды.
+Минимальное значение — 1 секунда, максимальное — 2 секунды.
 .It Cm priority Ar value
-Set the bridge priority for Spanning Tree.
-The default is 32768.
-The minimum is 0 and the maximum is 61440.
+Установите приоритет моста для связующего дерева.
+По умолчанию — 32768.
+Минимальное значение — 0, максимальное — 61440.
 .It Cm proto Ar value
-Set the Spanning Tree protocol.
-The default is rstp.
-The available options are stp and rstp.
+Установите протокол связующего дерева.
+По умолчанию — рстп.
+Доступные варианты: stp и rstp.
 .It Cm holdcnt Ar value
-Set the transmit hold count for Spanning Tree.
-This is the number of packets transmitted before being rate limited.
-The default is 6.
-The minimum is 1 and the maximum is 10.
+Установите счетчик удержания передачи для связующего дерева.
+Это количество пакетов, переданных до ограничения скорости.
+По умолчанию — 6.
+Минимум — 1, максимум — 10.
 .It Cm ifpriority Ar interface Ar value
-Set the Spanning Tree priority of
+Установите приоритет связующего дерева
 .Ar interface
-to
+к
 .Ar value .
-The default is 128.
-The minimum is 0 and the maximum is 240.
+По умолчанию — 128.
+Минимальное значение — 0, максимальное — 240.
 .It Cm ifpathcost Ar interface Ar value
-Set the Spanning Tree path cost of
+Установите стоимость пути связующего дерева
 .Ar interface
-to
+К
 .Ar value .
-The default is calculated from the link speed.
-To change a previously selected path cost back to automatic, set the
-cost to 0.
-The minimum is 1 and the maximum is 200000000.
+Значение по умолчанию рассчитывается на основе скорости соединения.
+Чтобы вернуть ранее выбранную стоимость пути на автоматическую, установите
+стоимость до 0.
+Минимум — 1, максимум — 200000000.
 .It Cm ifmaxaddr Ar interface Ar size
-Set the maximum number of hosts allowed from an interface, packets with unknown
-source addresses are dropped until an existing host cache entry expires or is
-removed.
-Set to 0 to disable.
+Установите максимальное количество хостов, разрешенных для интерфейса, пакеты с неизвестными
+исходные адреса удаляются до тех пор, пока не истечет срок действия существующей записи кэша хоста или не будет
+удаленный.
+Установите значение 0, чтобы отключить.
 .El
 .Ss Link Aggregation and Link Failover Parameters
-The following parameters are specific to lagg interfaces:
+Следующие параметры специфичны для лаговых интерфейсов:
 .Bl -tag -width indent
 .It Cm laggtype Ar type
-When creating a lagg interface the type can be specified as either
+При создании лагг-интерфейса тип может быть указан как
 .Cm ethernet
-or
+или
 .Cm infiniband .
-If not specified ethernet is the default lagg type.
+Если не указано иное, Ethernet является типом задержки по умолчанию.
 .It Cm laggport Ar interface
-Add the interface named by
+Добавьте интерфейс с именем
 .Ar interface
-as a port of the aggregation interface.
+в качестве порта интерфейса агрегации.
 .It Cm -laggport Ar interface
-Remove the interface named by
+Удалите интерфейс, названный
 .Ar interface
-from the aggregation interface.
+из интерфейса агрегации.
 .It Cm laggproto Ar proto
-Set the aggregation protocol.
-The default is
+Установите протокол агрегации.
+Значение по умолчанию:
 .Li failover .
-The available options are
+Доступные варианты:
 .Li failover ,
 .Li lacp ,
 .Li loadbalance ,
 .Li roundrobin ,
 .Li broadcast
-and
+и
 .Li none .
 .It Cm lagghash Ar option Ns Oo , Ns Ar option Oc
-Set the packet layers to hash for aggregation protocols which load balance.
-The default is
+Установите для уровней пакетов хеширование для протоколов агрегации, которые балансируют нагрузку.
+Значение по умолчанию:
 .Dq l2,l3,l4 .
-The options can be combined using commas.
+Опции можно объединять запятыми.
 .Pp
 .Bl -tag -width ".Cm l2" -compact
 .It Cm l2
-src/dst mac address and optional vlan number.
+Mac-адрес src/dst и дополнительный номер виртуальной локальной сети.
 .It Cm l3
 src/dst address for IPv4 or IPv6.
 .It Cm l4
-src/dst port for TCP/UDP/SCTP.
+порт src/dst для TCP/UDP/SCTP.
 .El
 .It Cm -use_flowid
-Enable local hash computation for RSS hash on the interface.
-The
+Включите локальное вычисление хеша для хэша RSS на интерфейсе.
 .Li loadbalance
-and
+и
 .Li lacp
-modes will use the RSS hash from the network card if available
-to avoid computing one, this may give poor traffic distribution
-if the hash is invalid or uses less of the protocol header information.
+режимы будут использовать хэш RSS с сетевой карты, если он доступен.
+чтобы избежать вычисления, это может привести к плохому распределению трафика
+если хэш недействителен или использует меньше информации заголовка протокола.
 .Cm -use_flowid
-disables use of RSS hash from the network card.
-The default value can be set via the
+отключает использование хеша RSS с сетевой карты.
+Значение по умолчанию можно установить с помощью
 .Va net.link.lagg.default_use_flowid
 .Xr sysctl 8
-variable.
+переменная.
 .Li 0
-means
+Означает
 .Dq disabled
-and
+и
 .Li 1
-means
+Означает
 .Dq enabled .
 .It Cm use_flowid
-Use the RSS hash from the network card if available.
+Используйте хэш RSS с сетевой карты, если он доступен.
 .It Cm flowid_shift Ar number
-Set a shift parameter for RSS local hash computation.
-Hash is calculated by using flowid bits in a packet header mbuf
-which are shifted by the number of this parameter.
+Установите параметр сдвига для вычисления локального хэша RSS.
+Хэш рассчитывается с использованием битов flowid в заголовке пакета mbuf.
+которые сдвинуты на номер этого параметра.
 .It Cm use_numa
-Enable selection of egress ports based on the native
+Включить выбор выходных портов на основе собственных
 .Xr numa 4
-domain for the packets being transmitted.
-This is currently only implemented for lacp mode.
-This works only on
+домен для передаваемых пакетов.
+В настоящее время это реализовано только для режима lacp.
+Это работает только на
 .Xr numa 4
-hardware, running a kernel compiled with the
+аппаратное обеспечение, работающее на ядре, скомпилированном с помощью
 .Xr numa 4
-option, and when interfaces from multiple
+вариант, и когда интерфейсы из нескольких
 .Xr numa 4
-domains are ports of the aggregation interface.
+домены — это порты интерфейса агрегации.
 .It Cm -use_numa
-Disable selection of egress ports based on the native
+Отключить выбор выходных портов на основе родного
 .Xr numa 4
-domain for the packets being transmitted.
+домен для передаваемых пакетов.
 .It Cm lacp_fast_timeout
-Enable lacp fast-timeout on the interface.
+Включите быстрый таймаут lacp на интерфейсе.
 .It Cm -lacp_fast_timeout
-Disable lacp fast-timeout on the interface.
+Отключите быстрый тайм-аут lacp на интерфейсе.
 .It Cm lacp_strict
-Enable lacp strict compliance on the interface.
-The default value can be set via the
+Включите строгое соответствие lacp на интерфейсе.
+Значение по умолчанию можно установить с помощью
 .Va net.link.lagg.lacp.default_strict_mode
 .Xr sysctl 8
-variable.
+переменная.
 .Li 0
-means
+Означает
 .Dq disabled
-and
+и
 .Li 1
-means
+Означает
 .Dq enabled .
 .It Cm -lacp_strict
-Disable lacp strict compliance on the interface.
+Отключите строгое соответствие lacp на интерфейсе.
 .It Cm rr_limit Ar number
-Configure a stride for an interface in round-robin mode.
-The default stride is 1.
+Настройте шаг для интерфейса в циклическом режиме.
+Шаг по умолчанию равен 1.
 .El
 .Ss Generic IP Tunnel Parameters
-The following parameters apply to IP tunnel interfaces,
+Следующие параметры применяются к интерфейсам IP-туннеля:
 .Xr gif 4 :
 .Bl -tag -width indent
 .It Cm tunnel Ar src_addr dest_addr
-Configure the physical source and destination address for IP tunnel
-interfaces.
-The arguments
+Настройте физический адрес источника и назначения для IP-туннеля.
+интерфейсы.
+Аргументы
 .Ar src_addr
-and
+и
 .Ar dest_addr
-are interpreted as the outer source/destination for the encapsulating
-IPv4/IPv6 header.
+интерпретируются как внешний источник/назначение для инкапсулирующей
+Заголовок IPv4/IPv6.
 .It Fl tunnel
-Unconfigure the physical source and destination address for IP tunnel
-interfaces previously configured with
+Отмените настройку физического адреса источника и назначения для IP-туннеля.
+интерфейсы, ранее настроенные с помощью
 .Cm tunnel .
 .It Cm deletetunnel
-Another name for the
+Другое название для
 .Fl tunnel
-parameter.
+параметр.
 .It Cm accept_rev_ethip_ver
-Set a flag to accept both correct EtherIP packets and ones
-with reversed version field.
-Enabled by default.
-This is for backward compatibility with
+Установите флаг для приема как правильных пакетов EtherIP, так и пакетов EtherIP.
+с перевернутым полем версии.
+Включено по умолчанию.
+Это для обратной совместимости с
 .Fx 6.1 ,
-6.2, 6.3, 7.0, and 7.1.
+6.2, 6.3, 7.0, и 7.1.
 .It Cm -accept_rev_ethip_ver
-Clear a flag
+Очистить флаг
 .Cm accept_rev_ethip_ver .
 .It Cm ignore_source
-Set a flag to accept encapsulated packets destined to this host
-independently from source address.
-This may be useful for hosts, that receive encapsulated packets
-from the load balancers.
+Установите флаг для приема инкапсулированных пакетов, предназначенных для этого хоста.
+независимо от адреса источника.
+Это может быть полезно для хостов, которые получают инкапсулированные пакеты.
+от балансировщиков нагрузки.
 .It Cm -ignore_source
-Clear a flag
+Очистить флаг
 .Cm ignore_source .
 .It Cm send_rev_ethip_ver
-Set a flag to send EtherIP packets with reversed version
-field intentionally.
-Disabled by default.
-This is for backward compatibility with
+Установите флаг для отправки пакетов EtherIP с обратной версией.
+поле намеренно.
+По умолчанию отключено.
+Это для обратной совместимости с
 .Fx 6.1 ,
-6.2, 6.3, 7.0, and 7.1.
+6.2, 6.3, 7.0, и 7.1.
 .It Cm -send_rev_ethip_ver
-Clear a flag
+Очистить флаг
 .Cm send_rev_ethip_ver .
 .El
 .Ss GRE Tunnel Parameters
-The following parameters apply to GRE tunnel interfaces,
+Следующие параметры применяются к туннельным интерфейсам GRE:
 .Xr gre 4 :
 .Bl -tag -width indent
 .It Cm tunnel Ar src_addr dest_addr
-Configure the physical source and destination address for GRE tunnel
-interfaces.
-The arguments
+Настройте физический адрес источника и назначения для туннеля GRE.
+интерфейсы.
+Аргументы
 .Ar src_addr
-and
+и
 .Ar dest_addr
-are interpreted as the outer source/destination for the encapsulating
-IPv4/IPv6 header.
+интерпретируются как внешний источник/назначение для инкапсулирующей
+Заголовок IPv4/IPv6.
 .It Fl tunnel
-Unconfigure the physical source and destination address for GRE tunnel
-interfaces previously configured with
+Отмените настройку физического адреса источника и назначения для туннеля GRE.
+интерфейсы, ранее настроенные с помощью
 .Cm tunnel .
 .It Cm deletetunnel
-Another name for the
+Другое название для
 .Fl tunnel
-parameter.
+параметр.
 .It Cm grekey Ar key
-Configure the GRE key to be used for outgoing packets.
-Note that
-.Xr gre 4 will always accept GRE packets with invalid or absent keys.
-This command will result in a four byte MTU reduction on the interface.
+Настройте ключ GRE, который будет использоваться для исходящих пакетов.
+Обратите внимание, что
+.Xr gre 4 всегда будет принимать пакеты GRE с недействительными или отсутствующими ключами.
+Эта команда приведет к уменьшению MTU на интерфейсе на четыре байта.
 .El
-.Ss Packet Filter State Table Sychronisation Parameters
-The following parameters are specific to
+.Ss Параметры синхронизации таблицы состояний фильтра пакетов
+Следующие параметры специфичны для
 .Xr pfsync 4
-interfaces:
+интерфейсы:
 .Bl -tag -width indent
 .It Cm syncdev Ar iface
-Use the specified interface
-to send and receive pfsync state synchronisation messages.
+Использовать указанный интерфейс
+для отправки и получения сообщений синхронизации состояния pfsync.
 .It Fl syncdev
-Stop sending pfsync state synchronisation messages over the network.
+Прекратите отправку сообщений синхронизации состояния pfsync по сети.
 .It Cm syncpeer Ar peer_address
-Make the pfsync link point-to-point rather than using
-multicast to broadcast the state synchronisation messages.
-The peer_address is the IP address of the other host taking part in
-the pfsync cluster.
+Сделайте ссылку pfsync «точка-точка», а не используйте
+многоадресная рассылка для трансляции сообщений синхронизации состояния.
+Peer_address — это IP-адрес другого хоста, участвующего в
+кластер pfsync.
 .It Fl syncpeer
-Broadcast the packets using multicast.
+Широковещательная рассылка пакетов с использованием многоадресной рассылки.
 .It Cm maxupd Ar n
-Set the maximum number of updates for a single state which
-can be collapsed into one.
-This is an 8-bit number; the default value is 128.
+Установите максимальное количество обновлений для одного состояния, которое
+можно свернуть в один.
+Это 8-битное число; значение по умолчанию — 128.
 .It Cm defer
-Defer transmission of the first packet in a state until a peer has
-acknowledged that the associated state has been inserted.
+Отложить передачу первого пакета в состоянии до тех пор, пока партнер не
+подтвердил, что связанное состояние было вставлено.
 .It Fl defer
-Do not defer the first packet in a state.
-This is the default.
+Не откладывайте первый пакет в состоянии.
+Это значение по умолчанию.
 .El
 .Ss VLAN Parameters
-The following parameters are specific to
+Следующие параметры специфичны для
 .Xr vlan 4
-interfaces:
+интерфейсы:
 .Bl -tag -width indent
 .It Cm vlan Ar vlan_tag
-Set the VLAN tag value to
+Установите значение тега VLAN на
 .Ar vlan_tag .
-This value is a 12-bit VLAN Identifier (VID) which is used to create an 802.1Q
-or 802.1ad VLAN header for packets sent from the
+Это значение представляет собой 12-битный идентификатор VLAN (VID), который используется для создания сети 802.1Q.
+или заголовок VLAN 802.1ad для пакетов, отправленных из
 .Xr vlan 4
-interface.
-Note that
+интерфейс.
+Обратите внимание, что
 .Cm vlan
-and
+и
 .Cm vlandev
-must both be set at the same time.
+оба должны быть установлены одновременно.
 .It Cm vlanproto Ar vlan_proto
-Set the VLAN encapsulation protocol to
+Установите протокол инкапсуляции VLAN на
 .Ar vlan_proto .
 Supported encapsulation protocols are currently:
 .Bl -tag
 .It Cm 802.1Q
-Default.
+По умолчанию.
 .It Cm 802.1ad
 .It Cm QinQ
-Same as
+Такой же как
 .Cm 802.1ad .
 .El
 .It Cm vlanpcp Ar priority_code_point
-Priority code point
+Код приоритета
 .Pq Dv PCP
-is an 3-bit field which refers to the IEEE 802.1p
-class of service and maps to the frame priority level.
+это 3-битное поле, которое относится к IEEE 802.1p.
+класс обслуживания и соответствует уровню приоритета кадра.
 .Pp
 Values in order of priority are:
 .Cm 1
@@ -2940,286 +2897,274 @@ Values in order of priority are:
 .Cm 7
 .Pq Dv Network control (highest) .
 .It Cm vlandev Ar iface
-Associate the physical interface
+Свяжите физический интерфейс
 .Ar iface
-with a
+с
 .Xr vlan 4
-interface.
-Packets transmitted through the
+интерфейсом.
+Пакеты, передаваемые через
 .Xr vlan 4
-interface will be
-diverted to the specified physical interface
+с
 .Ar iface
-with 802.1Q VLAN encapsulation.
-Packets with 802.1Q encapsulation received
-by the parent interface with the correct VLAN Identifier will be diverted to
-the associated
+с инкапсуляцией VLAN 802.1Q.
+Получены пакеты с инкапсуляцией 802.1Q
+родительским интерфейсом с правильным идентификатором VLAN будет перенаправлено на
+связанный
 .Xr vlan 4
-pseudo-interface.
-The
+псевдоинтерфейс.
 .Xr vlan 4
-interface is assigned a
-copy of the parent interface's flags and the parent's Ethernet address.
-The
+интерфейсу присвоен
+копия флагов родительского интерфейса и родительского адреса Ethernet.
 .Cm vlandev
-and
+и
 .Cm vlan
-must both be set at the same time.
-If the
+оба должны быть установлены одновременно.
+Если
 .Xr vlan 4
-interface already has
-a physical interface associated with it, this command will fail.
-To
-change the association to another physical interface, the existing
-association must be cleared first.
+интерфейс уже есть
+связанный с ним физический интерфейс, эта команда завершится неудачно.
+К
+изменить ассоциацию на другой физический интерфейс, существующий
+ассоциацию необходимо сначала очистить.
 .Pp
-Note: if the hardware tagging capability
-is set on the parent interface, the
+Примечание. Если возможность аппаратной маркировки
+устанавливается на родительском интерфейсе,
 .Xr vlan 4
-pseudo
-interface's behavior changes:
-the
+псевдо
+меняется поведение интерфейса:
 .Xr vlan 4
-interface recognizes that the
-parent interface supports insertion and extraction of VLAN tags on its
-own (usually in firmware) and that it should pass packets to and from
-the parent unaltered.
+интерфейс распознает, что
+родительский интерфейс поддерживает вставку и извлечение тегов VLAN на своем
+собственный (обычно в прошивке) и что он должен передавать пакеты туда и обратно
+родитель без изменений.
 .It Fl vlandev Op Ar iface
-If the driver is a
+Если драйвер является
 .Xr vlan 4
-pseudo device, disassociate the parent interface from it.
-This breaks the link between the
+псевдоустройство, отключите от него родительский интерфейс.
+Это разрывает связь между
 .Xr vlan 4
-interface and its parent,
-clears its VLAN Identifier, flags and its link address and shuts the interface
-down.
-The
+с
 .Ar iface
-argument is useless and hence deprecated.
+аргумент бесполезен и, следовательно, устарел.
 .El
 .Ss Virtual eXtensible LAN Parameters
-The following parameters are used to configure
+Следующие параметры используются для настройки
 .Xr vxlan 4
-interfaces.
+интерфейсы.
 .Bl -tag -width indent
 .It Cm vxlanid Ar identifier
-This value is a 24-bit VXLAN Network Identifier (VNI) that identifies the
-virtual network segment membership of the interface.
-.It Cm vxlanlocal Ar address
-The source address used in the encapsulating IPv4/IPv6 header.
-The address should already be assigned to an existing interface.
-When the interface is configured in unicast mode, the listening socket
-is bound to this address.
+Это значение представляет собой 24-битный идентификатор сети VXLAN (VNI), который идентифицирует
+принадлежность интерфейса к сегменту виртуальной сети.
 .It Cm vxlanremote Ar address
-The interface can be configured in a unicast, or point-to-point, mode
-to create a tunnel between two hosts.
-This is the IP address of the remote end of the tunnel.
+Интерфейс можно настроить в одноадресном или двухточечном режиме.
+создать туннель между двумя хостами.
+Это IP-адрес удаленного конца туннеля.
 .It Cm vxlangroup Ar address
-The interface can be configured in a multicast mode
-to create a virtual network of hosts.
-This is the IP multicast group address the interface will join.
+Интерфейс можно настроить в многоадресном режиме.
+создать виртуальную сеть хостов.
+Это адрес группы многоадресной IP-рассылки, к которой будет присоединен интерфейс.
 .It Cm vxlanlocalport Ar port
-The port number the interface will listen on.
-The default port number is 4789.
+Номер порта, который интерфейс будет прослушивать.
+Номер порта по умолчанию — 4789.
 .It Cm vxlanremoteport Ar port
-The destination port number used in the encapsulating IPv4/IPv6 header.
-The remote host should be listening on this port.
-The default port number is 4789.
-Note some other implementations, such as Linux,
-do not default to the IANA assigned port,
-but instead listen on port 8472.
+Номер порта назначения, используемый в инкапсулирующем заголовке IPv4/IPv6.
+Удаленный хост должен прослушивать этот порт.
+Номер порта по умолчанию — 4789.
+Обратите внимание на некоторые другие реализации, такие как Linux,
+не используйте по умолчанию порт, назначенный IANA,
+но вместо этого слушайте порт 8472.
 .It Cm vxlanportrange Ar low high
-The range of source ports used in the encapsulating IPv4/IPv6 header.
-The port selected within the range is based on a hash of the inner frame.
-A range is useful to provide entropy within the outer IP header
-for more effective load balancing.
-The default range is between the
+Диапазон исходных портов, используемых в инкапсулирующем заголовке IPv4/IPv6.
+Порт, выбранный в диапазоне, основан на хеше внутреннего фрейма.
+Диапазон полезен для обеспечения энтропии во внешнем заголовке IP.
+для более эффективной балансировки нагрузки.
+Диапазон по умолчанию находится между
 .Xr sysctl 8
-variables
+Переменные
 .Va net.inet.ip.portrange.first
-and
+и
 .Va net.inet.ip.portrange.last
 .It Cm vxlantimeout Ar timeout
-The maximum time, in seconds, before an entry in the forwarding table
-is pruned.
-The default is 1200 seconds (20 minutes).
+Максимальное время в секундах до записи в таблице переадресации.
+обрезается.
+Значение по умолчанию — 1200 секунд (20 минут).
 .It Cm vxlanmaxaddr Ar max
-The maximum number of entries in the forwarding table.
-The default is 2000.
+Максимальное количество записей в таблице пересылки.
+По умолчанию — 2000.
 .It Cm vxlandev Ar dev
-When the interface is configured in multicast mode, the
+Когда интерфейс настроен в многоадресном режиме,
 .Cm dev
-interface is used to transmit IP multicast packets.
+Интерфейс используется для передачи многоадресных IP-пакетов.
 .It Cm vxlanttl Ar ttl
-The TTL used in the encapsulating IPv4/IPv6 header.
-The default is 64.
+TTL, используемый в инкапсулирующем заголовке IPv4/IPv6.
+По умолчанию — 64.
 .It Cm vxlanlearn
-The source IP address and inner source Ethernet MAC address of
-received packets are used to dynamically populate the forwarding table.
-When in multicast mode, an entry in the forwarding table allows the
-interface to send the frame directly to the remote host instead of
-broadcasting the frame to the multicast group.
-This is the default.
+IP-адрес источника и внутренний MAC-адрес источника Ethernet
+полученные пакеты используются для динамического заполнения таблицы пересылки.
+В режиме многоадресной рассылки запись в таблице пересылки позволяет
+интерфейс для отправки кадра непосредственно на удаленный хост вместо
+трансляция кадра в группу многоадресной рассылки.
+Это значение по умолчанию.
 .It Fl vxlanlearn
-The forwarding table is not populated by received packets.
+Таблица пересылки не заполняется полученными пакетами.
 .It Cm vxlanflush
-Delete all dynamically-learned addresses from the forwarding table.
+Удалите все динамически полученные адреса из таблицы пересылки.
 .It Cm vxlanflushall
-Delete all addresses, including static addresses, from the forwarding table.
+Удалите все адреса, включая статические, из таблицы пересылки.
 .El
 .Ss CARP Parameters
-The following parameters are used to configure
+Следующие параметры используются для настройки
 .Xr carp 4
-protocol on an interface:
+протокол на интерфейсе:
 .Bl -tag -width indent
 .It Cm vhid Ar n
-Set the virtual host ID.
-This is a required setting to initiate
+Установите идентификатор виртуального хоста.
+Это обязательная настройка для запуска
 .Xr carp 4 .
-If the virtual host ID does not exist yet, it is created and attached to the
-interface, otherwise configuration of an existing vhid is adjusted.
-If the
+Если идентификатор виртуального хоста еще не существует, он создается и прикрепляется к
+интерфейс, в противном случае конфигурация существующего VID будет изменена.
+Если
 .Cm vhid
-keyword is supplied along with an
+Ключевое слово предоставляется вместе с
 .Dq inet6
-or
+или
 .Dq inet
-address, then this address is configured to be run under control of the
-specified vhid.
-Whenever a last address that refers to a particular vhid is removed from an
-interface, the vhid is automatically removed from interface and destroyed.
-Any other configuration parameters for the
+адрес, то этот адрес настроен для работы под управлением
+указан видид.
+Всякий раз, когда последний адрес, ссылающийся на конкретный VID, удаляется из
+интерфейс, VID автоматически удаляется из интерфейса и уничтожается.
+Любые другие параметры конфигурации для
 .Xr carp 4
-protocol should be supplied along with the
+протокол должен быть предоставлен вместе с
 .Cm vhid
-keyword.
-Acceptable values for vhid are 1 to 255.
+ключевое слово.
+Допустимые значения vhid — от 1 до 255.
 .It Cm advbase Ar seconds
-Specifies the base of the advertisement interval in seconds.
-The acceptable values are 1 to 255.
-The default value is 1.
+Указывает базовый интервал объявления в секундах.
+Допустимые значения: от 1 до 255.
+Значение по умолчанию — 1.
 .It Cm advskew Ar interval
-Specifies the skew to add to the base advertisement interval to
-make one host advertise slower than another host.
-It is specified in 1/256 of seconds.
-The acceptable values are 1 to 254.
-The default value is 0.
+Указывает сдвиг, добавляемый к базовому интервалу объявлений, чтобы
+заставить один хост рекламировать медленнее, чем другой хост.
+Указывается в 1/256 секунды.
+Допустимые значения: от 1 до 254.
+Значение по умолчанию — 0.
 .It Cm pass Ar phrase
-Set the authentication key to
+Установите ключ аутентификации на
 .Ar phrase .
 .It Cm state Ar state
-Forcibly change state of a given vhid.
-The following states are recognized:
+Принудительно изменить состояние данного VID.
+Признаются следующие государства:
 .Cm MASTER
-and
+и
 .Cm BACKUP .
 .It Cm peer Ar address
-Set the address to send (IPv4)
+Установите адрес для отправки (IPv4)
 .Xr carp 4
-announcements to.
+объявления для.
 .It Cm mcast
-Restore the default destination address for (IPv4)
+Восстановите адрес назначения по умолчанию для (IPv4)
 .Xr carp 4
-announcements, which is 224.0.0.18.
+объявления, то есть 224.0.0.18.
 .It Cm peer6 Ar address
-Set the address to send (IPv6)
+Установите адрес для отправки (IPv6)
 .Xr carp 4
-announcements to.
+объявления для.
 .It Cm mcast6
-Restore the default destination address for (IPv4)
+Восстановите адрес назначения по умолчанию для (IPv4)
 .Xr carp 4
-announcements, which is ff02::12.
+объявления, то есть ff02::12.
 .El
-.Sh ENVIRONMENT
-The following environment variables affect the execution of
+.Sh Среда
+Следующие переменные среды влияют на выполнение
 .Nm :
 .Bl -tag -width IFCONFIG_FORMAT
 .It Ev IFCONFIG_FORMAT
-This variable can contain a specification of the output format.
-See the description of the
+Эта переменная может содержать спецификацию выходного формата.
+Смотрите описание
 .Fl f
-flag for more details.
+флаг для более подробной информации.
 .El
-.Sh EXAMPLES
-Assign the IPv4 address
+.Sh Примеры
+Назначьте адрес IPv4
 .Li 192.0.2.10 ,
-with a network mask of
+с сетевой маской
 .Li 255.255.255.0 ,
-to the interface
+к интерфейсу
 .Li em0 :
 .Dl # ifconfig em0 inet 192.0.2.10 netmask 255.255.255.0
 .Pp
-Add the IPv4 address
+Добавьте IPv4-адрес
 .Li 192.0.2.45 ,
-with the CIDR network prefix
+с сетевым префиксом CIDR
 .Li /28 ,
-to the interface
+к интерфейсу
 .Li em0 :
 .Dl # ifconfig em0 inet 192.0.2.45/28 alias
 .Pp
-Remove the IPv4 address
+Удалить IPv4-адрес
 .Li 192.0.2.45
-from the interface
+из интерфейса
 .Li em0 :
 .Dl # ifconfig em0 inet 192.0.2.45 -alias
 .Pp
-Enable IPv6 functionality of the interface:
+Включите функциональность IPv6 интерфейса:
 .Dl # ifconfig em0 inet6 -ifdisabled
 .Pp
-Add the IPv6 address
+Добавьте IPv6-адрес
 .Li 2001:DB8:DBDB::123/48
-to the interface
+к интерфейсу
 .Li em0 :
 .Dl # ifconfig em0 inet6 2001:db8:bdbd::123 prefixlen 48 alias
-Note that lower case hexadecimal IPv6 addresses are acceptable.
+Обратите внимание, что шестнадцатеричные адреса IPv6 в нижнем регистре допускаются.
 .Pp
-Remove the IPv6 address added in the above example,
-using the
+Удалите адрес IPv6, добавленный в приведенном выше примере.
+используя
 .Li /
-character as shorthand for the network prefix:
+символ как сокращение префикса сети:
 .Dl # ifconfig em0 inet6 2001:db8:bdbd::123/48 -alias
 .Pp
-Configure a single CARP redundant address on igb0, and then switch it
-to be master:
+Настройте один резервный адрес CARP на igb0, а затем переключите его.
+быть хозяином:
 .Bd -literal -offset indent -compact
 # ifconfig igb0 vhid 1 10.0.0.1/24 pass foobar up
 # ifconfig igb0 vhid 1 state master
 .Ed
 .Pp
-Configure the interface
+Настройка интерфейса
 .Li xl0 ,
-to use 100baseTX, full duplex Ethernet media options:
+Чтобы использовать 100baseTX, варианты полнодуплексной среды Ethernet:
 .Dl # ifconfig xl0 media 100baseTX mediaopt full-duplex
 .Pp
-Label the em0 interface as an uplink:
+Пометьте интерфейс em0 как восходящий канал:
 .Dl # ifconfig em0 description \&"Uplink to Gigabit Switch 2\&"
 .Pp
-Create the software network interface
+Создайте сетевой интерфейс программного обеспечения
 .Li gif1 :
 .Dl # ifconfig gif1 create
 .Pp
-Destroy the software network interface
+Уничтожить сетевой интерфейс программного обеспечения
 .Li gif1 :
 .Dl # ifconfig gif1 destroy
 .Pp
-Display available wireless networks using
+Отображение доступных беспроводных сетей с помощью
 .Li wlan0 :
 .Dl # ifconfig wlan0 list scan
 .Pp
-Display inet and inet6 address subnet masks in CIDR notation
+Отображение масок подсети адресов inet и inet6 в нотации CIDR.
 .Dl # ifconfig -f inet:cidr,inet6:cidr
 .Pp
-Display interfaces that are up with the exception of loopback
+Отображать работающие интерфейсы, за исключением шлейфа.
 .Dl # ifconfig -a -u -G lo
 .Pp
-Display a list of interface names beloning to the wlan group:
+Отобразите список имен интерфейсов, принадлежащих группе wlan:
 .Bd -literal -offset indent -compact
 # ifconfig -g wlan
 wlan0
 wlan1
 .Ed
 .Pp
-Display details about the interfaces belonging to the wlan group:
+Отобразить подробную информацию об интерфейсах, принадлежащих группе wlan:
 .Bd -literal -offset indent -compact
 # ifconfig -a -g wlan
 wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
@@ -3249,13 +3194,13 @@ wlan1: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
         nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
 .Ed
 .Pp
-Set a randomly-generated MAC address on tap0:
+Установите случайно сгенерированный MAC-адрес на Tap0:
 .Dl # ifconfig tap0 ether random
-.Sh DIAGNOSTICS
-Messages indicating the specified interface does not exist, the
-requested address is unknown, or the user is not privileged and
-tried to alter an interface's configuration.
-.Sh SEE ALSO
+.Sh ДИАГНОСТИКА
+Сообщения о том, что указанный интерфейс не существует,
+запрошенный адрес неизвестен, или пользователь не имеет привилегий и
+попытался изменить конфигурацию интерфейса.
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr netstat 1 ,
 .Xr carp 4 ,
 .Xr gif 4 ,
@@ -3270,22 +3215,21 @@ tried to alter an interface's configuration.
 .Xr rc 8 ,
 .Xr routed 8 ,
 .Xr sysctl 8
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
 .Nm
-utility appeared in
+утилита появилась в
 .Bx 4.2 .
-.Sh BUGS
-Basic IPv6 node operation requires a link-local address on each
-interface configured for IPv6.
-Normally, such an address is automatically configured by the
-kernel on each interface added to the system or enabled; this behavior may
-be disabled by setting per-interface flag
+.Sh ОШИБКИ
+Для базовой работы узла IPv6 требуется локальный адрес канала на каждом
+интерфейс настроен для IPv6.
+Обычно такой адрес автоматически настраивается
+ядро на каждом интерфейсе, добавленном в систему или включенном; такое поведение может
+отключить, установив флаг для каждого интерфейса
 .Cm -auto_linklocal .
-The default value of this flag is 1 and can be disabled by using the sysctl
-MIB variable
+Значение этого флага по умолчанию — 1, и его можно отключить с помощью команды sysctl.
+Переменная MIB
 .Va net.inet6.ip6.auto_linklocal .
 .Pp
-Do not configure IPv6 addresses with no link-local address by using
+Не настраивайте адреса IPv6 без локального адреса с помощью
 .Nm .
-It can result in unexpected behaviors of the kernel.
+Это может привести к неожиданному поведению ядра.
