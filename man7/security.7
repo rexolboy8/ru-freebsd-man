@@ -1,1095 +1,968 @@
-.\" Copyright (C) 1998 Matthew Dillon. All rights reserved.
+.\" Авторское право (C) 1998 Matthew Dillon. Все права защищены.
 .\" Copyright (c) 2019 The FreeBSD Foundation, Inc.
 .\"
-.\" Parts of this documentation were written by
-.\" Konstantin Belousov <kib@FreeBSD.org> under sponsorship
-.\" from the FreeBSD Foundation.
+.\" Часть этой документации была написана
+.\" Konstantin Belousov <kib@FreeBSD.org> при спонсорской поддержке
+.\" от FreeBSD Foundation.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\" Распространение и использование в исходном коде и двоичном формате, с
+.\" изменениями или без них, разрешено при соблюдении следующих условий:
+.\" 1. При повторном распространении исходного кода должны сохраняться вышеуказанное
+.\"    уведомление об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. При повторном распространении в двоичной форме должны воспроизводиться вышеуказанное
+.\"    уведомление об авторских правах, этот список условий и следующий отказ от ответственности в
+.\"    документации и/или других материалах, прилагаемых к дистрибутиву.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL AUTHOR OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ АВТОРОМ "КАК ЕСТЬ", И
+.\" МЫ НЕ ДАЕМ НИКАКИХ ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ ГАРАНТИЙ, ВКЛЮЧАЯ
+.\" ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ ТОВАРНОЙ ПРИГОДНОСТИ И ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ И Т.П.
+.\" АВТОР НИ В КОЕМ СЛУЧАЕ НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ
+.\" ЗА ЛЮБОЙ ПРЯМОЙ, КОСВЕННЫЙ, СЛУЧАЙНЫЙ, ОСОБЫЙ, ПОКАЗАТЕЛЬНЫЙ ИЛИ ЛОГИЧЕСКИ ВЫТЕКАЮЩИЙ
+.\" УЩЕРБ (ВКЛЮЧАЯ: ПРИОБРЕТЕНИЕ ЗАМЕНЯЮЩИХ ТОВАРОВ ИЛИ УСЛУГ; ПОТЕРЮ ВОЗМОЖНОСТИ ИСПОЛЬЗОВАНИЯ,
+.\" ДАННЫХ ИЛИ ПРИБЫЛИ; ПЕРЕБОИ В РАБОТЕ)
+.\" НЕЗАВИСИМО ОТ ПРИЧИН И ПО ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ, БУДЬ ТО В КОНТРАКТЕ,
+.\" ИЛИ ПРАВОНАРУШЕНИЕ (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ ПРАВОНАРУШЕНИЕ ИНЫМ ОБРАЗОМ),
+.\" ВОЗНИКАЮЩЕЕ КАКИМ-ЛИБО ОБРАЗОМ В РЕЗУЛЬТАТЕ ИСПОЛЬЗОВАНИЯ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ,
+.\" ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ ТАКОГО УЩЕРБА.
 .\"
-.Dd October 5, 2023
+.Dd Октябрь 5, 2023
 .Dt SECURITY 7
 .Os
-.Sh NAME
+.Sh НАИМЕНОВАНИЕ
 .Nm security
-.Nd introduction to security under FreeBSD
-.Sh DESCRIPTION
-Security is a function that begins and ends with the system administrator.
-While all
+.Nd введение в безопасность во FreeBSD
+.Sh ОПИСАНИЕ
+Безопасность - это функция, которая начинается и заканчивается на системном администраторе.
+Хотя всем многопользовательским системам
 .Bx
-multi-user systems have some inherent security, the job of building and
-maintaining additional security mechanisms to keep users
-.Dq honest
+присуща определенная степень безопасности,
+работа по созданию и поддержанию дополнительных механизмов
+безопасности для обеспечения
+.Dq честности
 is probably
-one of the single largest undertakings of the sysadmin.
-Machines are
-only as secure as you make them, and security concerns are ever competing
-with the human necessity for convenience.
+пользователей, вероятно, является одним из самых важных начинаний
+системного администратора.
+Машины безопасны настолько, насколько вы их создаете, а
+забота о безопасности постоянно конкурирует с потребностью человека
+в удобстве.
 .Ux
-systems,
-in general, are capable of running a huge number of simultaneous processes
-and many of these processes operate as servers \(em meaning that external
-entities can connect and talk to them.
-As yesterday's mini-computers and mainframes
-become today's desktops, and as computers become networked and internetworked,
-security becomes an ever bigger issue.
+системы,
+как правило, способны выполнять огромное количество
+процессов одновременно, и многие из этих процессов работают как
+серверы \(em это означает, что внешние объекты могут подключаться к ним и взаимодействовать с ними.
+По мере того, как вчерашние мини-компьютеры и мэйнфреймы превращаются в современные настольные компьютеры,
+а компьютеры объединяются в сети и подключаются к Интернету, безопасность становится
+еще более серьезной проблемой.
 .Pp
-Security is best implemented through a layered onion approach.
-In a nutshell,
-what you want to do is to create as many layers of security as are convenient
-and then carefully monitor the system for intrusions.
+Безопасность лучше всего обеспечивается с помощью многоуровневого подхода onion. 
+
+В двух словах, вы хотите создать столько уровней безопасности, сколько это удобно,
+а затем тщательно отслеживать систему на предмет вторжений.
 .Pp
-System security also pertains to dealing with various forms of attacks,
-including attacks that attempt to crash or otherwise make a system unusable
-but do not attempt to break root.
-Security concerns can be split up into
-several categories:
+Безопасность системы также связана с противодействием различным формам атак,
+включая атаки, которые пытаются вывести систему из строя или иным образом сделать
+ее непригодной для использования, но не пытаются взломать root.  Проблемы безопасности можно
+разделить на несколько категорий:
 .Bl -enum -offset indent
 .It
-Denial of Service attacks (DoS)
+Атаки типа "Отказ в обслуживании" (DoS)
 .It
-User account compromises
+Компрометация учетной записи пользователя
 .It
-Root compromise through accessible servers
+Компрометация Root через доступные серверы
 .It
-Root compromise via user accounts
+Компрометация Root через учетные записи пользователей
 .It
-Backdoor creation
+Создание бэкдора
 .El
 .Pp
-A denial of service attack is an action that deprives the machine of needed
-resources.
-Typically, DoS attacks are brute-force mechanisms that attempt
-to crash or otherwise make a machine unusable by overwhelming its servers or
-network stack.
-Some DoS attacks try to take advantages of bugs in the
-networking stack to crash a machine with a single packet.
-The latter can
-only be fixed by applying a bug fix to the kernel.
-Attacks on servers can
-often be fixed by properly specifying options to limit the load the servers
-incur on the system under adverse conditions.
-Brute-force network attacks are harder to deal with.
-A spoofed-packet attack, for example, is
-nearly impossible to stop short of cutting your system off from the Internet.
-It may not be able to take your machine down, but it can fill up your Internet
-pipe.
+Атака типа "отказ в обслуживании" - это действие, которое лишает компьютер необходимых
+ресурсов.
+Как правило, DoS-атаки представляют собой механизмы грубой силы, которые пытаются
+вывести компьютер из строя или иным образом сделать его непригодным для использования,
+перегружая его серверы или сетевой стек.
+Некоторые Dos-атаки пытаются воспользоваться ошибками в
+сетевом стеке, чтобы вывести компьютер из строя с помощью одного пакета.
+Последнее можно
+исправить, только применив исправление к ядру.
+Атаки на серверы
+часто можно предотвратить, правильно указав параметры, ограничивающие нагрузку, которую серверы
+несут на систему в неблагоприятных условиях.
+С сетевыми атаками методом "грубой силы" справиться сложнее.
+Например, атаку с использованием поддельных пакетов
+практически невозможно предотвратить, если она не приведет к отключению вашей системы от Интернета.
+Возможно, она не сможет вывести ваш компьютер из строя, но может привести к переполнению вашего интернет-канала.
 .Pp
-A user account compromise is even more common than a DoS attack.
-Some
-sysadmins still run
+Компрометация учетной записи пользователя встречается даже чаще, чем DoS-атака. 
+Некоторые
+системные администраторы по-прежнему используют на своих компьютерах серверы
 .Nm telnetd
-and
-.Xr ftpd 8
-servers on their machines.
-These servers, by default, do not operate over encrypted
-connections.
-The result is that if you have any moderate-sized user base,
-one or more of your users logging into your system from a remote location
-(which is the most common and convenient way to log in to a system)
-will have his or her password sniffed.
-The attentive system administrator will analyze
-his remote access logs looking for suspicious source addresses
-even for successful logins.
+и
+.Xr ftpd 8 .
+Эти серверы по умолчанию не работают по зашифрованным соединениям.
+В результате, если у вас есть небольшая база пользователей, один или
+несколько из них войдут в вашу систему удаленно
+(что является наиболее распространенным и удобным способом входа в систему)
+и их пароль будет перехвачен. Внимательный системный
+администратор проанализирует свои журналы удаленного доступа в поисках подозрительных
+адресов источников даже при успешном входе в систему.
 .Pp
-One must always assume that once an attacker has access to a user account,
-the attacker can break root.
-However, the reality is that in a well secured
-and maintained system, access to a user account does not necessarily give the
-attacker access to root.
-The distinction is important because without access
-to root the attacker cannot generally hide his tracks and may, at best, be
-able to do nothing more than mess with the user's files or crash the machine.
-User account compromises are very common because users tend not to take the
-precautions that sysadmins take.
+Всегда следует исходить из того, что, получив доступ к учетной записи пользователя, злоумышленник
+может взломать root.
+Однако реальность такова, что в хорошо защищенной
+и поддерживаемой системе доступ к учетной записи пользователя не обязательно дает
+злоумышленнику доступ к root.
+Это различие важно, потому что без доступа
+к root злоумышленник, как правило, не может скрыть свои следы и в лучшем случае
+может только испортить файлы пользователя или вывести компьютер из строя.
+Компрометация учетных записей пользователей происходит очень часто, поскольку пользователи, как правило, не принимают
+мер предосторожности, которые принимают системные администраторы.
 .Pp
-System administrators must keep in mind that there are potentially many ways
-to break root on a machine.
-The attacker may know the root password,
-the attacker
-may find a bug in a root-run server and be able to break root over a network
-connection to that server, or the attacker may know of a bug in an SUID-root
-program that allows the attacker to break root once he has broken into a
-user's account.
-If an attacker has found a way to break root on a machine,
-the attacker may not have a need to install a backdoor.
-Many of the root holes found and closed to date involve a considerable amount
-of work by the attacker to clean up after himself, so most attackers do install
-backdoors.
-This gives you a convenient way to detect the attacker.
-Making
-it impossible for an attacker to install a backdoor may actually be detrimental
-to your security because it will not close off the hole the attacker used to
-break in originally.
+Системные администраторы должны иметь в виду, что потенциально существует множество способов
+взломать root на компьютере.
+Злоумышленник может знать пароль root,
+он может обнаружить ошибку на сервере, работающем под управлением root, и быть в состоянии взломать root через сетевое
+подключение к этому серверу, или злоумышленник может знать об ошибке в программе SUID-root,
+которая позволяет злоумышленнику взломать root, если он хотя бы раз взламывал учетную запись пользователя.
+Многие из обнаруженных и закрытых на сегодняшний день брешей требуют от
+злоумышленника значительного объема работы по устранению последствий,
+поэтому большинство злоумышленников устанавливают бэкдоры.
+Это дает вам удобный способ обнаружения злоумышленника.
+Лишение злоумышленника возможности установить бэкдор
+на самом деле может нанести ущерб вашей безопасности,
+поскольку это не перекроет дыру, которую злоумышленник
+изначально использовал для взлома.
 .Pp
-Security remedies should always be implemented with a multi-layered
+Средства защиты всегда должны быть реализованы с использованием многоуровневого
+подхода
 .Dq onion peel
-approach and can be categorized as follows:
+и могут быть классифицированы следующим образом:
 .Bl -enum -offset indent
 .It
-Securing root and staff accounts
+Защита учетных записей root и персонала
 .It
-Securing root \(em root-run servers and SUID/SGID binaries
+Защита root \(em  root-run серверов и двоичных файлов SUID/SGID
 .It
-Securing user accounts
+Защита учетных записей пользователей
 .It
-Securing the password file
+Защита файла паролей
 .It
-Securing the kernel core, raw devices, and file systems
+Защита ядра, необработанных устройств и файловых систем
 .It
-Quick detection of inappropriate changes made to the system
+Быстрое обнаружение нежелательных изменений, внесенных в систему
 .It
-Paranoia
+Паранойя
 .El
-.Sh SECURING THE ROOT ACCOUNT AND SECURING STAFF ACCOUNTS
-Do not bother securing staff accounts if you have not secured the root
-account.
-Most systems have a password assigned to the root account.
-The
-first thing you do is assume that the password is
-.Em always
-compromised.
-This does not mean that you should remove the password.
-The
-password is almost always necessary for console access to the machine.
-What it does mean is that you should not make it possible to use the password
-outside of the console or possibly even with a
-.Xr su 1
-utility.
-For example, make sure that your PTYs are specified as being
-.Dq Li insecure
-in the
-.Pa /etc/ttys
-file
-so that direct root logins via
-.Xr telnet 1
-are disallowed.
-If using
-other login services such as
+.Sh ЗАЩИТА УЧЕТНОЙ ЗАПИСИ ROOT И УЧЕТНЫХ ЗАПИСЕЙ СОТРУДНИКОВ
+Не пытайтесь защитить учетные записи сотрудников,
+если у вас не защищена учетная запись root.
+В большинстве систем учетной записи root присваивается пароль.
+Первое, что вы делаете, это предполагаете, что пароль
+.Em всегда
+скомпрометирован.
+Это не означает, что вы должны удалить пароль.
+Пароль почти всегда необходим для консольного доступа к компьютеру.
+Это означает, что вы не должны предоставлять возможность использовать
+пароль за пределами консоли или, возможно, даже с помощью утилиты
+.Xr su 1 .
+Например, убедитесь, что ваши PTYS указаны как
+.Dq Li небезопасные
+в файле
+.Pa /etc/ttys ,
+чтобы запретить прямой вход пользователя root через
+.Xr telnet 1 .
+При использовании других служб входа, таких как
 .Xr sshd 8 ,
-make sure that direct root logins are
-disabled there as well.
-Consider every access method \(em services such as
-.Xr ftp 1
-often fall through the cracks.
-Direct root logins should only be allowed
-via the system console.
+убедитесь, что там также отключен прямой вход пользователя root.
+Рассмотрите все способы доступа \(em сервисы, как
+.Xr ftp 1 ,
+часто не работают.
+Прямой вход пользователя root должен быть разрешен только через системную консоль.
 .Pp
-Of course, as a sysadmin you have to be able to get to root, so we open up
-a few holes.
-But we make sure these holes require additional password
-verification to operate.
-One way to make root accessible is to add appropriate
-staff accounts to the
+Конечно, как системный администратор, вы должны иметь доступ к системе root, поэтому мы
+используем некоторые возможности.
+Но мы следим за тем, чтобы эти возможности требовали дополнительной проверки пароля для работы.
+Один из способов сделать root доступным -
+добавить соответствующие учетные записи сотрудников в группу
 .Dq Li wheel
-group (in
+(в
 .Pa /etc/group ) .
-The staff members placed in the
+Сотрудникам, помещенным в группу
 .Li wheel
-group are allowed to
+разрешено использовать
 .Xr su 1
-to root.
-You should never give staff
-members native
+для доступа к root.
+Ни в коем случае не следует предоставлять сотрудникам собственный доступ
+.Li wheel ,
+добавляя их в группу
 .Li wheel
-access by putting them in the
+при вводе пароля.
+Учетные записи сотрудников следует поместить в группу
+.Dq Li staff ,
+а затем добавить в группу
 .Li wheel
-group in their password entry.
-Staff accounts should be placed in a
-.Dq Li staff
-group, and then added to the
-.Li wheel
-group via the
-.Pa /etc/group
-file.
-Only those staff members who actually need to have root access
-should be placed in the
-.Li wheel
-group.
-It is also possible, when using an
-authentication method such as Kerberos, to use Kerberos's
+с помощью файла
+.Pa /etc/group .
+Только тех сотрудников, которым действительно
+необходим root-доступ следует поместить в группу
+.Li wheel .
+При использовании такого метода аутентификации, как Kerberos, также возможно
+использовать файл
 .Pa .k5login
-file in the root account to allow a
+в учетной записи root, чтобы разрешить
 .Xr ksu 1
-to root without having to place anyone at all in the
+получить root-права без необходимости добавлять кого-либо вообще в группу
+.Li wheel .
+Это может быть лучшим решением, поскольку механизм
 .Li wheel
-group.
-This
-may be the better solution since the
+по-прежнему позволяет злоумышленнику взломать root,
+если он завладел вашим файлом паролей и может взломать
+учетную запись сотрудника.
+Хотя наличие механизма
 .Li wheel
-mechanism still allows an
-intruder to break root if the intruder has gotten hold of your password
-file and can break into a staff account.
-While having the
-.Li wheel
-mechanism
-is better than having nothing at all, it is not necessarily the safest
-option.
+лучше, чем отсутствие чего-либо вообще, но это не обязательно самый
+безопасный вариант.
 .Pp
-An indirect way to secure the root account is to secure your staff accounts
-by using an alternative login access method and *'ing out the crypted password
-for the staff accounts.
-This way an intruder may be able to steal the password
-file but will not be able to break into any staff accounts or root, even if
-root has a crypted password associated with it (assuming, of course, that
-you have limited root access to the console).
-Staff members
-get into their staff accounts through a secure login mechanism such as
+Косвенным способом защиты учетной записи root является защита учетных записей ваших сотрудников с помощью альтернативного метода входа в систему и ввода
+зашифрованного пароля для учетных записей сотрудников.
+Таким образом, злоумышленник может украсть файл с паролями, но не сможет взломать
+учетные записи сотрудников или root, даже если с root связан зашифрованный пароль (при условии, конечно, что у вас ограниченный доступ root к
+консоли).
+Сотрудники получают доступ к своим учетным записям сотрудников с помощью безопасного механизма входа в систему, такого как
 .Xr kerberos 8
-or
+или
 .Xr ssh 1
-using a private/public
-key pair.
-When you use something like Kerberos you generally must secure
-the machines which run the Kerberos servers and your desktop workstation.
-When you use a public/private key pair with SSH, you must generally secure
-the machine you are logging in
-.Em from
-(typically your workstation),
-but you can
-also add an additional layer of protection to the key pair by password
-protecting the keypair when you create it with
+используя частный/общедоступный пару ключей.
+огда вы используете что-то вроде Kerberos, вам, как правило, необходимо защитить компьютеры, на которых работают серверы Kerberos, и вашу настольную рабочую
+станцию.
+Когда вы используете пару открытых/закрытых ключей с помощью SSH, вы,
+как правило, должны защитить компьютер,
+.Em с которого
+вы входите в систему (обычно это ваша рабочая станция),
+но вы также можете добавить дополнительный уровень защиты к паре ключей,
+защитив паролем пару ключей при ее создании с помощью
 .Xr ssh-keygen 1 .
-Being able
-to star-out the passwords for staff accounts also guarantees that staff
-members can only log in through secure access methods that you have set up.
-You can
-thus force all staff members to use secure, encrypted connections for
-all their sessions which closes an important hole used by many intruders: that
-of sniffing the network from an unrelated, less secure machine.
+Возможность подбирать пароли к учетным записям сотрудников
+также гарантирует, что сотрудники смогут войти в систему только с
+помощью методов безопасного доступа, которые вы настроили. 
+Таким образом, вы можете заставить всех сотрудников использовать безопасные зашифрованные
+соединения для всех своих сеансов, что закрывает важную брешь,
+используемую многими злоумышленниками: возможность подключения
+к сети с несвязанного, менее защищенного компьютера.
 .Pp
-The more indirect security mechanisms also assume that you are logging in
-from a more restrictive server to a less restrictive server.
-For example,
-if your main box is running all sorts of servers, your workstation should not
-be running any.
-In order for your workstation to be reasonably secure
-you should run as few servers as possible, up to and including no servers
-at all, and you should run a password-protected screen blanker.
-Of course, given physical access to
-a workstation, an attacker can break any sort of security you put on it.
-This is definitely a problem that you should consider but you should also
-consider the fact that the vast majority of break-ins occur remotely, over
-a network, from people who do not have physical access to your workstation or
-servers.
+Более косвенные механизмы безопасности также предполагают, что вы выполняете вход
+с сервера с более строгими ограничениями на сервер с менее строгими ограничениями.
+Например, если на вашем главном сервере запущены все виды серверов,
+на вашей рабочей станции не должен быть запущен ни один из них.
+Для того чтобы ваша рабочая станция была
+достаточно защищена, вы должны использовать как можно меньше серверов,
+вплоть до полного отсутствия серверов, и вы должны использовать
+защищенную паролем систему блокировка экрана.
+Конечно, имея физический доступ к рабочей станции,
+злоумышленник может взломать любую систему защиты,
+которую вы на нее установили. Это определенно проблема,
+которую вам следует учитывать, но вы также должны учитывать тот факт, 
+что подавляющее большинство взломов происходит удаленно,
+по сети, от людей, которые не имеют физического доступа к
+вашей рабочей станции или серверам.
 .Pp
-Using something like Kerberos also gives you the ability to disable or
-change the password for a staff account in one place and have it immediately
-affect all the machines the staff member may have an account on.
-If a staff
-member's account gets compromised, the ability to instantly change his
-password on all machines should not be underrated.
-With discrete passwords, changing a password on N machines can be a mess.
-You can also impose
-re-passwording restrictions with Kerberos: not only can a Kerberos ticket
-be made to timeout after a while, but the Kerberos system can require that
-the user choose a new password after a certain period of time
-(say, once a month).
-.Sh SECURING ROOT \(em ROOT-RUN SERVERS AND SUID/SGID BINARIES
-The prudent sysadmin only runs the servers he needs to, no more, no less.
-Be aware that third party servers are often the most bug-prone.
-For example,
-running an old version of
+Использование чего-то вроде Kerberos также дает вам возможность
+отключить или изменить пароль для учетной записи сотрудника в
+одном месте и немедленно применить его ко всем компьютерам, 
+на которых у сотрудника может быть учетная запись.
+Если учетная запись сотрудника будет взломана, не следует
+недооценивать возможность мгновенной смены пароля на всех компьютерах.
+При использовании отдельных паролей смена пароля на N компьютерах может
+привести к путанице. Вы также можете ввести ограничения на повторный
+ввод пароля с помощью Kerberos: мало того, что запрос Kerberos может
+быть переведен в режим ожидания через некоторое время, но система
+Kerberos может потребовать, чтобы пользователь выбрал новый пароль
+через определенный промежуток времени (скажем, раз в месяц).
+.Sh ЗАЩИТА  ROOT \(em ROOT-RUN СЕРВЕРОВ И ДВОИЧНЫХ ФАЙЛОВ SUID/SGID
+Разумный системный администратор запускает только те серверы,
+которые ему необходимы, не больше и не меньше. Имейте в виду,
+что серверы сторонних производителей часто наиболее подвержены ошибкам.
+Например, запуск старой версии
 .Xr imapd 8
-or
+или
 .Xr popper 8 Pq Pa ports/mail/popper
-is like giving a universal root
-ticket out to the entire world.
-Never run a server that you have not checked
-out carefully.
-Many servers do not need to be run as root.
-For example,
-the
+это все равно что предоставление универсального доступа root для всего мира.
+Никогда не запускайте сервер, который вы предварительно не проверили.
+Многие серверы не требуют запуска от имени пользователя root.
+Например
 .Xr talkd 8 ,
 .Xr comsat 8 ,
-and
+и
 .Xr fingerd 8
-daemons can be run in special user
+могут быть запущены в специальной пользовательской среде
 .Dq sandboxes .
-A sandbox is not perfect unless you go to a large amount of trouble, but the
-onion approach to security still stands: if someone is able to break in
-through a server running in a sandbox, they still have to break out of the
-sandbox.
-The more layers the attacker must break through, the lower the
-likelihood of his success.
-Root holes have historically been found in
-virtually every server ever run as root, including basic system servers.
-If you are running a machine through which people only log in via
+Песочница не идеальна, если только вы не столкнетесь с большим
+количеством проблем, но традиционный подход к обеспечению
+безопасности остается в силе: если кто-то может взломать сервер,
+работающий в песочнице, ему все равно придется выходить из нее.
+Чем больше уровней должен
+преодолеть злоумышленник, тем ниже вероятность его успеха. Исторически рут-бреши обнаруживались практически на каждом сервере, когда-либо работавшем от
+имени root, включая базовые системные серверы.
+сли вы используете компьютер, на котором пользователи входят в систему только через
 .Xr sshd 8
-and never log in via
-.Nm telnetd
-then turn off this service!
+ никогда не входят в систему через
+.Nm telnetd ,
+просто отключите этот сервис!
 .Pp
 .Fx
-now defaults to running
+теперь по умолчанию запускает
 .Xr talkd 8 ,
 .Xr comsat 8 ,
-and
+и
 .Xr fingerd 8
-in a sandbox.
-Depending on whether you
-are installing a new system or upgrading an existing system, the special
-user accounts used by these sandboxes may not be installed.
-The prudent
-sysadmin would research and implement sandboxes for servers whenever possible.
+в песочнице.
+В зависимости от того, устанавливаете ли вы новую систему или обновляете
+существующую, специальные учетные записи пользователей, 
+используемые в этих изолированных системах, могут быть не установлены.
+Благоразумный системный администратор по возможности исследует
+и внедряет изолированные серверы для серверов.
 .Pp
-There are a number of other servers that typically do not run in sandboxes:
+Существует ряд других серверов, которые обычно не работают в изолированных системах:
 .Xr sendmail 8 ,
 .Xr popper 8 ,
 .Xr imapd 8 ,
 .Xr ftpd 8 ,
-and others.
-There are alternatives to
-some of these, but installing them may require more work than you are willing
-to put
-(the convenience factor strikes again).
-You may have to run these
-servers as root and rely on other mechanisms to detect break-ins that might
-occur through them.
+и  другие.
+Некоторым из них есть альтернативы, но их установка может потребовать
+больше усилий, чем вы готовы потратить (снова сказывается фактор удобства).
+Возможно, вам придется запускать эти серверы от имени пользователя root
+и использовать другие механизмы для обнаружения возможных взломов с их помощью.
 .Pp
-The other big potential root hole in a system are the SUID-root and SGID
-binaries installed on the system.
-Most of these binaries, such as
+Другой большой потенциальной дырой в системе являются двоичные
+файлы SUID-root и SGID, установленные в системе.
+Большинство из этих двоичных файлов, таких как
 .Xr su 1 ,
-reside in
+находятся в
 .Pa /bin , /sbin , /usr/bin ,
-or
+или
 .Pa /usr/sbin .
-While nothing is 100% safe,
-the system-default SUID and SGID binaries can be considered reasonably safe.
-Still, root holes are occasionally found in these binaries.
-A root hole
-was found in Xlib in 1998 that made
+Хотя ничто не является безопасным на 100%, двоичные файлы SUID и SGID,
+используемые системой по умолчанию, можно считать достаточно безопасными.
+Тем не менее, в этих двоичных файлах иногда обнаруживаются
+пробелы. В 1998 году в Xlib была обнаружена уязвимость, которая сделала
 .Xr xterm 1 Pq Pa ports/x11/xterm
-(which is typically SUID)
-vulnerable.
-It is better to be safe than sorry and the prudent sysadmin will restrict SUID
-binaries that only staff should run to a special group that only staff can
-access, and get rid of
+(который обычно является SUID) уязвимым.
+Лучше
+на всякий случай предусмотрительный системный администратор
+поместит двоичные файлы SUID, которые должны запускаться
+только сотрудниками, в специальную группу, доступ к которой
+может иметь только персонал, и избавится
 .Pq Dq Li "chmod 000"
-any SUID binaries that nobody uses.
-A server with no display generally does not need an
-.Xr xterm 1 Pq Pa ports/x11/xterm
-binary.
-SGID binaries can be almost as dangerous.
-If an intruder can break an SGID-kmem binary the
-intruder might be able to read
+от любых двоичных файлов SUID, которые никто не использует.
+Серверу без дисплея, как правило, не требуется двоичный файл
+.Xr xterm 1 Pq Pa ports/x11/xterm .
+Двоичные файлы SGID могут быть почти такими же опасными.
+Если злоумышленнику удастся взломать двоичный файл SGID-kmem, он сможет прочитать файл
 .Pa /dev/kmem
-and thus read the crypted password
-file, potentially compromising any passworded account.
-Alternatively an
-intruder who breaks group
+и, таким образом, прочитать зашифрованный файл паролей, потенциально
+взломать любую учетную запись с паролем.
+В качестве альтернативы злоумышленник, взломавший группу
 .Dq Li kmem
-can monitor keystrokes sent through PTYs,
-including PTYs used by users who log in through secure methods.
-An intruder
-that breaks the
+может отслеживать нажатия клавиш, отправленные с помощью PTYS,
+включая PTYS, используемые пользователями, которые входят в систему
+с помощью защищенных методов.
+Злоумышленник, взломавший группу
 .Dq Li tty
-group can write to almost any user's TTY.
-If a user
-is running a terminal
-program or emulator with a keyboard-simulation feature, the intruder can
-potentially
-generate a data stream that causes the user's terminal to echo a command, which
-is then run as that user.
-.Sh SECURING USER ACCOUNTS
-User accounts are usually the most difficult to secure.
-While you can impose
-draconian access restrictions on your staff and *-out their passwords, you
-may not be able to do so with any general user accounts you might have.
-If
-you do have sufficient control then you may win out and be able to secure the
-user accounts properly.
-If not, you simply have to be more vigilant in your
-monitoring of those accounts.
-Use of SSH and Kerberos for user accounts is
-more problematic due to the extra administration and technical support
-required, but still a very good solution compared to a crypted password
-file.
-.Sh SECURING THE PASSWORD FILE
-The only sure fire way is to *-out as many passwords as you can and
-use SSH or Kerberos for access to those accounts.
-Even though the
-crypted password file
+может выполнить запись практически в TTY любого пользователя.
+Если пользователь
+запускает программу терминала или эмулятор с функцией имитации клавиатуры,
+злоумышленник потенциально может сгенерировать поток данных,
+который заставит терминал пользователя повторить команду,
+которая затем будет запущена от имени этого пользователя.
+.Sh ЗАЩИТА УЧЕТНЫХ ЗАПИСЕЙ ПОЛЬЗОВАТЕЛЕЙ
+Учетные записи пользователей, как правило, труднее всего защитить. Хотя вы можете ввести драконовские ограничения на доступ для своих сотрудников и узнать их
+пароли, возможно, вы не сможете сделать это с обычными учетными записями пользователей, которые у вас могут быть. Если у вас есть достаточный контроль, вы можете выиграть
+и сможете должным образом защитить учетные записи пользователей. Если нет, вам просто нужно быть более бдительным при мониторинге этих учетных записей. Использование
+SSH и Kerberos для учетных записей пользователей более проблематично из-за необходимости дополнительного администрирования и технической поддержки, но все же это очень хороший способ.
+решение по сравнению с зашифрованным файлом паролей.
+.Sh ЗАЩИТА ФАЙЛА ПАРОЛЕЙ
+Единственный верный способ - это ввести как можно больше
+паролей и использовать SSH или Kerberos для доступа к этим
+учетным записям. Несмотря на то, что зашифрованный файл паролей
 .Pq Pa /etc/spwd.db
-can only be read by root, it may
-be possible for an intruder to obtain read access to that file even if the
-attacker cannot obtain root-write access.
+может быть прочитан только пользователем root,
+злоумышленник может получить доступ на чтение к этому файлу,
+даже если он не может получить доступ на запись с правами root.
 .Pp
-Your security scripts should always check for and report changes to
-the password file
-(see
-.Sx CHECKING FILE INTEGRITY
-below).
-.Sh SECURING THE KERNEL CORE, RAW DEVICES, AND FILE SYSTEMS
-If an attacker breaks root he can do just about anything, but there
-are certain conveniences.
-For example, most modern kernels have a packet sniffing device driver built in.
-Under
+Ваши сценарии безопасности должны всегда проверять наличие изменений в файле паролей и сообщать о них
+(см. раздел "ПРОВЕРКА ЦЕЛОСТНОСТИ ФАЙЛА" ниже).
+.Sh ЗАЩИТА ЯДРА, НЕОБРАБОТАННЫХ УСТРОЙСТВ И ФАЙЛОВЫХ СИСТЕМ
+Если злоумышленник взломает root, он может сделать практически все, что угодно, но есть определенные удобства.
+Например, в большинство современных ядер
+встроен драйвер устройства отслеживания пакетов.
+Во 
 .Fx
-it is called
-the
-.Xr bpf 4
-device.
-An intruder will commonly attempt to run a packet sniffer
-on a compromised machine.
-You do not need to give the intruder the
-capability and most systems should not have the
-.Xr bpf 4
-device compiled in.
+это называется устройством
+.Xr bpf 4 .
+Злоумышленник обычно пытается запустить анализатор
+пакетов на взломанном компьютере.
+Вам не нужно предоставлять злоумышленнику соответствующие возможности,
+и в большинстве систем не должно быть скомпилированного устройства
+.Xr bpf 4 .
 .Pp
-But even if you turn off the
-.Xr bpf 4
-device, you still have
+о даже если вы отключите устройство
+.Xr bpf 4 ,
+у вас все равно останутся файлы
 .Pa /dev/mem
-and
+и
 .Pa /dev/kmem
-to worry about.
-For that matter,
-the intruder can still write to raw disk devices.
-Also, there is another kernel feature called the module loader,
+о которых стоит беспокоиться.
+Если на то пошло, злоумышленник все равно
+может записывать данные на устройства с необработанным диском.
+роме того, в ядре есть еще одна функция, называемая загрузчиком модулей,
 .Xr kldload 8 .
-An enterprising intruder can use a KLD module to install
-his own
+Предприимчивый злоумышленник может использовать модуль
+KLD для установки своего собственного устройства
 .Xr bpf 4
-device or other sniffing device on a running kernel.
-To avoid these problems you have to run
-the kernel at a higher security level, at least level 1.
-The security level can be set with a
+или другого устройства отслеживания в работающем ядре.
+Чтобы избежать этих проблем, вы должны запустить ядро с более высоким уровнем безопасности, по крайней мере, с уровнем 1.
+Уровень безопасности можно задать с помощью
 .Xr sysctl 8
-on the
-.Va kern.securelevel
-variable.
-Once you have
-set the security level to 1, write access to raw devices will be denied and
-special
+в переменной
+.Va kern.securelevel .
+Как только вы
+если вы установили уровень безопасности равным 1, доступ на запись к необработанным устройствам будет запрещен и будут установлены специальные флаги
 .Xr chflags 1
-flags, such as
-.Cm schg ,
-will be enforced.
-You must also ensure
-that the
+такие как
+.Cm schg .
+Вы также должны убедиться, что флаг
 .Cm schg
-flag is set on critical startup binaries, directories, and
-script files \(em everything that gets run
-up to the point where the security level is set.
-This might be overdoing it, and upgrading the system is much more
-difficult when you operate at a higher security level.
-You may compromise and
-run the system at a higher security level but not set the
+установлен для критически важных двоичных файлов запуска, каталогов и файлов сценариев - всего, что запускается до уровня, на котором установлен уровень безопасности.
+Это может привести к перегибу,
+и обновить систему будет намного сложнее, если вы будете работать на более высоком уровне безопасности.
+Вы можете скомпрометировать систему и запустить ее с более высоким уровнем безопасности, но не устанавливать флаг
 .Cm schg
-flag for every
-system file and directory under the sun.
-Another possibility is to simply
-mount
+ля каждого системного файла и каталога в сети.
+Другой возможностью является простое подключение
+и доступ к
 .Pa /
-and
+и
 .Pa /usr
-read-only.
-It should be noted that being too draconian in
-what you attempt to protect may prevent the all-important detection of an
-intrusion.
+только для чтения.
+Следует отметить, что слишком жесткие меры в отношении того, что вы пытаетесь защитить, могут помешать обнаружению
+вторжения.
 .Pp
-The kernel runs with five different security levels.
-Any super-user process can raise the level, but no process
-can lower it.
-The security levels are:
+Ядро работает с пятью различными уровнями безопасности. Любой суперпользовательский
+процесс может повысить уровень, но ни один процесс не может его понизить. Уровни безопасности
+следующие:
 .Bl -tag -width flag
 .It Ic -1
-Permanently insecure mode \- always run the system in insecure mode.
-This is the default initial value.
+Постоянно небезопасный режим - всегда запускайте систему в небезопасном
+режиме. Это начальное значение по умолчанию.
 .It Ic 0
-Insecure mode \- immutable and append-only flags may be turned off.
-All devices may be read or written subject to their permissions.
+Небезопасный режим - флаги "неизменяемый" и "только для добавления" могут быть отключены. Чтение и запись с любых устройств возможны в зависимости от их разрешений.
 .It Ic 1
-Secure mode \- the system immutable and system append-only flags may not
-be turned off;
-disks for mounted file systems,
+езопасный режим \- флаги system immutable и system append-only
+не могут быть отключены;
+диски для подключенных файловых систем,
 .Pa /dev/mem
-and
+и
 .Pa /dev/kmem
-may not be opened for writing;
+могут быть закрыты для записи;
 .Pa /dev/io
-(if your platform has it) may not be opened at all;
-kernel modules (see
+(если он есть на вашей платформе) может вообще не открываться;
+модули ядра (см.
 .Xr kld 4 )
-may not be loaded or unloaded.
-The kernel debugger may not be entered using the
+может быть не загружен или не выгружен.
+Отладчик ядра не может быть введен с помощью
 .Va debug.kdb.enter
-sysctl unless a
+sysctl если политика
 .Xr MAC 9
-policy grants access, for example using
+не предоставляет доступ, например, с помощью
 .Xr mac_ddb 4 .
-A panic or trap cannot be forced using the
+Панику или trap невозможно вызвать с помощью
 .Va debug.kdb.panic ,
 .Va debug.kdb.panic_str
-and other sysctl's.
+других системных команд.
 .It Ic 2
-Highly secure mode \- same as secure mode, plus disks may not be
-opened for writing (except by
+Режим повышенной безопасности - аналогично безопасному режиму, плюс диски могут быть открыты для записи (исключая
 .Xr mount 2 )
-whether mounted or not.
-This level precludes tampering with file systems by unmounting them,
-but also inhibits running
-.Xr newfs 8
-while the system is multi-user.
+независимо от того, подключены они или нет.
+Этот уровень исключает вмешательство в файловые системы путем их размонтирования, но также препятствует запуску
+.Xr newfs 8 ,
+когда система является многопользовательской.
 .Pp
-In addition, kernel time changes are restricted to less than or equal to one
-second.
-Attempts to change the time by more than this will log the message
-.Dq Time adjustment clamped to +1 second .
+Кроме того, время, изменяемое ядром, ограничено временем, меньшим или равным одной секунде.
+При попытке изменить время более чем на это значение в журнал будет внесено сообщение
+.Dq Корректировка времени установлена на +1 секунду .
 .It Ic 3
-Network secure mode \- same as highly secure mode, plus
-IP packet filter rules (see
+Безопасный режим сети \- такой же, как и режим повышенной безопасности, плюс
+правила фильтрации IP-пакетов (см.
 .Xr ipfw 8 ,
 .Xr ipfirewall 4
-and
+и
 .Xr pfctl 8 )
-cannot be changed and
+нельзя
+изменить, а конфигурацию
 .Xr dummynet 4
-or
+или
 .Xr pf 4
-configuration cannot be adjusted.
+нельзя скорректировать.
 .El
 .Pp
-The security level can be configured with variables documented in
+Уровень безопасности можно настроить с помощью переменных, задокументированных в
 .Xr rc.conf 5 .
-.Sh CHECKING FILE INTEGRITY: BINARIES, CONFIG FILES, ETC
-When it comes right down to it, you can only protect your core system
-configuration and control files so much before the convenience factor
-rears its ugly head.
-For example, using
+.Sh ПРОВЕРКА ЦЕЛОСТНОСТИ ФАЙЛОВ: ДВОИЧНЫХ ФАЙЛОВ, КОНФИГУРАЦИОННЫХ ФАЙЛОВ И Т.Д
+Когда дело доходит до этого, вы можете защитить конфигурацию своей основной системы и управляющие файлы только до тех пор, пока фактор удобства
+не поднимет свою уродливую голову.
+Например, использование
 .Xr chflags 1
-to set the
+для установки бита
 .Cm schg
-bit on most of the files in
+для большинства файлов в
 .Pa /
-and
+и
 .Pa /usr
-is probably counterproductive because
-while it may protect the files, it also closes a detection window.
-The
-last layer of your security onion is perhaps the most important \(em detection.
-The rest of your security is pretty much useless (or, worse, presents you with
-a false sense of safety) if you cannot detect potential incursions.
-Half
-the job of the onion is to slow down the attacker rather than stop him
-in order to give the detection layer a chance to catch him in
-the act.
+вероятно, контрпродуктивно, поскольку, хотя это может защитить файлы, оно также закрывает
+окно обнаружения.
+Последний уровень вашей системы безопасности, пожалуй, самый важный - обнаружение. Остальная часть вашей системы безопасности практически бесполезна
+((или, что еще хуже, создает у вас ложное чувство безопасности), если вы не можете обнаружить потенциальное вторжение.
+Половина работы onion заключается в том, чтобы замедлить
+атакующего, а не остановить его, чтобы дать возможность уровню обнаружения поймать его на месте преступления.
 .Pp
-The best way to detect an incursion is to look for modified, missing, or
-unexpected files.
-The best
-way to look for modified files is from another (often centralized)
-limited-access system.
-Writing your security scripts on the extra-secure limited-access system
-makes them mostly invisible to potential attackers, and this is important.
-In order to take maximum advantage you generally have to give the
-limited-access box significant access to the other machines in the business,
-usually either by doing a read-only NFS export of the other machines to the
-limited-access box, or by setting up SSH keypairs to allow the limit-access
-box to SSH to the other machines.
-Except for its network traffic, NFS is
-the least visible method \(em allowing you to monitor the file systems on each
-client box virtually undetected.
-If your
-limited-access server is connected to the client boxes through a switch,
-the NFS method is often the better choice.
-If your limited-access server
-is connected to the client boxes through a hub or through several layers
-of routing, the NFS method may be too insecure (network-wise) and using SSH
-may be the better choice even with the audit-trail tracks that SSH lays.
+Лучший способ обнаружить вторжение - это поиск измененных, отсутствующих или непредвиденных файлов. Лучший способ найти измененные файлы
+- это использовать другую (часто централизованную) систему с ограниченным доступом. Написание ваших сценариев безопасности в сверхзащищенной системе ограниченного доступа
+делает их практически невидимыми для потенциальных злоумышленников, и это важно. Чтобы воспользоваться максимальными преимуществами, вам, как правило, необходимо предоставить блоку с ограниченным доступом значительный доступ к другим компьютерам в бизнесе, обычно либо путем экспорта других компьютеров из NFS только для чтения в
+блок ограниченного доступа или путем настройки пар ключей SSH, позволяющих блоку ограничивать доступ к другим компьютерам по SSH.
+За исключением сетевого
+трафика, NFS является наименее заметным методом \(em позволяющим отслеживать файловые системы на каждом клиентском блоке практически незамеченным.
+Если ваш сервер с ограниченным доступом подключен к клиентским блокам через концентратор или через несколько сетевых-
+из-за маршрутизации метод NFS может быть слишком небезопасным (с точки зрения сети), и использование SSH может быть лучшим выбором, даже учитывая контрольные записи, которые прокладывает
+SSH.
 .Pp
-Once you give a limit-access box at least read access to the client systems
-it is supposed to monitor, you must write scripts to do the actual
-monitoring.
-Given an NFS mount, you can write scripts out of simple system
-utilities such as
+ак только вы предоставите блоку ограничения доступа хотя бы доступ на чтение к клиентским
+системам, которые он должен отслеживать,
+вы должны написать сценарии для выполнения фактического мониторинга.
+При подключении к NFS вы можете писать сценарии с помощью
+простых системных утилит, таких как
 .Xr find 1
-and
+и
 .Xr md5 1 .
-It is best to physically
+Лучше всего выполнять физическую проверку файлов клиентского ящика
 .Xr md5 1
-the client-box files boxes at least once a
-day, and to test control files such as those found in
+не реже одного раза в день, а еще чаще тестировать управляющие файлы,
+такие как те, что находятся в
 .Pa /etc
-and
-.Pa /usr/local/etc
-even more often.
-When mismatches are found relative to the base MD5
-information the limited-access machine knows is valid, it should scream at
-a sysadmin to go check it out.
-A good security script will also check for
-inappropriate SUID binaries and for new or deleted files on system partitions
-such as
+и
+.Pa /usr/local/etc .
+огда обнаруживаются несоответствия с базовой информацией MD5, которая, по мнению компьютера с ограниченным доступом, является достоверной,
+он должен обратиться к системному администратору с просьбой проверить это. 
+Хороший сценарий безопасности также проверит наличие неподходящих двоичных
+файлов SUID и новых или удаленных файлов в системных разделах, таких как
 .Pa /
-and
+и
 .Pa /usr .
 .Pp
-When using SSH rather than NFS, writing the security script is much more
-difficult.
-You essentially have to
+При использовании SSH, а не NFS, написание сценария безопасности намного сложнее.
+По сути, вам нужно
 .Xr scp 1
-the scripts to the client box in order to run them, making them visible, and
-for safety you also need to
+перенести скрипты в клиентское окно, чтобы запустить их и сделать видимыми,
+и для обеспечения безопасности вам также необходимо
 .Xr scp 1
-the binaries (such as
-.Xr find 1 )
-that those scripts use.
-The
+поместить двоичные файлы (например,
+.Xr find 1 ),
+оторые
+используются этими скриптами.
+Возможно,
 .Xr sshd 8
-daemon on the client box may already be compromised.
-All in all,
-using SSH may be necessary when running over unsecure links, but it is also a
-lot harder to deal with.
+в клиентском окне уже взломан.
+В целом, использование SSH может быть необходимым при работе
+по незащищенным ссылкам, но с ним также намного сложнее справиться.
 .Pp
-A good security script will also check for changes to user and staff members
-access configuration files:
+Хороший сценарий безопасности также будет проверять наличие изменений в
+файлах конфигурации доступа пользователей и сотрудников:
 .Pa .rhosts , .shosts , .ssh/authorized_keys
-and so forth, files that might fall outside the purview of the MD5 check.
+и т.д., файлах, которые могут выходить за рамки проверки MD5.
 .Pp
-If you have a huge amount of user disk space it may take too long to run
-through every file on those partitions.
-In this case, setting mount
-flags to disallow SUID binaries on those partitions is a good
-idea.
-The
+Если у вас большой объем пользовательского дискового пространства, просмотр каждого файла на этих разделах может занять слишком много времени. В этом случае рекомендуется установить
+флаги монтирования, запрещающие использование двоичных файлов SUID на этих разделах.
+Параметр
 .Cm nosuid
-option
-(see
+(см.
 .Xr mount 8 )
-is what you want to look into.
-I would scan them anyway at least once a
-week, since the object of this layer is to detect a break-in whether or
-not the break-in is effective.
+это то, на что вам нужно обратить внимание.
+Я бы все равно просматривал их как минимум раз в неделю, поскольку цель
+этого слоя - обнаружить взлом независимо от того, эффективен взлом или нет.
 .Pp
-Process accounting
-(see
+Учет процессов
+(см.
 .Xr accton 8 )
-is a relatively low-overhead feature of
-the operating system which I recommend using as a post-break-in evaluation
-mechanism.
-It is especially useful in tracking down how an intruder has
-actually broken into a system, assuming the file is still intact after
-the break-in occurs.
+это функция операционной системы с относительно низкими затратами,
+которую я рекомендую использовать в качестве механизма оценки после взлома.
+Это особенно полезно для отслеживания того, как злоумышленник на самом деле проник в систему,
+предполагая, что файл все еще остается нетронутым после взлома.
 .Pp
-Finally, security scripts should process the log files and the logs themselves
-should be generated in as secure a manner as possible \(em remote syslog can be
-very useful.
-An intruder tries to cover his tracks, and log files are critical
-to the sysadmin trying to track down the time and method of the initial
-break-in.
-One way to keep a permanent record of the log files is to run
-the system console to a serial port and collect the information on a
-continuing basis through a secure machine monitoring the consoles.
-.Sh PARANOIA
-A little paranoia never hurts.
-As a rule, a sysadmin can add any number
-of security features as long as they do not affect convenience, and
-can add security features that do affect convenience with some added
-thought.
-Even more importantly, a security administrator should mix it up
-a bit \(em if you use recommendations such as those given by this manual
-page verbatim, you give away your methodologies to the prospective
-attacker who also has access to this manual page.
-.Sh SPECIAL SECTION ON DoS ATTACKS
-This section covers Denial of Service attacks.
-A DoS attack is typically a packet attack.
-While there is not much you can do about modern spoofed
-packet attacks that saturate your network, you can generally limit the damage
-by ensuring that the attacks cannot take down your servers.
+Наконец, сценарии безопасности должны обрабатывать файлы журналов,
+а сами журналы должны создаваться максимально безопасным способом \(em удаленный
+системный журнал может быть очень полезен.
+Злоумышленник пытается замести следы,
+и файлы журналов имеют решающее значение для системного администратора, пытающегося отследить время и способ первоначального взлома. Одним из способов ведения постоянной записи файлов журнала является подключение системной консоли к последовательному порту
+и постоянный сбор информации с помощью защищенного компьютера, осуществляющего мониторинг консолей.
+.Sh ПАРАНОЯ
+Немного паранойи никогда не помешает. Как правило,
+системный администратор может добавить любое количество функций безопасности,
+если они не влияют на удобство, и может добавить функции безопасности,
+которые влияют на удобство, если немного подумать.
+Что еще более важно, администратору системы безопасности следует немного
+запутаться \(em если вы дословно используете рекомендации,
+подобные приведенным на этой странице руководства,
+вы выдаете свои методики потенциальному злоумышленнику,
+который также имеет доступ к этой странице руководства.
+.Sh СПЕЦИАЛЬНЫЙ РАЗДЕЛ, ПОСВЯЩЕННЫЙ DoS-АТАКАМ
+В этом разделе рассматриваются атаки типа "Отказ в обслуживании".
+DoS-атака, как правило, представляет собой пакетную атаку.
+Хотя вы мало что можете сделать с современными
+атаками с использованием поддельных пакетов, которые наводняют вашу сеть,
+вы, как правило, можете ограничить ущерб, гарантируя,
+что атаки не смогут вывести из строя ваши серверы.
 .Bl -enum -offset indent
 .It
-Limiting server forks
+Ограничение форков сервера
 .It
-Limiting springboard attacks (ICMP response attacks, ping broadcast, etc.)
+Ограничение атак с использованием плацдарма (атаки с ответом ICMP, ping, рассылка и т.д.)
 .It
-Kernel Route Cache
+Кэширование маршрутов ядра
 .El
 .Pp
-A common DoS attack is against a forking server that attempts to cause the
-server to eat processes, file descriptors, and memory until the machine
-dies.
-The
+Распространенная DoS-атака направлена против разветвленного сервера,
+который пытается заставить сервер использовать процессы,
+файловые дескрипторы и память до тех пор, пока компьютер не выйдет из строя. 
+Сервер
 .Xr inetd 8
-server
-has several options to limit this sort of attack.
-It should be noted that while it is possible to prevent a machine from going
-down it is not generally possible to prevent a service from being disrupted
-by the attack.
-Read the
+имеет несколько возможностей для ограничения такого рода атак.
+Следует отметить, что, хотя можно предотвратить сбой в работе компьютера,
+как правило, невозможно предотвратить сбой в работе службы в результате атаки.
+Внимательно прочитайте страницу руководства
 .Xr inetd 8
-manual page carefully and pay specific attention
-to the
+и обратите особое внимание на опции
 .Fl c , C ,
-and
-.Fl R
-options.
-Note that spoofed-IP attacks will circumvent
-the
+и
+.Fl R .
+Обратите внимание, что при атаках с использованием поддельного IP-адреса параметр
 .Fl C
-option to
+не используется в
 .Xr inetd 8 ,
-so typically a combination of options must be used.
-Some standalone servers have self-fork-limitation parameters.
+поэтому обычно необходимо использовать комбинацию параметров.
+Некоторые автономные серверы имеют параметры ограничения самофоркинга.
 .Pp
-The
+У
 .Xr sendmail 8
-daemon has its
+есть опция
 .Fl OMaxDaemonChildren
-option which tends to work much
-better than trying to use
+которая, как правило, работает намного лучше,
+чем попытка использовать параметры ограничения загрузки в
 .Xr sendmail 8 Ns 's
-load limiting options due to the
-load lag.
-You should specify a
+из-за задержки загрузки.
+Вам следует указать параметр
 .Va MaxDaemonChildren
-parameter when you start
+при запуске
 .Xr sendmail 8
-high enough to handle your expected load but not so high that the
-computer cannot handle that number of
+достаточный для того, чтобы справиться с ожидаемой нагрузкой, 
+но не настолько высокий,
+чтобы компьютер не смог обработать такое количество сообщений
 .Nm sendmail Ns 's
-without falling on its face.
-It is also prudent to run
+без сбоев в работе.
+Также целесообразно запускать
 .Xr sendmail 8
-in
-.Dq queued
-mode
+в режиме
+.Dq очереди
 .Pq Fl ODeliveryMode=queued
-and to run the daemon
+и запускать
 .Pq Dq Nm sendmail Fl bd
-separate from the queue-runs
+отдельно от запуска в очереди
 .Pq Dq Nm sendmail Fl q15m .
-If you still want real-time delivery you can run the queue
-at a much lower interval, such as
+Если вам все еще нужна доставка в режиме реального времени,
+вы можете запустить очередь с гораздо меньшим интервалом, например, с помощью
 .Fl q1m ,
-but be sure to specify a reasonable
+но обязательно укажите приемлемый параметр
 .Va MaxDaemonChildren
-option for that
-.Xr sendmail 8
-to prevent cascade failures.
+для этого
+.Xr sendmail 8 ,
+чтобы предотвратить каскадные сбои.
 .Pp
-The
 .Xr syslogd 8
-daemon can be attacked directly and it is strongly recommended that you use
-the
+может быть атакован напрямую, и настоятельно рекомендуется использовать параметр
 .Fl s
-option whenever possible, and the
+когда это возможно, и параметр
 .Fl a
-option otherwise.
+в противном случае.
 .Pp
-You should also be fairly careful
-with connect-back services such as tcpwrapper's reverse-identd, which can
-be attacked directly.
-You generally do not want to use the reverse-ident
-feature of tcpwrappers for this reason.
+Вы также должны быть достаточно осторожны с сервисами обратного подключения,
+такими как tcp-wrappers reverse-identd, которые могут быть атакованы напрямую.
+По этой причине обычно не рекомендуется использовать
+функцию обратной идентификации tcp-wrappers.
 .Pp
-It is a very good idea to protect internal services from external access
-by firewalling them off at your border routers.
-The idea here is to prevent
-saturation attacks from outside your LAN, not so much to protect internal
-services from network-based root compromise.
-Always configure an exclusive
-firewall, i.e.,
+Очень хорошей идеей является защита внутренних служб от внешнего доступа
+с помощью брандмауэра на ваших пограничных маршрутизаторах.
+Идея здесь заключается в предотвращении атак по насыщению из-за
+пределов вашей локальной сети, а не в защите внутренних служб от
+сетевой компрометации root. Всегда настраивайте эксклюзивный брандмауэр, т.е.,
 .So
-firewall everything
-.Em except
-ports A, B, C, D, and M-Z
+брандмауэр для всего,
+.Em кроме
+портов A, B, C, D, and M-Z
 .Sc .
-This
-way you can firewall off all of your low ports except for certain specific
-services such as
+Таким образом, вы можете отключить брандмауэром все свои нижние порты,
+за исключением определенных служб, таких как
 .Xr talkd 8 ,
 .Xr sendmail 8 ,
-and other internet-accessible services.
-If you try to configure the firewall the other
-way \(em as an inclusive or permissive firewall, there is a good chance that you
-will forget to
-.Dq close
-a couple of services or that you will add a new internal
-service and forget to update the firewall.
-You can still open up the
-high-numbered port range on the firewall to allow permissive-like operation
-without compromising your low ports.
-Also take note that
+ других служб, доступных через Интернет.
+Если вы попытаетесь настроить брандмауэр по-другому \(em как включающий
+или разрешающий брандмауэр, есть большая вероятность, что вы забудете
+.Dq закрыть
+пару служб или добавите новую внутреннюю службу и забудете обновить брандмауэр.
+Вы по-прежнему можете открыть диапазон портов с высокими номерами в брандмауэре,
+чтобы разрешить работу в режиме разрешений без ущерба для ваших портов
+с низкими номерами. Также обратите внимание, что
 .Fx
-allows you to
-control the range of port numbers used for dynamic binding via the various
+позволяет вам контролировать диапазон номеров портов,
+используемых для динамической привязки, с помощью различных системных интерфейсов
 .Va net.inet.ip.portrange
 sysctl's
 .Pq Dq Li "sysctl net.inet.ip.portrange" ,
-which can also
-ease the complexity of your firewall's configuration.
-I usually use a normal
-first/last range of 4000 to 5000, and a hiport range of 49152 to 65535, then
-block everything under 4000 off in my firewall
-(except for certain specific
-internet-accessible ports, of course).
+что также может упростить настройку вашего брандмауэра.
+Обычно я использую обычный диапазон от первого до последнего от 4000 до 5000 и диапазон hiport от 49152 до 65535, а затем отключаю все, что меньше 4000, в моем
+брандмауэр (за исключением, конечно, определенных портов, доступных через Интернет).
 .Pp
-Another common DoS attack is called a springboard attack \(em to attack a server
-in a manner that causes the server to generate responses which then overload
-the server, the local network, or some other machine.
-The most common attack
-of this nature is the ICMP PING BROADCAST attack.
-The attacker spoofs ping
-packets sent to your LAN's broadcast address with the source IP address set
-to the actual machine they wish to attack.
-If your border routers are not
-configured to stomp on ping's to broadcast addresses, your LAN winds up
-generating sufficient responses to the spoofed source address to saturate the
-victim, especially when the attacker uses the same trick on several dozen
-broadcast addresses over several dozen different networks at once.
-Broadcast attacks of over a hundred and twenty megabits have been measured.
-A second common springboard attack is against the ICMP error reporting system.
-By
-constructing packets that generate ICMP error responses, an attacker can
-saturate a server's incoming network and cause the server to saturate its
-outgoing network with ICMP responses.
-This type of attack can also crash the
-server by running it out of
-.Vt mbuf Ns 's ,
-especially if the server cannot drain the
-ICMP responses it generates fast enough.
-The
+Другая распространенная DoS-атака называется springboard attack \(em атака на
+сервер таким образом, что сервер генерирует ответы, которые затем перегружают сервер,
+локальную сеть или какой-либо другой компьютер.
+Наиболее распространенной атакой такого рода является
+широковещательная атака ICMP PING. Злоумышленник подделывает ping-пакеты,
+отправляемые в широковещательную сеть вашей локальной сети
+адрес с исходным IP-адресом, установленным на фактическую машину,
+которую они хотят атаковать. Если ваши пограничные маршрутизаторы
+не настроены на передачу ping на широковещательные адреса,
+ваша локальная сеть в конечном итоге генерирует ответы, 
+достаточные для получения поддельного исходного адреса,
+чтобы насытить жертву, особенно когда злоумышленник использует один
+и тот же трюк для нескольких десятков широковещательных
+адресов в нескольких десятках разных сетей одновременно. 
+Были зафиксированы широковещательные атаки на скорости
+более ста двадцати мегабит. Asec-
+наиболее распространенной атакой с использованием
+springboard является атака на систему сообщений об ошибках ICMP.
+Создавая пакеты, которые генерируют ответы об ошибках ICMP,
+злоумышленник может заполнить входящую сеть сервера и
+заставить сервер заполнять свою исходящую сеть ответами ICMP.
+Этот тип атаки также может привести к аварийному завершению
+работы сервера из-за нехватки mbuf-файлов,
+особенно если сервер не может обработать ответы ICMP,
+которые он генерирует достаточно быстро.
+В ядре
 .Fx
-kernel has a new kernel
-compile option called
+появилась новая опция компиляции ядра, называемая
 .Dv ICMP_BANDLIM
-which limits the effectiveness of these
-sorts of attacks.
-The last major class of springboard attacks is related to
-certain internal
+что ограничивает эффективность подобных атак.
+Последний крупный класс атак springboard связан с определенными внутренними службами
 .Xr inetd 8
-services such as the UDP echo service.
-An attacker
-simply spoofs a UDP packet with the source address being server A's echo port,
-and the destination address being server B's echo port, where server A and B
-are both on your LAN.
-The two servers then bounce this one packet back and
-forth between each other.
-The attacker can overload both servers and their
-LANs simply by injecting a few packets in this manner.
-Similar problems
-exist with the internal chargen port.
-A competent sysadmin will turn off all
-of these
-.Xr inetd 8 Ns -internal
-test services.
-.Sh ACCESS ISSUES WITH KERBEROS AND SSH
-There are a few issues with both Kerberos and SSH that need to be addressed
-if you intend to use them.
-Kerberos5 is an excellent authentication
-protocol but the kerberized
+такими как служба UDP echo. Злоумышленник просто
+подделывает UDP-пакет, при этом адресом источника является эхо-порт сервера A, а адресом назначения - эхо-порт сервера B, где сервер
+и B находятся в вашей локальной сети.
+Затем два сервера передают этот пакет друг другу и обратно. Злоумышленник может перегрузить
+как серверы, так и их локальные сети,
+просто отправив несколько пакетов таким образом. 
+Аналогичные проблемы возникают с внутренним портом загрузки.
+Компетентный системный администратор отключит все эти службы
+внутреннего тестирования
+.Xr inetd 8 Ns -internal .
+.Sh ПРОБЛЕМЫ С ДОСТУПОМ С ПОМОЩЬЮ KERBEROS И SSH
+Как с Kerberos, так и с SSH есть несколько проблем, которые необходимо решить,
+если вы собираетесь их использовать.
+Kerberos5 отличный протокол аутентификации, но керберизованный
 .Xr telnet 1
-suck rocks.
-There are bugs that make them unsuitable for dealing with binary streams.
-Also, by default
-Kerberos does not encrypt a session unless you use the
-.Fl x
-option.
-SSH encrypts everything by default.
+отстой.
+Существуют
+ошибки, которые делают их непригодными для работы с двоичными потоками.
+Кроме того, по умолчанию Kerberos не шифрует сеанс,
+если вы не используете опцию
+.Fl x .
+По умолчанию SSH шифрует все.
 .Pp
-SSH works quite well in every respect except when it is set up to
-forward encryption keys.
-What this means is that if you have a secure workstation holding
-keys that give you access to the rest of the system, and you
+SSH работает достаточно хорошо во всех отношениях, за исключением тех случаев, когда он настроен на пересылку ключей шифрования. Это означает, что если у вас есть защищенная
+рабочая станция, на которой хранятся ключи, дающие вам доступ к остальной системе, и вы подключаетесь по
 .Xr ssh 1
-to an
-unsecure machine, your keys become exposed.
-The actual keys themselves are
-not exposed, but
+к незащищенной машине, ваши ключи становятся открытыми.
+Сами ключи не раскрываются, но
 .Xr ssh 1
-installs a forwarding port for the duration of your
-login and if an attacker has broken root on the unsecure machine he can utilize
-that port to use your keys to gain access to any other machine that your
-keys unlock.
+устанавливает порт переадресации на время вашего входа в систему, и если злоумышленник взломал root на незащищенной машине, он может использовать этот порт для использования ваших
+ключей для получения доступа к любой другой машине, которую разблокируют ваши ключи.
 .Pp
-We recommend that you use SSH in combination with Kerberos whenever possible
-for staff logins.
-SSH can be compiled with Kerberos support.
-This reduces
-your reliance on potentially exposable SSH keys while at the same time
-protecting passwords via Kerberos.
-SSH keys
-should only be used for automated tasks from secure machines (something
-that Kerberos is unsuited to).
-We also recommend that you either turn off
-key-forwarding in the SSH configuration, or that you make use of the
+Мы рекомендуем по возможности использовать SSH в сочетании с Kerberos
+для входа сотрудников в систему. SSH может быть скомпилирован с поддержкой Kerberos.
+Это снижает вашу зависимость от потенциально доступных SSH-ключей и в то же
+время защищает пароли с помощью Kerberos. SSH-ключи должны быть только
+может использоваться для автоматизированных задач с
+защищенных компьютеров (то, к чему не подходит Kerberos).
+Мы также рекомендуем вам либо отключить переадресацию ключей в
+конфигурации SSH, либо использовать параметр 
 .Va from Ns = Ns Ar IP/DOMAIN
-option that SSH allows in its
+который SSH разрешает в своем файле
 .Pa authorized_keys
-file to make the key only usable to entities logging in from specific
-machines.
-.Sh KNOBS AND TWEAKS
+чтобы сделать ключ доступным только для лиц, входящих в систему с определенных компьютеров.
+.Sh РЕГУЛЯТОРЫ И НАСТРОЙКИ
 .Fx
-provides several knobs and tweak handles that make some introspection
-information access more restricted.
-Some people consider this as improving system security, so the knobs are
-briefly listed there, together with controls which enable some mitigations
-of the hardware state leaks.
+предоставляет несколько регуляторов и настроек,
+которые делают доступ к некоторой информации для самоанализ
+ более ограниченным. Некоторые пользователи считают, что это
+повышает безопасность системы, поэтому здесь кратко перечислены регуляторы,
+а также элементы управления, которые позволяют снизить вероятность
+утечки информации о состоянии оборудования.
 .Pp
-Hardware mitigation sysctl knobs described below have been moved under
+Описанные ниже настройки sysctl для аппаратного обеспечения,
+описанные ниже, были перенесены в
 .Pa machdep.mitigations ,
-with backwards-compatibility shims to accept the existing names.
-A future change will rationalize the sense of the individual sysctls
-(so that enabled / true always indicates that the mitigation is active).
-For that reason the previous names remain the canonical way to set the
-mitigations, and are documented here.
-Backwards compatibility shims for the interim sysctls under
+с помощью оболочек обратной совместимости для принятия
+существующих имен. Будущие изменения позволят упорядочить смысл отдельных системных списков
+(чтобы значение enabled / true всегда указывало на то, что функция смягчения активна).
+По этой причине предыдущие названия остаются
+каноническим способом настройки мер смягчения и описаны здесь.
+Ограничения обратной совместимости для промежуточного sysctl в
 .Pa machdep.mitigations
-will not be added.
+по устранению неполадок добавлены не будут.
 .Bl -tag -width security.bsd.unprivileged_proc_debug
 .It Dv security.bsd.see_other_uids
-Controls visibility and reachability of subjects (e.g., processes) and objects
-(e.g., sockets) owned by a different uid.
-The knob directly affects the
+Управляет видимостью и доступностью субъектов (например, процессов)
+и объектов (например, сокетов), принадлежащих другому uid.
+Регулятор напрямую влияет на фильтрацию данных в
 .Dv kern.proc
-sysctls filtering of data, which results in restricted output from
-utilities like
+что приводит к ограничению вывода таких утилит, как
 .Xr ps 1 .
 .It Dv security.bsd.see_other_gids
-Same, for subjects and objects owned by a different gid.
+То же самое для субъектов и объектов, принадлежащих другому gid.
 .It Dv security.bsd.see_jail_proc
-Same, for subjects and objects belonging to a different jail, including
-sub-jails.
+То же самое относится к предметам и объектам, принадлежащим другой тюрьме, включая дополнительные тюрьмы.
 .It Dv security.bsd.conservative_signals
-When enabled, unprivileged users are only allowed to send job control
-and usual termination signals like
+Если этот параметр включен, непривилегированным пользователям разрешается отправлять
+только сигналы управления заданиями и обычные сигналы завершения, такие как
 .Dv SIGKILL ,
 .Dv SIGINT ,
-and
+и
 .Dv SIGTERM ,
-to the processes executing programs with changed uids.
+процессам, выполняющим программы с измененными идентификаторами uid.
 .It Dv security.bsd.unprivileged_proc_debug
-Controls availability of the process debugging facilities to non-root users.
-See also
+Контролирует доступность средств отладки процесса для пользователей, не имеющих прав root.
+Смотрите также трассировку
 .Xr proccontrol 1
-mode
+режима
 .Dv trace .
 .It Dv vm.pmap.pti
-Tunable, amd64-only.
-Enables mode of operation of virtual memory system where usermode page
-tables are sanitized to prevent so-called Meltdown information leak on
-some Intel CPUs.
-By default, the system detects whether the CPU needs the workaround,
-and enables it automatically.
-See also
+Настраиваемый,
+только для amd64.
+Включает режим работы системы виртуальной памяти, в котором таблицы страниц
+пользовательского режима обрабатываются для предотвращения так называемой утечки информации
+в результате сбоя на некоторых процессорах Intel. При устранении неисправности система определяет, требуется ли
+процессору обходной путь, и автоматически включает его.
+Смотрите также 
 .Xr proccontrol 1
-mode
+режим
 .Dv kpti .
 .It Dv machdep.mitigations.flush_rsb_ctxsw
 amd64.
-Controls Return Stack Buffer flush on context switch, to prevent
-cross-process ret2spec attacks.
-Only needed, and only enabled by default, if the machine
-supports SMEP, otherwise IBRS would do necessary flushing on kernel
-entry anyway.
+Управляет очисткой буфера стека при переключении контекста,
+чтобы предотвратить межпроцессные атаки ret2spec. Требуется и
+включается только по умолчанию, если компьютер поддерживает SMEP,
+в противном случае IBRS все равно выполнит необходимую очистку при входе в ядро.
 .It Dv hw.mds_disable
 amd64 and i386.
-Controls Microarchitectural Data Sampling hardware information leak
-mitigation.
+Управляет аппаратным обеспечением для отбора проб микроархитектурных данных, предотвращая утечку информации.
 .It Dv hw.spec_store_bypass_disable
 amd64 and i386.
-Controls Speculative Store Bypass hardware information leak mitigation.
+amd64 и i386. Управляет предотвращением утечки информации об аппаратном
+обеспечении для обхода спекулятивного хранилища.
 .It Dv hw.ibrs_disable
 amd64 and i386.
-Controls Indirect Branch Restricted Speculation hardware information leak
-mitigation.
+Контролирует предотвращение утечки информации об аппаратном
+обеспечении с ограниченным доступом к косвенным ответвлениям.
 .It Dv machdep.syscall_ret_flush_l1d
 amd64.
-Controls force-flush of L1D cache on return from syscalls which report
-errors other than
+Управляет принудительной очисткой кэша L1D при возврате из системного вызова,
+который сообщает об ошибках, отличных от
 .Ev EEXIST ,
 .Ev EAGAIN ,
 .Ev EXDEV ,
 .Ev ENOENT ,
 .Ev ENOTCONN ,
-and
+и
 .Ev EINPROGRESS .
-This is mostly a paranoid setting added to prevent hypothetical exploitation
-of unknown gadgets for unknown hardware issues.
-The error codes exclusion list is composed of the most common errors which
-typically occurs on normal system operation.
+В основном это параноидальная настройка,
+добавленная для предотвращения гипотетического использования
+неизвестных устройств для решения неизвестных аппаратных проблем.
+Список исключений кодов ошибок состоит из наиболее распространенных ошибок,
+которые обычно возникают при нормальной работе системы.
 .It Dv machdep.nmi_flush_l1d_sw
 amd64.
-Controls force-flush of L1D cache on NMI;
-this provides software assist for bhyve mitigation of L1 terminal fault
-hardware information leak.
+Управляет принудительной очисткой кэша L1D в NMI;
+это обеспечивает программную поддержку для предотвращения
+утечки информации о неисправном оборудовании терминала L1.
 .It Dv hw.vmm.vmx.l1d_flush
 amd64.
-Controls the mitigation of L1 Terminal Fault in bhyve hypervisor.
+Управляет устранением неисправности терминала L1 в гипервизоре bhyve.
 .It Dv vm.pmap.allow_2m_x_ept
 amd64.
-Allows the use of superpages for executable mappings under the EPT
-page table format used by hypervisors on Intel CPUs to map the guest
-physical address space to machine physical memory.
-May be disabled to work around a CPU Erratum called
-Machine Check Error Avoidance on Page Size Change.
+Позволяет использовать суперстраницы для сопоставления исполняемых
+файлов в формате таблицы страниц EPT, используемом гипервизорами
+на процессорах Intel для сопоставления физического адресного пространства
+гостя с физической памятью компьютера.
+Может быть отключен для устранения ошибки процессора,
+называемой машинной проверкой во избежание ошибок при
+изменении размера страницы.
 .It Dv machdep.mitigations.rngds.enable
 amd64 and i386.
-Controls mitigation of Special Register Buffer Data Sampling versus
-optimization of the MCU access.
-When set to zero, the mitigation is disabled, and the RDSEED and RDRAND
-instructions do not incur serialization overhead for shared buffer accesses,
-and do not serialize off-core memory accessses.
+Управляет уменьшением выборки данных из специального буфера
+регистровпо сравнению с оптимизацией доступа к микроконтроллеру.
+Если значение равно нулю, смягчение отключено,
+и инструкции RDSEED и RDRAND не требуют дополнительных затрат
+на сериализацию для доступа к общему буферу и не сериализуют
+доступ к памяти вне ядра.
 .It Dv kern.elf32.aslr.enable
-Controls system-global Address Space Layout Randomization (ASLR) for
-normal non-PIE (Position Independent Executable) 32-bit ELF binaries.
-See also the
+Система управления рандомизацией расположения в глобальном адресном пространстве (ASLR) for
+для обычных 32-разрядных двоичных файлов ELF,
+не связанных с PIE (позиционно-независимым исполняемым файлом).
+Смотрите также
 .Xr proccontrol 1
-.Dv aslr
-mode, also affected by the per-image control note flag.
+режим
+.Dv aslr ,
+на который также влияет флажок "Управление для каждого изображения".
 .It Dv kern.elf32.aslr.pie_enable
-Controls system-global Address Space Layout Randomization for
-position-independent (PIE) 32-bit binaries.
+Система управления -рандомизация расположения глобального адресного
+пространства для 32-разрядных двоичных файлов, 
+не зависящих от местоположения (POE).
 .It Dv kern.elf32.aslr.honor_sbrk
-Makes ASLR less aggressive and more compatible with old binaries
-relying on the sbrk area.
+Делает ASLR менее агрессивным и более совместимым со
+старыми двоичными файлами, используя область sbrk.
 .It Dv kern.elf32.aslr.stack
-If ASLR is enabled for a binary, a non-zero value enables randomization
-of the stack.
-Otherwise, the stack is mapped at a fixed location determined by the
-process ABI.
+Если ASLR включен для двоичного файла,
+ненулевое значение позволяет рандомизировать стек.
+В противном случае стек отображается в фиксированном местоположении,
+определяемом процессом ABI.
 .It Dv kern.elf64.aslr.enable
-ASLR control for 64-bit ELF binaries.
+Управление ASLR для 64-разрядных двоичных файлов ELF.
 .It Dv kern.elf64.aslr.pie_enable
-ASLR control for 64-bit ELF PIEs.
+Управление ASLR для 64-разрядных интерфейсов ELF.
 .It Dv kern.elf64.aslr.honor_sbrk
-ASLR sbrk compatibility control for 64-bit binaries.
+Контроль совместимости ASLR sbrk для 64-разрядных двоичных файлов.
 .It Dv kern.elf64.aslr.stack
-Controls stack address randomization for 64-bit binaries.
+Управляет рандомизацией адресов стека для 64-разрядных двоичных файлов.
 .It Dv kern.elf32.nxstack
-Enables non-executable stack for 32-bit processes.
-Enabled by default if supported by hardware and corresponding binary.
+Включает неисполняемый стек для 32-разрядных процессов.
+Включен по умолчанию, если поддерживается аппаратным обеспечением
+и соответствующим двоичным файлом.
 .It Dv kern.elf64.nxstack
-Enables non-executable stack for 64-bit processes.
+Включает неисполняемый стек для 64-разрядных процессов.
 .It Dv kern.elf32.allow_wx
-Enables mapping of simultaneously writable and executable pages for
-32-bit processes.
+Позволяет сопоставлять одновременно доступные для записи и
+исполняемые страницы для 32-разрядных процессов.
 .It Dv kern.elf64.allow_wx
-Enables mapping of simultaneously writable and executable pages for
-64-bit processes.
+Позволяет сопоставлять одновременно доступные для записи и
+исполняемые страницы для 64-разрядных процессов.
 .El
-.Sh SEE ALSO
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr chflags 1 ,
 .Xr find 1 ,
 .Xr md5 1 ,
@@ -1108,12 +981,11 @@ Enables mapping of simultaneously writable and executable pages for
 .Xr sysctl 8 ,
 .Xr syslogd 8 ,
 .Xr vipw 8
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
+Страница руководства
 .Nm
-manual page was originally written by
+была первоначально написана
 .An Matthew Dillon
-and first appeared
-in
+и впервые появилась в
 .Fx 3.1 ,
-December 1998.
+Декабрь 1998.
