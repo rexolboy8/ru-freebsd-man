@@ -1,34 +1,33 @@
-.\" Copyright (c) 2013 Bryan Drewery <bdrewery@FreeBSD.org>
-.\" All rights reserved.
+.\" Авторское право (c) 2013 Bryan Drewery <bdrewery@FreeBSD.org>
+.\" Все права защищены.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\" Распространение и использование в исходном коде и двоичном формате, с
+.\" изменениями или без них, разрешено при соблюдении следующих условий:
+.\" 1. При повторном распространении исходного кода должны сохраняться вышеуказанное
+.\"    уведомление об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. При повторном распространении в двоичной форме должны воспроизводиться вышеуказанное
+.\"    уведомление об авторских правах, этот список условий и следующий отказ от ответственности в
+.\"    документации и/или других материалах, прилагаемых к дистрибутиву.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ АВТОРОМ "КАК ЕСТЬ", И
+.\" МЫ НЕ ДАЕМ НИКАКИХ ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ ГАРАНТИЙ, ВКЛЮЧАЯ
+.\" ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ ТОВАРНОЙ ПРИГОДНОСТИ И ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ И Т.П.
+.\" АВТОР НИ В КОЕМ СЛУЧАЕ НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ
+.\" ЗА ЛЮБОЙ ПРЯМОЙ, КОСВЕННЫЙ, СЛУЧАЙНЫЙ, ОСОБЫЙ, ПОКАЗАТЕЛЬНЫЙ ИЛИ ЛОГИЧЕСКИ ВЫТЕКАЮЩИЙ
+.\" УЩЕРБ (ВКЛЮЧАЯ: ПРИОБРЕТЕНИЕ ЗАМЕНЯЮЩИХ ТОВАРОВ ИЛИ УСЛУГ; ПОТЕРЮ ВОЗМОЖНОСТИ ИСПОЛЬЗОВАНИЯ,
+.\" ДАННЫХ ИЛИ ПРИБЫЛИ; ПЕРЕБОИ В РАБОТЕ)
+.\" НЕЗАВИСИМО ОТ ПРИЧИН И ПО ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ, БУДЬ ТО В КОНТРАКТЕ,
+.\" ИЛИ ПРАВОНАРУШЕНИЕ (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ ПРАВОНАРУШЕНИЕ ИНЫМ ОБРАЗОМ),
+.\" ВОЗНИКАЮЩЕЕ КАКИМ-ЛИБО ОБРАЗОМ В РЕЗУЛЬТАТЕ ИСПОЛЬЗОВАНИЯ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ,
+.\" ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ ТАКОГО УЩЕРБА.
 .\"
-.Dd August 24, 2022
+.Dd Август 24, 2022
 .Dt PKG 7
 .Os
-.Sh NAME
+.Sh НАИМЕНОВАНИЕ
 .Nm pkg
-.Nd a utility for manipulating packages
-.Sh SYNOPSIS
+.Nd утилита для управления пакетами
+.Sh ОБЗОР
 .Nm
 .Op Fl d
 .Ar command ...
@@ -44,112 +43,113 @@
 .Cm bootstrap
 .Op Fl fy
 .Op Fl r Ar reponame
-.Sh DESCRIPTION
+.Sh ОПИСАНИЕ
 .Nm
-is the package management tool.
-It is used to manage local packages installed from
-.Xr ports 7
-and install/upgrade packages from remote repositories.
+это инструмент управления пакетами.
+Он используется для управления локальными пакетами, установленными из
+.Xr ports 7 ,
+и для установки/обновления пакетов из удаленных репозиториев.
 .Pp
-To avoid backwards incompatibility issues, the actual
+Чтобы избежать проблем с обратной несовместимостью, актуальный инструмент 
 .Xr pkg 8
-tool is not installed in the base system.
-The first time invoked,
+не установлен в базовой системе.
+При первом запуске,
 .Nm
-will bootstrap the real
+запустит загрузочный файл реального
 .Xr pkg 8
-from a remote repository.
+из удаленного хранилища.
 .Bl -tag
 .It Nm Ar command ...
-If
+Если
 .Xr pkg 8
-is not installed yet, it will be fetched, have its signature verified,
-installed, and then have the original command forwarded to it.
-If already installed, the command requested will be forwarded to the real
+еще не установлен, он будет извлечен, его подпись будет проверена,
+он будет установлен, а затем ему будет отправлена исходная команда.
+Если он уже установлен, запрошенная команда будет отправлена в реальный
 .Xr pkg 8 .
 .It Nm Cm add Oo Fl fy Oc Oo Fl r Ar reponame Oc Ar pkg.txz
-Install
+Устанавливает
 .Xr pkg 8
-from a local package instead of fetching from remote.
-If signature checking is enabled, then the correct signature file
-must exist and the signature valid before the package will be installed.
-If the
-.Fl f
-flag is specified, then
+из локального пакета, а не из удаленного.
+Если включена проверка подписи, то перед установкой пакета должен
+существовать правильный файл подписи и подпись должна быть действительной.
+Если указан флаг
+.Fl f ,
+то
 .Xr pkg 8
-will be installed regardless if it is already installed.
-If the
-.Fl y
-flag is specified, no confirmation will be asked when bootstrapping
-.Xr pkg 8 .
+будет установлен независимо от того, установлен ли он уже.
+Если указан флаг
+.Fl y ,
+то при начальной загрузке
+.Xr pkg 8 
+не будет запрашиваться подтверждение.
 .Pp
-If a
-.Ar reponame
-has been specified, then the signature configuration for that repository will be
-used.
+Если указано значение
+.Ar reponame ,
+то будет использоваться конфигурация подписи для этого репозитория.
 .It Nm Fl N
-Do not bootstrap, just determine if
+Не выполняет загрузку, а просто определяет, установлен ли
 .Xr pkg 8
-is actually installed or not.
-Returns 0 and the number of packages installed
-if it is, otherwise 1.
+на самом деле или нет.
+Возвращает 0 и количество установленных пакетов,
+если они есть, в противном случае 1.
 .It Nm Oo Fl 46 Oc Cm bootstrap Oo Fl fy Oc \
 Oo Fl r Ar reponame Oc
-Attempt to bootstrap and do not forward anything to
+Пробуйте выполнить загрузку и ничего не пересылает в
 .Xr pkg 8
-after it is installed.
-With
+после его установки.
+При значениях
 .Fl 4
-and
+и
 .Fl 6 ,
 .Nm
-will force IPv4 or IPv6 respectively to fetch
+принудительно запустит IPv4 или IPv6 соответственно для получения
 .Xr pkg 8
-and its signatures as needed.
-If the
-.Fl f
-flag is specified, then
+и его сигнатур по мере необходимости.
+Если указан флаг
+.Fl f ,
+то
 .Xr pkg 8
-will be fetched and installed regardless if it is already installed.
-If the
+wбудет извлечен и установлен независимо от того, установлен ли он уже.
+Если указан флаг
 .Fl y
-flag is specified, no confirmation will be asked when bootstrapping
-.Xr pkg 8 .
+то при начальной загрузке
+.Xr pkg 8
+одтверждение запрашиваться не будет.
 .Pp
-If a
-.Ar reponame
-has been specified, then the configuration for that repository will be used.
+Если указано значение
+.Ar reponame ,
+о будет использоваться конфигурация для этого репозитория.
 .El
-.Sh OPTIONS
-The following options are supported by
-.Nm :
+.Sh ОПЦИИ
+.Nm 
+поддерживает следующие опции:
 .Bl -tag -width indent
 .It Fl d, Fl -debug
-Show debug information.
-May be specified more than once to increase the level of detail.
-When specified twice,
-.Xr fetch 3
-debug output is enabled.
+Показывает отладочную информацию.
+Может быть вызван более одного раза для повышения уровня детализации.
+Если вызван дважды, включается функция отладочного вывода
+.Xr fetch 3 .
 .El
-.Sh CONFIGURATION
-Configuration varies in whether it is in a repository configuration file
-or the global configuration file.
-The default repository configuration for
+.Sh КОНФИГУРАЦИЯ
+Конфигурация зависит от того, находится ли она в файле конфигурации
+репозитория или в файле глобальной конфигурации.
+Конфигурация репозитория по умолчанию для
 .Fx
-is stored in
+хранится в
 .Pa /etc/pkg/FreeBSD.conf ,
-and additional repository configuration files will be searched for in
+а дополнительные
+файлы конфигурации репозитория можно найти в
 .Ev REPOS_DIR ,
-or
+или
 .Pa /usr/local/etc/pkg/repos
-if it is unset.
+если он не задан.
 .Pp
-For bootstrapping,
+Для начальной загрузки
 .Nm
-will process all repositories that it finds and use the last enabled repository
-by default.
+обработает все найденные репозитории и по умолчанию будет
+использовать последний включенный репозиторий.
 .Pp
-Repository configuration is stored in the following format:
+Конфигурация репозитория хранится в следующем формате:
 .Bd -literal -offset indent
 FreeBSD: {
   url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest",
@@ -162,28 +162,28 @@ FreeBSD: {
 .Pp
 .Bl -tag -width signature_type -compact
 .It url
-Refer to
+Обращается к
 .Dv PACKAGESITE
-in
+в разделе
 .Sx ENVIRONMENT
 .It mirror_type
-Refer to
+Обращается к
 .Dv MIRROR_TYPE
-in
+в разделе
 .Sx ENVIRONMENT
 .It signature_type
-Refer to
+Обращается к
 .Dv SIGNATURE_TYPE
-in
+в разделе
 .Sx ENVIRONMENT
 .It fingerprints
-Refer to
+Обращается к
 .Dv FINGERPRINTS
-in
+в разделе
 .Sx ENVIRONMENT
 .It enabled
-Defines whether this repository should be used or not.
-Valid values are
+Определяет, следует ли использовать это хранилище или нет.
+Допустимые значения:
 .Dv yes ,
 .Dv true ,
 .Dv 1 ,
@@ -192,9 +192,9 @@ Valid values are
 .Dv 0 .
 .El
 .Pp
-Global configuration can be stored in
+Глобальная конфигурация может быть сохранена в файле
 .Pa /usr/local/etc/pkg.conf
-in the following format:
+в следующем формате:
 .Bd -literal -offset indent
 PACKAGESITE: "pkg+http://pkg.FreeBSD.org/${ABI}/latest",
 MIRROR_TYPE: "srv",
@@ -204,127 +204,129 @@ ASSUME_ALWAYS_YES: "yes"
 REPOS_DIR: ["/etc/pkg", "/usr/local/etc/pkg/repos"]
 .Ed
 .Pp
-Reference
+Ссылается на
 .Sx ENVIRONMENT
-for each variable.
-.Sh ENVIRONMENT
-The following environment variables can be set to override the settings
-from the
-.Pa pkg.conf
-file used.
+для каждой переменной.
+.Sh ОКРУЖЕНИЕ
+Для переопределения настроек можно установить следующие переменные среды
+из используемого файла
+.Pa pkg.conf .
 .Bl -tag -width "ASSUME_ALWAYS_YES"
 .It Ev MIRROR_TYPE
-This defines which mirror type should be used.
-Valid values are
+Определяет, какой тип зеркала следует использовать.
+Допустимые значения:
 .Dv SRV ,
 .Dv HTTP ,
 .Dv NONE .
 .It Ev ABI
-This defines the ABI for the package to be installed.
-Default ABI is determined from
+Определяет ABI для пакета, который должен быть загружен.
+ABI по умолчанию определяется из
 .Pa /bin/sh .
 .It Ev ASSUME_ALWAYS_YES
-If set, no confirmation will be asked when bootstrapping
-.Xr pkg 8 .
+Если этот параметр установлен, то при начальной загрузке
+.Xr pkg 8 
+подтверждение запрашиваться не будет.
 .It Ev SIGNATURE_TYPE
-If set to
+Если установлено значение
 .Dv FINGERPRINTS
-then a signature will be required and validated against known
-certificate fingerprints when bootstrapping
-.Xr pkg 8 .
+то при начальной загрузке
+.Xr pkg 8 
+потребуется подпись,
+которая будет проверена на соответствие известным отпечаткам сертификата.
 .It Ev FINGERPRINTS
-If
+Если для параметра
 .Sy SIGNATURE_TYPE
-is set to
-.Dv FINGERPRINTS
-this value should be set to the directory path where known fingerprints are
-located.
+задано значение
+.Dv FINGERPRINTS ,
+то это значение
+должно быть равно пути к каталогу, в котором находятся известные файлы.
 .It Ev PACKAGESITE
-The URL that
+URL-адрес, с которого будут извлекаться
 .Xr pkg 8
-and other packages
-will be fetched from.
+и другие пакеты.
 .It Ev REPOS_DIR
-Comma-separated list of directories that should be searched for repository
-configuration files.
+Список каталогов, разделенных запятыми,
+в которых следует искать файлы конфигурации репозитория.
 .El
-.Sh FILES
-Configuration is read from the files in the listed order.
-This path can be changed by setting
+.Sh ФАЙЛЫ
+Конфигурация считывается из файлов в указанном порядке.
+Этот путь можно изменить, установив
 .Ev REPOS_DIR .
-The last enabled repository is the one used for bootstrapping
+Последний включенный репозиторий используется для начальной загрузки
 .Xr pkg 8 .
 .Bl -tag -width "/usr/local/etc/pkg/repos/*.conf"
 .It Pa /usr/local/etc/pkg.conf
 .It Pa /etc/pkg/FreeBSD.conf
 .It Pa /usr/local/etc/pkg/repos/*.conf
 .El
-.Sh EXAMPLES
-Some examples are listed here.
-The full list of available commands are available in
+.Sh ПРИМЕРЫ
+Здесь приведены некоторые примеры.
+олный список доступных команд доступен в
 .Xr pkg 8
-once it is bootstrapped.
+после его начальной загрузки.
 .Pp
-Search for a package:
+Поиск пакета:
 .Dl $ pkg search perl
 .Pp
-Install a package:
+Установка пакета:
 .Dl % pkg install perl
 .Pp
-List installed packages:
+Список установленных пакетов:
 .Dl $ pkg info
 .Pp
-Upgrade from remote repository:
+Обновление из удаленного репозитория:
 .Dl % pkg upgrade
 .Pp
-List non-automatic packages:
+Список неавтоматических пакетов:
 .Dl $ pkg query -e '%a = 0' %o
 .Pp
-List automatic packages:
+Список автоматических пакетов:
 .Dl $ pkg query -e '%a = 1' %o
 .Pp
-Delete an installed package:
+Удалить установленный пакет:
 .Dl % pkg delete perl
 .Pp
-Remove unneeded dependencies:
+Удаление ненужных зависимостей:
 .Dl % pkg autoremove
 .Pp
-Change a package from automatic to non-automatic, which will prevent
-.Xr pkg-autoremove 8
-from removing it:
+Изменяет пакет с автоматического на неавтоматический,
+что предотвратит его удаление с помощью
+.Xr pkg-autoremove 8 :
 .Dl % pkg set -A 0 perl
 .Pp
-Change a package from non-automatic to automatic, which will make
+Изменяет пакет с неавтоматического на автоматический,
+что приведет к тому, что
 .Xr pkg-autoremove 8
-allow it be removed once nothing depends on it:
+разрешит его удаление, как только от этого ничего не будет зависеть:
 .Dl % pkg set -A 1 perl
 .Pp
-Create package file from an installed package:
+Создёт файл пакета из установленного пакета:
 .Dl % pkg create -o /usr/ports/packages/All perl
 .Pp
-Determine which package installed a file:
+Определяет, какой пакет установил файл:
 .Dl $ pkg which /usr/local/bin/perl
 .Pp
-Audit installed packages for security advisories:
+Проверка установленных пакетов на предмет
+получения рекомендаций по безопасности:
 .Dl $ pkg audit
 .Pp
-Check installed packages for checksum mismatches:
+Проверяет установленные пакеты на предмет потерь контрольных сумм пакетов:
 .Dl # pkg check -s -a
 .Pp
-Check for missing dependencies:
+Проверяет, нет ли пропущенных зависимостей:
 .Dl # pkg check -d -a
-.Sh SEE ALSO
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr ports 7 ,
 .Xr pkg 8
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
+Команда 
 .Nm
-command first appeared in
+впервые появилась в
 .Fx 9.1 .
-It became the default package tool in
+на стала использоваться по умолчанию в
 .Fx 10.0 ,
-replacing the
-pkg_install suite of tools
+заменив набор инструментов
+pkg_install состоящий из
 .Xr pkg_add 1 ,
-.Xr pkg_info 1 and
+.Xr pkg_info 1 и
 .Xr pkg_create 1 .
