@@ -1,125 +1,123 @@
-.\" Copyright (c) 2018 Edward Tomasz Napierala <trasz@FreeBSD.org>
+.\" Авторское право (c) 2018 Edward Tomasz Napierala <trasz@FreeBSD.org>
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
+.\" Распространение и использование в исходном коде и двоичном формате, с
+.\" изменениями или без них, разрешено при соблюдении следующих условий:
+.\" 1. При повторном распространении исходного кода должны сохраняться вышеуказанное
+.\"    уведомление об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. При повторном распространении в двоичной форме должны воспроизводиться вышеуказанное
+.\"    уведомление об авторских правах, этот список условий и следующий отказ от ответственности в
+.\"    документации и/или других материалах, прилагаемых к дистрибутиву.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE AUTHORS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ АВТОРОМ "КАК ЕСТЬ", И
+.\" МЫ НЕ ДАЕМ НИКАКИХ ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ ГАРАНТИЙ, ВКЛЮЧАЯ
+.\" ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ ТОВАРНОЙ ПРИГОДНОСТИ И ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ И Т.П.
+.\" АВТОР НИ В КОЕМ СЛУЧАЕ НЕ НЕСЕТ ОТВЕТСТВЕННОСТИ
+.\" ЗА ЛЮБОЙ ПРЯМОЙ, КОСВЕННЫЙ, СЛУЧАЙНЫЙ, ОСОБЫЙ, ПОКАЗАТЕЛЬНЫЙ ИЛИ ЛОГИЧЕСКИ ВЫТЕКАЮЩИЙ
+.\" УЩЕРБ (ВКЛЮЧАЯ: ПРИОБРЕТЕНИЕ ЗАМЕНЯЮЩИХ ТОВАРОВ ИЛИ УСЛУГ; ПОТЕРЮ ВОЗМОЖНОСТИ ИСПОЛЬЗОВАНИЯ,
+.\" ДАННЫХ ИЛИ ПРИБЫЛИ; ПЕРЕБОИ В РАБОТЕ)
+.\" НЕЗАВИСИМО ОТ ПРИЧИН И ПО ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ, БУДЬ ТО В КОНТРАКТЕ,
+.\" ИЛИ ПРАВОНАРУШЕНИЕ (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ ПРАВОНАРУШЕНИЕ ИНЫМ ОБРАЗОМ),
+.\" ВОЗНИКАЮЩЕЕ КАКИМ-ЛИБО ОБРАЗОМ В РЕЗУЛЬТАТЕ ИСПОЛЬЗОВАНИЯ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ,
+.\" ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ ТАКОГО УЩЕРБА.
 .\"
-.Dd November 1, 2022
+.Dd Ноябрь 1, 2022
 .Dt DEVELOPMENT 7
 .Os
-.Sh NAME
+.Sh НАИМЕНОВАНИЕ
 .Nm development
-.Nd introduction to
+.Nd введение в процесс разработки
 .Fx
-development process
-.Sh DESCRIPTION
+.Sh ОПИСАНИЕ
 .Fx
-development is split into three major subprojects: doc, ports, and src.
-Doc is the documentation, such as the
-.Fx
-Handbook.
-To read more, see:
+разработка разделена на три основных подпроекта: doc, ports, and src.
+Doc это документация, такая как руководство по
+.Fx .
+Чтобы узнать больше, смотрите:
 .Pp
 .Lk https://docs.FreeBSD.org/en/books/fdp-primer/
 .Pp
-Ports, described further in
+Порты, описанные далее в разделе
 .Xr ports 7 ,
-are the way to build, package, and install third party software.
-To read more, see:
+представляют собой способ сборки, упаковки,
+и установики программного обеспечения сторонних производителей.
+Чтобы узнать больше, смотрите:
 .Pp
 .Lk https://docs.FreeBSD.org/en/books/porters-handbook/
 .Pp
-The last one, src, revolves around the source code for the base system,
-consisting of the kernel, and the libraries and utilities commonly called
-the world.
+Последний же, src, снован на исходном коде базовой системы,
+состоящем из ядра, а также библиотек и утилит, которые обычно
+называются "мир"
 .Pp
-The Committer's Guide, describing topics relevant to all committers,
-can be found at:
+Руководство Пользователя, описывающее темы, актуальные для всех пользователей,
+можно найти по адресу:
 .Pp
 .Lk https://docs.freebsd.org/en/articles/committers-guide/
 .Pp
 .Fx
-src development takes place in the project-hosted
-Git repository, located at:
+src разработка осуществляется в размещенном в проекте репозитории Git,
+расположенном по адресу:
 .Pp
 .Lk https://git.FreeBSD.org/src.git
 .Pp
-The push URL is:
+Активная URL ссылка ниже:
 .Pp
 .Lk ssh://git@gitrepo.FreeBSD.org/src.git
 .Pp
-There is also a list of public, read-only Git mirrors at:
+Также есть список общедоступных зеркал Git, доступных только для чтения, по адресу:
 .Pp
 .Lk https://docs.FreeBSD.org/en/books/handbook/mirrors/#external-mirrors
 .Pp
-The
+Основная
 .Ql main
-Git branch represents CURRENT;
-all changes are first committed to CURRENT and then usually cherry-picked
-back to STABLE, which refers to Git branches such as
+ветка Git соответствует ТЕКУЩЕЙ;
+все изменения сначала вносятся в
+ТЕКУЩУЮ, а затем, как правило, возвращаются в СТАБИЛЬНУЮ,
+которая относится к веткам Git, таким как
 .Ql stable/13 .
-Every few years a new STABLE is branched from CURRENT,
-with an incremented major version number.
-Releases are then branched off STABLE and numbered with consecutive minor
-numbers.
+Каждые несколько лет новая СТАБИЛЬНАЯ версия отделяется от ТЕКУЩЕЙ,
+с увеличением номера основной версии.
+Затем релизы отделяются от СТАБИЛЬНОЙ и нумеруются последовательными минимальными
+номерами.
 .Pp
-The layout of the source tree is described in its
-.Pa README.md
-file.
-Build instructions can be found in
+Структура дерева исходных текстов описана в его файле
+.Pa README.md .
+Инструкции по сборке можно найти в разделах
 .Xr build 7
-and
+и
 .Xr release 7 .
-Kernel programming interfaces (KPIs) are documented in section 9
-manual pages; use
+Программные интерфейсы ядра (KPIs) описаны на страницах руководства в разделе 9;
+используйте
 .Ql "apropos -s 9 ."
-for a list.
-Regression test suite is described in
+для получения списка.
+Набор регрессионных тестов описан в разделе
 .Xr tests 7 .
-For coding conventions, see
+Правила кодирования приведены в разделе
 .Xr style 9 .
 .Pp
-To ask questions regarding development, use the mailing lists,
-such as freebsd-arch@ and freebsd-hackers@:
+Чтобы задать вопросы, касающиеся разработки, используйте списки рассылок,
+такие как freebsd-arch@ and freebsd-hackers@:
 .Pp
 .Lk https://lists.FreeBSD.org
 .Pp
-To get your patches integrated into the main
-.Fx
-repository use Phabricator;
-it is a code review tool that allows other developers to review the changes,
-suggest improvements, and, eventually, allows them to pick up the change and
-commit it:
+Чтобы интегрировать ваши исправления в основной репозиторий
+.Fx ,
+используйте Phabricator;
+это инструмент проверки кода, который позволяет другим разработчикам
+просматривать изменения, предлагать улучшения и, в конечном счете, позволяет им
+подхватить изменения и зафиксировать их:
 .Pp
 .Lk https://reviews.FreeBSD.org
 .Pp
-To check the latest
+Для проверки последней сборки
 .Fx
-build and test status of CURRENT and STABLE branches,
-the continuous integration system is at:
+и тестирования статуса ТЕКУЩЕЙ и СТАБИЛЬНОЙ версий
+система непрерывной интеграции находится на:
 .Pp
 .Lk https://ci.FreeBSD.org
 .Pp
-.Sh EXAMPLES
-Check out the CURRENT branch, build it, and install, overwriting the current
-system:
+.Sh ПРИМЕРЫ
+Найдите ТЕКУЩУЮ ветку, соберите ее и установите, перезаписав
+текущую систему:
 .Bd -literal -offset indent
 git clone https://git.FreeBSD.org/src.git src
 cd src
@@ -127,52 +125,55 @@ make -sj8 buildworld buildkernel installkernel
 shutdown -r now
 .Ed
 .Pp
-After reboot:
+После перезагрузки:
 .Bd -literal -offset indent
 cd src
 make -j8 installworld
 reboot
 .Ed
 .Pp
-Rebuild and reinstall a single piece of userspace, in this
-case
+Перестроить и переустановить отдельный фрагмент пользовательского пространства,
+в данном случае используйте
 .Xr ls 1 :
 .Bd -literal -offset indent
 cd src/bin/ls
 make clean all install
 .Ed
 .Pp
-Quickly rebuild and reinstall the kernel, only recompiling the files
-changed since last build; note that this will only work if the full kernel
-build has been completed in the past, not on a fresh source tree:
+Быстро перестройте и переустановите ядро, только перекомпилировав файлы
+измененные с момента последней сборки; обратите внимание,
+что это сработает только в том случае,
+если полная сборка ядра была завершена в прошлом,
+а не в новом дереве исходных текстов:
 .Bd -literal -offset indent
 cd src
 make -sj8 kernel KERNFAST=1
 .Ed
 .Pp
-To rebuild parts of
+Чтобы перестроить части
 .Fx
-for another CPU architecture,
-first prepare your source tree by building the cross-toolchain:
+для другой архитектуры процессора, сначала подготовьте
+свое дерево исходных текстов, создав перекрестную цепочку инструментов:
 .Bd -literal -offset indent
 cd src
 make -sj8 toolchain TARGET_ARCH=aarch64
 .Ed
 .Pp
-Afterwards, to build and install a single piece of userspace, use:
+После этого, чтобы создать и установить единую часть пользовательского
+пространства, используйте:
 .Bd -literal -offset indent
 cd src/bin/ls
 make buildenv TARGET_ARCH=aarch64
 make clean all install DESTDIR=/clients/arm
 .Ed
 .Pp
-Likewise, to quickly rebuild and reinstall the kernel, use:
+Аналогично, чтобы быстро перестроить и переустановить ядро, используйте:
 .Bd -literal -offset indent
 cd src
 make buildenv TARGET_ARCH=aarch64
 make -sj8 kernel KERNFAST=1 DESTDIR=/clients/arm
 .Ed
-.Sh SEE ALSO
+.Sh СМОТРИТЕ ТАКЖЕ
 .Xr git 1 ,
 .Xr witness 4 ,
 .Xr build 7 ,
@@ -182,22 +183,21 @@ make -sj8 kernel KERNFAST=1 DESTDIR=/clients/arm
 .Xr tests 7 ,
 .Xr locking 9 ,
 .Xr style 9
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
+Первоначально страница
 .Nm
-manual page was originally written by
+руководства по разработке была написана
 .An Matthew Dillon Aq Mt dillon@FreeBSD.org
-and first appeared
-in
+и впервые появилась во
 .Fx 5.0 ,
-December 2002.
-It was since extensively modified by
+Декабрь 2002.
+С тех пор оно был значительно изменено 
 .An Eitan Adler Aq Mt eadler@FreeBSD.org
-to reflect the repository conversion from
+чтобы отразить преобразование репозитория из
 .Lk https://www.nongnu.org/cvs/ CVS
-to
+в
 .Lk https://subversion.apache.org/ Subversion .
-It was rewritten from scratch by
+Оно была переписана с нуля
 .An Edward Tomasz Napierala Aq Mt trasz@FreeBSD.org
-for
+для
 .Fx 12.0 .
