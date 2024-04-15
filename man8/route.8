@@ -1,39 +1,39 @@
 .\" Copyright (c) 1983, 1991, 1993
 .\"	The Regents of the University of California.  All rights reserved.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
-.\" 3. Neither the name of the University nor the names of its contributors
-.\"    may be used to endorse or promote products derived from this software
-.\"    without specific prior written permission.
+.\" Распространение и использование в исходной и двоичной формах, с или без
+.\" модификации, допускаются при соблюдении следующих условий:
+.\" 
+.\" 1. При повторном распространении исходного кода должно сохраняться вышеуказанное уведомление
+.\"    об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. При распространении в двоичной форме в документации и/или других материалах, прилагаемых к дистрибутиву,
+.\"    должны быть воспроизведены вышеуказанное уведомление об авторских правах,
+.\"    этот список условий и нижеследующий отказ от ответственности.
+.\" 3. Ни название университета, ни имена его сотрудников
+.\"    не могут быть использованы для рекламы или продвижения продуктов, созданных на основе данного программного обеспечения,
+.\"    без специального предварительного письменного разрешения.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ РЕГЕНТАМИ И АВТОРАМИ `КАК ЕСТЬ", И
+.\" И МЫ ОТКАЗЫВАЕМСЯ ОТ ЛЮБЫХ ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ ГАРАНТИЙ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ,
+.\" ПОДРАЗУМЕВАЕМЫМИ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ И ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ.
+.\" НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ УПРАВЛЯЮЩИЕ ИЛИ СПОНСОРЫ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ЗА КАКИЕ-ЛИБО ПРЯМЫЕ,
+.\" КОСВЕННЫЕ, СЛУЧАЙНЫЕ, ОСОБЫЕ, ПОКАЗАТЕЛЬНЫЕ ИЛИ КОСВЕННОПОСЛЕДОВАТЕЛЬНЫЕ УБЫТКИ (ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ,
+.\" ПРИОБРЕТЕНИЕМ ЗАМЕНЯЮЩИХ ТОВАРОВ ИЛИ УСЛУГ; ПОТЕРЕЙ ВОЗМОЖНОСТИ ИСПОЛЬЗОВАНИЯ,
+.\" ДАННЫХ ИЛИ ПРИБЫЛИ; ИЛИ ПЕРЕРЫВ В РАБОТЕ), НЕЗАВИСИМО ОТ ПРИЧИНЫ И НА ОСНОВАНИИ ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ,
+.\" БУДЬ ТО В РАМКАХ КОНТРАКТА, СТРОГОЙ ОТВЕТСТВЕННОСТИ ИЛИ ПРАВОНАРУШЕНИЯ (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ НАРУШЕНИЕ),
+.\" ВОЗНИКШЕГО КАКИМ-ЛИБО ОБРАЗОМ В РЕЗУЛЬТАТЕ ИСПОЛЬЗОВАНИЯ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ,
+.\" ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ
+.\" ТАКОГО УЩЕРБА.
 .\"
 .\"     @(#)route.8	8.3 (Berkeley) 3/19/94
 .\"
-.Dd June 16, 2023
+.Dd Июнь 16, 2023
 .Dt ROUTE 8
 .Os
-.Sh NAME
+.Sh НАИМЕНОВАНИЕ
 .Nm route
-.Nd manually manipulate the routing tables
-.Sh SYNOPSIS
+.Nd ручное управление таблицами маршрутизации
+.Sh КРАТКИЙ ОБЗОР
 .Nm
 .Op Fl j Ar jail
 .Op Fl dnqtv
@@ -42,88 +42,88 @@
 .Op Ar modifiers
 .Ar args
 .Oc
-.Sh DESCRIPTION
-The
+.Sh ОПИСАНИЕ
+
 .Nm
-utility is used to manually manipulate the network
-routing tables.
-It normally is not needed, as a
-system routing table management daemon, such as
+утилита используется для ручного управления таблицами
+сетевой маршрутизации.
+Обычно он не требуется в качестве
+даемона управления системной таблицей маршрутизации, такого как
 .Xr routed 8 ,
-should tend to this task.
+следует позаботиться об этой задаче.
 .Pp
-The
+
 .Nm
-utility supports a limited number of general options,
-but a rich command language, enabling the user to specify
-any arbitrary request that could be delivered via the
-programmatic interface discussed in
+утилита поддерживает ограниченное количество общих параметров,
+но богатый командный язык, позволяющий пользователю задать
+любой произвольный запрос, который может быть отправлен через
+программный интерфейс, описанный в
 .Xr route 4 .
 .Pp
-The following options are available:
+Доступны следующие параметры:
 .Bl -tag -width indent
 .It Fl 4
-Specify
+Указать
 .Cm inet
-address family as family hint for subcommands.
+семейство адресов в качестве подсказки для подкомманд.
 .It Fl 6
-Specify
+Указать
 .Cm inet6
-address family as family hint for subcommands.
+семейство адресов в качестве семейтва подсказки для подкомманд.
 .It Fl d
-Run in debug-only mode, i.e., do not actually modify the routing table.
+Запустить только в режиме отладки, т.е. фактически не изменяя таблицу маршрутизации.
 .It Fl n
-Bypass attempts to print host and network names symbolically
-when reporting actions.
-(The process of translating between symbolic
-names and numerical equivalents can be quite time consuming, and
-may require correct operation of the network; thus it may be expedient
-to forget this, especially when attempting to repair networking operations).
+Обходите попытки символической печати имен хостов и сетей
+при составлении отчетов о действиях.
+(Процесс перевода символьных
+имен в цифровые эквиваленты может занимать довольно много времени и
+может потребовать корректной работы сети; поэтому может оказаться целесообразным
+забыть об этом, особенно при попытке восстановить работу сети).
 .It Fl t
-Run in test-only mode.
+Запускается только в тестовом режиме.
 .Pa /dev/null
-is used instead of a socket.
+используется вместо сокета.
 .It Fl v
-(verbose) Print additional details.
+(подробно) Напечатать дополнительные сведения.
 .It Fl q
-Suppress all output from the
+Подавить все выходные данные из
 .Cm add , change , delete ,
-and
+и
 .Cm flush
-commands.
+комманды.
 .It Fl j Ar jail
-Run inside a jail.
+Запустить внутри jail.
 .El
 .Pp
-The
+
 .Nm
-utility provides the following commands:
+утилита предоставляет следующие команды:
 .Pp
 .Bl -tag -width Fl -compact
 .It Cm add
-Add a route.
+Добавить маршрут.
 .It Cm flush
-Remove all routes.
+Удалить все маршруты.
 .It Cm delete
-Delete a specific route.
+Удалить определенный маршрут.
 .It Cm del
-Another name for the
+Другое название для этой
 .Cm delete
-command.
+комманды.
 .It Cm change
-Change aspects of a route (such as its gateway).
+Изменить аспекты маршрута (например, его шлюз).
 .It Cm get
-Lookup and display the route for a destination.
+Выполнить поиск и отобразить маршрут для пункта назначения.
 .It Cm monitor
-Continuously report any changes to the routing information base,
-routing lookup misses, or suspected network partitionings.
+Постоянно сообщает о любых изменениях в базе маршрутной информации,
+ошибках при поиске маршрутов или подозрительных разделениях сети.
 .It Cm show
-Another name for the
+Другое название для этой
 .Cm get
-command.
+комманды.
 .El
 .Pp
-The monitor command has the syntax:
+Команда monitor имеет следующий синтаксис:
 .Pp
 .Bd -ragged -offset indent -compact
 .Nm
@@ -131,7 +131,7 @@ The monitor command has the syntax:
 .Cm monitor Op Fl fib Ar number
 .Ed
 .Pp
-The flush command has the syntax:
+Команда flush имеет следующий синтаксис:
 .Pp
 .Bd -ragged -offset indent -compact
 .Nm
@@ -139,33 +139,33 @@ The flush command has the syntax:
 .Cm flush Oo Ar family Oc Op Fl fib Ar number
 .Ed
 .Pp
-If the
+Если эта
 .Cm flush
-command is specified,
+комманда указана,
 .Nm
-will ``flush'' the routing tables of all gateway entries.
-When the address family may is specified by any of the
+приведет к `очистке" таблиц маршрутизации всех записей шлюза.
+Если семейство адресов может быть указано любым из
 .Fl inet6 ,
-or
+или
 .Fl inet
-modifiers, only routes having destinations with addresses in the
-delineated family will be deleted.
-Additionally,
+модификаторы, будут удалены только маршруты, имеющие пункты назначения с адресами из
+указанного семейства.
+Дополнительно,
 .Fl 4
-or
+или
 .Fl 6
-can be used as aliases for
+может использоваться в качестве псевдонимов для
 .Fl inet
-and
+и
 .Fl inet6
-modifiers.
-When a
+модификаторов
+Когда
 .Fl fib
-option is specified, the operation will be applied to
-the specified FIB
+если задана опция, операция будет применена к
+указанному волокну
 .Pq routing table .
 .Pp
-The add command has the following syntax:
+Команда add имеет следующий синтаксис:
 .Pp
 .Bd -ragged -offset indent -compact
 .Nm
@@ -177,7 +177,7 @@ The add command has the following syntax:
 .Op Fl fib Ar number
 .Ed
 .Pp
-and the other commands have the following syntax:
+а остальные команды имеют следующий синтаксис:
 .Pp
 .Bd -ragged -offset indent -compact
 .Nm
@@ -189,132 +189,133 @@ and the other commands have the following syntax:
 .Op Fl fib Ar number
 .Ed
 .Pp
-where
+когда
 .Ar destination
-is the destination host or network,
+это конечный узел или сеть,
 .Ar gateway
-is the next-hop intermediary via which packets should be routed.
-Routes to a particular host may be distinguished from those to
-a network by interpreting the Internet address specified as the
+является промежуточным звеном на следующем этапе, через которое должны направляться пакеты.
+Маршруты к конкретному хосту можно отличить от маршрутов к
+сети, интерпретируя интернет-адрес, указанный в качестве
 .Ar destination
-argument.
-The optional modifiers
+аргумента
+Необязательные модификаторы
 .Fl net
-and
+и
 .Fl host
-force the destination to be interpreted as a network or a host, respectively.
-Otherwise, if the
+принудительно интерпретировать назначение как сеть или хост, соответственно.
+В противном случае, если
 .Ar destination
-has a
+имеет
 .Dq local address part
-of
+от
 INADDR_ANY
 .Pq Li 0.0.0.0 ,
-or if the
+или если бы
 .Ar destination
-is the symbolic name of a network, then the route is
-assumed to be to a network; otherwise, it is presumed to be a
-route to a host.
-Optionally, the
+если это символическое имя сети, то
+предполагается, что маршрут ведет к сети; в противном случае предполагается, что это
+маршрут к хосту.
+При желании это
 .Ar destination
-could also be specified in the
+также может быть указано в
 .Ar net Ns / Ns Ar bits
-format.
+формате.
 .Pp
-For example,
+Например,
 .Li 128.32
-is interpreted as
+интерпретируется как
 .Fl host Li 128.0.0.32 ;
 .Li 128.32.130
-is interpreted as
+интерпретируется как
 .Fl host Li 128.32.0.130 ;
 .Fl net Li 128.32
-is interpreted as
+интерпретируется как
 .Li 128.32.0.0 ;
 .Fl net Li 128.32.130
-is interpreted as
+интерпретируется как
 .Li 128.32.130.0 ;
-and
+и
 .Li 192.168.64/20
-is interpreted as
+интерпретируется как
 .Fl net Li 192.168.64 Fl netmask Li 255.255.240.0 .
 .Pp
-A
+
 .Ar destination
-of
+от
 .Ar default
-is a synonym for the default route.
-For
+является синонимом маршрута по умолчанию.
+Для
 .Li IPv4
-it is
+это
 .Fl net Fl inet Li 0.0.0.0 ,
-and for
+и для
 .Li IPv6
-it is
+это
 .Fl net Fl inet6 Li :: .
 .Pp
-If the destination is directly reachable
-via an interface requiring
-no intermediary system to act as a gateway, the
+Если пункт назначения доступен напрямую
+через интерфейс,
+не требующий использования промежуточной системы в качестве шлюза, то
 .Fl interface
-modifier should be specified;
-the gateway given is the address of this host on the common network,
-indicating the interface to be used for transmission.
-Alternately, if the interface is point to point the name of the interface
-itself may be given, in which case the route remains valid even
-if the local or remote addresses change.
+должен быть указан модификатор;
+указанный шлюз - это адрес этого хоста в общей сети,
+указывающий на интерфейс, который будет использоваться для передачи данных.
+С другой стороны, если интерфейс работает от точки к точке,
+может быть указано название самого интерфейса, и в этом случае маршрут остается действительным,
+если меняются локальный или удаленный адреса.
 .Pp
-The optional
+Необязательный
 .Fl netmask
-modifier is intended
-to achieve the effect of an OSI ESIS
-redirect with the netmask option,
-or to manually add subnet routes with
-netmasks different from that of the implied network interface
-(as would otherwise be communicated using the OSPF or ISIS routing protocols).
-One specifies an additional ensuing address parameter
-(to be interpreted as a network mask).
-The implicit network mask generated in the AF_INET case
-can be overridden by making sure this option follows the destination parameter.
+модификатор предназначен
+для достижения эффекта перенаправления OSI ES IS
+с помощью параметра netmask
+или для ручного добавления маршрутов подсети с
+сетевыми масками, отличающимися от сетевых масок
+подразумеваемого сетевого интерфейса
+(которые в противном случае передавались бы с использованием протоколов маршрутизации OSPF или ISIS).
+В одном из них указывается дополнительный параметр address
+(который следует интерпретировать как сетевую маску).
+Неявную сетевую маску, сгенерированную в случае AF_INET,
+можно переопределить, убедившись, что этот параметр соответствует параметру назначения.
 .Pp
-For
+Для
 .Dv AF_INET6 ,
-the
+
 .Fl prefixlen
-qualifier
-is available instead of the
+квалификатора
+доступен вместо 
 .Fl mask
-qualifier because non-continuous masks are not allowed in IPv6.
-For example,
+квалификатора, поскольку в IPv6 не разрешены непрерывные маски.
+Например,
 .Fl prefixlen Li 32
-specifies that a network mask of
+указывает, что сетевая маска из
 .Li ffff:ffff:0000:0000:0000:0000:0000:0000
-will be used.
-The default prefixlen is 64.
-However, it is assumed to be 0 if
+будет использоваться.
+Префиксlen по умолчанию равен 64.
+Однако предполагается, что он равен 0, если
 .Cm default
-is specified for
+указывается для
 .Ar destination .
-Note that the qualifier works only for
+Обратите внимание, что квалификатор работает только для
 .Dv AF_INET6
-address family.
+семейство адрессов.
 .Pp
-Routes have associated flags which influence operation of the protocols
-when sending to destinations matched by the routes.
-These flags may be set (or sometimes cleared)
-by indicating the following corresponding modifiers:
+С маршрутами связаны флаги, которые влияют на работу протоколов
+при отправке в пункты назначения, соответствующие маршрутам.
+ти флаги можно установить (или иногда снять)
+указав следующие соответствующие модификаторы:
 .Bd -literal
--xresolve  RTF_XRESOLVE   - emit mesg on use (for external lookup)
--iface    ~RTF_GATEWAY    - destination is directly reachable
--static    RTF_STATIC     - manually added route
--nostatic ~RTF_STATIC     - pretend route added by kernel or daemon
--reject    RTF_REJECT     - emit an ICMP unreachable when matched
--blackhole RTF_BLACKHOLE  - silently discard pkts (during updates)
--proto1    RTF_PROTO1     - set protocol specific routing flag #1
--proto2    RTF_PROTO2     - set protocol specific routing flag #2
+-xresolve  RTF_XRESOLVE   - выдает сообщение при использовании (для внешнего поиска)
+-iface    ~RTF_GATEWAY    - до пункта назначения можно добраться напрямую
+-static    RTF_STATIC     - маршрут, добавленный вручную
+-nostatic ~RTF_STATIC     - представьте, что маршрут добавлен ядром или демоном
+-reject    RTF_REJECT     - выдает сообщение ICMP, недоступное при совпадении
+-blackhole RTF_BLACKHOLE  - автоматически удаляет pkt (во время обновлений)
+-proto1    RTF_PROTO1     - установите флаг маршрутизации для конкретного протокола #1
+-proto2    RTF_PROTO2     - установите флаг маршрутизации для конкретного протокола #2
 .Ed
 .Pp
-The optional modifiers
+Необязательные модификаторы
 .Fl rtt ,
 .Fl rttvar ,
 .Fl sendpipe ,
@@ -322,249 +323,249 @@ The optional modifiers
 .Fl mtu ,
 .Fl hopcount ,
 .Fl expire ,
-and
+и
 .Fl ssthresh
-provide initial values to quantities maintained in the routing entry
-by transport level protocols, such as TCP or TP4.
-These may be individually locked by preceding each such modifier to
-be locked by
-the
+укажите начальные значения величин, поддерживаемых в записи маршрутизации
+протоколами транспортного уровня, такими как TCP или TP4.
+Они могут быть заблокированы индивидуально, предшествуя каждому такому модификатору, 
+который должен быть заблокирован с помощью
+
 .Fl lock
-meta-modifier, or one can
-specify that all ensuing metrics may be locked by the
+meta-modifier, или может
+указать, что все последующие показатели могут быть заблокированы с помощью.
 .Fl lockrest
 meta-modifier.
 .Pp
-Note that
+Обратите внимание, что
 .Fl expire
-accepts expiration time of the route as the number of seconds since the
-Epoch
+принимает время истечения срока действия маршрута за количество секунд, прошедших с момента
+начала маршрута.
 .Pq see Xr time 3 .
-When the first character of the number is
+Когда первый символ числа яыляется
 .Dq +
-or
+или
 .Dq - ,
-it is interpreted as a value relative to the current time.
+это значение интерпретируется как значение, относящееся к текущему времени.
 .Pp
-The optional modifier
+Необязательный модификатор
 .Fl fib Ar number
-specifies that the command will be applied to a non-default FIB.
-The
+указывает, что команда будет применена к FIB, не используемому по умолчанию.
+
 .Ar number
-must be smaller than the
+должно быть меньше чем
 .Va net.fibs
 .Xr sysctl 8
 MIB.
-When this modifier is not specified,
-or a negative number is specified,
-the default FIB shown in the
+Если этот модификатор не указан,
+или указано отрицательное число,
+значение FIB по умолчанию, показанное в
 .Va net.my_fibnum
 .Xr sysctl 8
-MIB will be used.
+MIB будет использовано.
 .Pp
-The
+
 .Ar number
-allows multiple FIBs by a comma-separeted list and/or range
-specification.
-The
+допускает несколько подтасовок с помощью списка, разделенного запятыми, и/или
+спецификации диапазона.
+
 .Qq Fl fib Li 2,4,6
-means the FIB number 2, 4, and 6.
-The
+означает ложь под номерами 2, 4 и 6.
+
 .Qq Fl fib Li 1,3-5,6
-means the 1, 3, 4, 5, and 6.
+означает 1, 3, 4, 5 и 6.
 .Pp
-In a
+В
 .Cm change
-or
+или
 .Cm add
-command where the destination and gateway are not sufficient to specify
-the route (as in the ISO case where several interfaces may have the
-same address), the
+команда, в которой назначения и шлюза недостаточно для указания
+маршрута (как в случае ISO, когда несколько интерфейсов могут иметь один и тот
+же адрес),
 .Fl ifp
-or
+или
 .Fl ifa
-modifiers may be used to determine the interface or interface address.
+модификаторы могут использоваться для определения интерфейса или адреса интерфейса.
 .Pp
-All symbolic names specified for a
+Все символьные имена, указанные для
 .Ar destination
-or
+или
 .Ar gateway
-are looked up first as a host name using
+сначала ищутся как имя хоста с помощью
 .Xr gethostbyname 3 .
-If this lookup fails,
+Если этот поиск завершится неудачей,
 .Xr getnetbyname 3
-is then used to interpret the name as that of a network.
+затем используется для интерпретации имени как названия сети.
 .Pp
-The
+
 .Nm
-utility uses a routing socket and the new message types
+утилита использует маршрутизирующий сокет и новые типы сообщений
 .Dv RTM_ADD , RTM_DELETE , RTM_GET ,
-and
+и
 .Dv RTM_CHANGE .
-As such, only the super-user may modify
-the routing tables.
+Таким образом, только суперпользователь может изменять
+таблицы маршрутизации.
 .Pp
 .Fx provides support for scalable multipath routing.
-It is activated by default, but can be turned off by setting the
+Он активирован по умолчанию, но может быть отключен, установив
 .Va net.route.multipath
 .Xr sysctl 8
-MIB to 0.
+Значение MIB равное 0.
 .Pp
-There are multiple route lookup algorithms available.
-They can be configured by setting
+Доступно несколько алгоритмов поиска маршрутов.
+Их можно настроить, установив
 .Va net.route.algo.inet.algo
-for IPv4 and
+для IPv4 и
 .Va net.route.algo.inet6.algo
-for IPv6
+для IPv6
 .Xr sysctl 8
-MIBs.
+MIBы.
 .Pp
-A list of available algorithms can be obtained by accessing the
-following
+Список доступных алгоритмов можно получить, обратившись к
+следующему
 .Xr sysctl 8
-MIBs
+MIBы
 .Va net.route.algo.inet.algo_list
-for IPv4 and
+для IPv4 и
 .Va net.route.algo.inet6.algo_list
-for IPv6.
+для IPv6.
 .Pp
-The following algorithms are available:
+Доступны следующие алгоритмы:
 .Bl -tag -width radix_lockless
 .It radix
-Base system radix backend.
+Серверная часть базовой системы radix.
 .It bsearch
-Lockless binary search in a special IP array, tailored for a small FIB
-with <16 routes.
-This algorithm is only available for IPv4.
+Бинарный поиск без блокировки в специальном IP-массиве, адаптированном для небольшого FIB
+с менее чем 16 маршрутами.
+Этот алгоритм доступен только для IPv4.
 .It radix_lockless
-Lockless immutable radix, re-created on every rtable change,
-tailored for a small FIB with <1000 routes.
+Неизменяемая система счисления без блокировки, воссоздаваемая при каждом изменении таблицы,
+адаптирована для небольшого FIB с <1000 маршрутами.
 .It dpdk_lpm
-DPDK DIR24-8-based lookups, lockless datastructure, optimized
-for large FIBs.
-DIR24-8 relies on a large flat lookup table (64 MB with IPv4) which is
-directly indexed by the more significant portion of the lookup key.
-In order to use the dpdk_lpm algorithm one or both of the
-following kernel modules must be loaded via
+Поиск на основе DPDK DIR 24-8, структура данных без блокировки, оптимизированная
+для больших объемов данных.
+DIR 24-8 использует большую плоскую таблицу поиска (64 МБ с IPv4), которая
+напрямую индексируется по более значимой части ключа поиска.
+Для использования алгоритма dpdk_lpm один или оба из
+следующих модулей ядра должны быть загружены через
 .Xr loader.conf 5 :
 .Bl -tag -width dpdk_lpm6.ko -compact
 .It dpdk_lpm4.ko
-DPDK implementation for IPv4.
+Реализация DPDK для IPv4.
 .It dpdk_lpm6.ko
-DPDK implementation for IPv6.
+Реализация DPDK для IPv6.
 .El
 .It dxr
-IPv4 only, lockless, compressed lookup structure
-(below 2.5 Bytes per IPv4 prefix for large BGP FIBs)
-which easily fits into modern CPU cache hierarchies,
-lookup throughput scales linearly with CPU cores.
-Loadable as a kernel module at runtime or via
+Только IPv4, безблокировочная, сжатая структура поиска
+(менее 2,5 байт на префикс IPv4 для больших файлов BGP)
+которая легко вписывается в современные иерархии кэша процессора,
+а пропускная способность поиска линейно зависит от ядер процессора.
+Загружаемый как модуль ядра во время выполнения или через
 .Xr loader.conf 5 :
 .Bl -tag -width fib_dxr.ko -compact
 .It fib_dxr.ko
 .El
 .El
 .Pp
-The algorithms are selected automatically based on the size of the routing
-table of the system.
-They can be changed, but not every algorithm performs best for every
-FIB size.
-.Sh EXIT STATUS
+Алгоритмы выбираются автоматически в зависимости от размера таблицы маршрутизации
+системы.
+Их можно изменить, но не каждый алгоритм работает наилучшим образом для каждого конкретного случая.
+Размер фибрилляции предсердий.
+.Sh ВОЗВРАЩАЕМЫЕ ЗНАЧЕНИЯ
 .Ex -std
-.Sh EXAMPLES
-Add a default route to the network routing table.
-This will send all packets for destinations not available in the routing table
-to the default gateway at 192.168.1.1:
+.Sh ПРИМЕРЫ
+Добавить маршрут по умолчанию в сетевую таблицу маршрутизации.
+Это приведет к отправке всех пакетов для адресатов, недоступных в таблице маршрутизации,
+на шлюз по умолчанию по адресу 192.168.1.1:
 .Pp
 .Dl route add -net 0.0.0.0/0 192.168.1.1
 .Pp
-A shorter version of adding a default route can also be written as:
+Более короткая версия добавления маршрута по умолчанию также может быть записана в виде:
 .Pp
 .Dl route add default 192.168.1.1
 .Pp
-Add a static route to the 172.16.10.0/24 network via the 172.16.1.1 gateway:
+Добавить статический маршрут к сети 172.16.10.0/24 через шлюз 172.16.1.1:
 .Pp
 .Dl route add -net 172.16.10.0/24 172.16.1.1
 .Pp
-Change the gateway of an already established static route in the routing table:
+Изменить шлюз уже установленного статического маршрута в таблице маршрутизации:
 .Pp
 .Dl route change -net 172.16.10.0/24 172.16.1.2
 .Pp
-Display the route for a destination network:
+Отображение маршрута для сети назначения:
 .Pp
 .Dl route show 172.16.10.0
 .Pp
-Delete a static route from the routing table:
+Удалить статический маршрут из таблицы маршрутизации:
 .Pp
 .Dl route delete -net 172.16.10.0/24 172.16.1.2
 .Pp
-Remove all routes from the routing table:
+Удалить все маршруты из таблицы маршрутизации:
 .Pp
 .Dl route flush
 .Pp
-The routing table can be listed with
+Таблица маршрутизации может быть указана с помощью
 .Xr netstat 1 .
-.Sh DIAGNOSTICS
+.Sh ДИАГНОСТИКА
 .Bl -diag
 .It "add [host \&| network ] %s: gateway %s flags %x"
-The specified route is being added to the tables.
-The
-values printed are from the routing table entry supplied
-in the
+Указанный маршрут добавляется в таблицы.
+
+выводимые значения взяты из записи таблицы маршрутизации, предоставленной
+при 
 .Xr ioctl 2
-call.
-If the gateway address used was not the primary address of the gateway
-(the first one returned by
-.Xr gethostbyname 3 ) ,
-the gateway address is printed numerically as well as symbolically.
+вызове.
+Если используемый адрес шлюза не был основным адресом шлюза
+(первый адрес, возвращаемый с помощью
+.Xr gethostbyname 3 ),
+адрес шлюза выводится как в цифровом, так и в символьном виде.
 .It "delete [ host \&| network ] %s: gateway %s flags %x"
-As above, but when deleting an entry.
+Как указано выше, но при удалении записи.
 .It "%s %s done"
-When the
+Когда
 .Cm flush
-command is specified, each routing table entry deleted
-is indicated with a message of this form.
+команда указана, каждая удаленная запись в таблице маршрутизации
+отображается сообщением такого вида.
 .It "Network is unreachable"
-An attempt to add a route failed because the gateway listed was not
-on a directly-connected network.
-The next-hop gateway must be given.
+Попытка добавить маршрут завершилась неудачей, поскольку указанный шлюз не
+был подключен к сети с прямым подключением.
+Необходимо указать шлюз следующего перехода.
 .It "not in table"
-A delete operation was attempted for an entry which
-was not present in the tables.
+Была предпринята попытка удалить запись, которой
+не было в таблицах.
 .It "routing table overflow"
-An add operation was attempted, but the system was
-low on resources and was unable to allocate memory
-to create the new entry.
+Была предпринята попытка выполнить операцию добавления, но системе
+не хватало ресурсов, и она не смогла выделить память
+для создания новой записи.
 .It "gateway uses the same route"
-A
+
 .Cm change
-operation resulted in a route whose gateway uses the
-same route as the one being changed.
-The next-hop gateway should be reachable through a different route.
+в результате операции был создан маршрут, шлюз которого использует тот
+же маршрут, что и изменяемый.
+Шлюз следующего перехода должен быть доступен по другому маршруту.
 .El
-.Sh SEE ALSO
+.Sh СМОТРЕТЬ ТАКЖЕ
 .Xr netstat 1 ,
 .Xr netintro 4 ,
 .Xr route 4 ,
 .Xr loader.conf 5 ,
 .Xr arp 8 ,
 .Xr routed 8
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
+
 .Nm
-utility appeared in
+полезность появилась в
 .Bx 4.2 .
 .Sh BUGS
-The first paragraph may have slightly exaggerated
+В первом абзаце могут быть слегка преувеличены 
 .Xr routed 8 Ns 's
-abilities.
+способности.
 .Pp
-Currently, routes with the
+В настоящее время для маршрутов с 
 .Dv RTF_BLACKHOLE
-flag set need to have the gateway set to an instance of the
+установленным флагом необходимо, чтобы шлюз был настроен на экземпляр
 .Xr lo 4
-driver, using the
+драйвер, использующий эту
 .Fl iface
-option, for the flag to have any effect; unless IP fast forwarding
-is enabled, in which case the meaning of the flag will always
-be honored.
+опцию, чтобы флажок имел какой-либо эффект; если только не включена быстрая переадресация по IP,
+в этом случае значение флажка всегда
+будет соблюдаться.

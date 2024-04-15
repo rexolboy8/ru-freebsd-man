@@ -1,39 +1,39 @@
 .\" Copyright (c) 1983, 1990, 1992, 1993
 .\"	The Regents of the University of California.  All rights reserved.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that the following conditions
-.\" are met:
-.\" 1. Redistributions of source code must retain the above copyright
-.\"    notice, this list of conditions and the following disclaimer.
-.\" 2. Redistributions in binary form must reproduce the above copyright
-.\"    notice, this list of conditions and the following disclaimer in the
-.\"    documentation and/or other materials provided with the distribution.
-.\" 3. Neither the name of the University nor the names of its contributors
-.\"    may be used to endorse or promote products derived from this software
-.\"    without specific prior written permission.
+.\" Распространение и использование в исходной и двоичной формах, с или без
+.\" модификации, допускаются при соблюдении следующих условий:
+.\" 
+.\" 1. При повторном распространении исходного кода должно сохраняться вышеуказанное уведомление
+.\"    об авторских правах, этот список условий и следующий отказ от ответственности.
+.\" 2. При распространении в двоичной форме в документации и/или других материалах, прилагаемых к дистрибутиву,
+.\"    должны быть воспроизведены вышеуказанное уведомление об авторских правах,
+.\"    этот список условий и нижеследующий отказ от ответственности.
+.\" 3. Ни название университета, ни имена его сотрудников
+.\"    не могут быть использованы для рекламы или продвижения продуктов, созданных на основе данного программного обеспечения,
+.\"    без специального предварительного письменного разрешения.
 .\"
-.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-.\" SUCH DAMAGE.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ РЕГЕНТАМИ И АВТОРАМИ `КАК ЕСТЬ", И
+.\" И МЫ ОТКАЗЫВАЕМСЯ ОТ ЛЮБЫХ ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ ГАРАНТИЙ, ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ,
+.\" ПОДРАЗУМЕВАЕМЫМИ ГАРАНТИЯМИ ТОВАРНОЙ ПРИГОДНОСТИ И ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ.
+.\" НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ УПРАВЛЯЮЩИЕ ИЛИ СПОНСОРЫ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ЗА КАКИЕ-ЛИБО ПРЯМЫЕ,
+.\" КОСВЕННЫЕ, СЛУЧАЙНЫЕ, ОСОБЫЕ, ПОКАЗАТЕЛЬНЫЕ ИЛИ КОСВЕННОПОСЛЕДОВАТЕЛЬНЫЕ УБЫТКИ (ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ,
+.\" ПРИОБРЕТЕНИЕМ ЗАМЕНЯЮЩИХ ТОВАРОВ ИЛИ УСЛУГ; ПОТЕРЕЙ ВОЗМОЖНОСТИ ИСПОЛЬЗОВАНИЯ,
+.\" ДАННЫХ ИЛИ ПРИБЫЛИ; ИЛИ ПЕРЕРЫВ В РАБОТЕ), НЕЗАВИСИМО ОТ ПРИЧИНЫ И НА ОСНОВАНИИ ЛЮБОЙ ТЕОРИИ ОТВЕТСТВЕННОСТИ,
+.\" БУДЬ ТО В РАМКАХ КОНТРАКТА, СТРОГОЙ ОТВЕТСТВЕННОСТИ ИЛИ ПРАВОНАРУШЕНИЯ (ВКЛЮЧАЯ ХАЛАТНОСТЬ ИЛИ ИНОЕ НАРУШЕНИЕ),
+.\" ВОЗНИКШЕГО КАКИМ-ЛИБО ОБРАЗОМ В РЕЗУЛЬТАТЕ ИСПОЛЬЗОВАНИЯ ДАННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ,
+.\" ДАЖЕ ЕСЛИ ВЫ БЫЛИ ПРЕДУПРЕЖДЕНЫ О ВОЗМОЖНОСТИ
+.\" ТАКОГО УЩЕРБА.
 .\"
 .\"	@(#)netstat.1	8.8 (Berkeley) 4/18/94
 .\"
-.Dd August 14, 2023
+.Dd Август 14, 2023
 .Dt NETSTAT 1
 .Os
-.Sh NAME
+.Sh НАИМЕНОВАНИЕ
 .Nm netstat
-.Nd show network status and statistics
-.Sh SYNOPSIS
+.Nd показать состояния сети и статистики
+.Sh КРАТКИЙ ОБЗОР
 .Bk -words
 .Bl -tag -width "netstat"
 .It Nm
@@ -109,13 +109,13 @@
 .Op Fl -libxo
 .El
 .Ek
-.Sh DESCRIPTION
-The
+.Sh ОПИСАНИЕ
+
 .Nm
-command shows the contents of various network-related
-data structures.
-The arguments passed determine which of the below output formats the
-command uses.
+команда показывает содержимое различных структур данных,
+связанных с сетью.
+Передаваемые аргументы определяют, какой из приведенных ниже выходных форматов
+использует команда.
 .Bl -tag -width indent
 .It Xo
 .Bk -words
@@ -125,134 +125,134 @@ command uses.
 .Op Fl j Ar jail
 .Ek
 .Xc
-Display a list of active sockets
-(protocol control blocks)
-for each network protocol.
+Отобразить список активных сокетов
+(блоки управления протоколом)
+для каждого сетевого протокола.
 .Pp
-The default display for active sockets shows the local
-and remote addresses, send and receive queue sizes (in bytes), protocol,
-and the internal state of the protocol.
-Address formats are of the form
+В режиме отображения по умолчанию для активных сокетов отображаются локальные
+и удаленные адреса, размеры очереди отправки и получения (в байтах), протокол
+и внутреннее состояние протокола.
+Форматы адресов имеют следующий вид
 .Dq host.port
-or
+или
 .Dq network.port
-if a socket's address specifies a network but no specific host address.
-When known, the host and network addresses are displayed symbolically
-according to the databases
+если адрес сокета указывает сеть, но не указан конкретный адрес хоста.
+Если он известен, адреса хоста и сети отображаются символически
+в соответствии с базой данных
 .Xr hosts 5
-and
+и
 .Xr networks 5 ,
-respectively.
-If a symbolic name for an address is unknown, or if
-the
+соответственно.
+Если символьное имя для адреса неизвестно,
+или если
 .Fl n
-option is specified, the address is printed numerically, according
-to the address family.
-For more information regarding
-the Internet IPv4
+если указан параметр, адрес выводится в цифровом виде в соответствии
+с семейством адресов.
+Для получения дополнительной информации об
+IPv4 в Интернете
 .Dq dot format ,
-refer to
+ссылается на
 .Xr inet 3 .
-Unspecified,
-or
+Неуточненный,
+или
 .Dq wildcard ,
-addresses and ports appear as
+адреса и порты отображаются следующим образом
 .Dq Li * .
 .Bl -tag -width indent
 .It Fl -libxo
-Generate output via
+Генерировать выходные данные с помощью
 .Xr libxo 3
-in a selection of different human and machine readable formats.
-See
+в различных форматах, удобочитаемых человеком и машиной.
+Смотреть
 .Xr xo_parse_args 3
-for details on command line arguments.
+для получения подробной информации об аргументах командной строки.
 .It Fl 4
-Show IPv4 only.
-See
+Показывать только IPv4.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only.
-See
+Показывать только IPv6.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl A
-Show the address of a protocol control block (PCB)
-associated with a socket; used for debugging.
+Показывает адрес блока управления протоколом (PCB),
+связанного с сокетом; используется для отладки.
 .It Fl a
-Show the state of all sockets;
-normally sockets used by server processes are not shown.
+Показывает состояние всех сокетов;
+обычно сокеты, используемые серверными процессами, не отображаются.
 .It Fl c
-Show the used TCP stack for each session.
+Покажите используемый стек TCP для каждого сеанса.
 .It Fl C
-Show the congestion control algorithm and diagnostic information of TCP sockets.
+Покажите алгоритм контроля перегрузки и диагностическую информацию о TCP-сокетах.
 .It Fl L
-Show the size of the various listen queues.
-The first count shows the number of unaccepted connections,
-the second count shows the amount of unaccepted incomplete connections,
-and the third count is the maximum number of queued connections.
+Показывает размер различных очередей прослушивания.
+Первый подсчет показывает количество непринятых подключений,
+второй подсчет показывает количество недопустимых незавершенных соединений,
+и третье значение - это максимальное количество подключений в очереди.
 .It Fl n
-Do not resolve numeric addresses and port numbers to names.
-See
+Не преобразуйте числовые адреса и номера портов в имена.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl P
-Display the log ID for each socket.
+Отобразить идентификатор журнала для каждого сокета.
 .It Fl R
-Display the flowid and flowtype for each socket.
-flowid is a 32 bit hardware specific identifier for each flow.
-flowtype defines which protocol fields are hashed to produce the id.
-A complete listing is available in
+Отобразить идентификатор потока и тип потока для каждого разъема.
+идентификатор потока - это 32-разрядный аппаратный идентификатор для каждого потока.
+тип потока определяет, какие поля протокола хэшируются для получения идентификатора.
+Полный список доступен на сайте
 .Pa sys/mbuf.h
-under
+под
 .Dv M_HASHTYPE_* .
 .It Fl S
-Show network addresses as numbers (as with
+Отображать сетевые адреса в виде цифр (как в
 .Fl n )
-but show ports symbolically.
+но показывайте порты символически.
 .It Fl T
-Display diagnostic information from the TCP control block.
-Fields include the number of packets requiring retransmission,
-received out-of-order, and those advertising a zero-sized window.
+Отобразить диагностическую информацию из блока управления TCP.
+Поля включают количество пакетов, требующих повторной передачи,
+принятых не по порядку и тех, которые указывают на окно нулевого размера.
 .It Fl W
-Avoid truncating addresses even if this causes some fields to overflow.
+Избегайте усечения адресов, даже если это приводит к переполнению некоторых полей.
 .It Fl x
-Display socket buffer and TCP timer statistics for each
-internet socket.
+Отображать статистику буфера сокета и таймера TCP для каждого
+интернет-сокета.
 .Pp
-The
+
 .Fl x
-flag causes
+причины появления флага
 .Nm
-to output all the information recorded about data
-stored in the socket buffers.
-The fields are:
+для вывода всей информации, записанной о данных,
+хранящихся в буферах сокетов.
+Эти поля являются:
 .Bl -column ".Li R-HIWA"
-.It Li R-HIWA Ta Receive buffer high water mark, in bytes.
-.It Li S-HIWA Ta Send buffer high water mark, in bytes.
-.It Li R-LOWA Ta Receive buffer low water mark, in bytes.
-.It Li S-LOWA Ta Send buffer low water mark, in bytes.
-.It Li R-BCNT Ta Receive buffer byte count.
-.It Li S-BCNT Ta Send buffer byte count.
-.It Li R-BMAX Ta Maximum bytes that can be used in the receive buffer.
-.It Li S-BMAX Ta Maximum bytes that can be used in the send buffer.
-.It Li rexmt Ta Time, in seconds, to fire Retransmit Timer, or 0 if not armed.
-.It Li persist Ta Time, in seconds, to fire Retransmit Persistence, or 0 if not armed.
-.It Li keep Ta Time, in seconds, to fire Keep Alive, or 0 if not armed.
-.It Li 2msl Ta Time, in seconds, to fire 2*msl TIME_WAIT Timer, or 0 if not armed.
-.It Li delack Ta Time, in seconds, to fire Delayed ACK Timer, or 0 if not armed.
-.It Li rcvtime Ta Time, in seconds, since last packet received.
+.It Li R-HIWA Ta Получить наивысшую отметку буфера в байтах.
+.It Li S-HIWA Ta Отправить буфер с наивысшей отметкой в байтах.
+.It Li R-LOWA Ta Получить буфер с наименьшей отметкой в байтах.
+.It Li S-LOWA Ta Отправить буфер с наименьшей отметкой в байтах.
+.It Li R-BCNT Ta Получить количество байт в буфере.
+.It Li S-BCNT Ta Отправить колличество байт в буфере.
+.It Li R-BMAX Ta Максимальное количество байт, которые могут быть использованы в приемном буфере.
+.It Li S-BMAX Ta Максимальное количество байт, которые могут быть использованы в буфере отправки.
+.It Li rexmt Ta Время в секундах до срабатывания таймера повторной передачи или 0, если он не включен.
+.It Li persist Ta Время, в секундах, до срабатывания повторной передачи сигнала, или 0, если он не включен.
+.It Li keep Ta Время, в секундах, до срабатывания "Сохранить живым", или 0, если он не включен.
+.It Li 2msl Ta Время срабатывания таймера TIME_WAIT в секундах 2*msl или 0, если он не включен.
+.It Li delack Ta Время срабатывания таймера отложенного подтверждения в секундах или 0, если он не включен.
+.It Li rcvtime Ta Время в секундах с момента получения последнего пакета.
 .El
 .It Fl f Ar protocol_family
-Filter by
+Фильтровать по
 .Ar protocol_family .
-See
-.Sx GENERAL OPTIONS .
+Смотреть
+.Sx ОСНОВНЫЕ ПАРАМЕТРЫ .
 .It Fl p Ar protocol
-Filter by
+Фильтровать по
 .Ar protocol .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -266,76 +266,76 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Show the state of all network interfaces or a single
+Отображение состояния всех сетевых интерфейсов или одного из них
 .Ar interface
-which have been auto-configured
-(interfaces statically configured into a system, but not
-located at boot time are not shown).
-An asterisk
+которые были настроены автоматически
+(интерфейсы, статически настроенные в системе, но отсутствующие
+во время загрузки, не отображаются).
+Звездочка
 .Pq Dq Li *
-after an interface name indicates that the interface is
+после имени интерфейса указывается, что интерфейс является
 .Dq down .
 .Pp
-When
+Когда
 .Nm
-is invoked with
+вызывается с помощью
 .Fl i
 .Pq all interfaces
-or
+или
 .Fl I Ar interface ,
-it provides a table of cumulative
-statistics regarding packets transferred, errors, and collisions.
-The network addresses of the interface
-and the maximum transmission unit
+в нем представлена таблица совокупной
+статистики о переданных пакетах, ошибках и коллизиях.
+Сетевые адреса интерфейса
+и максимальная скорость передачи.
 .Pq Dq mtu
-are also displayed.
-If both
+также отображаются.
+Если оба
 .Fl i
-and
+и
 .Fl I
-are specified,
+указаны,
 .Fl I
-overrides any instances of
+переопределяет все экземпляры
 .Fl i .
 .Bl -tag -width indent
 .It Fl 4
-Show IPv4 only.
-See
+Показывать только IPv4.
+Смотеть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only.
-See
+Показывать только IPv6.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl a
-Multicast addresses currently in use are shown
-for each Ethernet interface and for each IP interface address.
-Multicast addresses are shown on separate lines following the interface
-address with which they are associated.
+Используемые в настоящее время адреса многоадресной рассылки отображаются
+для каждого интерфейса Ethernet и для каждого адреса IP-интерфейса.
+Адреса многоадресной рассылки отображаются в отдельных строках после
+адреса интерфейса, с которым они связаны.
 .It Fl b
 Show the number of bytes in and out.
 .It Fl d
-Show the number of dropped packets.
+Показывает количество входящих и исходящих байт.
 .It Fl h
-Print all counters in human readable form.
+Распечатайте все счетчики в удобочитаемом виде.
 .It Fl n
-Do not resolve numeric addresses and port numbers to names.
-See
+Не преобразуйте числовые адреса и номера портов в имена.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl W
-Avoid truncating addresses even if this causes some fields to overflow.
-See
+Избегайте усечения адресов, даже если это приводит к переполнению некоторых полей.
+Смотреть
 .Sx GENERAL OPTIONS .
-However, in most cases field widths are determined automatically with the
+Однако в большинстве случаев ширина полей определяется автоматически с помощью
 .Fl i
-option, and this option has little effect.
+вариант, и этот вариант имеет мало эффекта.
 .It Fl f Ar protocol_family
-Filter by
+Фильтровать по
 .Ar protocol_family .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Сотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -350,55 +350,55 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-At intervals of
+С интервалом в
 .Ar wait
-seconds, display the information regarding packet traffic on all
-configured network interfaces or a single
+секунд, отобразить информацию о пакетном трафике на всех
+настроенных сетевых интерфейсах или на одном
 .Ar interface .
 .Pp
-When
+Когда
 .Nm
-is invoked with the
+вызывается с помощью
 .Fl w
-option and a
+вариант и
 .Ar wait
-interval argument, it displays a running count of statistics related to
-network interfaces.
-An obsolescent version of this option used a numeric parameter
-with no option, and is currently supported for backward compatibility.
-By default, this display summarizes information for all interfaces.
-Information for a specific interface may be displayed with the
+в качестве аргумента interval он отображает текущее количество статистических данных,
+относящихся к сетевым интерфейсам.
+Устаревшая версия этого параметра использовала числовой параметр
+без опции и в настоящее время поддерживается для обеспечения обратной совместимости.
+По умолчанию на этом дисплее отображается сводная информация для всех интерфейсов.
+Информация для определенного интерфейса может отображаться с помощью
 .Fl I Ar interface
-option.
+опции
 .Bl -tag -width indent
 .It Fl I Ar interface
-Only show information regarding
+Показывать только информацию, касающуюся
 .Ar interface
 .It Fl 4
-Show IPv4 only.
-See
+Показывать только IPv4.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only.
-See
+Показывать только IPv6.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl d
-Show the number of dropped packets.
+Показывает количество отброшенных пакетов.
 .It Fl M
-Use an alternative core.
-See
+Используйте альтернативное ядро.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image.
-See
+Используйте альтернативный образ ядра.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl q
-Exit after
+Выйдите после
 .Ar howmany
-outputs.
+выходы.
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -412,43 +412,43 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Display system-wide statistics for each network protocol.
+Отображать общесистемную статистику по каждому сетевому протоколу.
 .Bl -tag -width indent
 .It Fl 4
-Show IPv4 only.
-See
+Показывать только IPv4.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only.
-See
+Показывать только IPv6.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl s
-If
+Или
 .Fl s
-is repeated, counters with a value of zero are suppressed.
+повторяется, счетчики с нулевым значением отключаются.
 .It Fl z
-Reset statistic counters after displaying them.
+Сбросьте статистические счетчики после их отображения.
 .It Fl f Ar protocol_family
-Filter by
+Фильтровать по
 .Ar protocol_family .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl p Ar protocol
-Filter by
+Фильтровать по
 .Ar protocol .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl M
-Use an alternative core.
-See
+Используйте альтернативное ядро.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -462,49 +462,49 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Display per-interface statistics for each network protocol.
-If both
+Отображение статистики по каждому интерфейсу для каждого сетевого протокола.
+если оба
 .Fl i
-and
+и
 .Fl I
-are specified,
+указаны,
 .Fl I
-overrides any instances of
+переопределяет все экземпляры
 .Fl i .
 .Bl -tag -width indent
 .It Fl 4
-Show IPv4 only
-See
+Показывать только IPv4
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only
-See
+Показывать только IPv6
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl s
-If
+Или
 .Fl s
-is repeated, counters with a value of zero are suppressed.
+повторяется, счетчики с нулевым значением отключаются.
 .It Fl f Ar protocol_family
-Filter by
+Фильтровать по
 .Ar protocol_family .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl p Ar protocol
-Filter by
+Фильтровать по
 .Ar protocol .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl M
-Use an alternative core
-See
+Используйте альтернативное ядро
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -516,21 +516,21 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Show statistics recorded by the memory management routines
+Показывать статистику, записанную с помощью процедур управления памятью
 .Pq Xr mbuf 9 .
-The network manages a private pool of memory buffers.
+Сеть управляет частным пулом буферов памяти.
 .Bl -tag -width indent
 .It Fl M
-Use an alternative core
-See
+Используйте альтернативное ядро
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -542,43 +542,43 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Show statistics about
+Показывать статистику о
 .Xr bpf 4
-peers.
-This includes information like
-how many packets have been matched, dropped and received by the
-bpf device, also information about current buffer sizes and device
-states.
+одноранговых узлах.
+Это включает в себя такую информацию, как
+сколько пакетов было сопоставлено, отброшено и получено
+устройством bpf, а также информация о текущих размерах буфера
+и состояниях устройства.
 .Pp
-The
+
 .Xr bpf 4
-flags displayed when
+флаги, отображаемые при
 .Nm
-is invoked with the
+вызывается с помощью
 .Fl B
-option represent the underlying parameters of the bpf peer.
-Each flag is
-represented as a single lower case letter.
-The mapping between the letters and flags in order of appearance are:
+параметр представляет собой базовые параметры узла bpf.
+Каждый флаг является
+представлен в виде одной строчной буквы.
+Соответствие между буквами и флажками в порядке их появления выглядит следующим образом:
 .Bl -column ".Li i"
 .It Li p Ta Set if listening promiscuously
 .It Li i Ta Dv BIOCIMMEDIATE No has been set on the device
 .It Li f Ta Dv BIOCGHDRCMPLT No status: source link addresses are being
-filled automatically
+заполняется автоматически
 .It Li s Ta Dv BIOCGSEESENT No status: see packets originating locally and
-remotely on the interface.
+удаленно подключен к интерфейсу.
 .It Li a Ta Packet reception generates a signal
 .It Li l Ta Dv BIOCLOCK No status: descriptor has been locked
 .El
 .Pp
-For more information about these flags, please refer to
+Для получения дополнительной информации об этих флагах, пожалуйста, обратитесь к
 .Xr bpf 4 .
 .Bl -tag -width indent
 .It Fl z
-Reset statistic counters after displaying them.
+Сбросьте статистические счетчики после их отображения.
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -593,91 +593,91 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Display the contents of routing tables.
+Отображение содержимого таблиц маршрутизации.
 .Pp
-When
+Когда
 .Nm
-is invoked with the routing table option
+вызывается с помощью параметра таблица маршрутизации
 .Fl r ,
-it lists the available routes and their status.
-Each route consists of a destination host or network, and a gateway to use
-in forwarding packets.
-The flags field shows a collection of information about the route stored
-as binary choices.
-The individual flags are discussed in more detail in the
+в нем перечислены доступные маршруты и их статус.
+Каждый маршрут состоит из узла назначения или сети и шлюза, который используется
+для пересылки пакетов.
+Поле "Флаги" отображает набор сведений о маршруте, сохраненных
+в виде двоичных вариантов выбора.
+Более подробно отдельные флаги обсуждаются в разделе
 .Xr route 8
-and
+и
 .Xr route 4
-manual pages.
-The mapping between letters and flags is:
+страницы руководства.
+Соответствие между буквами и флагами таково:
 .Bl -column ".Li W" ".Dv RTF_WASCLONED"
-.It Li 1 Ta Dv RTF_PROTO1 Ta "Protocol specific routing flag #1"
-.It Li 2 Ta Dv RTF_PROTO2 Ta "Protocol specific routing flag #2"
-.It Li 3 Ta Dv RTF_PROTO3 Ta "Protocol specific routing flag #3"
-.It Li B Ta Dv RTF_BLACKHOLE Ta "Just discard pkts (during updates)"
-.It Li b Ta Dv RTF_BROADCAST Ta "The route represents a broadcast address"
-.It Li D Ta Dv RTF_DYNAMIC Ta "Created dynamically (by redirect)"
-.It Li G Ta Dv RTF_GATEWAY Ta "Destination requires forwarding by intermediary"
-.It Li H Ta Dv RTF_HOST Ta "Host entry (net otherwise)"
-.It Li L Ta Dv RTF_LLINFO Ta "Valid protocol to link address translation"
-.It Li M Ta Dv RTF_MODIFIED Ta "Modified dynamically (by redirect)"
-.It Li R Ta Dv RTF_REJECT Ta "Host or net unreachable"
-.It Li S Ta Dv RTF_STATIC Ta "Manually added"
-.It Li U Ta Dv RTF_UP Ta "Route usable"
-.It Li X Ta Dv RTF_XRESOLVE Ta "External daemon translates proto to link address"
+.It Li 1 Ta Dv RTF_PROTO1 Ta "Специальный флаг маршрутизации протокола #1"
+.It Li 2 Ta Dv RTF_PROTO2 Ta "Специальный флаг маршрутизации протокола #2"
+.It Li 3 Ta Dv RTF_PROTO3 Ta "Специальный флаг маршрутизации протокола #3"
+.It Li B Ta Dv RTF_BLACKHOLE Ta "Просто отказаться от pkts (во время обновления)"
+.It Li b Ta Dv RTF_BROADCAST Ta "Маршрут представляет собой широковещательный адрес"
+.It Li D Ta Dv RTF_DYNAMIC Ta "Создаётся динамически (путем перенаправления)"
+.It Li G Ta Dv RTF_GATEWAY Ta "Пункт назначения требует передачи через посредника"
+.It Li H Ta Dv RTF_HOST Ta "Вход в узел (в противном случае - net)"
+.It Li L Ta Dv RTF_LLINFO Ta "Действующий протокол для перевода адресов"
+.It Li M Ta Dv RTF_MODIFIED Ta "Динамически модифицированный (путем перенаправления)"
+.It Li R Ta Dv RTF_REJECT Ta "Хост или сеть недоступны"
+.It Li S Ta Dv RTF_STATIC Ta "Добавлено вручную"
+.It Li U Ta Dv RTF_UP Ta "Маршрут, который можно использовать"
+.It Li X Ta Dv RTF_XRESOLVE Ta "Внешний daemon переводит прото в адрес ссылки"
 .El
 .Pp
-Direct routes are created for each
-interface attached to the local host;
-the gateway field for such entries shows the address of the outgoing interface.
-The refcnt field gives the
-current number of active uses of the route.
-Connection oriented
-protocols normally hold on to a single route for the duration of
-a connection while connectionless protocols obtain a route while sending
-to the same destination.
-The use field provides a count of the number of packets
-sent using that route.
-The interface entry indicates the network interface utilized for the route.
+Прямые маршруты создаются для каждого интерфейса,
+подключенного к локальному хосту;
+в поле шлюза для таких записей отображается адрес исходящего интерфейса.
+Поле refcnt выдает следующее
+текущее количество активных пользователей маршрута.
+Протоколы, ориентированные на подключение,
+бычно сохраняют один маршрут в течение всего времени действия соединения,
+в то время как протоколы без установления соединения 
+получают маршрут при отправке в тот же пункт назначения.
+В поле use указывается количество пакетов,
+отправленных по этому маршруту.
+Запись интерфейса указывает сетевой интерфейс, используемый для маршрута.
 .Bl -tag -width indent
 .It Fl 4
-Show IPv4 only.
-See
+Показывать только IPv4.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only.
-See
+Показывать только IPv6.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl n
-Do not resolve numeric addresses and port numbers to names.
-See
+Не преобразуйте числовые адреса и номера портов в имена.
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl W
-Show the path MTU for each route, and print interface names with a
-wider field size.
+Укажите MTU пути для каждого маршрута и выведите названия интерфейсов с
+увеличенным размером поля.
 .It Fl F
-Display the routing table with the number
+Отобразить таблицу маршрутизации с номером
 .Ar fibnum .
-If the specified
+Если указанный
 .Ar fibnum
-is -1 or
+будет -1 или
 .Fl F
-is not specified,
-the default routing table is displayed.
+если этот параметр не указан,
+отображается таблица маршрутизации по умолчанию.
 .It Fl f
-Display the routing table for a particular
+Отобразить таблицу маршрутизации для конкретного
 .Ar address_family .
 .It Fl M
-Use an alternative core
-See
+Используйте альтернативное ядро
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -690,23 +690,23 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Display routing statistics.
+Отображение статистики маршрутизации.
 .Bl -tag -width indent
 .It Fl s
-If
+Или
 .Fl s
-is repeated, counters with a value of zero are suppressed.
+повторяется, счетчики с нулевым значением отключаются.
 .It Fl M
-Use an alternative core
-See
+Используйте альтернативное ядро
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -720,42 +720,42 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Display the contents of the multicast virtual interface tables,
-and multicast forwarding caches.
-Entries in these tables will appear only when the kernel is
-actively forwarding multicast sessions.
-This option is applicable only to the
+Отображать содержимое таблиц виртуального интерфейса
+многоадресной рассылки и кэшей многоадресной пересылки.
+Записи в этих таблицах будут отображаться только тогда, когда
+ядро активно пересылает сеансы многоадресной рассылки.
+Эта опция применима только к
 .Cm inet
-and
+и
 .Cm inet6
-address families.
+семейства адрессов.
 .Bl -tag -width indent
 .It Fl 4
-Show IPv4 only
-See
+Показывать только IPv4
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only
-See
+Показывать только IPv6
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl W
-Avoid truncating addresses even if this causes some fields to overflow.
+Избегайте усечения адресов, даже если это приводит к переполнению некоторых полей.
 .It Fl f Ar protocol_family
-Filter by
+Фильтровать по
 .Ar protocol_family .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl M
-Use an alternative core
-See
+Используйте альтернативное ядро
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -769,36 +769,36 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Show multicast routing statistics.
+Отображение статистики многоадресной маршрутизации.
 .Bl -tag -width indent
 .It Fl 4
-Show IPv4 only
-See
+Показывать только IPv4
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl 6
-Show IPv6 only
-See
+Показывать только IPv6
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl s
-If
+Или
 .Fl s
-is repeated, counters with a value of zero are suppressed.
+повторяется, счетчики с нулевым значением отключаются.
 .It Fl f Ar protocol_family
-Filter by
+Фильтровать по
 .Ar protocol_family .
-See
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl M
-Use an alternative core
-See
+Используйте альтернативное ядро
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl N
-Use an alternative kernel image
-See
+Используйте альтернативный образ ядра
+Смотреть
 .Sx GENERAL OPTIONS .
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .It Xo
@@ -808,40 +808,40 @@ See
 .Op Fl j Ar jail
 .Ek
 .Xc
-Show
+Показать
 .Xr netisr 9
-statistics.
-The flags field shows available ISR handlers:
+ститистику.
+В поле флаги отображаются доступные обработчики ISR:
 .Bl -column ".Li W" ".Dv NETISR_SNP_FLAGS_DRAINEDCPU"
 .It Li C Ta Dv NETISR_SNP_FLAGS_M2CPUID Ta "Able to map mbuf to cpu id"
 .It Li D Ta Dv NETISR_SNP_FLAGS_DRAINEDCPU  Ta "Has queue drain handler"
 .It Li F Ta Dv NETISR_SNP_FLAGS_M2FLOW Ta "Able to map mbuf to flow id"
 .It Fl j Ar jail
-Run inside a jail.
-See
+Запустить внутри jail.
+Смотреть
 .Sx GENERAL OPTIONS .
 .El
 .El
 .Ss GENERAL OPTIONS
-Some options have the general meaning:
+Некоторые варианты имеют общее значение:
 .Bl -tag -width flag
 .It Fl 4
-Is shorthand for
+Это сокращение от
 .Fl f
 .Ar inet
 .Pq Show only IPv4
 .It Fl 6
-Is shorthand for
+Это сокращение от
 .Fl f
 .Ar inet6
 .Pq Show only IPv6
 .It Fl f Ar address_family , Fl p Ar protocol
-Limit display to those records
-of the specified
+Ограничить отображение только теми записями
+указанного
 .Ar address_family
-or a single
+или одного-единственного
 .Ar protocol .
-The following address families and protocols are recognized:
+Распознаются следующие семейства адресов и протоколы:
 .Pp
 .Bl -tag -width ".Cm netgraph , ng Pq Dv AF_NETGRAPH" -compact
 .It Em Family
@@ -858,58 +858,58 @@ The following address families and protocols are recognized:
 .It Cm link Pq Dv AF_LINK
 .El
 .Pp
-The program will complain if
+Программа будет жаловаться, если
 .Ar protocol
-is unknown or if there is no statistics routine for it.
+является неизвестным или для него не существует статистической процедуры.
 .It Fl M
-Extract values associated with the name list from the specified core
-instead of the default
+Извлеките значения, связанные со списком имен, из указанного ядра
+вместо значений по умолчанию
 .Pa /dev/kmem .
 .It Fl N
-Extract the name list from the specified system instead of the default,
-which is the kernel image the system has booted from.
+Извлеките список имен из указанной системы вместо используемого по умолчанию
+образа ядра, с которого система загрузилась.
 .It Fl n
-Show network addresses and ports as numbers.
-Normally
+Отображать сетевые адреса и порты в виде цифр.
+Обычно
 .Nm
-attempts to resolve addresses and ports,
-and display them symbolically.
+пытается определить адреса и порты
+и отобразить их в символическом виде.
 .It Fl W
-Wider output; expand address fields, etc, to avoid truncation.
-Non-numeric values such as domain names may still be truncated; use the
+Расширьте выходные данные; расширьте поля адресов и т.д., чтобы избежать усечения.
+Нечисловые значения, такие как доменные имена, все еще могут быть усечены; используйте
 .Fl n
-option if necessary to avoid ambiguity.
+выберите вариант, если это необходимо, чтобы избежать двусмысленности.
 .It Fl j Ar jail
-Perform the actions inside the
+Выполните действия внутри
 .Ar jail .
-This allows network state to be accessed even if the
+Это позволяет получить доступ к состоянию сети, даже если
 .Cm netstat
-binary is not available in the
+двоичный файл недоступен в
 .Ar jail .
 .El
-.Sh EXAMPLES
-Show packet traffic information (packets, bytes, errors, packet drops, etc) for
-interface re0 updated every 2 seconds and exit after 5 outputs:
+.Sh ПРИМЕРЫ
+Отображение информации о трафике пакетов (пакеты, байты, ошибки, отбрасывания пакетов и т.д.) для
+интерфейса re0 обновляется каждые 2 секунды и завершается через 5 выходов:
 .Bd -literal -offset indent
 $ netstat -w 2 -q 5 -I re0
 .Ed
 .Pp
-Show statistics for ICMP on any interface:
+Показывать статистику для ICMP на любом интерфейсе:
 .Bd -literal -offset indent
 $ netstat -s -p icmp
 .Ed
 .Pp
-Show routing tables:
+Показывать таблицы маршрутизации:
 .Bd -literal -offset indent
 $ netstat -r
 .Ed
 .Pp
-Same as above, but without resolving numeric addresses and port numbers to
-names:
+То же, что и выше, но без преобразования числовых адресов и номеров портов в
+имена:
 .Bd -literal -offset indent
 $ netstat -rn
 .Ed
-.Sh SEE ALSO
+.Sh СОТРЕТЬ ТАКЖЕ
 .Xr fstat 1 ,
 .Xr nfsstat 1 ,
 .Xr procstat 1 ,
@@ -929,12 +929,12 @@ $ netstat -rn
 .Xr route 8 ,
 .Xr vmstat 8 ,
 .Xr mbuf 9
-.Sh HISTORY
-The
+.Sh ИСТОРИЯ
+
 .Nm
-command appeared in
+команда появилась в
 .Bx 4.2 .
 .Pp
-IPv6 support was added by WIDE/KAME project.
-.Sh BUGS
-The notion of errors is ill-defined.
+Поддержка IPv6 была добавлена проектом WIDE/KAME.
+.Sh ПРОБЛЕМЫ
+Понятие ошибок определено нечетко.

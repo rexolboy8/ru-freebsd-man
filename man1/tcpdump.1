@@ -4,26 +4,26 @@
 .\"	The Regents of the University of California.  All rights reserved.
 .\" All rights reserved.
 .\"
-.\" Redistribution and use in source and binary forms, with or without
-.\" modification, are permitted provided that: (1) source code distributions
-.\" retain the above copyright notice and this paragraph in its entirety, (2)
-.\" distributions including binary code include the above copyright notice and
-.\" this paragraph in its entirety in the documentation or other materials
-.\" provided with the distribution, and (3) all advertising materials mentioning
-.\" features or use of this software display the following acknowledgement:
-.\" ``This product includes software developed by the University of California,
-.\" Lawrence Berkeley Laboratory and its contributors.'' Neither the name of
-.\" the University nor the names of its contributors may be used to endorse
-.\" or promote products derived from this software without specific prior
-.\" written permission.
-.\" THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
-.\" WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
-.\" MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+.\" Распространение и использование в исходном коде и двоичной форме, с изменениями или без них 
+.\" допускается при условии, что: (1) распространение исходного кода
+.\" сохраняет вышеуказанное уведомление об авторских правах и этот абзац в полном объеме, (2)
+.\" дистрибутивы, содержащие двоичный код, содержат вышеуказанное уведомление об авторских правах и
+.\" этот абзац полностью включен в документацию или другие материалы,
+.\" поставляемые с дистрибутивом, и (3) все рекламные материалы, в которых упоминаются
+.\" функции или использование этого программного обеспечения, свидетельствуют о следующем подтверждении:
+.\" `Данный продукт включает в себя программное обеспечение, разработанное Калифорнийским университетом,
+.\" Лабораторией Лоуренса Беркли и ее сотрудниками." Ни название
+.\" университета, ни имена его сотрудников не могут использоваться для поддержки
+.\" или продвижения продуктов, созданных на основе этого программного обеспечения, без предварительного уведомления
+.\" письменное разрешение.
+.\" ДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ `КАК ЕСТЬ" И БЕЗ КАКИХ-ЛИБО ЯВНЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ
+.\" ГАРАНТИИ, ВКЛЮЧАЯ, ПОМИМО ПРОЧЕГО, ПОДРАЗУМЕВАЕМЫЕ ГАРАНТИИ
+.\" ТОВАРНАЯ ПРИГОДНОСТЬ И ПРИГОДНОСТЬ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ.
 .\"
 .TH TCPDUMP 1  "12 March 2023"
-.SH NAME
+.SH НАИМЕНОВАНИЕ
 tcpdump \- dump traffic on a network
-.SH SYNOPSIS
+.SH КРАТКИЙ ОБЗОР
 .na
 .B tcpdump
 [
@@ -149,411 +149,412 @@ tcpdump \- dump traffic on a network
 ]
 .br
 .ad
-.SH DESCRIPTION
+.SH ОПИСАНИЕ
 .LP
-\fITcpdump\fP prints out a description of the contents of packets on a
-network interface that match the Boolean \fIexpression\fP (see
+\fITcpdump\fP выводит описание содержимого пакетов на сетевом интерфейсе, 
+которое соответствует логическому значению \fIexpression\fP (смотреть
 .BR \%pcap-filter (7)
-for the \fIexpression\fP syntax); the
-description is preceded by a time stamp, printed, by default, as hours,
-minutes, seconds, and fractions of a second since midnight.  It can also
-be run with the
+для \fIexpression\fP syntax); 
+описанию предшествует временная метка, которая по умолчанию отображается в виде часов,
+минут, секунд и долей секунды с полуночи.  Программа также может
+быть запущена с помощью
 .B \-w
-flag, which causes it to save the packet data to a file for later
-analysis, and/or with the
+флаг, который заставляет его сохранять пакетные данные в файл для последующего
+анализа, и/или с помощью
 .B \-r
-flag, which causes it to read from a saved packet file rather than to
-read packets from a network interface.  It can also be run with the
+флаг, который заставляет его считывать данные из сохраненного файла пакета, а не
+из сетевого интерфейса.  Его также можно запустить с помощью
 .B \-V
-flag, which causes it to read a list of saved packet files. In all cases,
-only packets that match
-.I expression
-will be processed by
+флаг, который заставляет его считывать список сохраненных файлов пакетов. Во всех случаях
+используются только пакеты, соответствующие
+.I выражение
+будет обработано с помощью
 .IR tcpdump .
 .LP
 .I Tcpdump
-will, if not run with the
+будет, если не будет запущен с
 .B \-c
-flag, continue capturing packets until it is interrupted by a SIGINT
-signal (generated, for example, by typing your interrupt character,
-typically control-C) or a SIGTERM signal (typically generated with the
+флажком, продолжать захват пакетов до тех пор, пока он не будет прерван сигналом SIGINT
+(генерируемым, например, путем ввода вашего символа прерывания,
+обычно control-C) или сигналом SIGTERM (обычно генерируемым с помощью
 .BR kill (1)
-command); if run with the
+command); если запустить с помощью
 .B \-c
-flag, it will capture packets until it is interrupted by a SIGINT or
-SIGTERM signal or the specified number of packets have been processed.
+если установлен флажок, он будет перехватывать пакеты до тех пор, пока не будет прерван сигналом SIGINT или
+SIGTERM или пока не будет обработано указанное количество пакетов.
 .LP
-When
+Когда
 .I tcpdump
-finishes capturing packets, it will report counts of:
+завершится захват пакетов, он сообщит о количестве:
 .IP
-packets ``captured'' (this is the number of packets that
+пакеты `захвачены" (это количество пакетов, которые
 .I tcpdump
-has received and processed);
+были получены и обработаны);
 .IP
-packets ``received by filter'' (the meaning of this depends on the OS on
-which you're running
+пакеты `получены фильтром" (значение этого зависит от операционной системы, на
+которой вы работаете,
 .IR tcpdump ,
-and possibly on the way the OS was configured - if a filter was
-specified on the command line, on some OSes it counts packets regardless
-of whether they were matched by the filter expression and, even if they
-were matched by the filter expression, regardless of whether
+и, возможно, от того, как была настроена операционная система - если
+в командной строке был указан фильтр, в некоторых операционных системах он подсчитывает пакеты независимо
+от того, соответствовали ли они выражению фильтра, и даже если они
+были сопоставлены с помощью выражения фильтра, независимо от того, были ли
 .I tcpdump
-has read and processed them yet, on other OSes it counts only packets that were
-matched by the filter expression regardless of whether
+если он еще не прочитал и не обработал их, то в других операционных системах он подсчитывает только те пакеты, которые были
+сопоставлены с помощью выражения фильтра, независимо от того, были ли
 .I tcpdump
-has read and processed them yet, and on other OSes it counts only
-packets that were matched by the filter expression and were processed by
+пока не прочитал и не обработал их, а в других операционных системах учитываются только
+те пакеты, которые были сопоставлены с помощью выражения фильтра и были обработаны
 .IR tcpdump );
 .IP
-packets ``dropped by kernel'' (this is the number of packets that were
-dropped, due to a lack of buffer space, by the packet capture mechanism
-in the OS on which
+пакеты, `отброшенные ядром" (это количество пакетов, которые были
+отброшены из-за нехватки места в буфере механизмом перехвата пакетов
+в операционной системе, на которой
 .I tcpdump
-is running, if the OS reports that information to applications; if not,
-it will be reported as 0).
+запущены, если операционная система сообщает эту информацию приложениям; в противном случае
+это будет указано как 0).
 .LP
-On platforms that support the SIGINFO signal, such as most BSDs
-(including macOS) and Digital/Tru64 UNIX, it will report those counts
-when it receives a SIGINFO signal (generated, for example, by typing
-your ``status'' character, typically control-T, although on some
-platforms, such as macOS, the ``status'' character is not set by
-default, so you must set it with
+На платформах, поддерживающих сигнал SIGINFO, таких как большинство BSD
+(включая macOS) и Digital/Tru64 UNIX, он сообщит об этих показателях
+при получении сигнала SIGINFO (генерируемого, например, путем ввода
+вашего символа `status", обычно control-T, хотя на некоторых
+платформах, таких как mac OS, символ `status" по
+умолчанию не установлен, поэтому вы должны установить его с помощью
 .BR stty (1)
-in order to use it) and will continue capturing packets. On platforms that
-do not support the SIGINFO signal, the same can be achieved by using the
-SIGUSR1 signal.
+чтобы использовать его) и продолжит захват пакетов. На платформах, которые
+не поддерживают сигнал SIGINFO, того же можно добиться, используя сигнал
+SIGUSR1.
 .LP
-Using the SIGUSR2 signal along with the
+Используя сигнал SIGUSR2 вместе с
 .B \-w
-flag will forcibly flush the packet buffer into the output file.
+флагом приведет к принудительному сбросу буфера пакетов в выходной файл.
 .LP
-Reading packets from a network interface may require that you have
-special privileges; see the
+Для чтения пакетов с сетевого интерфейса может потребоваться наличие у вас
+особых привилегий; подробности смотрите на
 .BR pcap (3PCAP)
-man page for details.  Reading a saved packet file doesn't require
-special privileges.
-.SH OPTIONS
+странице руководства. Чтение сохраненного файла пакета не требует
+специальных привилегий.
+.SH ПАРАМЕТРЫ
 .TP
 .B \-A
-Print each packet (minus its link level header) in ASCII.  Handy for
-capturing web pages.
+Отобразить каждый пакет (за вычетом его заголовка на уровне ссылок) в формате ASCII.  Удобно для
+создания веб-страниц.
 .TP
 .B \-b
-Print the AS number in BGP packets in ASDOT notation rather than ASPLAIN
-notation.
+Выводите номер AS в пакетах BGP в формате ASDOT, а не В виде обычной
+записи.
 .TP
 .BI \-B " buffer_size"
 .PD 0
 .TP
 .BI \-\-buffer\-size= buffer_size
 .PD
-Set the operating system capture buffer size to \fIbuffer_size\fP, in
-units of KiB (1024 bytes).
+Установите размер буфера захвата операционной системы равным \fI buffer_size\fP, в
+килобайтах (1024 байта).
 .TP
 .BI \-c " count"
-Exit after receiving \fIcount\fP packets.
+Выйдите после получения \fIcount\fP packets.
 .TP
 .BI \-\-count
-Print only on stdout the packet count when reading capture file(s) instead
-of parsing/printing the packets. If a filter is specified on the command
-line, \fItcpdump\fP counts only packets that were matched by the filter
-expression.
+Выводите количество пакетов только при стандартном выводе при чтении файлов захвата вместо
+анализа/печати пакетов. Если в командной
+строке указан фильтр, \fItcpdump\fP подсчитывает только те пакеты, которые были сопоставлены с
+выражением фильтра.
 .TP
 .BI \-C " file_size"
-Before writing a raw packet to a savefile, check whether the file is
-currently larger than \fIfile_size\fP and, if so, close the current
-savefile and open a new one.  Savefiles after the first savefile will
-have the name specified with the
+Перед записью необработанного пакета в файл сохранения проверьте,
+не превышает ли размер файла в данный момент \file_size\fP, и, если да, закрыть текущий
+файл сохранения и открыть новый. Сохраняемые файлы после первого сохранения будут
+иметь имя, указанное с помощью
 .B \-w
-flag, with a number after it, starting at 1 and continuing upward.
-The units of \fIfile_size\fP are millions of bytes (1,000,000 bytes,
-not 1,048,576 bytes).
+флажка, с номером после него, начинающимся с 1 и продолжающимся вверх.
+Единицами измерения \fIfile_size\fP являются миллионы байт (1 000 000 байт,
+а не 1 048 576 байт).
 .TP
 .B \-d
-Dump the compiled packet-matching code in a human readable form to
-standard output and stop.
+Выведите скомпилированный код сопоставления пакетов в удобочитаемой форме в
+стандартный вывод и остановитесь.
 .IP
-Please mind that although code compilation is always DLT-specific,
-typically it is impossible (and unnecessary) to specify which DLT to use
-for the dump because \fItcpdump\fP uses either the DLT of the input pcap
-file specified with
+Пожалуйста, имейте в виду, что, хотя компиляция кода всегда зависит от DLT,
+обычно невозможно (и не нужно) указывать, какую библиотеку DLL использовать
+для дампа, потому что \fItcpdump\fP использует либо DLT входного
+файла pcap, указанного с помощью
 .BR -r ,
-or the default DLT of the network interface specified with
+или значение разности по умолчанию для сетевого интерфейса, указанное с помощью
 .BR -i ,
-or the particular DLT of the network interface specified with
+или конкретное значение разности для сетевого интерфейса, указанное с помощью
 .B -y
-and
+И
 .B -i
-respectively. In these cases the dump shows the same exact code that
-would filter the input file or the network interface without
+соответственно. В этих случаях в дампе отображается точно такой же код, который
+отфильтровывал бы входной файл или сетевой интерфейс без
 .BR -d .
 .IP
-However, when neither
+Однако, когда ни то, ни другое
 .B -r
-nor
+ни
 .B -i
-is specified, specifying
+указывается, указывая
 .B -d
-prevents \fItcpdump\fP from guessing a suitable network interface (see
+предотвращает \fItcpdump\fP от подбора подходящего сетевого интерфейса (смотрите
 .BR -i ).
-In this case the DLT defaults to EN10MB and can be set to another valid
-value manually with
+В этом случае значение DLT по умолчанию равно EN10MB и может быть установлено на другое допустимое
+значение вручную с помощью
 .BR -y .
 .TP
 .B \-dd
-Dump packet-matching code as a
+Дамп кода для сопоставления пакетов в виде
 .B C
-program fragment.
+фрагмента программы.
 .TP
 .B \-ddd
-Dump packet-matching code as decimal numbers (preceded with a count).
+Выводите соответствующий пакету код в виде десятичных чисел (перед которыми указывается число).
 .TP
 .B \-D
 .PD 0
 .TP
 .B \-\-list\-interfaces
 .PD
-Print the list of the network interfaces available on the system and on
-which
+Распечатать список сетевых интерфейсов, доступных в системе и с
+помощью которых
 .I tcpdump
-can capture packets.  For each network interface, a number and an
-interface name, possibly followed by a text description of the
-interface, are printed.  The interface name or the number can be supplied
-to the
+можно перехватить пакеты. Для каждого сетевого интерфейса выводятся номер и
+название интерфейса, за которыми, возможно, следует текстовое описание
+интерфейса. Имя интерфейса или номер могут быть предоставлены
+пользователю.
 .B \-i
-flag to specify an interface on which to capture.
+флажком, указывающий интерфейс, на котором выполняется захват.
 .IP
-This can be useful on systems that don't have a command to list them
-(e.g., Windows systems, or UNIX systems lacking
-.BR "ifconfig \-a" );
-the number can be useful on Windows 2000 and later systems, where the
-interface name is a somewhat complex string.
+Это может быть полезно в системах, в которых нет команды для их перечисления
+(например, в системах Windows или UNIX отсутствует
+.BR "ifconfig \-a" ).;
+этот номер может быть полезен в системах Windows 2000 и более поздних версиях, где имя
+интерфейса представляет собой несколько сложную строку.
 .IP
-The
+
 .B \-D
-flag will not be supported if
+флаг не будет поддерживаться, если
 .I tcpdump
-was built with an older version of
+он был собран с использованием более старой версии,
 .I libpcap
-that lacks the
+в которой отсутствует эта
 .BR pcap_findalldevs (3PCAP)
-function.
+функция.
 .TP
 .B \-e
-Print the link-level header on each dump line.  This can be used, for
-example, to print MAC layer addresses for protocols such as Ethernet and
+Вывести заголовок канального уровня в каждой строке дампа.  Это можно использовать,
+например, для печати адресов MAC-уровня для таких протоколов, как Ethernet и
 IEEE 802.11.
 .TP
 .B \-E
-Use \fIspi@ipaddr algo:secret\fP for decrypting IPsec ESP packets that
-are addressed to \fIaddr\fP and contain Security Parameter Index value
-\fIspi\fP. This combination may be repeated with comma or newline separation.
+Использовать алгоритм \fIspi@ipaddr:secret\fP для расшифровки ESP-пакетов IPSec,
+адресованных \fIaddr\fP и содержащих значение индекса параметра безопасности
+\fIspi\fP. Эта комбинация может повторяться с разделением запятой или новой строкой.
 .IP
-Note that setting the secret for IPv4 ESP packets is supported at this time.
+Обратите внимание, что в настоящее время поддерживается установка секретности для ESP-пакетов IPv4.
 .IP
-Algorithms may be
+Алгоритмы могут быть
 \fBdes-cbc\fP,
 \fB3des-cbc\fP,
 \fBblowfish-cbc\fP,
 \fBrc3-cbc\fP,
-\fBcast128-cbc\fP, or
+\fBcast128-cbc\fP, или
 \fBnone\fP.
-The default is \fBdes-cbc\fP.
-The ability to decrypt packets is only present if \fItcpdump\fP was compiled
-with cryptography enabled.
+Значение по умолчанию равно \fBdes-cbc\fP.
+Возможность расшифровки пакетов присутствует только в том случае, если \fItcpdump\fP был скомпилирован
+с включенной криптографией.
 .IP
-\fIsecret\fP is the ASCII text for ESP secret key.
-If preceded by 0x, then a hex value will be read.
+\fIsecret\fP это ASCII-текст для секретного ключа ESP.
+Если перед ним стоит 0x, то будет считано шестнадцатеричное значение.
 .IP
-The option assumes RFC 2406 ESP, not RFC 1827 ESP.
-The option is only for debugging purposes, and
-the use of this option with a true `secret' key is discouraged.
-By presenting IPsec secret key onto command line
-you make it visible to others, via
+Этот параметр предполагает использование RFC 2406, а не RFC 1827.
+Этот параметр предназначен только для целей отладки, и
+использование этого параметра с настоящим "секретным" ключом не рекомендуется.
+Вводя секретный ключ IPSec в командную строку
+, вы делаете его видимым для других пользователей с помощью
 .IR ps (1)
-and other occasions.
+и в других случаях.
 .IP
-In addition to the above syntax, the syntax \fIfile name\fP may be used
-to have tcpdump read the provided file in. The file is opened upon
-receiving the first ESP packet, so any special permissions that tcpdump
-may have been given should already have been given up.
+В дополнение к приведенному выше синтаксису, для того, чтобы tcpdump прочитал предоставленный файл,
+может использоваться синтаксис \fIfile name\fP. Файл открывается при получении первого ESP-пакета,
+поэтому все специальные разрешения, которые
+могли быть предоставлены tcpdump, уже должны были быть отменены.
 .TP
 .B \-f
-Print `foreign' IPv4 addresses numerically rather than symbolically
-(this option is intended to get around serious brain damage in
-Sun's NIS server \(em usually it hangs forever translating non-local
-internet numbers).
+Вывести `чужие" IPv4-адреса численно, а не символически
+(этот параметр предназначен для предотвращения серьезных повреждений мозга в
+NIS-сервер Sun (обычно он вечно зависает, переводя номера нелокального
+Интернета).
 .IP
-The test for `foreign' IPv4 addresses is done using the IPv4 address and
-netmask of the interface on that capture is being done.  If that
-address or netmask are not available, either because the
-interface on that capture is being done has no address or netmask or
-because it is the "any" pseudo-interface, which is
-available in Linux and in recent versions of macOS and Solaris, and which
-can capture on more than one interface, this option will not work
-correctly.
+Проверка на наличие "чужих" IPv4-адресов выполняется с использованием IPv4-адреса и
+сетевой маски интерфейса, на котором выполняется перехват.  Если этот
+адрес или маска сети недоступны, либо потому
+, что интерфейс, в котором выполняется перехват, не имеет адреса или маски сети, либо
+потому, что это псевдоинтерфейс "any", который
+доступен в Linux и в последних версиях macOS и Solaris и который
+может выполнять перехват более чем на одном интерфейсе, этот параметр не будет работать
+корректно.
 .TP
-.BI \-F " file"
-Use \fIfile\fP as input for the filter expression.
-An additional expression given on the command line is ignored.
+.BI \-F " файл"
+Использовать \fIfile\fP в качестве входных данных для выражения фильтра.
+Дополнительное выражение, заданное в командной строке, игнорируется.
 .TP
 .BI \-G " rotate_seconds"
-If specified, rotates the dump file specified with the
+Если указано, файл дампа, указанный с помощью
 .B \-w
-option every \fIrotate_seconds\fP seconds.
-Savefiles will have the name specified by
+параметра, будет обновляться каждые \fIrotate_seconds\fP секунд.
+Сохраняемые файлы будут иметь указанное имя,
 .B \-w
-which should include a time format as defined by
+которое должно включать формат времени, определенный
 .BR strftime (3).
-If no time format is specified, each new file will overwrite the previous.
-Whenever a generated filename is not unique, tcpdump will overwrite the
-pre-existing data; providing a time specification that is coarser than the
-capture period is therefore not advised.
+Если формат времени не указан, каждый новый файл будет перезаписывать предыдущий.
+Всякий раз, когда сгенерированное имя файла не является уникальным, tcpdump перезапишет
+ранее существовавшие данные; поэтому не рекомендуется указывать более точное время, чем период
+записи.
 .IP
-If used in conjunction with the
+При использовании в сочетании с
 .B \-C
-option, filenames will take the form of `\fIfile\fP<count>'.
+этой опцией имена файлов будут иметь форму `\fIfile\fP<количество>'.
 .TP
 .B \-h
 .PD 0
 .TP
 .B \-\-help
 .PD
-Print the tcpdump and libpcap version strings, print a usage message,
-and exit.
+Вывести строки версий tcpdump и libpcap, вывести сообщение об использовании
+и завершить работу.
 .TP
 .B \-\-version
 .PD
-Print the tcpdump and libpcap version strings and exit.
+Выведите строки версий tcpdump и libpcap и завершите работу.
 .TP
 .B \-H
-Attempt to detect 802.11s draft mesh headers.
+Попытка обнаружить заголовки черновой сетки стандарта 802.11s.
 .TP
-.BI \-i " interface"
+.BI \-i " интерфейс"
 .PD 0
 .TP
 .BI \-\-interface= interface
 .PD
-Listen, report the list of link-layer types, report the list of time
-stamp types, or report the results of compiling a filter expression on
-\fIinterface\fP.  If unspecified and if the
+Послушайте, сообщите о списке типов канального уровня
+, о списке типов временных меток или о результатах компиляции выражения фильтра в
+\\interface\fP. Если не указано и если флаг
 .B -d
-flag is not given, \fItcpdump\fP searches the system
-interface list for the lowest numbered, configured up interface
-(excluding loopback), which may turn out to be, for example, ``eth0''.
+не задан, \fItcpdump\fP выполняет поиск в
+списке системных интерфейсов в поисках настроенного интерфейса с наименьшим номером
+(исключая loopback), который может оказаться, например, `eth0".
 .IP
-On Linux systems with 2.2 or later kernels and on recent versions of macOS
-and Solaris, an
-.I interface
-argument of ``any'' can be used to capture packets from all interfaces.
-Note that captures on the ``any'' pseudo-interface will not be done in promiscuous
-mode.
+В системах Linux с ядрами версии 2.2 или более поздних версий, а также в последних версиях macOS
+и Solaris
+.
+Аргумент интерфейса I, равный `any", может использоваться для перехвата пакетов со всех интерфейсов.
+Обратите внимание, что захваты в псевдоинтерфейсе `any" не будут выполняться в произвольном
+режиме.
 .IP
-If the
+Если
 .B \-D
-flag is supported, an interface number as printed by that flag can be
-used as the
-.I interface
-argument, if no interface on the system has that number as a name.
+если флаг поддерживается,
+то в качестве
+.I интерфейс
+аргумента может использоваться номер интерфейса, указанный этим флагом,
+если ни один интерфейс в системе не имеет такого номера в качестве имени.
 .TP
 .B \-I
 .PD 0
 .TP
 .B \-\-monitor\-mode
 .PD
-Put the interface in "monitor mode"; this is supported only on IEEE
-802.11 Wi-Fi interfaces, and supported only on some operating systems.
+Switch the interface to "monitoring mode"; this is supported only on IEEE 802.11 Wi-Fi
+interfaces and is supported only on some operating systems.
 .IP
-Note that in monitor mode the adapter might disassociate from the
-network with which it's associated, so that you will not be able to use
-any wireless networks with that adapter.  This could prevent accessing
-files on a network server, or resolving host names or network addresses,
-if you are capturing in monitor mode and are not connected to another
-network with another adapter.
+Обратите внимание, что в режиме мониторинга адаптер может отключиться от
+сети, к которой он подключен, и вы не сможете использовать
+какие-либо беспроводные сети с этим адаптером.  Это может привести к невозможности доступа
+к файлам на сетевом сервере, а также к невозможности определения имен хостов или сетевых адресов,
+если запись ведется в режиме мониторинга и вы не подключены к другой
+сети с помощью другого адаптера.
 .IP
-This flag will affect the output of the
+Этот флаг повлияет на выходные данные
 .B \-L
-flag.  If
+флаг.  Если
 .B \-I
-isn't specified, only those link-layer types available when not in
-monitor mode will be shown; if
+параметр не указан, будут показаны только те типы канального уровня, которые доступны не в
+режиме мониторинга; если
 .B \-I
-is specified, only those link-layer types available when in monitor mode
-will be shown.
+указано, будут показаны только те типы канального уровня,
+которые доступны в режиме мониторинга.
 .TP
 .BI \-\-immediate\-mode
-Capture in "immediate mode".  In this mode, packets are delivered to
-tcpdump as soon as they arrive, rather than being buffered for
-efficiency.  This is the default when printing packets rather than
-saving packets to a ``savefile'' if the packets are being printed to a
-terminal rather than to a file or pipe.
+Захват в "немедленном режиме".  В этом режиме пакеты доставляются в
+tcpdump сразу после их поступления, а не буферизуются для
+повышения эффективности.  Это значение используется по умолчанию при печати пакетов, а не
+при сохранении пакетов в `файл сохранения", если пакеты выводятся на
+терминал, а не в файл или канал передачи.
 .TP
 .BI \-j " tstamp_type"
 .PD 0
 .TP
 .BI \-\-time\-stamp\-type= tstamp_type
 .PD
-Set the time stamp type for the capture to \fItstamp_type\fP.  The names
-to use for the time stamp types are given in
+Установите тип временной метки для захвата равным \Fit stamp_type\FP.  Имена
+, используемые для типов временных меток, приведены в
 .BR \%pcap-tstamp (7);
-not all the types listed there will necessarily be valid for any given
-interface.
+не все перечисленные там типы обязательно будут допустимы для любого данного
+интерфейса.
 .TP
 .B \-J
 .PD 0
 .TP
 .B \-\-list\-time\-stamp\-types
 .PD
-List the supported time stamp types for the interface and exit.  If the
-time stamp type cannot be set for the interface, no time stamp types are
-listed.
+Перечислите поддерживаемые типы временных меток для интерфейса и завершите работу.  Если
+тип временной метки не может быть задан для интерфейса, типы временных меток
+в списке не отображаются.
 .TP
 .BI \-\-time\-stamp\-precision= tstamp_precision
-When capturing, set the time stamp precision for the capture to
-\fItstamp_precision\fP.  Note that availability of high precision time
-stamps (nanoseconds) and their actual accuracy is platform and hardware
-dependent.  Also note that when writing captures made with nanosecond
-accuracy to a savefile, the time stamps are written with nanosecond
-resolution, and the file is written with a different magic number, to
-indicate that the time stamps are in seconds and nanoseconds; not all
-programs that read pcap savefiles will be able to read those captures.
+При захвате установите точность временной метки для захвата
+равной \\fIt stamp_precision\fP.  Обратите внимание, что наличие высокоточных временных
+меток (наносекунд) и их фактическая точность зависят от платформы и аппаратного
+обеспечения.  Также обратите внимание, что при записи записей, сделанных с наносекундной
+точностью, в файл сохранения временные метки записываются с наносекундным
+разрешением, а в файл записывается другое магическое число,
+указывающее, что временные метки указаны в секундах и наносекундах; не все
+программы, которые читают файл сохранения pcap, смогут прочитать эти записи.
 .IP
-When reading a savefile, convert time stamps to the precision specified
-by \fItimestamp_precision\fP, and display them with that resolution.  If
-the precision specified is less than the precision of time stamps in the
-file, the conversion will lose precision.
+При чтении файла сохранения преобразовываются временные метки с точностью, указанной
+в параметре \timestamp_precision\fP, и отобразите их с этим разрешением.  Если
+указанная точность меньше точности временных меток в
+файле, преобразование приведет к потере точности.
 .IP
-The supported values for \fItimestamp_precision\fP are \fBmicro\fP for
-microsecond resolution and \fBnano\fP for nanosecond resolution.  The
-default is microsecond resolution.
+Поддерживаемыми значениями для параметра \fI timestamp_precision\fP являются \fBmicro\fP для
+разрешения в микросекунды и \fBnano\fP для разрешения в наносекунды.  По
+умолчанию используется разрешение в микросекунды.
 .TP
 .B \-\-micro
 .PD 0
 .TP
 .B \-\-nano
 .PD
-Shorthands for \fB\-\-time\-stamp\-precision=micro\fP or
-\fB\-\-time\-stamp\-precision=nano\fP, adjusting the time stamp
-precision accordingly.  When reading packets from a savefile, using
-\fB\-\-micro\fP truncates time stamps if the savefile was created with
-nanosecond precision.  In contrast, a savefile created with microsecond
-precision will have trailing zeroes added to the time stamp when
-\fB\-\-nano\fP is used.
+Сокращенные обозначения для \fB\-\-time\-stamp\-precision=micro\fP или
+\fB\-\-time\-stamp\-precision=nano\fP,
+соответственно изменяя точность отметки времени.  При чтении пакетов из файла сохранения при использовании
+\\fB\-\-micro\fP временные метки сокращаются, если файл сохранения был создан с
+точностью до наносекунды.  Напротив, в файле сохранения, созданном с
+точностью до микросекунды, к отметке времени будут добавлены конечные нули, если используется
+\fB\-\-nano\fP.
 .TP
 .B \-K
 .PD 0
 .TP
 .B \-\-dont\-verify\-checksums
 .PD
-Don't attempt to verify IP, TCP, or UDP checksums.  This is useful for
-interfaces that perform some or all of those checksum calculation in
-hardware; otherwise, all outgoing TCP checksums will be flagged as bad.
+Не пытайтесь проверять контрольные суммы по протоколам IP, TCP или UDP.  Это полезно для
+интерфейсов, которые частично или полностью выполняют вычисление этих контрольных
+сумм аппаратно; в противном случае все исходящие контрольные суммы по протоколу TCP будут помечены как неверные.
 .TP
 .B \-l
-Make stdout line buffered.
-Useful if you want to see the data
-while capturing it.
+Сделать строку стандартного вывода буферизованной.
+Полезно, если вы хотите видеть данные
+во время их записи.
 E.g.,
 .IP
 .RS
@@ -574,446 +575,446 @@ or
 .RE
 .RE
 .IP
-Note that on Windows,``line buffered'' means ``unbuffered'', so that
-WinDump will write each character individually if
+Обратите внимание, что в Windows `строка с буферизацией" означает `небуферизованная", так что
+WinDump запишет каждый символ отдельно, если
 .B \-l
-is specified.
+указан.
 .IP
 .B \-U
-is similar to
+похож на
 .B \-l
-in its behavior, but it will cause output to be ``packet-buffered'', so
-that the output is written to stdout at the end of each packet rather
-than at the end of each line; this is buffered on all platforms,
-including Windows.
+в своем поведении, но это приведет к тому, что выходные данные будут `буферизованы пакетами", так
+что выходные данные записываются в стандартный вывод в конце каждого пакета, а
+не в конце каждой строки; это буферизуется на всех платформах,
+включая Windows.
 .TP
 .B \-L
 .PD 0
 .TP
 .B \-\-list\-data\-link\-types
 .PD
-List the known data link types for the interface, in the specified mode,
-and exit.  The list of known data link types may be dependent on the
-specified mode; for example, on some platforms, a Wi-Fi interface might
-support one set of data link types when not in monitor mode (for
-example, it might support only fake Ethernet headers, or might support
-802.11 headers but not support 802.11 headers with radio information)
-and another set of data link types when in monitor mode (for example, it
-might support 802.11 headers, or 802.11 headers with radio information,
-only in monitor mode).
+Перечислите известные типы каналов передачи данных для интерфейса в указанном режиме
+и завершите работу.  Список известных типов каналов передачи данных может зависеть от
+указанного режима; например, на некоторых платформах интерфейс Wi-Fi может
+поддерживать один набор типов каналов передачи данных, когда он не находится в режиме мониторинга (
+например, он может поддерживать только поддельные заголовки Ethernet или может поддерживать
+Заголовки 802.11, но не поддерживают заголовки 802.11 с радиоинформацией)
+и другой набор типов каналов передачи данных в режиме мониторинга (например, он
+может поддерживать заголовки 802.11 или заголовки 802.11 с радиоинформацией,
+только в режиме мониторинга).
 .TP
-.BI \-m " module"
-Load SMI MIB module definitions from file \fImodule\fR.
-This option
-can be used several times to load several MIB modules into \fItcpdump\fP.
+.BI \-m " модуль"
+Загрузка определения модулей SMI MIB из файла \fImodule\fR.
+Эту опцию
+можно использовать несколько раз для загрузки нескольких модулей MIB в \fItcpdump\fP.
 .TP
 .BI \-M " secret"
-Use \fIsecret\fP as a shared secret for validating the digests found in
-TCP segments with the TCP-MD5 option (RFC 2385), if present.
+Использовать \fI secret\fP в качестве общего секрета для проверки дайджестов, найденных в
+Сегменты TCP с параметром TCP-MD5 (RFC 2385), если таковой имеется.
 .TP
 .B \-n
-Don't convert addresses (i.e., host addresses, port numbers, etc.) to names.
+Не преобразует адреса (например, адреса хостов, номера портов и т.д.) в имена.
 .TP
 .B \-N
-Don't print domain name qualification of host names.
-E.g.,
-if you give this flag then \fItcpdump\fP will print ``nic''
-instead of ``nic.ddn.mil''.
+Не указывает доменное имя для имен хостов.
+Например,
+если вы установите этот флажок, то в \fItcpdump\fP
+вместо `nic.ddn.mil" будет выведено "nic".
 .TP
 .B \-#
 .PD 0
 .TP
 .B \-\-number
 .PD
-Print an optional packet number at the beginning of the line.
+Выведите необязательный номер пакета в начале строки.
 .TP
 .B \-O
 .PD 0
 .TP
 .B \-\-no\-optimize
 .PD
-Do not run the packet-matching code optimizer.
-This is useful only
-if you suspect a bug in the optimizer.
+Не запускает оптимизатор кода для сопоставления пакетов.
+Это полезно, только
+если вы подозреваете ошибку в оптимизаторе.
 .TP
 .B \-p
 .PD 0
 .TP
 .B \-\-no\-promiscuous\-mode
 .PD
-\fIDon't\fP put the interface
-into promiscuous mode.
-Note that the interface might be in promiscuous
-mode for some other reason; hence, `-p' cannot be used as an abbreviation for
-`ether host {local-hw-addr} or ether broadcast'.
+\fIDon't\fP поместить интерфейс
+в неразборчивый режим.
+Обратите внимание, что интерфейс может находиться в неразборчивом
+режиме по какой-либо другой причине; следовательно, "-p" не может использоваться в качестве сокращения для
+"ether host {local-hw-addr} или ether broadcast".
 .TP
 .BI \-\-print
-Print parsed packet output, even if the raw packets are being saved to a
-file with the
+Распечатать выходные данные проанализированного пакета, даже если необработанные пакеты сохраняются в
+файл с
 .B \-w
-flag.
+флагом.
 .TP
 .BI \-Q " direction"
 .PD 0
 .TP
 .BI \-\-direction= direction
 .PD
-Choose send/receive direction \fIdirection\fR for which packets should be
-captured. Possible values are `in', `out' and `inout'. Not available
-on all platforms.
+Выберать направление отправки/получения \direction\fR, для которого следует
+перехватывать пакеты. Возможные значения - `входящий", `исходящий" и `около". Доступно не
+на всех платформах.
 .TP
 .B \-q
-Quick (quiet?) output.
-Print less protocol information so output
-lines are shorter.
+Быстро (тихо?) выход.
+Печатать меньше информации о протоколе, чтобы выходные
+строки были короче.
 .TP
 .BI \-r " file"
-Read packets from \fIfile\fR (which was created with the
+Считывает пакеты из \Fifile\FR (который был создан с помощью опции
 .B \-w
-option or by other tools that write pcap or pcapng files).
-Standard input is used if \fIfile\fR is ``-''.
+или другими инструментами, которые записывают файлы pcap или pcapng).
+Используется стандартный ввод, если \Fifile\FR равен `-".
 .TP
 .B \-S
 .PD 0
 .TP
 .B \-\-absolute\-tcp\-sequence\-numbers
 .PD
-Print absolute, rather than relative, TCP sequence numbers.
+Вывести абсолютные, а не относительные порядковые номера TCP.
 .TP
 .BI \-s " snaplen"
 .PD 0
 .TP
 .BI \-\-snapshot\-length= snaplen
 .PD
-Snarf \fIsnaplen\fP bytes of data from each packet rather than the
-default of 262144 bytes.
-Packets truncated because of a limited snapshot
-are indicated in the output with ``[|\fIproto\fP]'', where \fIproto\fP
-is the name of the protocol level at which the truncation has occurred.
+Snarf \fIsnaplen\Количество байт данных из каждого пакета вместо
+262144 байт по умолчанию.
+Пакеты, усеченные из-за ограниченного времени создания моментального
+снимка, отображаются в выходных данных как `[|\fI proto\fP]", где \fI proto\fP
+- это название уровня протокола, на котором произошло усечение.
 .IP
-Note that taking larger snapshots both increases
-the amount of time it takes to process packets and, effectively,
-decreases the amount of packet buffering.
-This may cause packets to be
-lost.
-Note also that taking smaller snapshots will discard data from protocols
-above the transport layer, which loses information that may be
-important.  NFS and AFS requests and replies, for example, are very
-large, and much of the detail won't be available if a too-short snapshot
-length is selected.
+Обратите внимание, что создание снимков большего
+размера увеличивает время, необходимое для обработки пакетов, и, по сути,
+уменьшает объем буферизации пакетов.
+Это может привести к
+потере пакетов.
+Обратите также внимание, что при создании снимков меньшего размера данные из протоколов
+, расположенных выше транспортного уровня, будут удалены, что приведет к потере
+важной информации.  Например, запросы и ответы NFS и AFS очень
+велики, и большая часть деталей будет недоступна, если выбрана слишком короткая
+длина снимка.
 .IP
-If you need to reduce the snapshot size below the default, you should
-limit \fIsnaplen\fP to the smallest number that will capture the
-protocol information you're interested in.  Setting
-\fIsnaplen\fP to 0 sets it to the default of 262144,
-for backwards compatibility with recent older versions of
-.IR tcpdump .
+Если вам нужно уменьшить размер моментального снимка ниже значения по умолчанию, вам следует
+ограничить \fIsnaplen\fP наименьшим числом, которое позволит получить
+интересующую вас информацию о протоколе.  Установка
+\fIsnaplen\fP в 0 устанавливает значение по умолчанию 262144
+для обратной совместимости с последними старыми версиями
+.ИК-tcpdump .
 .TP
 .BI \-T " type"
-Force packets selected by "\fIexpression\fP" to be interpreted the
-specified \fItype\fR.
-Currently known types are
-\fBaodv\fR (Ad-hoc On-demand Distance Vector protocol),
-\fBcarp\fR (Common Address Redundancy Protocol),
-\fBcnfp\fR (Cisco NetFlow protocol),
-\fBdomain\fR (Domain Name System),
-\fBlmp\fR (Link Management Protocol),
-\fBpgm\fR (Pragmatic General Multicast),
-\fBpgm_zmtp1\fR (ZMTP/1.0 inside PGM/EPGM),
-\fBptp\fR (Precision Time Protocol),
-\fBradius\fR (RADIUS),
-\fBresp\fR (REdis Serialization Protocol),
-\fBrpc\fR (Remote Procedure Call),
-\fBrtcp\fR (Real-Time Applications control protocol),
-\fBrtp\fR (Real-Time Applications protocol),
-\fBsnmp\fR (Simple Network Management Protocol),
-\fBsomeip\fR (SOME/IP),
-\fBtftp\fR (Trivial File Transfer Protocol),
-\fBvat\fR (Visual Audio Tool),
-\fBvxlan\fR (Virtual eXtensible Local Area Network),
-\fBwb\fR (distributed White Board)
-and
-\fBzmtp1\fR (ZeroMQ Message Transport Protocol 1.0).
+Принудительно интерпретировать пакеты, выбранные с помощью "\fIexpression\fP"
+, в соответствии с указанным \fItype\fR.
+В настоящее время известны следующие типы
+: \fBaodv\fR (специальный протокол векторного расстояния по требованию),
+\fBcarp\fR (Протокол резервирования общих адресов),
+\fBcnfp\fR (протокол Cisco NetFlow),
+\\domain\fR (Система доменных имен),
+\\fblp\fR (Управление каналами Протокол),
+\\fbm\fR (Прагматичная общая многоадресная рассылка),
+\\fBpgm_zmtp1\fR (SMTP/1.0 внутри PGM/EPGM),
+\fBptp\fR (Протокол точного времени),
+\\fB radius\fR (РАДИУС),
+\fBresp\fR (протокол сериализации REdis),
+\fBrpc\fR (Удаленный вызов процедуры),
+\\fbtcp\fR (Протокол управления приложениями реального времени),
+\fBrtp\fR (протокол приложений реального времени),
+\\dbsnmp\fR (Простой протокол сетевого управления),
+\\fBsomeip\fR (SOME/IP),
+\\FBTTP\fR (Обычный протокол передачи файлов),
+\\fBvat\fR (Визуальный аудиоинструмент),
+\fBvxlan\fR (Виртуальная расширяемая локальная сеть),
+\\fbwb\fR (распределенная доска объявлений)
+и
+\\fBzmtp1\fR (протокол передачи сообщений ZeroMQ версии 1.0).
 .IP
-Note that the \fBpgm\fR type above affects UDP interpretation only, the native
-PGM is always recognised as IP protocol 113 regardless. UDP-encapsulated PGM is
-often called "EPGM" or "PGM/UDP".
+Обратите внимание, что указанный выше тип \fbm\fR влияет только на интерпретацию UDP, а не на собственный
+PGM всегда распознается как IP-протокол 113 независимо от этого. PGM, инкапсулированный в UDP
+, часто называют "EPGM" или "PGM/UDP".
 .IP
-Note that the \fBpgm_zmtp1\fR type above affects interpretation of both native
-PGM and UDP at once. During the native PGM decoding the application data of an
-ODATA/RDATA packet would be decoded as a ZeroMQ datagram with ZMTP/1.0 frames.
-During the UDP decoding in addition to that any UDP packet would be treated as
-an encapsulated PGM packet.
+Обратите внимание, что приведенный выше тип \fBpgm_zmtp1\fR влияет на интерпретацию обоих собственных
+PGM и UDP одновременно. Во время собственного PGM-декодирования прикладных данных
+Пакет ODATA/RDATA будет декодирован как дейтаграмма ZeroMQ с фреймами SMTP/1.0.
+В дополнение к этому, во время декодирования UDP любой пакет UDP будет рассматриваться как
+инкапсулированный пакет PGM.
 .TP
 .B \-t
-\fIDon't\fP print a timestamp on each dump line.
+\fIDon't\fP вывести временную метку в каждой строке дампа.
 .TP
 .B \-tt
-Print the timestamp, as seconds since January 1, 1970, 00:00:00, UTC, and
-fractions of a second since that time, on each dump line.
+Напечатать метку времени, в секундах с 1 января 1970, , 00:00:00, мирового и
+доли секунды с того времени в каждой строке дампа.
 .TP
 .B \-ttt
-Print a delta (microsecond or nanosecond resolution depending on the
+Вывести разность (с разрешением в микросекунды или наносекунды, в зависимости от параметра
 .B \-\-time\-stamp-precision
-option) between current and previous line on each dump line.
-The default is microsecond resolution.
+) между текущей и предыдущей строками в каждой строке дампа.
+По умолчанию используется разрешение в микросекунды.
 .TP
 .B \-tttt
-Print a timestamp, as hours, minutes, seconds, and fractions of a second
-since midnight, preceded by the date, on each dump line.
+Выведите временную метку в виде часов, минут, секунд и долей секунды
+, прошедших с полуночи, с указанием даты в каждой строке дампа.
 .TP
 .B \-ttttt
-Print a delta (microsecond or nanosecond resolution depending on the
+Вывести разность (с разрешением в микросекунды или наносекунды, в зависимости от параметра
 .B \-\-time\-stamp-precision
-option) between current and first line on each dump line.
-The default is microsecond resolution.
+) между текущей и первой строками в каждой строке дампа.
+По умолчанию используется разрешение в микросекунды.
 .TP
 .B \-u
-Print undecoded NFS handles.
+Вывести недекодированные дескрипторы NFS.
 .TP
 .B \-U
 .PD 0
 .TP
 .B \-\-packet\-buffered
 .PD
-If the
+Если
 .B \-w
-option is not specified, or if it is specified but the
-.B \-\-print
-flag is also specified, make the printed packet output
-``packet-buffered''; i.e., as the description of the contents of each
-packet is printed, it will be written to the standard output, rather
-than, when not writing to a terminal, being written only when the output
-buffer fills.
+параметр не указан, или, если он указан, но
+также указан флаг .B \-\-print,
+выполните вывод распечатанного пакета
+`с буферизацией пакетов"; то есть, когда описание содержимого каждого
+пакета выводится на печать, оно будет записываться в стандартный выходной
+файл, вместо того, чтобы, когда запись не выполняется в терминал, записываться только при заполнении выходного
+буфера.
 .IP
-If the
+Если
 .B \-w
-option is specified, make the saved raw packet output
-``packet-buffered''; i.e., as each packet is saved, it will be written
-to the output file, rather than being written only when the output
-buffer fills.
+если указана опция, выводите сохраненный необработанный пакет
+`с буферизацией пакетов", т.е. по мере сохранения каждого пакета он будет записываться
+в выходной файл, а не только при заполнении выходного
+буфера.
 .IP
-The
+
 .B \-U
-flag will not be supported if
+флаг не будет поддерживаться, если
 .I tcpdump
-was built with an older version of
+был собран с использованием более старой версии
 .I libpcap
-that lacks the
+, в которой отсутствует
 .BR pcap_dump_flush (3PCAP)
-function.
+функция.
 .TP
 .B \-v
-When parsing and printing, produce (slightly more) verbose output.
-For example, the time to live,
-identification, total length and options in an IP packet are printed.
-Also enables additional packet integrity checks such as verifying the
-IP and ICMP header checksum.
+При синтаксическом анализе и печати выводите (чуть более) подробные данные.
+Например, печатаются время жизни,
+идентификация, общая продолжительность и параметры в IP-пакете.
+Также позволяет выполнять дополнительные проверки целостности пакетов, такие как проверка
+Контрольная сумма заголовка IP и ICMP.
 .IP
-When writing to a file with the
+При записи в файл с помощью
 .B \-w
-option and at the same time not reading from a file with the
+возможность и в то же время отсутствие чтения из файла с
 .B \-r
-option, report to stderr, once per second, the number of packets captured. In
-Solaris, FreeBSD and possibly other operating systems this periodic update
-currently can cause loss of captured packets on their way from the kernel to
+опция, сообщающая в stderr раз в секунду о количестве перехваченных пакетов. В
+Solaris, FreeBSD и, возможно, в других операционных системах это периодическое обновление
+в настоящее время может привести к потере перехваченных пакетов на пути из ядра в
 tcpdump.
 .TP
 .B \-vv
-Even more verbose output.
-For example, additional fields are
-printed from NFS reply packets, and SMB packets are fully decoded.
+Еще более подробный вывод.
+Например,
+в ответных пакетах NFS печатаются дополнительные поля, а SMB-пакеты полностью декодируются.
 .TP
 .B \-vvv
-Even more verbose output.
-For example,
-telnet \fBSB\fP ... \fBSE\fP options
-are printed in full.
-With
+Еще более подробный вывод.
+Например,
+telnet \fBSB\fP ... Параметры \fbs\fP
+выводятся полностью.
+С
 .B \-X
-Telnet options are printed in hex as well.
+Параметры Telnet также выводятся в шестнадцатеричном формате.
 .TP
 .BI \-V " file"
-Read a list of filenames from \fIfile\fR. Standard input is used
-if \fIfile\fR is ``-''.
+Считатся список имен файлов из файла \fIfile\fR. Используется стандартный ввод
+, если в файле \fIfile\fR указано `-".
 .TP
 .BI \-w " file"
-Write the raw packets to \fIfile\fR rather than parsing and printing
-them out.
-They can later be printed with the \-r option.
-Standard output is used if \fIfile\fR is ``-''.
+Записывает необработанные пакеты в \fIfile\fR, а не анализирует и выводит
+их.
+Позже их можно распечатать с помощью опции \-r.
+Если в \fIfile\fR значение `-", используется стандартный вывод.
 .IP
-This output will be buffered if written to a file or pipe, so a program
-reading from the file or pipe may not see packets for an arbitrary
-amount of time after they are received.  Use the
+Эти выходные данные будут буферизованы, если они будут записаны в файл или канал, поэтому программа
+, считывающая пакеты из файла или канала, может не видеть пакеты в течение произвольного
+периода времени после их получения.  Используется
 .B \-U
-flag to cause packets to be written as soon as they are received.
+флажок, позволяющий записывать пакеты сразу после их получения.
 .IP
-The MIME type \fIapplication/vnd.tcpdump.pcap\fP has been registered
-with IANA for \fIpcap\fP files. The filename extension \fI.pcap\fP
-appears to be the most commonly used along with \fI.cap\fP and
-\fI.dmp\fP. \fITcpdump\fP itself doesn't check the extension when
-reading capture files and doesn't add an extension when writing them
-(it uses magic numbers in the file header instead). However, many
-operating systems and applications will use the extension if it is
-present and adding one (e.g. .pcap) is recommended.
+MIME-тип \fI application/vnd.tcpdump.pcap\fP был зарегистрирован
+в IANA для файлов \fIpcap\fP. Расширение имени файла \fI.pcap\fP
+по-видимому, наиболее часто используется наряду с \fI.cap\fP и
+\fI.dmp\fP. \fITcpdump\fP сами по себе не проверяют расширение при
+чтении файлов capture и не добавляют расширение при их записи
+(вместо этого они используют магические цифры в заголовке файла). Однако многие
+операционные системы и приложения будут использовать это расширение, если оно
+присутствует, и рекомендуется добавить его (например, .pcap).
 .IP
-See
+Смотрите
 .BR \%pcap-savefile (5)
-for a description of the file format.
+для получения описания формата файла.
 .TP
 .BI \-W " filecount"
-Used in conjunction with the
+При использовании в сочетании с параметром
 .B \-C
-option, this will limit the number
-of files created to the specified number, and begin overwriting files
-from the beginning, thus creating a 'rotating' buffer.
-In addition, it will name
-the files with enough leading 0s to support the maximum number of
-files, allowing them to sort correctly.
+это ограничит количество
+создаваемых файлов указанным числом и начнет перезапись файлов
+с самого начала, создавая, таким образом, "вращающийся" буфер.
+Кроме того, он будет присваивать
+файлам имена с достаточным количеством нулей в начале, чтобы поддерживать максимальное количество
+файлов, что позволит правильно их сортировать.
 .IP
-Used in conjunction with the
+При использовании в сочетании с параметром
 .B \-G
-option, this will limit the number of rotated dump files that get
-created, exiting with status 0 when reaching the limit.
+это ограничит количество создаваемых сменяемых файлов дампа, которые будут
+завершаться со статусом 0 при достижении предела.
 .IP
-If used in conjunction with both
+Если используется в сочетании с обоими параметрами
 .B \-C
-and
+и
 .B \-G,
-the
+
 .B \-W
-option will currently be ignored, and will only affect the file name.
+в настоящее время этот параметр игнорируется и влияет только на имя файла.
 .TP
 .B \-x
-When parsing and printing,
-in addition to printing the headers of each packet, print the data of
-each packet (minus its link level header) in hex.
-The smaller of the entire packet or
+При разборе и печати,
+в дополнение к печати заголовков каждого пакета, выводятся данные
+каждого пакета (за вычетом его заголовка на уровне канала) в шестнадцатеричном формате.
+Чем меньше размер всего пакета или
 .I snaplen
-bytes will be printed.  Note that this is the entire link-layer
-packet, so for link layers that pad (e.g. Ethernet), the padding bytes
-will also be printed when the higher layer packet is shorter than the
-required padding.
-In the current implementation this flag may have the same effect as
+будут напечатаны байты.  Обратите внимание, что это весь
+пакет канального уровня, поэтому для канальных уровней, которые дополняют друг друга (например, Ethernet), байты заполнения
+также будут напечатаны, если пакет более высокого уровня короче
+требуемого размера заполнения.
+В текущей реализации этот флаг может иметь тот же эффект, что и
 .B \-xx
-if the packet is truncated.
+если пакет усечен.
 .TP
 .B \-xx
-When parsing and printing,
-in addition to printing the headers of each packet, print the data of
-each packet,
-.I including
-its link level header, in hex.
+При синтаксическом анализе и печати,
+в дополнение к печати заголовков каждого пакета, выводятся данные
+каждого пакета,
+.I включая
+его заголовок канального уровня, в шестнадцатеричном формате.
 .TP
 .B \-X
-When parsing and printing,
-in addition to printing the headers of each packet, print the data of
-each packet (minus its link level header) in hex and ASCII.
-This is very handy for analysing new protocols.
-In the current implementation this flag may have the same effect as
-.B \-XX
-if the packet is truncated.
+При анализе и печати,
+в дополнение к печати заголовков каждого пакета, выводятся данные
+каждого пакета (за вычетом заголовка на уровне канала) в шестнадцатеричном и ASCII формате.
+Это очень удобно для анализа новых протоколов.
+В текущей реализации этот флаг может иметь тот же эффект, что и 
+.B\-XX
+если пакет усечен.
 .TP
 .B \-XX
-When parsing and printing,
-in addition to printing the headers of each packet, print the data of
-each packet,
-.I including
-its link level header, in hex and ASCII.
+При синтаксическом анализе и печати,
+в дополнение к печати заголовков каждого пакета, выводятся данные
+каждого пакета,
+.I включая
+его заголовок канального уровня, в формате hex и ASCII.
 .TP
 .BI \-y " datalinktype"
 .PD 0
 .TP
 .BI \-\-linktype= datalinktype
 .PD
-Set the data link type to use while capturing packets (see
+Установить тип канала передачи данных, который будет использоваться при захвате пакетов (см.
 .BR -L )
-or just compiling and dumping packet-matching code (see
+или просто скомпилировать и сбросить код для сопоставления пакетов (см.
 .BR -d )
-to \fIdatalinktype\fP.
+в \fIdatalinktype\fP.
 .TP
 .BI \-z " postrotate-command"
-Used in conjunction with the
+Используется в сочетании с
 .B -C
-or
+или
 .B -G
-options, this will make
+параметры, это сделает
 .I tcpdump
-run "
-.I postrotate-command file
-" where
-.I file
-is the savefile being closed after each rotation. For example, specifying
+запустить "
+.I postrotate-command файл
+" где
+.I файл
+файл сохранения закрывающийся после каждого поворота. Например, указав
 .B \-z gzip
-or
+или
 .B \-z bzip2
-will compress each savefile using gzip or bzip2.
+будет сжимать каждый сохраненный файл с помощью gzip или bzip2.
 .IP
-Note that tcpdump will run the command in parallel to the capture, using
-the lowest priority so that this doesn't disturb the capture process.
+Обратите внимание, что tcpdump запустит команду параллельно с записью, используя
+самый низкий приоритет, чтобы это не помешало процессу записи.
 .IP
-And in case you would like to use a command that itself takes flags or
-different arguments, you can always write a shell script that will take the
-savefile name as the only argument, make the flags & arguments arrangements
-and execute the command that you want.
+И в случае, если вы хотите использовать команду, которая сама принимает флаги или
+другие аргументы, вы всегда можете написать сценарий оболочки, который будет принимать
+имя файла сохранения в качестве единственного аргумента, распределять флаги и аргументы
+и выполнять нужную вам команду.
 .TP
 .BI \-Z " user"
 .PD 0
 .TP
 .BI \-\-relinquish\-privileges= user
 .PD
-If
+Если
 .I tcpdump
-is running as root, after opening the capture device or input savefile,
-but before opening any savefiles for output, change the user ID to
+запускается от имени пользователя root, после открытия устройства захвата или входного файла сохранения,
+но перед открытием любых файлов сохранения для вывода измените идентификатор пользователя на
 .I user
-and the group ID to the primary group of
+и идентификатор группы для основной группы
 .IR user .
 .IP
-This behavior can also be enabled by default at compile time.
+Это поведение также может быть включено по умолчанию во время компиляции.
 .IP "\fI expression\fP"
 .RS
-selects which packets will be dumped.
-If no \fIexpression\fP
-is given, all packets on the net will be dumped.
-Otherwise,
-only packets for which \fIexpression\fP is `true' will be dumped.
+выбирает, какие пакеты будут сбрасываться.
+Если значение \fIexpression\fP
+не указано, будут сбрасываться все пакеты в сети.
+В противном случае
+будут сбрасываться только пакеты, для которых значение \fIexpression\fP равно true.
 .LP
-For the \fIexpression\fP syntax, see
-.BR \%pcap-filter (7).
+Синтаксис \fIexpression\fP смотрите в разделе
+.BR \%pcap-фильтр (7).
 .LP
-The \fIexpression\fP argument can be passed to \fItcpdump\fP as either a single
-Shell argument, or as multiple Shell arguments, whichever is more convenient.
-Generally, if the expression contains Shell metacharacters, such as
-backslashes used to escape protocol names, it is easier to pass it as
-a single, quoted argument rather than to escape the Shell
-metacharacters.
-Multiple arguments are concatenated with spaces before being parsed.
-.SH EXAMPLES
+Аргумент \fIexpression\fP может быть передан в \fItcpdump\fP либо как один аргумент оболочки,
+либо как несколько аргументов оболочки, в зависимости от того, что удобнее.
+Как правило, если выражение содержит метасимволы оболочки, такие как
+обратная косая черта, используемая для экранирования имен протоколов, проще передать его как
+один аргумент, заключенный в кавычки, чем экранировать 
+метасимволы оболочки.
+Перед анализом несколько аргументов объединяются пробелами.
+.SH ПРИМЕРЫ
 .LP
-To print all packets arriving at or departing from \fIsundown\fP:
+Чтобы распечатать все пакеты, прибывающие в аэропорт или отправляющиеся из \fIsundown\fP:
 .RS
 .nf
 \fBtcpdump host sundown\fP
 .fi
 .RE
 .LP
-To print traffic between \fIhelios\fR and either \fIhot\fR or \fIace\fR:
+Для печати трафика между \fIhelios\fR and either \fIhot\fR or \fIace\fR:
 .RS
 .nf
-\fBtcpdump host helios and \\( hot or ace \\)\fP
+\fBtcpdump принимающий гелиос и \\( hot or ace \\)\fP
 .fi
 .RE
 .LP
-To print all IP packets between \fIace\fR and any host except \fIhelios\fR:
+Для печати всех IP-пакетов между \fIace\fR и любой хост, кроме \fIhelios\fR:
 .RS
 .nf
 \fBtcpdump ip host ace and not helios\fP
 .fi
 .RE
 .LP
-To print all traffic between local hosts and hosts at Berkeley:
+Чтобы распечатать весь трафик между локальными хостами и хостами в Беркли:
 .RS
 .nf
 .B
@@ -1021,9 +1022,9 @@ tcpdump net ucb-ether
 .fi
 .RE
 .LP
-To print all ftp traffic through internet gateway \fIsnup\fP:
-(note that the expression is quoted to prevent the shell from
-(mis-)interpreting the parentheses):
+Для печати всего ftp-трафика через internet gateway \fIsnup\fP:
+(обратите внимание, что выражение заключено в кавычки, чтобы оболочка
+не могла (неправильно) интерпретировать круглые скобки):
 .RS
 .nf
 .B
@@ -1031,9 +1032,9 @@ tcpdump 'gateway snup and (port ftp or ftp-data)'
 .fi
 .RE
 .LP
-To print traffic neither sourced from nor destined for local hosts
-(if you gateway to one other net, this stuff should never make it
-onto your local net).
+Для печати трафика, который не поступает с локальных хостов и не предназначен для них
+((если ваш шлюз подключен к другой сети, этот материал никогда не должен попадать
+в вашу локальную сеть).
 .RS
 .nf
 .B
@@ -1041,8 +1042,8 @@ tcpdump ip and not net \fIlocalnet\fP
 .fi
 .RE
 .LP
-To print the start and end packets (the SYN and FIN packets) of each
-TCP conversation that involves a non-local host.
+Для печати начального и конечного пакетов (SYN- и FIN-пакетов) каждого
+TCP-диалог, в котором задействован нелокальный хост.
 .RS
 .nf
 .B
@@ -1050,9 +1051,9 @@ tcpdump 'tcp[tcpflags] & (tcp-syn|tcp-fin) != 0 and not src and dst net \fIlocal
 .fi
 .RE
 .LP
-To print the TCP packets with flags RST and ACK both set.
-(i.e. select only the RST and ACK flags in the flags field, and if the result
-is "RST and ACK both set", match)
+Чтобы напечатать TCP-пакеты с установленными флагами RST и ACK.
+(т.е. выберите только флаги RST и ACK в поле flags, и если результат
+"RST и ACK оба установлены", выполните сопоставление)
 .RS
 .nf
 .B
@@ -1060,9 +1061,9 @@ tcpdump 'tcp[tcpflags] & (tcp-rst|tcp-ack) == (tcp-rst|tcp-ack)'
 .fi
 .RE
 .LP
-To print all IPv4 HTTP packets to and from port 80, i.e. print only
-packets that contain data, not, for example, SYN and FIN packets and
-ACK-only packets.  (IPv6 is left as an exercise for the reader.)
+Для печати всех HTTP-пакетов IPv4, поступающих на порт 80 и исходящих из него, т.е. для печати только
+пакетов, содержащих данные, а не, например, пакетов SYN и FIN и
+пакетов только для подтверждения.  (IPv6 оставлен в качестве упражнения для читателя.)
 .RS
 .nf
 .B
@@ -1070,7 +1071,7 @@ tcpdump 'tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) !
 .fi
 .RE
 .LP
-To print IP packets longer than 576 bytes sent through gateway \fIsnup\fP:
+Для печати IP-пакетов длиной более 576 байт, отправленных через шлюз \fIsnup\fP:
 .RS
 .nf
 .B
@@ -1078,9 +1079,9 @@ tcpdump 'gateway snup and ip[2:2] > 576'
 .fi
 .RE
 .LP
-To print IP broadcast or multicast packets that were
-.I not
-sent via Ethernet broadcast or multicast:
+Для печати широковещательных или многоадресных IP-пакетов, которые были
+.I не
+передается по широковещательной или многоадресной рассылке Ethernet:
 .RS
 .nf
 .B
@@ -1088,104 +1089,104 @@ tcpdump 'ether[0] & 1 = 0 and ip[16] >= 224'
 .fi
 .RE
 .LP
-To print all ICMP packets that are not echo requests/replies (i.e., not
-ping packets):
+Для печати всех ICMP-пакетов, которые не являются эхо-запросами/ответами (т.е. не
+пинговыми пакетами):
 .RS
 .nf
 .B
 tcpdump 'icmp[icmptype] != icmp-echo and icmp[icmptype] != icmp-echoreply'
 .fi
 .RE
-.SH OUTPUT FORMAT
+.SH ВЫХОДНОЙ ФОРМАТ
 .LP
-The output of \fItcpdump\fP is protocol dependent.
-The following
-gives a brief description and examples of most of the formats.
+Выходные данные \fItcpdump\fP зависят от протокола.
+Ниже
+приведены краткое описание и примеры большинства форматов.
 .de HD
 .sp 1.5
 .B
 ..
 .HD
-Timestamps
+Временные метки
 .LP
-By default, all output lines are preceded by a timestamp.
-The timestamp
-is the current clock time in the form
+По умолчанию всем строкам вывода предшествует временная метка.
+Временная метка
+это текущее тактовое время в форме
 .RS
 .nf
 \fIhh:mm:ss.frac\fP
 .fi
 .RE
-and is as accurate as the kernel's clock.
-The timestamp reflects the time the kernel applied a time stamp to the packet.
-No attempt is made to account for the time lag between when the network
-interface finished receiving the packet from the network and when the
-kernel applied a time stamp to the packet; that time lag could include a
-delay between the time when the network interface finished receiving a
-packet from the network and the time when an interrupt was delivered to
-the kernel to get it to read the packet and a delay between the time
-when the kernel serviced the `new packet' interrupt and the time when it
-applied a time stamp to the packet.
+Временная метка отражает время, в течение
+которого ядро применяло временную метку к пакету.
+Не предпринимается никаких попыток учесть временную задержку между моментом, когда сетевой
+интерфейс завершил прием пакета из сети, и моментом, когда
+ядро применило временную метку к пакету; эта временная задержка может включать
+задержку между моментом, когда сетевой интерфейс завершил прием
+пакета из сети, и моментом, когда произошло прерывание. был передан
+ядру, чтобы заставить его прочитать пакет, и задержка между моментом,
+когда ядро обработало прерывание "новый пакет", и моментом, когда оно
+применил временную метку к пакету.
 .HD
-Link Level Headers
+Заголовки на уровне ссылок
 .LP
-If the '-e' option is given, the link level header is printed out.
-On Ethernets, the source and destination addresses, protocol,
-and packet length are printed.
+Если задан параметр "-e", выводится заголовок канального уровня.
+В Ethernet-сетях выводятся адреса источника и назначения, протокол
+и длина пакета.
 .LP
-On FDDI networks, the  '-e' option causes \fItcpdump\fP to print
-the `frame control' field,  the source and destination addresses,
-and the packet length.
-(The `frame control' field governs the
-interpretation of the rest of the packet.
-Normal packets (such
-as those containing IP datagrams) are `async' packets, with a priority
-value between 0 and 7; for example, `\fBasync4\fR'.
-Such packets
-are assumed to contain an 802.2 Logical Link Control (LLC) packet;
-the LLC header is printed if it is \fInot\fR an ISO datagram or a
-so-called SNAP packet.
+В сетях FDDI параметр "-e" приводит к тому, что \fItcpdump\fP выводит
+поле "управление кадром", адреса источника и назначения,
+а также длину пакета.
+(Поле "управление кадром" определяет
+интерпретацию остальной части пакета.
+Обычные пакеты (
+например, содержащие IP-дейтаграммы) являются "асинхронными" пакетами со
+значением приоритета от 0 до 7; например, "\fBasync4\fR".
+Предполагается, что такие пакеты
+содержат пакет управления логическим соединением стандарта 802.2 (LLC);
+заголовок LLC печатается, если это не дейтаграмма ISO или
+так называемый SNAP pocket.
 .LP
-On Token Ring networks, the '-e' option causes \fItcpdump\fP to print
-the `access control' and `frame control' fields, the source and
-destination addresses, and the packet length.
-As on FDDI networks,
-packets are assumed to contain an LLC packet.
-Regardless of whether
-the '-e' option is specified or not, the source routing information is
-printed for source-routed packets.
+В сетях Token Ring параметр "-e" приводит к тому, что \fItcpdump\fP выводит
+поля "управление доступом" и "управление кадрами", адреса источника и
+назначения, а также длину пакета.
+Как и в сетях FDDI,
+предполагается, что пакеты содержат пакет LLC.
+Независимо от того, указана ли
+опция "-e" или нет, информация
+о маршруте источника выводится для пакетов, маршрутизируемых источником.
 .LP
-On 802.11 networks, the '-e' option causes \fItcpdump\fP to print
-the `frame control' fields, all of the addresses in the 802.11 header,
-and the packet length.
-As on FDDI networks,
-packets are assumed to contain an LLC packet.
+В сетях стандарта 802.11 параметр "-e" приводит к тому, что \fItcpdump\fP выводит
+поля "управление кадром", все адреса в заголовке стандарта 802.11
+и длину пакета.
+Как и в сетях FDDI,
+предполагается, что пакеты содержат пакет LLC.
 .LP
-\fI(N.B.: The following description assumes familiarity with
-the SLIP compression algorithm described in RFC 1144.)\fP
+\fI(N.B.: Следующее описание предполагает знакомство с
+алгоритмом сжатия SLIP, описанным в RFC 1144.)\fP
 .LP
-On SLIP links, a direction indicator (``I'' for inbound, ``O'' for outbound),
-packet type, and compression information are printed out.
-The packet type is printed first.
-The three types are \fIip\fP, \fIutcp\fP, and \fIctcp\fP.
-No further link information is printed for \fIip\fR packets.
-For TCP packets, the connection identifier is printed following the type.
-If the packet is compressed, its encoded header is printed out.
-The special cases are printed out as
-\fB*S+\fIn\fR and \fB*SA+\fIn\fR, where \fIn\fR is the amount by which
-the sequence number (or sequence number and ack) has changed.
-If it is not a special case,
-zero or more changes are printed.
-A change is indicated by U (urgent pointer), W (window), A (ack),
-S (sequence number), and I (packet ID), followed by a delta (+n or -n),
-or a new value (=n).
-Finally, the amount of data in the packet and compressed header length
-are printed.
+На линиях связи SLIP выводится индикатор направления (`I" для входящих, `O" для исходящих),
+тип пакета и информация о сжатии.
+Сначала выводится тип пакета.
+Существует три типа пакетов: \fIip\fP, \fIutcp\fP и \fIctcp\fP.
+Для пакетов \fIip\fR дополнительная информация о соединении не выводится.
+Для пакетов TCP идентификатор соединения выводится в соответствии с типом.
+Если пакет сжат, то выводится его закодированный заголовок.
+Особые случаи выводятся в виде
+\fB*S+\fIn\fR и \fB*SA+\fIn\fR, где \fIn\fR - это величина, на которую
+изменился порядковый номер (или порядковый номер и ack).
+Если это не особый случай,
+выводится ноль или более изменений.
+Изменение обозначается U (срочный указатель), W (окно), A (подтверждение).,
+S (порядковый номер) и I (идентификатор пакета), за которыми следует дельта (+n или -n)
+или новое значение (=n).
+Наконец, выводятся объем данных в пакете и
+сжатая длина заголовка.
 .LP
-For example, the following line shows an outbound compressed TCP packet,
-with an implicit connection identifier; the ack has changed by 6,
-the sequence number by 49, and the packet ID by 6; there are 3 bytes of
-data and 6 bytes of compressed header:
+Например, в следующей строке показан исходящий сжатый TCP-пакет
+с неявным идентификатором соединения; ack изменился на 6,
+порядковый номер - на 49, а идентификатор пакета - на 6; имеется 3 байта
+данных и 6 байт сжатого заголовка:
 .RS
 .nf
 \fBO ctcp * A+6 S+49 I+6 3 (6)\fP
@@ -1194,11 +1195,11 @@ data and 6 bytes of compressed header:
 .HD
 ARP/RARP Packets
 .LP
-ARP/RARP output shows the type of request and its arguments.
-The
-format is intended to be self explanatory.
-Here is a short sample taken from the start of an `rlogin' from
-host \fIrtsg\fP to host \fIcsam\fP:
+ARP/RARP выходные данные показывают тип запроса и его аргументы.
+
+формат должен быть понятен сам по себе.
+Вот краткий пример, взятый из начала "rlogin" с
+хоста \first\fP на хост \fIc sam\fP:
 .RS
 .nf
 .sp .5
@@ -1207,13 +1208,13 @@ arp reply csam is-at CSAM\fR
 .sp .5
 .fi
 .RE
-The first line says that rtsg sent an ARP packet asking
-for the Ethernet address of internet host csam.
+В первой строке говорится, что rtsg отправил ARP-пакет с запросом
+Ethernet-адреса интернет-узла csam.
 Csam
-replies with its Ethernet address (in this example, Ethernet addresses
-are in caps and internet addresses in lower case).
+отвечает своим Ethernet-адресом (в этом примере
+адреса Ethernet указаны заглавными буквами, а адреса Интернета - строчными).
 .LP
-This would look less redundant if we had done \fItcpdump \-n\fP:
+Это выглядело бы менее избыточным, если бы мы сделали \fItcpdump \-n\fP:
 .RS
 .nf
 .sp .5
@@ -1222,8 +1223,8 @@ arp reply 128.3.254.6 is-at 02:07:01:00:01:c4\fP
 .fi
 .RE
 .LP
-If we had done \fItcpdump \-e\fP, the fact that the first packet is
-broadcast and the second is point-to-point would be visible:
+Если бы мы использовали \fItcpdump \-e\fP, то был бы виден тот факт, что первый пакет передается
+широковещательно, а второй - от точки к точке:
 .RS
 .nf
 .sp .5
@@ -1232,63 +1233,63 @@ CSAM RTSG 0806  64: arp reply csam is-at CSAM\fR
 .sp .5
 .fi
 .RE
-For the first packet this says the Ethernet source address is RTSG, the
-destination is the Ethernet broadcast address, the type field
-contained hex 0806 (type ETHER_ARP) and the total length was 64 bytes.
+Для первого пакета это означает, что адрес источника Ethernet - RTSG, адрес
+назначения - широковещательный адрес Ethernet, поле type
+содержало шестнадцатеричный код 0806 (тип ETHER_ARP), а общая длина составляла 64 байта.
 .HD
 IPv4 Packets
 .LP
-If the link-layer header is not being printed, for IPv4 packets,
+Если заголовок канального уровня не печатается, то для пакетов IPv4,
 \fBIP\fP is printed after the time stamp.
 .LP
-If the
+Если
 .B \-v
-flag is specified, information from the IPv4 header is shown in
-parentheses after the \fBIP\fP or the link-layer header.
-The general format of this information is:
+если указан флаг, информация из заголовка IPv4 отображается в
+круглых скобках после заголовка \bp\fP или заголовка канального уровня.
+Общий формат этой информации следующий:
 .RS
 .nf
 .sp .5
-tos \fItos\fP, ttl \fIttl\fP, id \fIid\fP, offset \fIoffset\fP, flags [\fIflags\fP], proto \fIproto\fP, length \fIlength\fP, options (\fIoptions\fP)
+tos \fItos\fP, ttl \fIttl\fP, id \fIid\fP, смещение \fIoffset\fP, флажки [\fIflags\fP], прототип \fIproto\fP, длина \fIlength\fP, зараметры (\fIoptions\fP)
 .sp .5
 .fi
 .RE
-\fItos\fP is the type of service field; if the ECN bits are non-zero,
-those are reported as \fBECT(1)\fP, \fBECT(0)\fP, or \fBCE\fP.
-\fIttl\fP is the time-to-live; it is not reported if it is zero.
-\fIid\fP is the IP identification field.
-\fIoffset\fP is the fragment offset field; it is printed whether this is
-part of a fragmented datagram or not.
-\fIflags\fP are the MF and DF flags; \fB+\fP is reported if MF is set,
-and \fBDF\fP is reported if F is set.  If neither are set, \fB.\fP is
-reported.
-\fIproto\fP is the protocol ID field.
-\fIlength\fP is the total length field.
-\fIoptions\fP are the IP options, if any.
+\fItos\fP это поле типа услуги; если биты ECN отличны от нуля,
+они отображаются как \fBECT(1)\fP, \fBECT(0)\fP, или \fBCE\fP.
+\fIttl\fP это время жизни; о нем не сообщается, если оно равно нулю.
+\fIid\fP это поле для идентификации IP-адреса.
+\fIoffset\fP это поле смещения фрагмента; оно выводится независимо от того, является ли это
+частью фрагментированной дейтаграммы или нет.
+\fIflags\fP являются флагами MF и DF; \fB+\fP сообщается, если установлен MF,
+и \fBDF\fP сообщается, если задан параметр F.  Если не задан ни один из них, \fB.\fP 
+сообщена.
+\fIproto\fP это поле идентификатора протокола.
+\fIlength\fP это поле общей длины.
+\fIoptions\fP это параметры IP, если таковые имеются.
 .LP
-Next, for TCP and UDP packets, the source and destination IP addresses
-and TCP or UDP ports, with a dot between each IP address and its
-corresponding port, will be printed, with a > separating the source and
-destination.  For other protocols, the addresses will be printed, with
-a > separating the source and destination.  Higher level protocol
-information, if any, will be printed after that.
+Далее, для пакетов TCP и UDP
+будут напечатаны IP-адреса источника и назначения, а также порты TCP или UDP, с точкой между каждым IP-адресом и
+соответствующим ему портом, при этом источник и пункт назначения будут разделены символом >.
+Для других протоколов адреса будут напечатаны,
+разделяя источник и пункт назначения символом >.  
+После этого будет напечатана информация о протоколе более высокого уровня, если таковая имеется.
 .LP
-For fragmented IP datagrams, the first fragment contains the higher
-level protocol header; fragments after the first contain no higher level
-protocol header.  Fragmentation information will be printed only with
-the
+Для фрагментированных IP-дейтаграмм первый фрагмент содержит заголовок протокола более высокого
+уровня; фрагменты, следующие за первым, не содержат
+заголовка протокола более высокого уровня.  Информация о фрагментации будет выводиться только с
+флагом
 .B \-v
-flag, in the IP header information, as described above.
+в информации заголовка IP, как описано выше.
 .HD
-TCP Packets
+TCP Пакеты
 .LP
-\fI(N.B.:The following description assumes familiarity with
-the TCP protocol described in RFC 793.
-If you are not familiar
-with the protocol, this description will not
-be of much use to you.)\fP
+\fI(N.B.:Следующее описание предполагает знакомство с
+протоколом TCP, описанным в RFC 793.
+Если вы не знакомы
+с протоколом, это описание будет вам не
+очень полезно.)\fP
 .LP
-The general format of a TCP protocol line is:
+Общий формат строки протокола TCP таков:
 .RS
 .nf
 .sp .5
@@ -1296,27 +1297,27 @@ The general format of a TCP protocol line is:
 .sp .5
 .fi
 .RE
-\fISrc\fP and \fIdst\fP are the source and destination IP
-addresses and ports.
-\fITcpflags\fP are some combination of S (SYN),
+\fISrc\fP and \fIdst\fP это IP
+-адреса и порты источника и назначения.
+\fITcpflags\fP aпредставляют собой некоторую комбинацию S (SYN),
 F (FIN), P (PSH), R (RST), U (URG), W (CWR), E (ECE) or
-`.' (ACK), or `none' if no flags are set.
-\fIData-seqno\fP describes the portion of sequence space covered
-by the data in this packet (see example below).
-\fIAckno\fP is sequence number of the next data expected the other
-direction on this connection.
-\fIWindow\fP is the number of bytes of receive buffer space available
-the other direction on this connection.
-\fIUrg\fP indicates there is `urgent' data in the packet.
-\fIOpts\fP are TCP options (e.g., mss 1024).
-\fILen\fP is the length of payload data.
+`.' (ACK), или `ни один' если флаги не установлены.
+\fIData-seqno\fP описывает часть пространства последовательностей, занимаемую
+данными в этом пакете (см. пример ниже).
+\fIAckno\fP это порядковый номер следующих данных, ожидаемых в другом
+направлении по этому соединению.
+\fIWindow\fP это количество байт места в буфере приема, доступного
+в другом направлении по этому соединению.
+\fIUrg\fP указывает на наличие в пакете `срочных" данных.
+\fIOpts\fP являются TCP параметрами (e.g., mss 1024).
+\fILen\fP это длина данных полезной нагрузки.
 .LP
 \fIIptype\fR, \fISrc\fP, \fIdst\fP, and \fIflags\fP are always present.
-The other fields
-depend on the contents of the packet's TCP protocol header and
-are output only if appropriate.
+Остальные поля
+зависят от содержимого заголовка протокола TCP пакета и
+выводятся только при необходимости.
 .LP
-Here is the opening portion of an rlogin from host \fIrtsg\fP to
+Вот начальная часть rlogin от host \fIrtsg\fP до
 host \fIcsam\fP.
 .RS
 .nf
@@ -1333,91 +1334,91 @@ IP csam.login > rtsg.1023: Flags [P.], seq 3:4, ack 21, win 4077, urg 1, length 
 .sp .5
 .fi
 .RE
-The first line says that TCP port 1023 on rtsg sent a packet
-to port \fIlogin\fP
-on csam.
-The \fBS\fP indicates that the \fISYN\fP flag was set.
-The packet sequence number was 768512 and it contained no data.
-(The notation is `first:last' which means `sequence
-numbers \fIfirst\fP
-up to but not including \fIlast\fP'.)
-There was no piggy-backed ACK, the available receive window was 4096
-bytes and there was a max-segment-size option requesting an MSS of
-1024 bytes.
+В первой строке говорится, что TCP-порт 1023 на rtsg отправил пакет
+на порт \fIlogin\fP
+на csam.
+ \fBS\fP indicates that the \fISYN\fP флажок установлен.
+Порядковый номер пакета был 768512 и в нем не было никаких данных.
+(Обозначение - "первый:последний", что означает "порядковые
+номера". \fIfirst\fP
+вплоть до, но не включая \fIlast\fP'.)
+Подтверждения с поддержкой piggy-backed не было, доступное окно получения составляло 4096
+байт, и была опция максимального размера сегмента, запрашивающая MSS
+в 1024 байта.
 .LP
-Csam replies with a similar packet except it includes a piggy-backed
-ACK for rtsg's SYN.
-Rtsg then ACKs csam's SYN.
-The `.' means the ACK flag was set.
-The packet contained no data so there is no data sequence number or length.
-Note that the ACK sequence
-number is a small integer (1).
-The first time \fItcpdump\fP sees a
-TCP `conversation', it prints the sequence number from the packet.
-On subsequent packets of the conversation, the difference between
-the current packet's sequence number and this initial sequence number
-is printed.
-This means that sequence numbers after the
-first can be interpreted
-as relative byte positions in the conversation's data stream (with the
-first data byte each direction being `1').
-`-S' will override this
-feature, causing the original sequence numbers to be output.
+Csam отвечает аналогичным пакетом, за исключением того, что он включает в себя объединенный
+Подтверждение для SYN rtsg.
+Rtsg затем ACKs csam's SYN.
+`." означает, что был установлен флаг подтверждения.
+Пакет не содержал данных, поэтому нет ни порядкового номера, ни длины данных.
+Обратите внимание, что порядковый
+номер подтверждения - это небольшое целое число (1).
+В первый раз, когда \fItcpdump\fP увидит
+TCP `диалог", он выводит порядковый номер из пакета.
+В последующих пакетах обмена данными выводится разница между
+порядковым номером текущего пакета и этим исходным порядковым 
+номером.
+Это означает, что порядковые номера после
+первого могут интерпретироваться
+как относительные позиции байтов в потоке данных диалога (при
+этом первый байт данных в каждом направлении равен `1").
+`-S' переопределит эту
+функцию, в результате чего будут выведены исходные порядковые номера.
 .LP
-On the 6th line, rtsg sends csam 19 bytes of data (bytes 2 through 20
-in the rtsg \(-> csam side of the conversation).
-The PSH flag is set in the packet.
-On the 7th line, csam says it's received data sent by rtsg up to
-but not including byte 21.
-Most of this data is apparently sitting in the
-socket buffer since csam's receive window has gotten 19 bytes smaller.
-Csam also sends one byte of data to rtsg in this packet.
-On the 8th and 9th lines,
-csam sends two bytes of urgent, pushed data to rtsg.
+В 6-й строке rtsg отправляет csam 19 байт данных (байты со 2 по 20
+в первой части диалога \(-> csam).
+В пакете установлен флаг PSH.
+В 7-й строке csam сообщает, что получены данные, отправленные rtsg, вплоть до
+21-го байта, но не включая его.
+Большая часть этих данных, по-видимому, находится в буфере
+сокета, поскольку окно приема sam уменьшилось на 19 байт.
+В этом пакете Sam также отправляет один байт данных в rtsg.
+В 8-й и 9-й строках
+csm отправляет два байта срочных данных в rtsg.
 .LP
-If the snapshot was small enough that \fItcpdump\fP didn't capture
-the full TCP header, it interprets as much of the header as it can
-and then reports ``[|\fItcp\fP]'' to indicate the remainder could not
-be interpreted.
-If the header contains a bogus option (one with a length
-that's either too small or beyond the end of the header), \fItcpdump\fP
-reports it as ``[\fIbad opt\fP]'' and does not interpret any further
-options (since it's impossible to tell where they start).
-If the header
-length indicates options are present but the IP datagram length is not
-long enough for the options to actually be there, \fItcpdump\fP reports
-it as ``[\fIbad hdr length\fP]''.
+Если снимок был достаточно маленьким, чтобы \fItcpdump\fP не смог захватить
+полный заголовок TCP, он интерпретирует как можно большую часть заголовка,
+а затем сообщает `[|\fIt cp\fP]", указывая, что остальная часть не может
+быть интерпретирована.
+Если заголовок содержит фиктивный параметр (длина
+которого либо слишком мала, либо находится за пределами конца заголовка), \fItcpdump\fP
+сообщает об этом как о `[\fIbad opt\fP]" и не интерпретирует другие
+параметры (поскольку невозможно определить, где они начинаются).
+Если длина заголовка
+указывает на наличие параметров, но длина IP-дейтаграммы
+недостаточна для того, чтобы параметры действительно были там, \fItcpdump\fP сообщает
+об этом как `[\fI bad hdr length\fP''.
 .HD
-.B Capturing TCP packets with particular flag combinations (SYN-ACK, URG-ACK, etc.)
+.B Захват TCP-пакетов с определенными комбинациями флагов (SYN-ACK, URG-ACK, etc.)
 .PP
-There are 8 bits in the control bits section of the TCP header:
+В разделе "Управляющие биты" заголовка TCP содержится 8 битов:
 .IP
 .I CWR | ECE | URG | ACK | PSH | RST | SYN | FIN
 .PP
-Let's assume that we want to watch packets used in establishing
-a TCP connection.
-Recall that TCP uses a 3-way handshake protocol
-when it initializes a new connection; the connection sequence with
-regard to the TCP control bits is
+Давайте предположим, что мы хотим просмотреть пакеты, используемые при установлении
+TCP-соединения.
+Напомним, что TCP использует трехсторонний протокол подтверждения
+связи при инициализации нового соединения; последовательность соединений в
+отношении управляющих битов TCP такова
 .PP
 .RS
-1) Caller sends SYN
+1) Запросчик отправляет SYN
 .RE
 .RS
-2) Recipient responds with SYN, ACK
+2) Получатель отвечает следующим образом SYN, ACK
 .RE
 .RS
-3) Caller sends ACK
+3) Запросчик отправляет ACK
 .RE
 .PP
-Now we're interested in capturing packets that have only the
-SYN bit set (Step 1).
-Note that we don't want packets from step 2
-(SYN-ACK), just a plain initial SYN.
-What we need is a correct filter
-expression for \fItcpdump\fP.
+Теперь нас интересует захват пакетов, для которых установлен только
+бит SYN (шаг 1).
+Обратите внимание, что нам не нужны пакеты с шага 2
+(SYN-ACK), только обычный начальный SYN.
+Что нам нужно, так это правильное
+выражение фильтра для \fitcpdump\FP.
 .PP
-Recall the structure of a TCP header without options:
+Напомним структуру заголовка TCP без опций:
 .PP
 .nf
  0                            15                              31
@@ -1434,12 +1435,12 @@ Recall the structure of a TCP header without options:
 -----------------------------------------------------------------
 .fi
 .PP
-A TCP header usually holds 20 octets of data, unless options are
-present.
-The first line of the graph contains octets 0 - 3, the
-second line shows octets 4 - 7 etc.
+The TCP header usually contains 20 octets of data, unless there are additional
+options.
+The first line of the graph contains octets from 0 to 3,
+the second line contains octets from 4 to 7, etc.
 .PP
-Starting to count with 0, the relevant TCP control bits are contained
+Starting from 0, the corresponding TCP control bits are contained
 in octet 13:
 .PP
 .nf
@@ -1450,7 +1451,7 @@ in octet 13:
 |               |  13th octet   |               |               |
 .fi
 .PP
-Let's have a closer look at octet no. 13:
+Давайте поближе познакомимся с октетом № 13:
 .PP
 .nf
                 |               |
@@ -1460,14 +1461,14 @@ Let's have a closer look at octet no. 13:
                 |7   5   3     0|
 .fi
 .PP
-These are the TCP control bits we are interested
-in.
-We have numbered the bits in this octet from 0 to 7, right to
-left, so the PSH bit is bit number 3, while the URG bit is number 5.
+Это управляющие биты TCP,
+которые нас интересуют.
+Мы пронумеровали биты в этом октете от 0 до 7 справа
+налево, поэтому бит PSH имеет номер 3, а бит URG - номер 5.
 .PP
-Recall that we want to capture packets with only SYN set.
-Let's see what happens to octet 13 if a TCP datagram arrives
-with the SYN bit set in its header:
+Напомним, что мы хотим перехватывать пакеты только с установленным SYN.
+Давайте посмотрим, что произойдет с октетом 13, если дейтаграмма TCP поступит
+с установленным битом SYN в заголовке:
 .PP
 .nf
                 |C|E|U|A|P|R|S|F|
@@ -1477,46 +1478,46 @@ with the SYN bit set in its header:
                 |7 6 5 4 3 2 1 0|
 .fi
 .PP
-Looking at the
-control bits section we see that only bit number 1 (SYN) is set.
+Заглянув в
+раздел "Управляющие биты", мы видим, что установлен только бит с номером 1 (SYN).
 .PP
-Assuming that octet number 13 is an 8-bit unsigned integer in
-network byte order, the binary value of this octet is
+Предполагая, что октет с номером 13 представляет собой 8-разрядное целое число без знака в
+сетевом порядке байтов, двоичное значение этого октета равно
 .IP
 00000010
 .PP
-and its decimal representation is
+и его десятичное представление равно
 .PP
 .nf
    7     6     5     4     3     2     1     0
 0*2 + 0*2 + 0*2 + 0*2 + 0*2 + 0*2 + 1*2 + 0*2  =  2
 .fi
 .PP
-We're almost done, because now we know that if only SYN is set,
-the value of the 13th octet in the TCP header, when interpreted
-as a 8-bit unsigned integer in network byte order, must be exactly 2.
+Мы почти закончили, потому что теперь мы знаем, что если задан только SYN,
+то значение 13-го октета в заголовке TCP, интерпретируемое
+как 8-разрядное целое число без знака в сетевом порядке байтов, должно быть ровно 2.
 .PP
-This relationship can be expressed as
+Эта взаимосвязь может быть выражена следующим образом
 .RS
 .B
 tcp[13] == 2
 .RE
 .PP
-We can use this expression as the filter for \fItcpdump\fP in order
-to watch packets which have only SYN set:
+Мы можем использовать это выражение в качестве фильтра для \fItcpdump\fP,
+чтобы отслеживать пакеты, для которых установлен только SYN:
 .RS
 .B
 tcpdump -i xl0 tcp[13] == 2
 .RE
 .PP
-The expression says "let the 13th octet of a TCP datagram have
-the decimal value 2", which is exactly what we want.
+Выражение гласит: "пусть 13-й октет TCP-дейтаграммы имеет
+десятичное значение 2", что является именно тем, что нам нужно.
 .PP
-Now, let's assume that we need to capture SYN packets, but we
-don't care if ACK or any other TCP control bit is set at the
-same time.
-Let's see what happens to octet 13 when a TCP datagram
-with SYN-ACK set arrives:
+Теперь давайте предположим, что нам нужно перехватывать SYN-пакеты, но нас
+не волнует, установлен ли при этом ACK или любой другой управляющий 
+бит TCP.
+Давайте посмотрим, что происходит с октетом 13, когда поступает TCP-дейтаграмма
+с установленным SYN-ACK:
 .PP
 .nf
      |C|E|U|A|P|R|S|F|
@@ -1526,31 +1527,31 @@ with SYN-ACK set arrives:
      |7 6 5 4 3 2 1 0|
 .fi
 .PP
-Now bits 1 and 4 are set in the 13th octet.
-The binary value of
-octet 13 is
+Теперь биты 1 и 4 установлены в 13-м октете.
+Двоичное значение
+октета 13 равно
 .IP
      00010010
 .PP
-which translates to decimal
+который переводится в десятичный формат
 .PP
 .nf
    7     6     5     4     3     2     1     0
 0*2 + 0*2 + 0*2 + 1*2 + 0*2 + 0*2 + 1*2 + 0*2   = 18
 .fi
 .PP
-Now we can't just use 'tcp[13] == 18' in the \fItcpdump\fP filter
-expression, because that would select only those packets that have
-SYN-ACK set, but not those with only SYN set.
-Remember that we don't care
-if ACK or any other control bit is set as long as SYN is set.
+Теперь мы не можем просто использовать 'tcp[13] == 18' в выражении фильтра \fitcpdump\FP,
+потому что это выбрало бы только те пакеты, у которых установлен
+SYN-ACK, но не те, у которых установлен только SYN.
+Помните, что нам все равно,
+установлен ли ACK или любой другой управляющий бит, пока установлен SYN.
 .PP
-In order to achieve our goal, we need to logically AND the
-binary value of octet 13 with some other value to preserve
-the SYN bit.
-We know that we want SYN to be set in any case,
-so we'll logically AND the value in the 13th octet with
-the binary value of a SYN:
+Чтобы достичь нашей цели, нам нужно логически
+объединить двоичное значение октета 13 с каким-либо другим значением, чтобы сохранить
+бит SYN.
+Мы знаем, что хотим, чтобы SYN был установлен в любом случае,
+поэтому логически сопоставим значение в 13-м октете с
+двоичным значением SYN:
 .PP
 .nf
 
@@ -1560,41 +1561,41 @@ the binary value of a SYN:
      =    00000010                 =    00000010
 .fi
 .PP
-We see that this AND operation delivers the same result
-regardless whether ACK or another TCP control bit is set.
-The decimal representation of the AND value as well as
-the result of this operation is 2 (binary 00000010),
-so we know that for packets with SYN set the following
-relation must hold true:
+Мы видим, что эта операция И дает один и тот же результат
+независимо от того, установлен ли ACK или другой управляющий бит TCP.
+Десятичное представление значения AND, а также
+результат этой операции равны 2 (двоичный код 00000010),
+поэтому мы знаем, что для пакетов с установленным значением SYN
+должно выполняться следующее соотношение:
 .IP
 ( ( value of octet 13 ) AND ( 2 ) ) == ( 2 )
 .PP
-This points us to the \fItcpdump\fP filter expression
+Это указывает нам на выражение фильтра \fItcpdump\fP
 .RS
 .B
      tcpdump -i xl0 'tcp[13] & 2 == 2'
 .RE
 .PP
-Some offsets and field values may be expressed as names
-rather than as numeric values. For example tcp[13] may
-be replaced with tcp[tcpflags]. The following TCP flag
-field values are also available: tcp-fin, tcp-syn, tcp-rst,
-tcp-push, tcp-ack, tcp-urg, tcp-ece and tcp-cwr.
+Некоторые смещения и значения полей могут быть выражены в виде имен,
+а не числовых значений. Например, tcp[13] может
+быть заменен на tcp[флаги tcp]. Также доступны следующие
+значения полей флага TCP: tcp-fin, tcp-syn, tcp-rst,
+tcp-push, tcp-ack, tcp-urg, tcp-ece и tcp-cwr.
 .PP
-This can be demonstrated as:
+Это может быть продемонстрировано следующим образом:
 .RS
 .B
      tcpdump -i xl0 'tcp[tcpflags] & tcp-push != 0'
 .RE
 .PP
-Note that you should use single quotes or a backslash
-in the expression to hide the AND ('&') special character
-from the shell.
+Обратите внимание, что вы должны использовать одинарные кавычки или обратную косую
+черту в выражении, чтобы скрыть специальный символ AND ('&')
+из оболочки.
 .HD
 .B
-UDP Packets
+UDP Пакеты
 .LP
-UDP format is illustrated by this rwho packet:
+UDP формат проиллюстрирован этим пакетом rwho:
 .RS
 .nf
 .sp .5
@@ -1602,25 +1603,25 @@ UDP format is illustrated by this rwho packet:
 .sp .5
 .fi
 .RE
-This says that port \fIwho\fP on host \fIactinide\fP sent a UDP
-datagram to port \fIwho\fP on host \fIbroadcast\fP, the Internet
-broadcast address.
-The packet contained 84 bytes of user data.
+Это говорит о том, что порт \fIwho\fP на хосте \fIactinide\fP отправил дейтаграмму UDP
+на порт \fIwho\fP на хосте \fI broadcast\fP,
+адрес широковещательной передачи в Интернете.
+Пакет содержал 84 байта пользовательских данных.
 .LP
-Some UDP services are recognized (from the source or destination
-port number) and the higher level protocol information printed.
-In particular, Domain Name service requests (RFC 1034/1035) and Sun
-RPC calls (RFC 1050) to NFS.
+Распознаются некоторые службы UDP (по
+номеру порта источника или назначения) и выводится информация о протоколе более высокого уровня.
+В частности, запросы на обслуживание доменных имен (RFC 1034/1035) и Sun
+RPC вызывает NFS (RFC 1050).
 .HD
-TCP or UDP Name Server Requests
+TCP или UDP Запросы к серверу имен
 .LP
-\fI(N.B.:The following description assumes familiarity with
-the Domain Service protocol described in RFC 1035.
-If you are not familiar
-with the protocol, the following description will appear to be written
-in Greek.)\fP
+\fI(N.B.:Следующее описание предполагает знакомство с
+протоколом обслуживания домена, описанным в RFC 1035.
+Если вы не знакомы
+с протоколом, то следующее описание, как вам покажется, написано
+на греческом языке.)\fP
 .LP
-Name server requests are formatted as
+Запросы к серверу имен форматируются следующим образом
 .RS
 .nf
 .sp .5
@@ -1630,38 +1631,38 @@ Name server requests are formatted as
 .sp .5
 .fi
 .RE
-Host \fIh2opolo\fP asked the domain server on \fIhelios\fP for an
-address record (qtype=A) associated with the name \fIucbvax.berkeley.edu.\fP
-The query id was `3'.
-The `+' indicates the \fIrecursion desired\fP flag
-was set.
-The query length was 37 bytes, excluding the TCP or UDP and
-IP protocol headers.
-The query operation was the normal one, \fIQuery\fP,
-so the op field was omitted.
-If the op had been anything else, it would
-have been printed between the `3' and the `+'.
-Similarly, the qclass was the normal one,
-\fIC_IN\fP, and omitted.
-Any other qclass would have been printed
-immediately after the `A'.
+Хост \fIh2opolo\fP запросил у сервера домена на \fIhelios\fP запись
+адреса (тип=A), связанную с именем \fI ucbvax.berkeley.edu.\fP
+Идентификатор запроса был `3'.
+Знак "+" указывает на то, что был установлен желаемый флаг рекурсии
+\fI\fP.
+Длина запроса составляла 37 байт, исключая TCP или UDP и
+Заголовки IP-протоколов.
+Операция запроса была обычной, \frequency\FP,
+поэтому поле op было опущено.
+Если бы оп был чем-то другим, он был
+бы напечатан между "3" и `+".
+Аналогично, класс был обычным,
+\fic_in\FP, и опущен.
+Любой другой класс был бы напечатан
+сразу после буквы "А".
 .LP
-A few anomalies are checked and may result in extra fields enclosed in
-square brackets:  If a query contains an answer, authority records or
-additional records section,
+Проверяются некоторые отклонения, которые могут привести к появлению дополнительных полей, заключенных в
+квадратные скобки:  Если запрос содержит ответ, официальные записи или
+раздел дополнительных записей,
 .IR ancount ,
 .IR nscount ,
-or
+или
 .I arcount
-are printed as `[\fIn\fPa]', `[\fIn\fPn]' or  `[\fIn\fPau]' where \fIn\fP
-is the appropriate count.
-If any of the response bits are set (AA, RA or rcode) or any of the
-`must be zero' bits are set in bytes two and three, `[b2&3=\fIx\fP]'
-is printed, where \fIx\fP is the hex value of header bytes two and three.
+печатаются как `[\fIn\fp]", "[\fIn\fp]" или "[\fi\f Pau]", где \fIn\fP
+- соответствующий округ.
+Если задан какой-либо из битов ответа (код AA, RA или r) или любой из
+битов "должно быть равно нулю" задан во втором и третьем байтах, выводится "[b2&3=\fIx\fP]",
+где \fIx\fP - шестнадцатеричное значение заголовка второй и третий байты.
 .HD
-TCP or UDP Name Server Responses
+TCP или UDP Ответы Сервера Имен
 .LP
-Name server responses are formatted as
+Ответы сервера имен форматируются следующим образом
 .RS
 .nf
 .sp .5
@@ -1672,50 +1673,50 @@ helios.domain > h2opolo.1537: 2 NXDomain* 0/1/0 (97)\fR
 .sp .5
 .fi
 .RE
-In the first example, \fIhelios\fP responds to query id 3 from \fIh2opolo\fP
-with 3 answer records, 3 name server records and 7 additional records.
-The first answer record is type A (address) and its data is internet
-address 128.32.137.3.
-The total size of the response was 273 bytes,
-excluding TCP or UDP and IP headers.
-The op (Query) and response code
-(NoError) were omitted, as was the class (C_IN) of the A record.
+В первом примере \fIhelios\fP отвечает на запрос с идентификатором 3 от \fIh2opolo\fP
+с 3 записями ответов, 3 записями сервера имен и 7 дополнительными записями.
+Первая запись ответа имеет тип A (адрес), а ее данные - это интернет
+-адрес 128.32.137.3.
+Общий размер ответа составил 273 байта,
+не считая заголовков TCP, UDP и IP.
+Код операции (запроса) и ответа
+((Ошибки нет) были опущены, как и класс (C_IN) записи A.
 .LP
-In the second example, \fIhelios\fP responds to query 2 with a
-response code of non-existent domain (NXDomain) with no answers,
-one name server and no authority records.
-The `*' indicates that
-the \fIauthoritative answer\fP bit was set.
-Since there were no
-answers, no type, class or data were printed.
+Во втором примере \Fihelios\FP отвечает на запрос 2
+кодом ответа несуществующего домена (nxdomain) без ответов,
+с одним сервером имен и без записей полномочий.
+Символ "*" указывает на то, что
+был установлен бит \fI authoritous answer\fP.
+Поскольку ответов не было,
+тип, класс или данные не были напечатаны.
 .LP
-Other flag characters that might appear are `\-' (recursion available,
-RA, \fInot\fP set) and `|' (truncated message, TC, set).
-If the
-`question' section doesn't contain exactly one entry, `[\fIn\fPq]'
-is printed.
+Другими символами флага, которые могут отображаться, являются `\-' (доступна рекурсия,
+RA, \fInot\fP установлен) и `|' (усеченное сообщение, TC, установлено).
+Если в
+разделе "вопрос" не содержится ровно одной записи, печатается
+"[\fIn\fPq]".
 .HD
-SMB/CIFS decoding
+SMB/CIFS расшифровка
 .LP
-\fItcpdump\fP now includes fairly extensive SMB/CIFS/NBT decoding for data
-on UDP/137, UDP/138 and TCP/139.
-Some primitive decoding of IPX and
-NetBEUI SMB data is also done.
+\fItcpdump\fP now includes fairly обширный SMB/CIFS/NBT расшифровка данных
+на UDP/137, UDP/138 и TCP/139.
+Также выполняется некоторое примитивное декодирование данных IPX и
+NetBEUI SMB.
 .LP
-By default a fairly minimal decode is done, with a much more detailed
-decode done if -v is used.
-Be warned that with -v a single SMB packet
-may take up a page or more, so only use -v if you really want all the
-gory details.
+По умолчанию выполняется довольно минимальное декодирование,
+но при использовании -v выполняется гораздо более подробное декодирование.
+Имейте в виду, что при использовании -v один SMB-пакет
+может занимать страницу или больше, поэтому используется -v только в том случае, если вам действительно нужны все
+подробности.
 .LP
-For information on SMB packet formats and what all the fields mean see
-\%https://download.samba.org/pub/samba/specs/ and other online resources.
-The SMB patches were written by Andrew Tridgell
-(tridge@samba.org).
+Информацию о форматах пакетов SMB и значении всех полей смотрите в разделе
+\%https://download.samba.org/pub/samba/specs/ и на других онлайн-ресурсах.
+Исправления для SMB были написаны Эндрю Триджеллом
+(Andrew Tridgell) (tridge@samba.org).
 .HD
-NFS Requests and Replies
+NFS Запросы и ответы
 .LP
-Sun NFS (Network File System) requests and replies are printed as:
+Sun NFS (Network File System) запросы и ответы печатаются в виде:
 .RS
 .nf
 .sp .5
@@ -1735,32 +1736,32 @@ wrl.nfs > sushi.1022: NFS reply xid 8219
 .sp .5
 .fi
 .RE
-In the first line, host \fIsushi\fP sends a transaction with id \fI26377\fP
-to \fIwrl\fP.
-The request was 112 bytes,
-excluding the UDP and IP headers.
-The operation was a \fIreadlink\fP
-(read symbolic link) on file handle (\fIfh\fP) 21,24/10.731657119.
-(If one is lucky, as in this case, the file handle can be interpreted
-as a major,minor device number pair, followed by the inode number and
-generation number.) In the second line, \fIwrl\fP replies `ok' with
-the same transaction id and the contents of the link.
+В первой строке хост \fIsushi\fP отправляет транзакцию с идентификатором \fI26377\fP
+на адрес \fIwrl\fP.
+Объем запроса составил 112 байт,
+не считая заголовков UDP и IP.
+Операция представляла собой \fI readlink\fP
+(чтение символьной ссылки) для дескриптора файла (\fIfh\fP) 21,24/10.731657119.
+(Если повезет, как в данном случае, дескриптор файла можно интерпретировать
+как пару основных и второстепенных номеров устройств, за которыми следуют номер индексного дескриптора и номер
+поколения.) Во второй строке \fIwrl\fP отвечает "ок" с
+тем же идентификатором транзакции и содержимым ссылки.
 .LP
-In the third line, \fIsushi\fP asks (using a new transaction id) \fIwrl\fP
-to lookup the name `\fIxcolors\fP' in directory file 9,74/4096.6878. In
-the fourth line, \fIwrl\fP sends a reply with the respective transaction id.
+В третьей строке \fIsushi\fP запрашивает (используя новый идентификатор транзакции) \fIwrl\fP
+для поиска имени `\fIxcolors\fP' в файле каталога 9,74/4096.6878. В
+четвертой строке \fIwrl\fP отправляет ответ с соответствующим идентификатором транзакции.
 .LP
-Note that the data printed
-depends on the operation type.
-The format is intended to be self
-explanatory if read in conjunction with
-an NFS protocol spec.
-Also note that older versions of tcpdump printed NFS packets in a
-slightly different format: the transaction id (xid) would be printed
-instead of the non-NFS port number of the packet.
+Обратите внимание, что печатаемые данные
+зависят от типа операции.
+Формат должен быть понятен сам
+по себе, если его читать в сочетании со
+спецификацией протокола NFS.
+Также обратите внимание, что более старые версии tcpdump печатали пакеты NFS в
+несколько ином формате:
+вместо номера порта пакета, отличного от NFS, печатался идентификатор транзакции (xid).
 .LP
-If the \-v (verbose) flag is given, additional information is printed.
-For example:
+Если установлен флажок \-v (подробный), выводится дополнительная информация.
+Например:
 .RS
 .nf
 .sp .5
@@ -1773,33 +1774,33 @@ wrl.nfs > sushi.1023: NFS reply xid 79658
 .sp .5
 .fi
 .RE
-(\-v also prints the IP header TTL, ID, length, and fragmentation fields,
-which have been omitted from this example.)  In the first line,
-\fIsushi\fP asks \fIwrl\fP to read 8192 bytes from file 21,11/12.195,
-at byte offset 24576.
-\fIWrl\fP replies `ok'; the packet shown on the
-second line is the first fragment of the reply, and hence is only 1472
-bytes long (the other bytes will follow in subsequent fragments, but
-these fragments do not have NFS or even UDP headers and so might not be
-printed, depending on the filter expression used).
-Because the \-v flag
-is given, some of the file attributes (which are returned in addition
-to the file data) are printed: the file type (``REG'', for regular file),
-the file mode (in octal), the UID and GID, and the file size.
+(\-v также выводит поля TTL, ID, длина и фрагментация заголовка IP,
+которые были опущены в этом примере.)  В первой строке,
+\\fIsushi\fP запрашивает \tiwari\fP для чтения 8192 байт из файла 21,11/
+12.195 со смещением в байтах 24576.
+\fIWrl\fP отвечает "ок"; пакет, показанный во
+второй строке, является первым фрагментом ответа и, следовательно, имеет всего 1472
+длина в байтах (остальные байты будут приведены в последующих фрагментах, но
+эти фрагменты не имеют заголовков NFS или даже UDP и поэтому могут не
+печататься, в зависимости от используемого выражения фильтра).
+Поскольку задан флаг \-v,
+выводятся некоторые атрибуты файла (которые возвращаются в дополнение
+к данным файла): тип файла (`REG", для обычного файла),
+режим файла (в восьмеричном формате), UID и GID GID и размер файла.
 .LP
-If the \-v flag is given more than once, even more details are printed.
+Если флаг \-v указан более одного раза, выводится еще больше сведений.
 .LP
-NFS reply packets do not explicitly identify the RPC operation.
-Instead,
-\fItcpdump\fP keeps track of ``recent'' requests, and matches them to the
-replies using the transaction ID.
-If a reply does not closely follow the
-corresponding request, it might not be parsable.
+Ответные пакеты NFS явно не идентифицируют операцию RPC.
+Вместо,
+\fItcpdump\fP отслеживает `последние" запросы и сопоставляет их с
+ответами, используя идентификатор транзакции.
+Если ответ не соответствует
+соответствующему запросу, он может быть недоступен для синтаксического анализа.
 .HD
-AFS Requests and Replies
+AFS Запросы и ответы
 .LP
-Transarc AFS (Andrew File System) requests and replies are printed
-as:
+Запросы и ответы Transarc AFS (файловая система Andrew) печатаются
+в виде:
 .HD
 .RS
 .nf
@@ -1817,59 +1818,59 @@ pike.afsfs > elvis.7001: rx data fs reply rename
 .sp .5
 .fi
 .RE
-In the first line, host elvis sends a RX packet to pike.
-This was
-a RX data packet to the fs (fileserver) service, and is the start of
-an RPC call.
-The RPC call was a rename, with the old directory file id
-of 536876964/1/1 and an old filename of `.newsrc.new', and a new directory
-file id of 536876964/1/1 and a new filename of `.newsrc'.
-The host pike
-responds with a RPC reply to the rename call (which was successful, because
-it was a data packet and not an abort packet).
+В первой строке хост elvis отправляет RX-пакет pike.
+Это был
+RX-пакет данных для службы fs (файлового сервера) и является началом
+вызова RPC.
+Вызовом RPC было переименование со старым идентификатором файла каталога
+536876964/1/1 и старым именем файла ".newsrc.new", а также с новым
+идентификатором файла каталога 536876964/1/1 и новым именем файла `.newsrc".
+Хост-сервер pike
+отвечает RPC-ответом на вызов переименования (который прошел успешно, поскольку
+это был пакет данных, а не пакет прерывания).
 .LP
-In general, all AFS RPCs are decoded at least by RPC call name.
-Most
-AFS RPCs have at least some of the arguments decoded (generally only
-the `interesting' arguments, for some definition of interesting).
+В общем, все RPC AFS декодируются, по крайней мере, по имени вызова RPC.
+Наиболее
+В RPC AFS расшифрованы, по крайней мере, некоторые аргументы (обычно только
+"интересные" аргументы, для некоторого определения интересного).
 .LP
-The format is intended to be self-describing, but it will probably
-not be useful to people who are not familiar with the workings of
-AFS and RX.
+Этот формат предназначен для самоописания, но, вероятно
+, он не будет полезен людям, которые не знакомы с работой
+AFS и RX.
 .LP
-If the -v (verbose) flag is given twice, acknowledgement packets and
-additional header information is printed, such as the RX call ID,
-call number, sequence number, serial number, and the RX packet flags.
+Если дважды задан флаг -v (подробный), выводятся пакеты подтверждения и
+дополнительная информация в заголовке, такая как идентификатор вызова RX
+, номер вызова, порядковый номер, серийный номер и флаги пакетов RX.
 .LP
-If the -v flag is given twice, additional information is printed,
-such as the RX call ID, serial number, and the RX packet flags.
-The MTU negotiation information is also printed from RX ack packets.
+Если флаг -v указан дважды, выводится дополнительная информация,
+такая как идентификатор вызова RX, серийный номер и флаги пакетов RX.
+Информация о согласовании MTU также выводится из пакетов подтверждения RX.
 .LP
-If the -v flag is given three times, the security index and service id
-are printed.
+Если флажок -v задан три раза, печатаются индекс безопасности и идентификатор
+службы.
 .LP
-Error codes are printed for abort packets, with the exception of Ubik
-beacon packets (because abort packets are used to signify a yes vote
-for the Ubik protocol).
+Коды ошибок выводятся для пакетов прерывания, за исключением
+пакетов-маяков Ubik (поскольку пакеты прерывания используются для обозначения одобрения
+протокола Ubik).
 .LP
-AFS reply packets do not explicitly identify the RPC operation.
-Instead,
-\fItcpdump\fP keeps track of ``recent'' requests, and matches them to the
-replies using the call number and service ID.
-If a reply does not closely
-follow the
-corresponding request, it might not be parsable.
+AFS ответные пакеты явно не идентифицируют операцию RPC.
+Вместо,
+\fItcpdump\fP отслеживает `последние" запросы и сопоставляет их с
+ответами, используя номер вызова и идентификатор службы.
+Если ответ не
+соответствует
+соответствующему запросу, его может быть невозможно проанализировать.
 
 .HD
 KIP AppleTalk (DDP in UDP)
 .LP
-AppleTalk DDP packets encapsulated in UDP datagrams are de-encapsulated
-and dumped as DDP packets (i.e., all the UDP header information is
-discarded).
+Пакеты AppleTalk DDP, инкапсулированные в дейтаграммы UDP,
+деинкапсулируются и сбрасываются как пакеты DDP (т.е. вся информация заголовка UDP
+отбрасывается).
 The file
 .I /etc/atalk.names
-is used to translate AppleTalk net and node numbers to names.
-Lines in this file have the form
+используется для преобразования номеров сетей AppleTalk и узлов в имена.
+Строки в этом файле имеют вид
 .RS
 .nf
 .sp .5
@@ -1881,19 +1882,19 @@ Lines in this file have the form
 .sp .5
 .fi
 .RE
-The first two lines give the names of AppleTalk networks.
-The third
-line gives the name of a particular host (a host is distinguished
-from a net by the 3rd octet in the number \-
-a net number \fImust\fP have two octets and a host number \fImust\fP
-have three octets.)  The number and name should be separated by
-whitespace (blanks or tabs).
-The
+В первых двух строках указаны названия сетей AppleTalk.
+В третьей
+строке указано имя конкретного хоста (хост отличается
+от сети по 3-му октету в номере \-
+номеру сети\, который должен соответствовать\У fP есть два октета, а у номера хоста \fImust\fP
+должно быть три октета.)  Номер и имя должны быть разделены
+пробелами (пробелами или символами табуляции).
+
 .I /etc/atalk.names
-file may contain blank lines or comment lines (lines starting with
+файл может содержать пустые строки или строки комментариев (строки, начинающиеся с
 a `#').
 .LP
-AppleTalk addresses are printed in the form
+AppleTalk адреса печатаются в формеm
 .RS
 .nf
 .sp .5
@@ -1907,25 +1908,25 @@ jssmag.149.235 > icsd-net.2\fR
 .RE
 (If the
 .I /etc/atalk.names
-doesn't exist or doesn't contain an entry for some AppleTalk
-host/net number, addresses are printed in numeric form.)
-In the first example, NBP (DDP port 2) on net 144.1 node 209
-is sending to whatever is listening on port 220 of net icsd node 112.
-The second line is the same except the full name of the source node
-is known (`office').
-The third line is a send from port 235 on
-net jssmag node 149 to broadcast on the icsd-net NBP port (note that
-the broadcast address (255) is indicated by a net name with no host
-number \- for this reason it's a good idea to keep node names and
-net names distinct in /etc/atalk.names).
+не существует или не содержит записи для некоторого
+номера узла/сети AppleTalk, адреса печатаются в числовом виде.)
+В первом примере NBP (порт DDP 2) на узле 209 net 144.1
+отправляет данные на все, что прослушивает порт 220 узла 112 icsd сети.
+Вторая строка такая же, за исключением того, что известно полное имя исходного узла
+(`office").
+Третья строка представляет собой отправку с порта 235 на
+сетевом узле jssmag 149 для широковещательной передачи на порт icsd-net NBP (обратите внимание, что
+широковещательный адрес (255) обозначен сетевым именем без
+номера хоста\- по этой причине рекомендуется сохранять имена узлов и
+сетевые имена, отличные от /etc/atalk.names).
 .LP
-NBP (name binding protocol) and ATP (AppleTalk transaction protocol)
-packets have their contents interpreted.
-Other protocols just dump
-the protocol name (or number if no name is registered for the
-protocol) and packet size.
+NBP (протокол привязки имен) и ATP (протокол транзакций AppleTalk)
+содержимое пакетов интерпретируется.
+Другие протоколы просто передают
+имя протокола (или номер, если для протокола не зарегистрировано имя)
+и размер пакета.
 
-\fBNBP packets\fP are formatted like the following examples:
+\fBNBP packets\fP отформатированы так, как показано в следующих примерах:
 .RS
 .nf
 .sp .5
@@ -1935,17 +1936,17 @@ techpit.2 > icsd-net.112.220: nbp-reply 190: "techpit:LaserWriter@*" 186\fR
 .sp .5
 .fi
 .RE
-The first line is a name lookup request for laserwriters sent by net icsd host
-112 and broadcast on net jssmag.
-The nbp id for the lookup is 190.
-The second line shows a reply for this request (note that it has the
-same id) from host jssmag.209 saying that it has a laserwriter
-resource named "RM1140" registered on port 250.
-The third line is
-another reply to the same request saying host techpit has laserwriter
-"techpit" registered on port 186.
+Первая строка - это запрос на поиск имени для laserwriters, отправленный хостом net icsd
+112 и транслируемый в net jssmag.
+Идентификатор nb для поиска равен 190.
+Во второй строке показан ответ на этот запрос (обратите внимание, что он имеет тот
+же идентификатор) от хоста jssmag.209, в котором говорится,
+что на порту 250 зарегистрирован ресурс laserwriter с именем "RM1140".
+Третья строка - это
+еще один ответ на тот же запрос, в котором говорится, что у hosttech pit есть laserwriter
+""tech pit", зарегистрированный на порту 186.
 
-\fBATP packet\fP formatting is demonstrated by the following example:
+\fBATP packet\fP форматирование демонстрируется на следующем примере:
 .RS
 .nf
 .sp .5
@@ -1966,35 +1967,35 @@ jssmag.209.133 > helios.132: atp-req* 12267<0-7> 0xae030002\fR
 .sp .5
 .fi
 .RE
-Jssmag.209 initiates transaction id 12266 with host helios by requesting
-up to 8 packets (the `<0-7>').
-The hex number at the end of the line
-is the value of the `userdata' field in the request.
+Jssmag.209 инициирует транзакцию с идентификатором 12266 с хостом helios, запрашивая
+до 8 пакетов (`<0-7>").
+Шестнадцатеричное число в конце строки
+является значением поля `пользовательские данные" в запросе.
 .LP
-Helios responds with 8 512-byte packets.
-The `:digit' following the
-transaction id gives the packet sequence number in the transaction
-and the number in parens is the amount of data in the packet,
-excluding the ATP header.
-The `*' on packet 7 indicates that the
-EOM bit was set.
+Helios отправляет в ответ 8 пакетов по 512 байт.
+Цифра ":", следующая
+за идентификатором транзакции, указывает порядковый номер пакета в транзакции,
+а число в скобках - объем данных в пакете,
+за исключением заголовка ATP.
+Символ "*" в пакете 7 указывает на то, что
+бит EOM был установлен.
 .LP
-Jssmag.209 then requests that packets 3 & 5 be retransmitted.
+Затем Jssmag.209 запрашивает повторную передачу пакетов 3 и 5.
 Helios
-resends them then jssmag.209 releases the transaction.
-Finally,
-jssmag.209 initiates the next request.
-The `*' on the request
-indicates that XO (`exactly once') was \fInot\fP set.
+повторно отправляет их, после чего jssmag.209 завершает транзакцию.
+Наконец,
+jssmag.209 инициирует следующий запрос.
+Символ "*" в запросе
+указывает на то, что XO ("ровно один раз") был установлен \fInot\fP.
 
-.SH BACKWARD COMPATIBILITY
-The TCP flag names
+.SH ОБРАТНАЯ СОВМЕСТИМОСТЬ
+TCP наименования флажков
 .B tcp-ece
-and
+и
 .B tcp-cwr
-became available when linking with libpcap 1.9.0 or later.
+стал доступен при подключении к libpcap версии 1.9.0 или более поздней.
 
-.SH "SEE ALSO"
+.SH "СМОТРЕТЬ ТАКЖЕ"
 .BR stty (1),
 .BR pcap (3PCAP),
 .BR bpf (4),
@@ -2009,82 +2010,82 @@ became available when linking with libpcap 1.9.0 or later.
 .ad
 .RE
 .LP
-.SH AUTHORS
-The original authors are:
+.SH АВТОРЫ
+Первоначальными авторами являются:
 .LP
-Van Jacobson,
-Craig Leres and
-Steven McCanne, all of the
-Lawrence Berkeley National Laboratory, University of California, Berkeley, CA.
+Ван Джейкобсон,
+Крейг Лерес и
+Стивен Маккэнн, все из
+Национальной лаборатории Лоуренса Беркли, Калифорнийский университет, Беркли, Калифорния.
 .LP
-It is currently maintained by The Tcpdump Group.
+В настоящее время он поддерживается группой Tcpdump.
 .LP
-The current version is available via HTTPS:
+Текущая версия доступна по протоколу HTTPS:
 .LP
 .RS
 .I https://www.tcpdump.org/
 .RE
 .LP
-The original distribution is available via anonymous ftp:
+Исходный дистрибутив доступен по анонимному ftp:
 .LP
 .RS
 .I ftp://ftp.ee.lbl.gov/old/tcpdump.tar.Z
 .RE
 .LP
-IPv6/IPsec support is added by WIDE/KAME project.
-This program uses OpenSSL/LibreSSL, under specific configurations.
-.SH BUGS
-To report a security issue please send an e-mail to \%security@tcpdump.org.
+Поддержка IPv6/IPSec добавлена проектом WIDE/KAME.
+Эта программа использует OpenSSL/LibreSSL в определенных конфигурациях.
+.SH ПРОБЛЕМЫ
+Чтобы сообщить о проблеме с системой безопасности, пожалуйста, отправьте электронное письмо по адресу \%security@tcpdump.org.
 .LP
-To report bugs and other problems, contribute patches, request a
-feature, provide generic feedback etc. please see the file
+Чтобы сообщать об ошибках и других проблемах, вносить исправления, запрашивать
+функцию, предоставлять общие отзывы и т.д. пожалуйста, ознакомьтесь с файлом
 .I CONTRIBUTING.md
-in the tcpdump source tree root.
+в корне древа исходных текстов tcpdump.
 .LP
-NIT doesn't let you watch your own outbound traffic, BPF will.
-We recommend that you use the latter.
+NIT не позволяет вам отслеживать ваш собственный исходящий трафик, а BPF позволяет.
+Мы рекомендуем использовать последний вариант.
 .LP
-On Linux systems with 2.0[.x] kernels:
+В системах Linux с ядрами версии 2.0[.x]:
 .IP
-packets on the loopback device will be seen twice;
+пакеты на устройстве обратной связи будут видны дважды;
 .IP
-packet filtering cannot be done in the kernel, so that all packets must
-be copied from the kernel in order to be filtered in user mode;
+фильтрация пакетов не может быть выполнена в ядре, поэтому все пакеты должны
+быть скопированы из ядра для фильтрации в пользовательском режиме;
 .IP
-all of a packet, not just the part that's within the snapshot length,
-will be copied from the kernel (the 2.0[.x] packet capture mechanism, if
-asked to copy only part of a packet to userspace, will not report the
-true length of the packet; this would cause most IP packets to get an
-error from
+весь пакет, а не только та его часть, которая находится в пределах длины моментального снимка,
+будет скопирован из ядра (механизм захвата пакетов версии 2.0[.x], если
+его попросят скопировать только часть пакета в пользовательское пространство, не сообщит
+истинную длину пакета; это приведет к тому, что большинство IP-адресов будут заблокированы). пакеты, из которых нужно получить
+сообщение об ошибке
 .BR tcpdump );
 .IP
-capturing on some PPP devices won't work correctly.
+запись на некоторых устройствах PPP будет работать некорректно.
 .LP
-We recommend that you upgrade to a 2.2 or later kernel.
+Мы рекомендуем вам обновиться до версии 2.2 или более поздней версии ядра.
 .LP
-Some attempt should be made to reassemble IP fragments or, at least
-to compute the right length for the higher level protocol.
+Следует предпринять некоторые попытки для повторной сборки IP-фрагментов или, по крайней
+мере, для вычисления правильной длины для протокола более высокого уровня.
 .LP
-Name server inverse queries are not dumped correctly: the (empty)
-question section is printed rather than real query in the answer
-section.
-Some believe that inverse queries are themselves a bug and
-prefer to fix the program generating them rather than \fItcpdump\fP.
+Имя обратных запросов сервер не свалил правильно: (пустая)
+раздел Вопрос-напечатаны, а не реального запроса в ответ
+раздел.
+Некоторые считают, что обратные запросы сами по себе являются ошибкой, и
+предпочитают исправлять их в программе, генерирующей их, а не в \fItcpdump\fP.
 .LP
-A packet trace that crosses a daylight savings time change will give
-skewed time stamps (the time change is ignored).
+Трассировка пакетов, которая пересекает переход на летнее время, даст
+искаженные временные метки (изменение времени игнорируется).
 .LP
-Filter expressions on fields other than those in Token Ring headers will
-not correctly handle source-routed Token Ring packets.
+Выражения фильтрации для полей, отличных от тех, которые указаны в заголовках Token Ring,
+не будут корректно обрабатывать пакеты Token Ring, маршрутизируемые из источника.
 .LP
-Filter expressions on fields other than those in 802.11 headers will not
-correctly handle 802.11 data packets with both To DS and From DS set.
+Выражения фильтрации для полей, отличных от тех, что указаны в заголовках 802.11, не
+будут корректно обрабатывать пакеты данных стандарта 802.11 с установленными параметрами Todd и From DS.
 .LP
 .BR "ip6 proto"
-should chase header chain, but at this moment it does not.
+следовало бы преследовать цепочку заголовков, но в данный момент этого не происходит.
 .BR "ip6 protochain"
-is supplied for this behavior.
+предоставляется для такого поведения.
 .LP
-Arithmetic expression against transport layer headers, like \fBtcp[0]\fP,
-does not work against IPv6 packets.
-It only looks at IPv4 packets.
+Арифметическое выражение для заголовков транспортного уровня, например \fBtcp[0]\fP,
+не работает с пакетами IPv6.
+Оно просматривает только пакеты IPv4.
