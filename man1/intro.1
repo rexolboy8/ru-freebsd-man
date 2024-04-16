@@ -30,33 +30,31 @@
 .Dd October 21, 2001
 .Dt INTRO 1
 .Os
-.Sh NAME
+.Sh ИМЯ
 .Nm intro
-.Nd introduction to general commands (tools and utilities)
-.Sh DESCRIPTION
-Section one of the manual contains most of the commands
-which comprise the
-.Bx
-user environment.
-Some of the commands included in section one are
-text editors, command shell interpreters,
-searching and sorting tools,
-file manipulation commands,
-system status commands,
-remote file copy commands, mail commands,
-compilers and compiler tools,
-formatted output tools,
-and line printer commands.
+.Nd введение в общие команды (инструменты и утилиты)
+.Sh ОПИСАНИЕ
+В первом разделе руководства содержится большинство команд, которые составляют
+пользовательскую среду 
+.Bx . 
+Некоторые из команд, включенные в первый раздел: 
+текстовые редакторы, интерпретаторы командной оболочки, 
+инструменты поиска и сортировки, 
+команды для работы с файлами, 
+команды опроса состояния системы, 
+команды работы с удаленными файлами, работы с почтой, 
+компиляторы и средства компиляции, 
+средства форматирования вывода и 
+команды печати строк.
 .Pp
-All commands set a status value upon exit which may be tested
-to see if the command completed normally.
-Traditionally, the value 0 signifies successful
-completion of the command, while a value >0 indicates an error.
-Some commands attempt to describe the nature of the failure by using
-exit codes as defined in
+Все команды при завершении задают значение статуса, 
+которое можно проверить, чтобы убедиться, что команда выполнена нормально.
+Традиционно значение 0 означает успешное выполнение команды, в то время как значение >0 указывает на ошибку.
+Некоторые команды пытаются описать природу сбоя, используя 
+коды завершения, определенные в 
 .Xr sysexits 3 ,
-while others simply set the status to an arbitrary value >0 (typically 1).
-.Sh SEE ALSO
+в то время как другие просто устанавливают для статуса произвольное значение >0 (обычно 1).
+.Sh СМОТРИ ТАКЖЕ
 .Xr apropos 1 ,
 .Xr man 1 ,
 .Xr intro 2 ,
@@ -70,10 +68,10 @@ while others simply set the status to an arbitrary value >0 (typically 1).
 .Xr intro 8 ,
 .Xr intro 9
 .Pp
-Tutorials in the
-.%T "UNIX User's Manual Supplementary Documents" .
-.Sh HISTORY
-The
+Учебные пособия в руководства
+.%T "Дополнительные документы к руководству пользователя UNIX" .
+.Sh ИСТОРИЯ
+Страница
 .Nm
-manual page appeared in
+руководства впервые появилась в 
 .At v6 .
